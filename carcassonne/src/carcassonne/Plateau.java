@@ -10,10 +10,15 @@ package carcassonne;
  * @author Thomas
  */
 public class Plateau {
-    private Tuile[][] plateau;
 
-    public Plateau() {
-        this.plateau = new Tuile[10][10];        
+    private Tuile[][] plateau;
+    private int tailleX;
+    private int tailleY;
+
+    public Plateau(int tailleX, int tailleY) {
+        this.plateau = new Tuile[tailleX][tailleY];
+        this.tailleX = 10;
+        this.tailleY = 10;
     }
 
     public Tuile[][] getPlateau() {
