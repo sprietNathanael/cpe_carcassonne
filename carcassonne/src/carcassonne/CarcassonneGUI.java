@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package carcassonne;
-
+import carcassonne.EnumTuile;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,6 +28,10 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
     private JLayeredPane layeredPane;
     private Dimension dim;
     private JPanel[][] panels;
+    private JLabel blank;
+    private JLabel road;
+    private JLabel castle;
+    private JLabel field;
 
     public CarcassonneGUI(Plateau plateau) {
         this.plateau = plateau;
@@ -53,6 +57,16 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
             }
 
         }
+        
+        blank = new JLabel("B");
+        road = new JLabel("R");
+        castle = new JLabel("C");
+        field = new JLabel("F");
+        
+        /*blank.setBackground(Color.blue);
+        field.setBackground(Color.green);
+        castle.setBackground(Color.red);
+        road.setBackground(Color.black);*/
     }
 
     @Override
@@ -61,36 +75,75 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
             for (int incY = 0; incY < this.plateau.getTailleY(); incY++) {
                 System.out.println(incX+";"+incY);
                 panels[incX][incY].removeAll();
+                
                 // First Line
                 panels[incX][incY].add(new JLabel(""));
-                //panels[incX][incY].add(new JLabel("B"));
-                if (this.plateau.getElement(incX, incY).getNord() != null) {
-                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getNord()));
-                } else {
+                
+                if (this.plateau.getElement(incX, incY).getNord() == null) {
+                    //panels[incX][incY].add(blank);
                     panels[incX][incY].add(new JLabel(""));
+                } else if(this.plateau.getElement(incX, incY).getNord() == EnumTuile.ville) {
+                    //panels[incX][incY].add(castle);
+                    panels[incX][incY].add(new JLabel("V"));
+                } else if(this.plateau.getElement(incX, incY).getNord() == EnumTuile.route) {
+                    //panels[incX][incY].add(road);
+                    panels[incX][incY].add(new JLabel("R"));
+                } else if(this.plateau.getElement(incX, incY).getNord() == EnumTuile.champ) {
+                    //panels[incX][incY].add(field);
+                    panels[incX][incY].add(new JLabel("C"));
                 }
+                
                 panels[incX][incY].add(new JLabel(""));
                 
                 // Second Line
-                if (this.plateau.getElement(incX, incY).getOuest() != null) {
-                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getOuest()));
-                } else {
+                if (this.plateau.getElement(incX, incY).getOuest() == null) {
+                    //panels[incX][incY].add(blank);
                     panels[incX][incY].add(new JLabel(""));
+                } else if(this.plateau.getElement(incX, incY).getOuest() == EnumTuile.ville) {
+                    //panels[incX][incY].add(castle);
+                    panels[incX][incY].add(new JLabel("V"));
+                } else if(this.plateau.getElement(incX, incY).getOuest() == EnumTuile.route) {
+                    //panels[incX][incY].add(road);
+                    panels[incX][incY].add(new JLabel("R"));
+                } else if(this.plateau.getElement(incX, incY).getOuest() == EnumTuile.champ) {
+                    //panels[incX][incY].add(field);
+                    panels[incX][incY].add(new JLabel("C"));
                 }
+                
                 panels[incX][incY].add(new JLabel(""));
-                if (this.plateau.getElement(incX, incY).getEst() != null) {
-                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getEst()));
-                } else {
+                
+                if (this.plateau.getElement(incX, incY).getEst() == null) {
+                    //panels[incX][incY].add(blank);
                     panels[incX][incY].add(new JLabel(""));
+                } else if(this.plateau.getElement(incX, incY).getEst() == EnumTuile.ville) {
+                    //panels[incX][incY].add(castle);
+                    panels[incX][incY].add(new JLabel("V"));
+                } else if(this.plateau.getElement(incX, incY).getEst() == EnumTuile.route) {
+                    //panels[incX][incY].add(road);
+                    panels[incX][incY].add(new JLabel("R"));
+                } else if(this.plateau.getElement(incX, incY).getEst() == EnumTuile.champ) {
+                    //panels[incX][incY].add(field);
+                    panels[incX][incY].add(new JLabel("C"));
                 }
                 
                 // Third Line
                 panels[incX][incY].add(new JLabel(""));
-                if (this.plateau.getElement(incX, incY).getSud() != null) {
-                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getSud()));
-                } else {
+                
+                if (this.plateau.getElement(incX, incY).getSud() == null) {
+                    //panels[incX][incY].add(blank);
                     panels[incX][incY].add(new JLabel(""));
+                } else if(this.plateau.getElement(incX, incY).getSud() == EnumTuile.ville) {
+                    //panels[incX][incY].add(castle);
+                    panels[incX][incY].add(new JLabel("V"));
+                } else if(this.plateau.getElement(incX, incY).getSud() == EnumTuile.route) {
+                    //panels[incX][incY].add(road);
+                    panels[incX][incY].add(new JLabel("R"));
+                } else if(this.plateau.getElement(incX, incY).getSud() == EnumTuile.champ) {
+                    //panels[incX][incY].add(field);
+                    panels[incX][incY].add(new JLabel("C"));
                 }
+                
+                //panels[incX][incY].add(blank);
                 panels[incX][incY].add(new JLabel(""));
             }
         }
