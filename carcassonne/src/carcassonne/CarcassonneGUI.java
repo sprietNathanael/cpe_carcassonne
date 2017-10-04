@@ -73,7 +73,6 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
     public void update(Observable o, Object arg) {
         for (int incX = 0; incX < this.plateau.getTailleX(); incX++) {
             for (int incY = 0; incY < this.plateau.getTailleY(); incY++) {
-                System.out.println(incX+";"+incY);
                 panels[incX][incY].removeAll();
                 
                 // First Line
