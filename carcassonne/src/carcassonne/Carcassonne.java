@@ -18,16 +18,13 @@ public class Carcassonne {
 
         Plateau p = new Plateau(10, 10);
         p.setElement(new Tuile(2, 2, EnumTuile.route, EnumTuile.route, EnumTuile.route, EnumTuile.route));
-        Tuile t = new Tuile(2,3, EnumTuile.route, EnumTuile.route, EnumTuile.route, EnumTuile.route);
+        Tuile t = new Tuile(4,2, EnumTuile.route, EnumTuile.route, EnumTuile.route, EnumTuile.route);
         
         if(p.verifPos(t)==true)
         {
          p.setElement(t);
         }
         
-
-        
-        p.setElement(new Tuile(2, 2, EnumTuile.route, EnumTuile.champ, EnumTuile.ville, EnumTuile.route));
         p.setElement(new Tuile(2, 3, EnumTuile.champ, EnumTuile.route, EnumTuile.route, EnumTuile.ville));
         p.setElement(new Tuile(5, 5, EnumTuile.champ, EnumTuile.route, EnumTuile.route, EnumTuile.ville));
         p.setElement(new Tuile(5, 4, EnumTuile.champ, EnumTuile.route, EnumTuile.ville, EnumTuile.route));
