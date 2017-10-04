@@ -24,6 +24,10 @@ public class Plateau {
     public Tuile[][] getPlateau() {
         return plateau;
     }
+    public Tuile getElement(int x, int y)
+    {
+        return plateau[x][y];
+    }
 
     public void setPlateau(Tuile[][] plateau) {
         this.plateau = plateau;
