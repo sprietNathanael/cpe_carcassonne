@@ -75,9 +75,23 @@ public class Tuile
         this.ouest = ouest;
     }
 
+    public String enumResume(EnumTuile et)
+    {
+        switch (et)
+        {
+            //case EnumTuile
+        }
+        return "";
+    }
+    
     @Override
     public String toString() {
-        return "|\t" + nord + "\t     |\n|" +  ouest + " \t\t" + est + "|\n|\t" + sud + "\t     |";
+        //return "|\t" + nord + "\t     |\n|" +  ouest + " \t\t" + est + "|\n|\t" + sud + "\t     |";
+        if (nord != null)
+            return nord.toString() +  ouest.toString() + est.toString() + sud.toString();
+        else
+            return "     " +  "     " + "     " + "     ";
+        
     }
-
+     
 }
