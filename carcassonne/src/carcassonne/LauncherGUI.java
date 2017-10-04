@@ -19,6 +19,8 @@ public class LauncherGUI{
 
         JFrame frame;
         Plateau plateau = new Plateau(10, 10);
+        Tuile tuile = new Tuile(5, 5, EnumTuile.champ, EnumTuile.route, EnumTuile.route, EnumTuile.champ);
+        plateau.setElement(tuile);
         frame = new CarcassonneGUI(plateau);
         GUIController controller = new GUIController();
         controller.addObserver((Observer) frame);
@@ -26,7 +28,8 @@ public class LauncherGUI{
         frame.setLocation(600, 10);
         frame.pack();
         frame.setVisible(true);
-        controller.notifyObservers();;
+        
+        //controller.notifyObservers();
     }
 
     
