@@ -5,6 +5,8 @@
  */
 package carcassonne;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Thomas
@@ -107,5 +109,36 @@ public class Plateau {
         
         return pos;
     }
+    
+    public void PlacerTuile(int x, int y, String nord, String sud, String est, String ouest)
+    {
+        Tuile t = new Tuile(x, y, EnumTuile.toEnum(nord), EnumTuile.toEnum(sud), EnumTuile.toEnum(est), EnumTuile.toEnum(ouest) );
+        setElement(t);    
+    }
 
+    public void PlacementJoueur()
+    {        
+        int x = 0;
+        int y = 0;
+        String nord;
+        String sud;
+        String ouest;
+        String est;
+            
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Veuillez saisir les informations de la tuile :");
+        System.out.println("X : ");
+        x = sc.nextInt();
+        System.out.println("Y : ");
+        y = sc.nextInt();
+        System.out.println("Nord : ");
+        nord = sc.next();
+        System.out.println("Sud : ");
+        sud = sc.next();
+        System.out.println("Est : ");
+        est = sc.next();
+        System.out.println("Ouest : ");
+        ouest = sc.next();
+        PlacerTuile(x, y, nord, sud, est, ouest);
+    }
 }
