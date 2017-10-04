@@ -113,7 +113,8 @@ public class Plateau {
     public void PlacerTuile(int x, int y, String nord, String sud, String est, String ouest)
     {
         Tuile t = new Tuile(x, y, EnumTuile.toEnum(nord), EnumTuile.toEnum(sud), EnumTuile.toEnum(est), EnumTuile.toEnum(ouest) );
-        setElement(t);    
+        if (verifPos(t) == true)
+            setElement(t);    
     }
 
     public void PlacementJoueur()
