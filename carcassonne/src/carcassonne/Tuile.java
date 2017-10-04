@@ -75,5 +75,9 @@ public class Tuile
         this.ouest = ouest;
     }
 
-    
+    @Override
+    public String toString() {
+        return "|\t" + nord + "\t     |\n|" +  ouest + " \t\t" + est + "|\n|\t" + sud + "\t     |";
+    }
+
 }

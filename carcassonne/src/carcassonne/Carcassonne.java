@@ -15,7 +15,9 @@ public class Carcassonne {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+        Tuile tuile = new Tuile(0, 0, EnumTuile.champ, EnumTuile.route, EnumTuile.route, EnumTuile.champ);
         
+        System.out.println(tuile);
     }
     
 }
