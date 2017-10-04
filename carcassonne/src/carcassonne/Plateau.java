@@ -28,11 +28,37 @@ public class Plateau {
     public void setPlateau(Tuile[][] plateau) {
         this.plateau = plateau;
     }
-    
-    public void AfficherConsole()
-    {
-        
+
+    public int getTailleX() {
+        return tailleX;
+    }
+
+    public void setTailleX(int tailleX) {
+        this.tailleX = tailleX;
+    }
+
+    public int getTailleY() {
+        return tailleY;
+    }
+
+    public void setTailleY(int tailleY) {
+        this.tailleY = tailleY;
     }
     
     
+
+    @Override
+    public String toString() {
+        for (int i = 0; i < tailleX; i++) {
+            for (int j = 0; j < tailleY; j++) {
+                AffichageTuile(plateau[i][j]);
+            }
+        }
+        return "";
+    }
+     
+    public String AffichageTuile(Tuile t){
+        return "";
+    }
+
 }
