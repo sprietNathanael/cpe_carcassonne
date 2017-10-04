@@ -12,5 +12,16 @@ package carcassonne;
 public enum EnumTuile {
     ville,
     champ,
-    route
+    route;
+    
+    @Override    
+    public String toString() {
+        switch(this)
+        {
+            case ville : return "V";
+            case champ : return "C";
+            case route : return "R";
+            default : return "";
+        }
+    }
 }
