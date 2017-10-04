@@ -24,4 +24,15 @@ public enum EnumTuile {
             default : return "";
         }
     }
+    
+    public static EnumTuile toEnum(String t)
+    {
+        switch(t)
+        {
+            case "V" : return ville;
+            case "C" : return champ;
+            case "R" : return route;
+            default : return null;
+        }
+    }
 }
