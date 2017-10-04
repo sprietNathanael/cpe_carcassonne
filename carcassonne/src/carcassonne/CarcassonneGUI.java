@@ -27,6 +27,7 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
     private JPanel carcassonneBoard;
     private JLayeredPane layeredPane;
     private Dimension dim;
+    private JPanel[][] panels;
 
     public CarcassonneGUI(Plateau plateau) {
         this.plateau = plateau;
@@ -40,27 +41,59 @@ public class CarcassonneGUI extends JFrame implements java.util.Observer {
         carcassonneBoard.setLayout(new GridLayout(this.plateau.getTailleX(), this.plateau.getTailleY()));
         carcassonneBoard.setPreferredSize(dim);
         carcassonneBoard.setBounds(0, 0, dim.width, dim.height);
+        panels = new JPanel[this.plateau.getTailleX()][this.plateau.getTailleY()];
+        for (int incX = 0; incX < this.plateau.getTailleX(); incX++) {
+            for (int incY = 0; incY < this.plateau.getTailleY(); incY++) {
+                panels[incX][incY] = new JPanel();
+                panels[incX][incY].setLayout(new GridLayout(3, 3));
+                panels[incX][incY].setBorder(BorderFactory.createLineBorder(Color.black));
+                panels[incX][incY].setBackground(Color.white);
 
-        for (int i = 0; i < (this.plateau.getTailleX() * this.plateau.getTailleY()); i++) {
-            JPanel square = new JPanel(new BorderLayout());
-            square.setBorder(BorderFactory.createLineBorder(Color.black));
-            JLabel jlabel;
-            jlabel = new JLabel("" + i);
-            square.add(jlabel);
-            carcassonneBoard.add(square);
-            square.setBackground(Color.white);
+                carcassonneBoard.add(panels[incX][incY]);
+            }
+
         }
     }
-    
+
     @Override
     public void update(Observable o, Object arg) {
         for (int incX = 0; incX < this.plateau.getTailleX(); incX++) {
             for (int incY = 0; incY < this.plateau.getTailleY(); incY++) {
-                System.out.println(this.plateau.getElement(incX, incY));
+                System.out.println(incX+";"+incY);
+                panels[incX][incY].removeAll();
+                // First Line
+                panels[incX][incY].add(new JLabel(""));
+                //panels[incX][incY].add(new JLabel("B"));
+                if (this.plateau.getElement(incX, incY).getNord() != null) {
+                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getNord()));
+                } else {
+                    panels[incX][incY].add(new JLabel(""));
+                }
+                panels[incX][incY].add(new JLabel(""));
+                
+                // Second Line
+                if (this.plateau.getElement(incX, incY).getOuest() != null) {
+                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getOuest()));
+                } else {
+                    panels[incX][incY].add(new JLabel(""));
+                }
+                panels[incX][incY].add(new JLabel(""));
+                if (this.plateau.getElement(incX, incY).getEst() != null) {
+                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getEst()));
+                } else {
+                    panels[incX][incY].add(new JLabel(""));
+                }
+                
+                // Third Line
+                panels[incX][incY].add(new JLabel(""));
+                if (this.plateau.getElement(incX, incY).getSud() != null) {
+                    panels[incX][incY].add(new JLabel("" + this.plateau.getElement(incX, incY).getSud()));
+                } else {
+                    panels[incX][incY].add(new JLabel(""));
+                }
+                panels[incX][incY].add(new JLabel(""));
             }
         }
     }
-    
-    
 
 }
