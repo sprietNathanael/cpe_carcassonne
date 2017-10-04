@@ -5,6 +5,8 @@
  */
 package carcassonne;
 
+import java.util.Scanner;
+
 /**
  *
  * @author nathanael
@@ -33,6 +35,19 @@ public class Carcassonne {
         p.setElement(new Tuile(2, 4, EnumTuile.route, EnumTuile.champ, EnumTuile.champ, EnumTuile.route));
         p.setElement(new Tuile(3, 3, EnumTuile.route, EnumTuile.ville, EnumTuile.route, EnumTuile.ville));
         System.out.println(p);
+
+        
+        
+        while (true)
+        {
+            p.PlacementJoueur();
+            System.out.println(p);
+        }
+        
+        
+        
+        
+        
 
     }
     
