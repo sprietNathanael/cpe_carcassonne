@@ -26,6 +26,16 @@ public class Tuile
         this.est = est;
         this.ouest = ouest;
     }
+    
+    public Tuile(int posX, int posY)
+    {
+        this.posX = posX;
+        this.posY = posY;
+        this.nord = null;
+        this.sud = null;
+        this.est = null;
+        this.ouest = null;
+    }
 
     public int getPosX() {
         return posX;
@@ -80,9 +90,9 @@ public class Tuile
     public String toString() {
         //return "|\t" + nord + "\t     |\n|" +  ouest + " \t\t" + est + "|\n|\t" + sud + "\t     |";
         if (nord != null)
-            return ouest.toString() +  nord.toString() + sud.toString() + est.toString();
+            return "O:" + ouest.toString() + " N:" + nord.toString() + " S:" + sud.toString() + " E:" + est.toString();
         else
-            return " " +  " " + " " + " ";
+            return "   " +  "    " + "    " + "    ";
         
     }
      
