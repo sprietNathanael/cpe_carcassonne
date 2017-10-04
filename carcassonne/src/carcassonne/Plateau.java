@@ -17,17 +17,28 @@ public class Plateau {
 
     public Plateau(int tailleX, int tailleY) {
         this.plateau = new Tuile[tailleX][tailleY];
-        this.tailleX = 10;
-        this.tailleY = 10;
+        this.tailleX = tailleX;
+        this.tailleY = tailleY;
+        
+        for (int i=0 ; i<tailleX ; i++){
+            for (int j=0 ; j<tailleY ; j++)
+            {
+                plateau[i][j] = new Tuile(0, 0, null, null, null, null);
+            }
+                
+        }
+            
     }
 
-    public Tuile[][] getPlateau() {
-        return plateau;
-    }
     public Tuile getElement(int x, int y)
     {
         return plateau[x][y];
     }
+    
+    public void setElement(Tuile t){
+        plateau[t.getPosX()][t.getPosY()] = t;
+    }
+            
 
     public void setPlateau(Tuile[][] plateau) {
         this.plateau = plateau;
@@ -48,21 +59,17 @@ public class Plateau {
     public void setTailleY(int tailleY) {
         this.tailleY = tailleY;
     }
-    
-    
 
     @Override
     public String toString() {
+        String ret = "";
         for (int i = 0; i < tailleX; i++) {
             for (int j = 0; j < tailleY; j++) {
-                AffichageTuile(plateau[i][j]);
+                ret += "[" + plateau[i][j] + "] ";
             }
+            ret += "\n";
         }
-        return "";
-    }
-     
-    public String AffichageTuile(Tuile t){
-        return "";
+        return ret;
     }
 
 }
