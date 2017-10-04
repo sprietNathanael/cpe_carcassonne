@@ -37,6 +37,7 @@ public class Plateau {
     
     public void setElement(Tuile t){
         plateau[t.getPosX()][t.getPosY()] = t;
+  
     }
             
 
@@ -70,6 +71,41 @@ public class Plateau {
             ret += "\n";
         }
         return ret;
+    }
+    
+    public boolean verifPos(Tuile t)
+    {
+        boolean pos = false;
+        // Case de droite
+         if(this.getElement(t.getPosX()+1, t.getPosY()).getNord()!= null)
+        {
+            pos = true;
+        }
+         
+        // Case de gauche
+          if(this.getElement(t.getPosX()-1, t.getPosY()).getNord()!= null)
+        {
+            pos = true;
+        }
+        
+        // Case du Haut
+        if(this.getElement(t.getPosX(), t.getPosY()+1).getNord()!= null)
+        {
+            pos = true;
+        }
+        
+        // Case du Bas
+         if(this.getElement(t.getPosX(), t.getPosY()-1).getNord()!= null)
+        {
+            pos = true;
+        }
+        
+        if(pos == false)
+        {
+            System.out.println("Action impossible \n");
+        }
+        
+        return pos;
     }
 
 }
