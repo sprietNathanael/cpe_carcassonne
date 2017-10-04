@@ -12,8 +12,8 @@ package carcassonne;
 public class Plateau {
     private Tuile[][] plateau;
 
-    public Plateau(Tuile[][] plateau) {
-        this.plateau = plateau;
+    public Plateau() {
+        this.plateau = new Tuile[10][10];        
     }
 
     public Tuile[][] getPlateau() {
@@ -24,6 +24,10 @@ public class Plateau {
         this.plateau = plateau;
     }
     
+    public void AfficherConsole()
+    {
+        
+    }
     
     
 }
