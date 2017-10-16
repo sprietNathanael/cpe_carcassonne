@@ -1,0 +1,9 @@
+<#if licenseFirst??>
+${licenseFirst}
+</#if>
+${licensePrefix}Carcassonne Project - 2017 - 2018
+${licensePrefix}Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
+${licensePrefix}CPE 4th year project
+<#if licenseLast??>
+${licenseLast}
+</#if>
