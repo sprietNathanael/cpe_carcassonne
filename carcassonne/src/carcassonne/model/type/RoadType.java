@@ -9,10 +9,10 @@ package carcassonne.model.type;
  *
  * @author nathanael
  */
-public class CityType extends AbstractType
+public class RoadType extends AbstractType
 {
 
-    public CityType()
+    public RoadType()
     {
     }
     

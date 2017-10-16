@@ -9,11 +9,12 @@ package carcassonne.model.type;
  *
  * @author nathanael
  */
-public class CityType extends AbstractType
+public class FieldType extends AbstractType
 {
 
-    public CityType()
+    public FieldType()
     {
     }
+    
     
 }
