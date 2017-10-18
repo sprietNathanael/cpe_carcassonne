@@ -6,7 +6,6 @@
 package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.tile.CasualTile;
 
 /**
  * Manage the tiles on the board
@@ -18,6 +17,14 @@ public class Board implements BoardInterface
 
     private AbstractTile[][] grid;
 
+    /**
+     * Initialize an empty board
+     *
+     */
+    public Board()
+    {
+    }
+    
     /**
      * Initialize the board using the baseTile as the first tile of the game
      *
