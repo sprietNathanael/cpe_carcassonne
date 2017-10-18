@@ -5,11 +5,53 @@
  */
 package carcassonne.model.board;
 
+import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
+
 /**
+ * Manage the tiles on the board
  *
- * @author thomas
+ * @author Étienne
  */
-public class Board
+public class Board implements BoardInterface
 {
-    
+
+    private AbstractTile[][] grid;
+
+    /**
+     * Initialize the board using the baseTile as the first tile of the game
+     *
+     * @param baseTile
+     */
+    public Board(AbstractTile baseTile)
+    {
+        grid = new AbstractTile[ROWS][COLUMNS];
+
+        //Put the first tile in the center of the Board
+        grid[CENTER_ROW][CENTER_COLUMN] = baseTile;
+    }
+
+    /**
+     * Add a tile into the requested location on the Board
+     *
+     * @param newTile
+     * @param row
+     * @param column
+     * @exception ArrayIndexOutOfBoundsException if not in the grid
+     * @exception Exception if there is already a tile in the location
+     */
+    public void addTile(AbstractTile newTile, int row, int column) throws Exception
+    {
+        try {
+            if (grid[row][column] == null) {
+                grid[row][column] = newTile;
+            }
+            else {
+                throw new Exception("There is already a tile in the location ["
+                        + row + ":" + column + "]");
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new Exception("The new tile has indexes that are out of the grid range");
+        }
+    }
 }
