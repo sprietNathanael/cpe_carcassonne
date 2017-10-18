@@ -6,10 +6,9 @@
 package carcassonne.model.player;
 
 /**
- *
- * @author nathanael
+ * void class before completion by another feature
  */
 public class Meeple
 {
-    
+
 }

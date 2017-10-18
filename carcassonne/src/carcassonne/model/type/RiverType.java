@@ -6,16 +6,18 @@
 package carcassonne.model.type;
 
 /**
- *
- * @author nathanael
+ * Represents a river type
  */
 public class RiverType extends AbstractType
 {
 
+    /**
+     * Constructor
+     */
     public RiverType()
     {
         super();
         this.isMeepable = false;
     }
-    
+
 }

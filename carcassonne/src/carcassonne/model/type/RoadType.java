@@ -6,15 +6,17 @@
 package carcassonne.model.type;
 
 /**
- *
- * @author nathanael
+ * Represents a road type
  */
 public class RoadType extends AbstractType
 {
 
+    /**
+     * Constructor
+     */
     public RoadType()
     {
         super();
     }
-    
+
 }

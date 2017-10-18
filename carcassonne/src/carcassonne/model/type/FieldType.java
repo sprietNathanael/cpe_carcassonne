@@ -6,16 +6,17 @@
 package carcassonne.model.type;
 
 /**
- *
- * @author nathanael
+ * Represents a field type
  */
 public class FieldType extends AbstractType
 {
 
+    /**
+     * Constructor
+     */
     public FieldType()
     {
         super();
     }
-    
-    
+
 }

@@ -6,12 +6,11 @@
 package carcassonne.model.type;
 
 /**
- *
- * @author nathanael
+ * Represents a cross type
  */
 public class CrossType extends AbstractType
 {
-    
+
     private boolean isForest = true;
 
     /**
@@ -24,6 +23,11 @@ public class CrossType extends AbstractType
         return isForest;
     }
 
+    /**
+     * Constructor
+     *
+     * @param isForest
+     */
     public CrossType(boolean isForest)
     {
         super();
@@ -31,6 +35,4 @@ public class CrossType extends AbstractType
         this.isForest = isForest;
     }
 
-    
-    
 }

@@ -7,15 +7,17 @@ package carcassonne.model.type;
 
 /**
  *
- * @author nathanael
+ * Represents an abbay type
  */
 public class AbbayType extends AbstractType
 {
-    
+
+    /**
+     * Constructor
+     */
     public AbbayType()
     {
         super();
     }
 
-    
 }
