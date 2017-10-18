@@ -26,6 +26,8 @@ public class CrossType extends AbstractType
 
     public CrossType(boolean isForest)
     {
+        super();
+        this.isMeepable = false;
         this.isForest = isForest;
     }
 

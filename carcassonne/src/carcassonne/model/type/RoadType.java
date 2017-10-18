@@ -14,6 +14,7 @@ public class RoadType extends AbstractType
 
     public RoadType()
     {
+        super();
     }
     
 }

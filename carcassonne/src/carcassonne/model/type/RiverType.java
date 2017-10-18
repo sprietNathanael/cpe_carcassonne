@@ -14,6 +14,8 @@ public class RiverType extends AbstractType
 
     public RiverType()
     {
+        super();
+        this.isMeepable = false;
     }
     
 }

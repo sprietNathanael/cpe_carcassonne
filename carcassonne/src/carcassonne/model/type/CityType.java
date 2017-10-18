@@ -14,6 +14,7 @@ public class CityType extends AbstractType
 
     public CityType()
     {
+        super();
     }
     
 }

@@ -14,6 +14,7 @@ public class FieldType extends AbstractType
 
     public FieldType()
     {
+        super();
     }
     
     

@@ -11,10 +11,11 @@ package carcassonne.model.type;
  */
 public class AbbayType extends AbstractType
 {
-
+    
     public AbbayType()
     {
+        super();
     }
-    
+
     
 }
