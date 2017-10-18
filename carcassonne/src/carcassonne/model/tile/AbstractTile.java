@@ -25,4 +25,9 @@ public class AbstractTile
     {
         return true;
     }
+    
+    public boolean isMeepable()
+    {
+        return true;
+    }
 }
