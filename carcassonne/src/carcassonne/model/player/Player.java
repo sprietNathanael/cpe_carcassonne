@@ -3,17 +3,18 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.modele.player;
+package carcassonne.model.player;
 
 import java.awt.Color;
 
 /**
- *
- * @author thomas
+ * Shows a Player
  */
 public class Player
 {
-
+    /**
+     * How much meeples the player has 
+     */
     public static int NBMEEPLE = 8;
 
     private Meeple[] meeple;
@@ -21,6 +22,11 @@ public class Player
     private int points;
     Color color;
 
+    /**
+     * Allows to create a new Player
+     * @param name
+     * @param color 
+     */
     public Player(String name, Color color)
     {
         this.name = name;

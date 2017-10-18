@@ -3,11 +3,10 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.modele.player;
+package carcassonne.model.player;
 
 /**
- *
- * @author thomas
+ * Shows a meeeple
  */
 public class Meeple
 {
@@ -15,11 +14,19 @@ public class Meeple
     private boolean isUsed;
     private boolean isBig;
 
+    /**
+     * Allows to create a new meeple
+     *
+     * @param isUsed
+     */
     private Meeple(boolean isUsed)
     {
         this.isUsed = isUsed;
     }
 
+    /**
+     * Allows to create a new meeple with isUsed=false
+     */
     public Meeple()
     {
         this(false);
