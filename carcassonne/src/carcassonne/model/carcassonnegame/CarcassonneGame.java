@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * Allows to play
  */
-public abstract class CarcassonneGame implements CarcassonneGameInterface
+public class CarcassonneGame implements CarcassonneGameInterface
 {
 
     private List<AbstractTile> players;
@@ -31,7 +31,7 @@ public abstract class CarcassonneGame implements CarcassonneGameInterface
 
     public void pileTile()
     {
-        //A FAIRE AVEC LE BOULOT DE NATH
+        
     }
 
     /**
@@ -42,6 +42,7 @@ public abstract class CarcassonneGame implements CarcassonneGameInterface
      * @param Column
      * @throws Exception
      */
+    @Override
     public void putTile(AbstractTile tile, int Row, int Column) throws Exception
     {
         try {
@@ -50,5 +51,6 @@ public abstract class CarcassonneGame implements CarcassonneGameInterface
             throw ex;
         }
     }
+
 
 }
