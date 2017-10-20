@@ -8,13 +8,11 @@ package carcassonne.model.carcassonnegame;
 import carcassonne.model.board.Board;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Allows to play 
  */
-public class CarcassonneGame implements CarcassonneGameInterface
+public abstract class CarcassonneGame implements CarcassonneGameInterface
 {
     AbstractTile tile;
     Player[] player;
@@ -33,11 +31,16 @@ public class CarcassonneGame implements CarcassonneGameInterface
         //A FAIRE AVEC LE BOULOT DE NATH
     }
 
-     /**
+
+
+       /** 
      * Allows to put a Tile on the board
+     * @param tile
+     * @param Row
+     * @param Column
+     * @throws Exception 
      */
-    @Override
-    public void putTile(int Row, int Column) throws Exception
+    public void putTile(AbstractTile tile,int Row, int Column) throws Exception
     {
         try {
             board.addTile(tile, Row, Column);
