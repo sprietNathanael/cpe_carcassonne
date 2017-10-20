@@ -14,5 +14,5 @@ import carcassonne.model.tile.AbstractTile;
 public interface CarcassonneGameInterface
 {
     public void putTile(AbstractTile tile, int Row, int Column) throws Exception;
-    public void pileTile();
+    public AbstractTile pileTile();
 }

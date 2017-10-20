@@ -29,9 +29,24 @@ public class CarcassonneGame implements CarcassonneGameInterface
         this.players = new ArrayList<>();
     }
 
-    public void pileTile()
+    /**
+     * Allows to take a new card in the pile
+     *
+     * @return
+     */
+    @Override
+    public AbstractTile pileTile()
     {
-        
+        AbstractTile tile;
+        int Nbrand;
+        int Min = 1;
+        int Max = pile.size(); //Numbers maximum of cards 
+
+        Nbrand = (int) (Math.random() * (Max - Min));
+        tile = pile.get(Nbrand);
+        pile.remove(Nbrand);
+
+        return tile;
     }
 
     /**
@@ -51,6 +66,5 @@ public class CarcassonneGame implements CarcassonneGameInterface
             throw ex;
         }
     }
-
 
 }
