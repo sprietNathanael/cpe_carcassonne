@@ -5,7 +5,10 @@
  */
 package carcassonne.model.tile;
 
+import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
+import carcassonne.model.type.RiverType;
 import java.util.HashMap;
 
 /**
@@ -294,4 +297,23 @@ public class CasualTile extends AbstractTile
         return this.types.get("CSW");
     }
 
+    /**
+     * Displays the tile in command line
+     * @return string represents the tile
+     */
+    @Override
+    public String toString()
+    {
+        return getNNW().toString()+ getN() + getNNE() + getNE() + getNEE() +
+                getE() + getSEE() + getSE() + getSSE() + getS() + getSSW() + getS() + getSWW() +
+                getW() + getNWW() + getNW();
+    }
+    
+    
+
+    public static void main(String str[])
+    {
+        CasualTile ct = new CasualTile(new AbbayType(), new CityType(), new RiverType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType());
+        System.out.println(ct);
+    }
 }

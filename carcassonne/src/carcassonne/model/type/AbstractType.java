@@ -35,4 +35,15 @@ public abstract class AbstractType
         return 0;
     }
 
+    /**
+     * Displays a default value
+     * @return default value in string
+     */
+    @Override
+    public String toString()
+    {
+        return "00";
+    }
+
+    
 }
