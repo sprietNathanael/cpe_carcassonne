@@ -8,39 +8,41 @@ package carcassonne.model.carcassonnegame;
 import carcassonne.model.board.Board;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Allows to play 
+ * Allows to play
  */
 public abstract class CarcassonneGame implements CarcassonneGameInterface
 {
-    AbstractTile tile;
-    Player[] player;
-    Board board;
-    Player current;
-    AbstractTile[] pile;
-    
+
+    private List<AbstractTile> players;
+    private Board board;
+    private Player current;
+    private List<AbstractTile> pile;
+
     public CarcassonneGame()
     {
         this.board = new Board();
-        
+        this.pile = new ArrayList<>();
+        this.players = new ArrayList<>();
     }
-    
+
     public void pileTile()
     {
         //A FAIRE AVEC LE BOULOT DE NATH
     }
 
-
-
-       /** 
+    /**
      * Allows to put a Tile on the board
+     *
      * @param tile
      * @param Row
      * @param Column
-     * @throws Exception 
+     * @throws Exception
      */
-    public void putTile(AbstractTile tile,int Row, int Column) throws Exception
+    public void putTile(AbstractTile tile, int Row, int Column) throws Exception
     {
         try {
             board.addTile(tile, Row, Column);
