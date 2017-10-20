@@ -5,12 +5,14 @@
  */
 package carcassonne.model.carcassonnegame;
 
+import carcassonne.model.tile.AbstractTile;
+
 /**
  *
  * @author thomas
  */
 public interface CarcassonneGameInterface
 {
-    public void putTile(int Row, int Column) throws Exception;
+    public void putTile(AbstractTile tile, int Row, int Column) throws Exception;
     public void pileTile();
 }
