@@ -11,6 +11,6 @@ package carcassonne.model.carcassonnegame;
  */
 public interface CarcassonneGameInterface
 {
-    public void putTile(int Row, int Column);
+    public void putTile(int Row, int Column) throws Exception;
     public void pileTile();
 }

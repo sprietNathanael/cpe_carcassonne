@@ -8,12 +8,14 @@ package carcassonne.model.carcassonnegame;
 import carcassonne.model.board.Board;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author thomas
  */
-public class CarcassonneGame
+public class CarcassonneGame implements CarcassonneGameInterface
 {
     AbstractTile tile;
     Player[] player;
@@ -27,14 +29,19 @@ public class CarcassonneGame
         
     }
     
-    public void putTile(int Row, int Column)
-    {
-        //A FAIRE AVEC LE BOULOT D ETIENNE
-    }
-    
     public void pileTile()
     {
         //A FAIRE AVEC LE BOULOT DE NATH
     }
-    
+
+    @Override
+    public void putTile(int Row, int Column) throws Exception
+    {
+        try {
+            board.addTile(tile, Row, Column);
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
 }
