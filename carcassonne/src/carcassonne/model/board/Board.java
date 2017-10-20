@@ -23,8 +23,9 @@ public class Board implements BoardInterface
      */
     public Board()
     {
+        grid = new AbstractTile[ROWS][COLUMNS];
     }
-    
+
     /**
      * Initialize the board using the baseTile as the first tile of the game
      *
@@ -38,15 +39,7 @@ public class Board implements BoardInterface
         grid[CENTER_ROW][CENTER_COLUMN] = baseTile;
     }
 
-    /**
-     * Add a tile into the requested location on the Board
-     *
-     * @param newTile
-     * @param row
-     * @param column
-     * @exception ArrayIndexOutOfBoundsException if not in the grid
-     * @exception Exception if there is already a tile in the location
-     */
+    @Override
     public void addTile(AbstractTile newTile, int row, int column) throws Exception
     {
         try {
@@ -61,4 +54,15 @@ public class Board implements BoardInterface
             throw new Exception("The new tile has indexes that are out of the grid range");
         }
     }
+
+    @Override
+    public AbstractTile getTile(int row, int column) throws Exception
+    {
+        try {
+            return grid[row][column];
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new Exception("The position asked is out of the grid range");
+        }
+    }
+
 }
