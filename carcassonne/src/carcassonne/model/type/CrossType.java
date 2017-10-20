@@ -34,5 +34,15 @@ public class CrossType extends AbstractType
         this.isMeepable = false;
         this.isForest = isForest;
     }
+    
+    /**
+     * Displays the abrevation of the type
+     * @return the type in string
+     */
+    @Override
+    public String toString()
+    {
+        return "Cr";
+    }
 
 }
