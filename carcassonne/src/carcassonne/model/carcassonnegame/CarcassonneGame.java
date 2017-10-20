@@ -12,8 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- *
- * @author thomas
+ * Allows to play 
  */
 public class CarcassonneGame implements CarcassonneGameInterface
 {
@@ -34,6 +33,9 @@ public class CarcassonneGame implements CarcassonneGameInterface
         //A FAIRE AVEC LE BOULOT DE NATH
     }
 
+     /**
+     * Allows to put a Tile on the board
+     */
     @Override
     public void putTile(int Row, int Column) throws Exception
     {
