@@ -11,32 +11,19 @@ package carcassonne.model.type;
 public class CrossType extends AbstractType
 {
 
-    private boolean isForest = true;
-
-    /**
-     * Get the value of isForest
-     *
-     * @return the value of isForest
-     */
-    public boolean isIsForest()
-    {
-        return isForest;
-    }
-
     /**
      * Constructor
      *
-     * @param isForest
      */
-    public CrossType(boolean isForest)
+    public CrossType()
     {
         super();
         this.isMeepable = false;
-        this.isForest = isForest;
     }
-    
+
     /**
      * Displays the abrevation of the type
+     *
      * @return the type in string
      */
     @Override

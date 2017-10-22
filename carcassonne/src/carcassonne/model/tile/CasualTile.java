@@ -7,9 +7,7 @@ package carcassonne.model.tile;
 
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
-import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
-import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.HashMap;
 
