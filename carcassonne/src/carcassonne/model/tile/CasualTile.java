@@ -8,7 +8,9 @@ package carcassonne.model.tile;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
+import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
+import carcassonne.model.type.RoadType;
 import java.util.HashMap;
 
 /**
@@ -21,6 +23,7 @@ public class CasualTile extends AbstractTile
 {
 
     private HashMap<String, AbstractType> types;
+    private String id;
     static private HashMap<String, String[]> neighbouring;
 
     static {
@@ -51,6 +54,7 @@ public class CasualTile extends AbstractTile
     /**
      * Construct a Tile
      *
+     * @param tileId
      * @param NWW North-west-western type
      * @param NW North-western type
      * @param NNW North-north-western type
@@ -72,8 +76,9 @@ public class CasualTile extends AbstractTile
      * @param CSE Center-south-eastern type
      * @param CSW Center-south-western type
      */
-    public CasualTile(AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    public CasualTile(String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
     {
+        this.id = tileId;
         this.types = new HashMap<>();
         this.types.put("NWW", NWW);
         this.types.put("NW", NW);
@@ -95,6 +100,60 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
+    }
+
+    /**
+     * Construct a none complex tile: using a 3*3 array for borders and the
+     * usual 4 boxes for the center
+     *
+     * @param tileId
+     * @param NW (NWW, NW, NNW)
+     * @param N Same as usual
+     * @param NE (NNE, NE, NEE)
+     * @param E Same as usual
+     * @param SE (SEE, SE, SSE)
+     * @param S Same as usual
+     * @param SW (SSW, SW, SSW)
+     * @param W Same as usual
+     * @param CNW Same as usual
+     * @param CNE Same as usual
+     * @param CSE Same as usual
+     * @param CSW Same as usual
+     */
+    public CasualTile(String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    {
+        this.id = tileId;
+        this.types = new HashMap<>();
+        this.types.put("NWW", NW);
+        this.types.put("NW", NW);
+        this.types.put("NNW", NW);
+        this.types.put("N", N);
+        this.types.put("NNE", NE);
+        this.types.put("NE", NE);
+        this.types.put("NEE", NE);
+        this.types.put("E", E);
+        this.types.put("SEE", SE);
+        this.types.put("SE", SE);
+        this.types.put("SSE", SE);
+        this.types.put("S", S);
+        this.types.put("SSW", SW);
+        this.types.put("SW", SW);
+        this.types.put("SWW", SW);
+        this.types.put("W", W);
+        this.types.put("CNW", CNW);
+        this.types.put("CNE", CNE);
+        this.types.put("CSE", CSE);
+        this.types.put("CSW", CSW);
+    }
+
+    /**
+     * Get the id of the tile
+     *
+     * @return the id of the tile
+     */
+    public String getId()
+    {
+        return this.id;
     }
 
     /**
@@ -299,21 +358,26 @@ public class CasualTile extends AbstractTile
 
     /**
      * Displays the tile in command line
+     *
      * @return string represents the tile
      */
     @Override
     public String toString()
     {
-        return getNNW().toString()+ getN() + getNNE() + getNE() + getNEE() +
-                getE() + getSEE() + getSE() + getSSE() + getS() + getSSW() + getS() + getSWW() +
-                getW() + getNWW() + getNW();
+        return getNNW().toString() + getN() + getNNE() + getNE() + getNEE()
+                + getE() + getSEE() + getSE() + getSSE() + getS() + getSSW() + getS() + getSWW()
+                + getW() + getNWW() + getNW();
     }
-    
-    
 
     public static void main(String str[])
     {
-        CasualTile ct = new CasualTile(new AbbayType(), new CityType(), new RiverType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType(), new CityType());
+        CasualTile ct = new CasualTile("B", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new FieldType(), //East section
+                new FieldType(), new RoadType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType() //Center section
+        );
         System.out.println(ct);
     }
 }
