@@ -45,8 +45,8 @@ public class BasicSet implements SetInterface
      */
     private void initiliazeSet()
     {
-        //Tiles A (x3)
-        for (int i = 1; i <= 3; i++) {
+        //Tiles A (x2)
+        for (int i = 1; i <= 2; i++) {
             tileList.add(new CasualTile("A" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
@@ -73,8 +73,238 @@ public class BasicSet implements SetInterface
                 new CityType(true), //West section
                 new CityType(true), new CityType(true), new CityType(true), new CityType(true) //Center section
         ));
-
-        /* @TODO: ajouter les autres plus complexes (D à T) */
+        //Tiles D (x4)
+        for (int i = 1; i <= 4; i++) {
+            tileList.add(new CasualTile("D" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North West section
+                    new RoadType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new FieldType(), //West
+                    new RoadType(), new RoadType(), new RoadType(), new RoadType() //Center section
+            ));
+        }
+        //Tiles E (x5)
+        for (int i = 1; i <= 5; i++) {
+            tileList.add(new CasualTile("E" + i, //Id
+                    new FieldType(), new FieldType(), new CityType(), //North West section
+                    new CityType(), //North
+                    new CityType(), new FieldType(), new FieldType(), //North East section
+                    new FieldType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new FieldType(), //West
+                    new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles F (x2)
+        for (int i = 1; i <= 2; i++) {
+            tileList.add(new CasualTile("F" + i, //Id
+                    new CityType(true), new FieldType(), new FieldType(), //North West section
+                    new FieldType(), //North
+                    new FieldType(), new FieldType(), new CityType(true), //North East section
+                    new CityType(true), //East
+                    new CityType(true), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new CityType(true), //South West section
+                    new CityType(true), //West
+                    new CityType(true), new CityType(true), new CityType(true), new CityType(true) //Center section
+            ));
+        }
+        //Tile G (x1)
+        tileList.add(new CasualTile("G", //Id
+                new FieldType(), new FieldType(), new CityType(), //North West section
+                new CityType(), //North
+                new CityType(), new FieldType(), new FieldType(), //North East section
+                new FieldType(), //East
+                new FieldType(), new FieldType(), new CityType(), //South East section
+                new CityType(), //South
+                new CityType(), new FieldType(), new FieldType(), //South West section
+                new FieldType(), //West
+                new CityType(), new CityType(), new CityType(), new CityType() //Center section
+        ));
+        //Tiles H (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("H" + i, //Id
+                    new CityType(), new FieldType(), new FieldType(), //North West section
+                    new FieldType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new CityType(), //South West section
+                    new CityType(), //West
+                    new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles I (x2)
+        for (int i = 1; i <= 2; i++) {
+            tileList.add(new CasualTile("I" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North West section
+                    new FieldType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new CityType(), //South East section
+                    new CityType(), //South
+                    new CityType(), new FieldType(), new FieldType(), //South West section
+                    new FieldType(), //West
+                    new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles J (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("J" + i, //Id
+                    new FieldType(), new FieldType(), new CityType(), //North West section
+                    new CityType(), //North
+                    new CityType(), new FieldType(), new FieldType(), //North East section
+                    new RoadType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new FieldType(), //West
+                    new FieldType(), new FieldType(), new RoadType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles K (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("K" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North West section
+                    new RoadType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new RoadType(), //West
+                    new RoadType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles L (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("L" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North West section
+                    new RoadType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new RoadType(), //West
+                    new CrossType(), new FieldType(), new FieldType(), new CrossType() //Center section
+            ));
+        }
+        //Tiles M (x2)
+        for (int i = 1; i <= 2; i++) {
+            tileList.add(new CasualTile("M" + i, //Id
+                    new CityType(true), new CityType(true), new CityType(true), //North West section
+                    new CityType(true), //North
+                    new CityType(true), new FieldType(), new FieldType(), //North East section
+                    new FieldType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new CityType(true), //South West section
+                    new CityType(true), //West
+                    new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles N (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("N" + i, //Id
+                    new CityType(), new CityType(), new CityType(), //North West section
+                    new CityType(), //North
+                    new CityType(), new FieldType(), new FieldType(), //North East section
+                    new FieldType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new CityType(), //South West section
+                    new CityType(), //West
+                    new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles O (x2)
+        for (int i = 1; i <= 2; i++) {
+            tileList.add(new CasualTile("O" + i, //Id
+                    new CityType(true), new CityType(true), new CityType(true), //North West section
+                    new CityType(true), //North
+                    new CityType(true), new FieldType(), new FieldType(), //North East section
+                    new RoadType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new CityType(true), //South West section
+                    new CityType(true), //West
+                    new FieldType(), new FieldType(), new RoadType(), new FieldType() //Center section
+            ));
+        }
+        //Tiles P (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("P" + i, //Id
+                    new CityType(), new CityType(), new CityType(), //North West section
+                    new CityType(), //North
+                    new CityType(), new FieldType(), new FieldType(), //North East section
+                    new RoadType(), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new CityType(), //South West section
+                    new CityType(), //West
+                    new FieldType(), new FieldType(), new RoadType(), new FieldType() //Center section
+            ));
+        }
+        //Tile Q (x1)
+        tileList.add(new CasualTile("Q", //Id
+                new CityType(true), new CityType(true), new CityType(true), //North West section
+                new CityType(true), //North
+                new CityType(true), new CityType(true), new CityType(true), //North East section
+                new CityType(true), //East
+                new CityType(true), new FieldType(), new FieldType(), //South East section
+                new FieldType(), //South
+                new FieldType(), new FieldType(), new CityType(true), //South West section
+                new CityType(true), //West
+                new CityType(true), new CityType(true), new CityType(true), new CityType(true) //Center section
+        ));
+        //Tiles R (x3)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("R" + i, //Id
+                    new CityType(), new CityType(), new CityType(), //North West section
+                    new CityType(), //North
+                    new CityType(), new CityType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new FieldType(), //South
+                    new FieldType(), new FieldType(), new CityType(), //South West section
+                    new CityType(), //West
+                    new CityType(), new CityType(), new CityType(), new CityType() //Center section
+            ));
+        }
+        //Tiles S (x2)
+        for (int i = 1; i <= 3; i++) {
+            tileList.add(new CasualTile("S" + i, //Id
+                    new CityType(true), new CityType(true), new CityType(true), //North West section
+                    new CityType(true), //North
+                    new CityType(true), new CityType(true), new CityType(true), //North East section
+                    new CityType(true), //East
+                    new CityType(true), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new CityType(true), //South West section
+                    new CityType(true), //West
+                    new CityType(true), new CityType(true), new CityType(true), new CityType(true) //Center section
+            ));
+        }
+        //Tile T (x1)
+        tileList.add(new CasualTile("T", //Id
+                new CityType(), new CityType(), new CityType(), //North West section
+                new CityType(), //North
+                new CityType(), new CityType(), new CityType(), //North East section
+                new CityType(), //East
+                new CityType(), new FieldType(), new FieldType(), //South East section
+                new RoadType(), //South
+                new FieldType(), new FieldType(), new CityType(), //South West section
+                new CityType(), //West
+                new CityType(), new CityType(), new CityType(), new CityType() //Center section
+        ));
         //Tiles U (x8)
         for (int i = 1; i <= 8; i++) {
             tileList.add(new CasualTile("U" + i, //Id
