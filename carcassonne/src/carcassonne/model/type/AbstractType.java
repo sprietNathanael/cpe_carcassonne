@@ -46,5 +46,14 @@ public abstract class AbstractType
         return "00";
     }
 
-    
+    /**
+     * Gets the Meeple of the type
+     *
+     * @return Meeple The current meeple of the type, null otherwise
+     */
+    public Meeple getMeeple()
+    {
+        return this.meeple;
+    }
+
 }
