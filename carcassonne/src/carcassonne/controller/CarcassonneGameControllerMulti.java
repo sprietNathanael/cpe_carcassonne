@@ -5,11 +5,22 @@
  */
 package carcassonne.controller;
 
+import carcassonne.model.carcassonnegame.CarcassonneGame;
+
 /**
  * Allows to play at several players on a same computer
  * @author Thomas
  */
 public class CarcassonneGameControllerMulti extends AbstractCarcassonneGameController
 {
+
+    public CarcassonneGameControllerMulti()
+    {
+    }
+
+    public CarcassonneGameControllerMulti(CarcassonneGame model)
+    {
+        super(model);
+    }
     
 }

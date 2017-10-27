@@ -6,6 +6,7 @@
 package carcassonne.controller;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Player;
 
 /**
  * Abstract class which represents a generic class
@@ -25,3 +26,25 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         this.carcassonneGame = new CarcassonneGame();
     }
 
+    /**
+     * Constructor for an AbstractCarcassonneGameController from an existing
+     * model
+     *
+     * @param model an existing CarcassonneGame
+     */
+    public AbstractCarcassonneGameController(CarcassonneGame model)
+    {
+        this.carcassonneGame = model;
+    }
+
+    /**
+     * Gets the current player
+     *
+     * @return Player the current player
+     */
+    public Player getCurrentPlayer()
+    {
+        return (this.carcassonneGame.getCurrentPlayer());
+    }
+
+}
