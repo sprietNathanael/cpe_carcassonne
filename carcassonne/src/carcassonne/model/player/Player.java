@@ -6,6 +6,7 @@
 package carcassonne.model.player;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
  * Represents a player
@@ -14,14 +15,14 @@ public class Player
 {
 
     /**
-     * How much meeples the player has 
+     * How much meeples the player has
      */
     public static int NBMEEPLE = 8;
 
-    private Meeple[] meeple;
+    private ArrayList<Meeple> meeples;
     private String name;
     private int points;
-    Color color;
+    private Color color;
 
     /**
      * Creates a new Player
@@ -33,19 +34,27 @@ public class Player
     {
         this.name = name;
         this.color = color;
-        points = 0;
-        meeple = new Meeple[NBMEEPLE];
-        meeple[0].setIsBig(true);
+        this.points = 0;
+        this.meeples = new ArrayList<>();
+        for (int i = 0; i < NBMEEPLE; i++) {
+            if (i == 0) {
+                this.meeples.add(new Meeple(true));
+            }
+            else {
+                this.meeples.add(new Meeple());
+            }
+
+        }
     }
 
-    public Meeple[] getMeeple()
+    /**
+     * Gets the meeples of the player
+     *
+     * @return ArrayList<Meeple> the list of the meeples
+     */
+    public ArrayList<Meeple> getMeeple()
     {
-        return meeple;
-    }
-
-    public void setMeeple(Meeple[] meeple)
-    {
-        this.meeple = meeple;
+        return this.meeples;
     }
 
     /**
@@ -56,11 +65,6 @@ public class Player
     public String getName()
     {
         return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
     }
 
     /**
@@ -81,11 +85,6 @@ public class Player
     public Color getColor()
     {
         return color;
-    }
-
-    public void setColor(Color color)
-    {
-        this.color = color;
     }
 
 }
