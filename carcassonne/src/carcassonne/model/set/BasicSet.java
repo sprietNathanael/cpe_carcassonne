@@ -60,7 +60,7 @@ public class BasicSet implements SetInterface
             tileList.add(new CasualTile("B" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
-                    new FieldType(), new RoadType(), new FieldType(), //South section
+                    new FieldType(), new FieldType(), new FieldType(), //South section
                     new FieldType(), //West section
                     new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType() //Center section
             ));
@@ -84,7 +84,7 @@ public class BasicSet implements SetInterface
                     new RoadType(), //South
                     new FieldType(), new FieldType(), new FieldType(), //South West section
                     new FieldType(), //West
-                    new RoadType(), new RoadType(), new RoadType(), new RoadType() //Center section
+                    new RoadType(), new FieldType(), new FieldType(), new RoadType() //Center section
             ));
         }
         //Tiles E (x5)
