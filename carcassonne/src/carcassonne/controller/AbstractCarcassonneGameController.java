@@ -7,6 +7,7 @@ package carcassonne.controller;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
+import carcassonne.model.tile.AbstractTile;
 
 /**
  * Abstract class which represents a generic class
@@ -45,6 +46,16 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public Player getCurrentPlayer()
     {
         return (this.carcassonneGame.getCurrentPlayer());
+    }
+
+    /**
+     * Draws the first tile of the pile
+     *
+     * @return AbstractTile the first tile of the pile
+     */
+    public AbstractTile drawTile()
+    {
+        return this.carcassonneGame.drawFromPile();
     }
 
 }

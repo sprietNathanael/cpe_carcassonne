@@ -80,8 +80,8 @@ public class CarcassonneGame implements CarcassonneGameInterface
     }
 
     /**
-     * Adds a new set of tiles to the current pile (Used to add a new
-     * extension to the game)
+     * Adds a new set of tiles to the current pile (Used to add a new extension
+     * to the game)
      *
      * @param newSet
      * @author Étienne
@@ -98,11 +98,23 @@ public class CarcassonneGame implements CarcassonneGameInterface
     }
 
     /**
+     * Draws the first tile of the pile. Removes it from the pile and then
+     * returns it
+     *
+     * @return AbstractTile The first tile of the pile
+     */
+    public AbstractTile drawFromPile()
+    {
+        return this.pile.remove(0);
+    }
+
+    /**
      * Puts a Tile on the Board
+     *
      * @param tile The tile to put
      * @param row The row at which the tile has to be put
      * @param column The column at which the tile has to be put
-     * @throws Exception 
+     * @throws Exception
      */
     @Override
     public void putTile(AbstractTile tile, int row, int column) throws Exception
