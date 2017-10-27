@@ -19,9 +19,9 @@ import java.util.List;
 public class CarcassonneGame implements CarcassonneGameInterface
 {
 
-    private List<AbstractTile> players;
+    private List<Player> players;
     private Board board;
-    private Player current;
+    private int currentPlayerIndex;
     private List<AbstractTile> pile;
 
     public CarcassonneGame()
@@ -32,10 +32,55 @@ public class CarcassonneGame implements CarcassonneGameInterface
         SetInterface basicSet = new BasicSet();
         this.pile = basicSet.getSet();
         this.players = new ArrayList<>();
+        this.currentPlayerIndex = 0;
     }
 
     /**
-     * @Étienne Add a new set of tiles to the current pile (Used to add a new
+     * Constructor for CarcassonneGame from an existing list of players
+     *
+     * @param players existing list of players
+     */
+    public CarcassonneGame(ArrayList<Player> players)
+    {
+        this.board = new Board();
+
+        //Call the basic extension to get the basic tiles into the pile
+        SetInterface basicSet = new BasicSet();
+        this.pile = basicSet.getSet();
+        this.players = players;
+        this.currentPlayerIndex = 0;
+    }
+
+    /**
+     * Gets the current Player
+     *
+     * @return the current player
+     */
+    public Player getCurrentPlayer()
+    {
+        return (this.players.get(this.currentPlayerIndex));
+    }
+
+    /**
+     * Switches the turn to the next player
+     *
+     * @return the next Player
+     */
+    public Player nextPlayer()
+    {
+        this.currentPlayerIndex++;
+
+        /**
+         * If this is the end of the array, go back to the begining
+         */
+        if (this.currentPlayerIndex >= this.players.size()) {
+            this.currentPlayerIndex = 0;
+        }
+        return this.getCurrentPlayer();
+    }
+
+    /**
+     * Adds a new set of tiles to the current pile (Used to add a new
      * extension to the game)
      *
      * @param newSet
