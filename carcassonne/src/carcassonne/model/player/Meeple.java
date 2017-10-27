@@ -15,21 +15,24 @@ public class Meeple
     private boolean isBig;
 
     /**
-     * Allows to create a new meeple
+     * Creates a new meeple and to precise its size. A new meeple can
+     * not be used at its creation, so isUsed is set to false by default
      *
-     * @param isUsed
+     * @param isBig
      */
-    private Meeple(boolean isUsed)
+    public Meeple(boolean isBig)
     {
-        this.isUsed = isUsed;
+        this.isBig = isBig;
+        this.isUsed = false;
     }
 
     /**
-     * Allows to create a new meeple with isUsed=false
+     * Creates a default meeple
      */
     public Meeple()
     {
-        this(false);
+        this.isBig = false;
+        this.isUsed = false;
     }
 
     /**
@@ -60,11 +63,6 @@ public class Meeple
     public boolean getIsBig()
     {
         return isBig;
-    }
-
-    public void setIsBig(boolean isBig)
-    {
-        this.isBig = isBig;
     }
 
 }
