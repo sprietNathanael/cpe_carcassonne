@@ -22,6 +22,7 @@ public class AbbayType extends AbstractType
 
     /**
      * Displays the abrevation of the type
+     *
      * @return the type in string
      */
     @Override
@@ -29,7 +30,5 @@ public class AbbayType extends AbstractType
     {
         return "Ab";
     }
-    
-    
 
 }

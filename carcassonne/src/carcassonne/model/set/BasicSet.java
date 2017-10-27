@@ -26,7 +26,7 @@ public class BasicSet implements SetInterface
     private List<AbstractTile> tileList;
 
     /**
-     * Initilialize the basic set with all its tiles
+     * Initilializes the basic set with all its tiles
      */
     public BasicSet()
     {
@@ -41,7 +41,7 @@ public class BasicSet implements SetInterface
     }
 
     /**
-     * Add all the tiles of the extension
+     * Adds all the tiles of the extension
      */
     private void initiliazeSet()
     {

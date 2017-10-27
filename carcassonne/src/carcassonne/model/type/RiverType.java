@@ -22,6 +22,7 @@ public class RiverType extends AbstractType
 
     /**
      * Displays the abrevation of the type
+     *
      * @return the type in string
      */
     @Override

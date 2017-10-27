@@ -6,7 +6,7 @@
 package carcassonne.model.player;
 
 /**
- * Shows a meeeple
+ * Represents a "Meeple", the follower or pawn of a player
  */
 public class Meeple
 {
@@ -32,16 +32,31 @@ public class Meeple
         this(false);
     }
 
+    /**
+     * Get the status of the meeple
+     *
+     * @return true if the meeple is used, false otherwise
+     */
     public boolean getIsUsed()
     {
         return isUsed;
     }
 
+    /**
+     * Set the status of the meeple
+     *
+     * @param isUsed
+     */
     public void setIsUsed(boolean isUsed)
     {
         this.isUsed = isUsed;
     }
 
+    /**
+     * Get the size of the meeple
+     *
+     * @return true if the meeple is a big one, false otherwise
+     */
     public boolean getIsBig()
     {
         return isBig;

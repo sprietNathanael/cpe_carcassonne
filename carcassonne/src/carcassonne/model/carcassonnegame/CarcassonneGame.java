@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Allows to play
+ * Represents a carcassonne game, which aggregates all the model entities
  */
 public class CarcassonneGame implements CarcassonneGameInterface
 {
@@ -53,18 +53,17 @@ public class CarcassonneGame implements CarcassonneGameInterface
     }
 
     /**
-     * Allows to put a Tile on the board
-     *
-     * @param tile
-     * @param Row
-     * @param Column
-     * @throws Exception
+     * Puts a Tile on the Board
+     * @param tile The tile to put
+     * @param row The row at which the tile has to be put
+     * @param column The column at which the tile has to be put
+     * @throws Exception 
      */
     @Override
-    public void putTile(AbstractTile tile, int Row, int Column) throws Exception
+    public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         try {
-            board.addTile(tile, Row, Column);
+            board.addTile(tile, row, column);
         } catch (Exception ex) {
             throw ex;
         }

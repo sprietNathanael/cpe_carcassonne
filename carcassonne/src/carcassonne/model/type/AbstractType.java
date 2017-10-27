@@ -26,7 +26,7 @@ public abstract class AbstractType
     }
 
     /**
-     * Get points of a type
+     * Gets the points of a type
      *
      * @return number of points
      */
@@ -37,6 +37,7 @@ public abstract class AbstractType
 
     /**
      * Displays a default value
+     *
      * @return default value in string
      */
     @Override

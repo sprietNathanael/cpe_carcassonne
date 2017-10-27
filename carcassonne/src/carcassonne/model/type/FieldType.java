@@ -18,9 +18,10 @@ public class FieldType extends AbstractType
     {
         super();
     }
-    
+
     /**
      * Displays the abrevation of the type
+     *
      * @return the type in string
      */
     @Override

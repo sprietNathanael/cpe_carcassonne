@@ -44,11 +44,10 @@ public class CityType extends AbstractType
         return "Ci";
     }
 
-
     /**
-     * Tel if the city has a shield in it
+     * Tells if the city has a shield in it
      *
-     * @return boolean
+     * @return boolean true if it has a shield, false otherwise
      */
     public boolean isShielded()
     {

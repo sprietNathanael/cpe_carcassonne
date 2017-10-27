@@ -9,12 +9,14 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 
 /**
  * Abstract class which represents a generic class
+ *
  * @author Thomas
  */
 public class AbstractCarcassonneGameController implements CarcassonneGameControllerInterface
 {
+
     private CarcassonneGame carcassonneGame;
-    
+
     /**
      * Constructor for an AbstractCarcassonneGameController
      */
@@ -22,7 +24,4 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         this.carcassonneGame = new CarcassonneGame();
     }
-    
-           
-}
 

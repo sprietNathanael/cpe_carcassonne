@@ -8,10 +8,11 @@ package carcassonne.model.player;
 import java.awt.Color;
 
 /**
- * Shows a Player
+ * Represents a player
  */
 public class Player
 {
+
     /**
      * How much meeples the player has 
      */
@@ -23,9 +24,10 @@ public class Player
     Color color;
 
     /**
-     * Allows to create a new Player
-     * @param name
-     * @param color 
+     * Creates a new Player
+     *
+     * @param name the player's name
+     * @param color the player's color
      */
     public Player(String name, Color color)
     {
@@ -46,6 +48,11 @@ public class Player
         this.meeple = meeple;
     }
 
+    /**
+     * Gets the name of the player
+     *
+     * @return string the name of the player
+     */
     public String getName()
     {
         return name;
@@ -56,11 +63,21 @@ public class Player
         this.name = name;
     }
 
+    /**
+     * Gets the points of the player
+     *
+     * @return integer the points of the player
+     */
     public int getPoints()
     {
         return points;
     }
 
+    /**
+     * Gets the color of the player
+     *
+     * @return Color the color of the player
+     */
     public Color getColor()
     {
         return color;

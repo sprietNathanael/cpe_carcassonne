@@ -8,7 +8,7 @@ package carcassonne.model.board;
 import carcassonne.model.tile.AbstractTile;
 
 /**
- * Manage the tiles on the board
+ * Manages the tiles on the board
  *
  * @author Étienne
  */
@@ -18,7 +18,7 @@ public class Board implements BoardInterface
     private AbstractTile[][] grid;
 
     /**
-     * Initialize an empty board
+     * Initializes an empty board
      *
      */
     public Board()
@@ -27,7 +27,7 @@ public class Board implements BoardInterface
     }
 
     /**
-     * Initialize the board using the baseTile as the first tile of the game
+     * Initializes the board using the baseTile as the first tile of the game
      *
      * @param baseTile
      */

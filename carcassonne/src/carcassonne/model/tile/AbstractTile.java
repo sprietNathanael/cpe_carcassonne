@@ -50,6 +50,5 @@ public abstract class AbstractTile
 
     @Override
     public abstract String toString();
-    
-    
+
 }
