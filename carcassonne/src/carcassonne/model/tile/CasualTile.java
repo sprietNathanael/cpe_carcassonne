@@ -364,11 +364,11 @@ public class CasualTile extends AbstractTile
     @Override
     public String toString()
     {
-        return "" + getNNW() + getN() + getNNE() + " "
-                + getNE() + getNEE() + getE() + getSEE() + getSE() + " "
-                + getSSE() + getS() + getSSW() + " "
-                + getSW() + getSWW() + getW() + getNWW() + getNW() + " "
-                + getCNW() + getCNE() + getCSE() + getCSW();
+        return ""  + getNWW() + getNW() + getNNW() + getN() + getNNE() + getNE() + getNEE() +
+                getE() + 
+                getSEE() + getSE() + getSSE() + getS() + getSSW() + getSW() + getSWW() +
+                getW() +
+                getCNW() + getCNE() + getCSE() + getCSW();
     }
 
     /**
