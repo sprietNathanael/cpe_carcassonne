@@ -27,7 +27,7 @@ public class FieldType extends AbstractType
     @Override
     public String toString()
     {
-        return "FI";
+        return "Fi";
     }
 
 }
