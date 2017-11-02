@@ -7,7 +7,9 @@ package carcassonne.model.tile;
 
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
+import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.HashMap;
 
@@ -362,20 +364,109 @@ public class CasualTile extends AbstractTile
     @Override
     public String toString()
     {
-        return getNNW().toString() + getN() + getNNE() + getNE() + getNEE()
-                + getE() + getSEE() + getSE() + getSSE() + getS() + getSSW() + getS() + getSWW()
-                + getW() + getNWW() + getNW();
+        return "" + getNNW() + getN() + getNNE() + " "
+                + getNE() + getNEE() + getE() + getSEE() + getSE() + " "
+                + getSSE() + getS() + getSSW() + " "
+                + getSW() + getSWW() + getW() + getNWW() + getNW() + " "
+                + getCNW() + getCNE() + getCSE() + getCSW();
+    }
+
+    /**
+     * Rotates the tile's types from east to west (counter clockwise)
+     *
+     * @return true if the rotation is successfull
+     */
+    public boolean rotateLeft()
+    {
+        AbstractType intermediate;
+        intermediate = this.types.get("N");
+        this.types.put("N", this.types.get("E"));
+        this.types.put("E", this.types.get("S"));
+        this.types.put("S", this.types.get("W"));
+        this.types.put("W", intermediate);
+
+        intermediate = this.types.get("CNW");
+        this.types.put("CNW", this.types.get("CNE"));
+        this.types.put("CNE", this.types.get("CSE"));
+        this.types.put("CSE", this.types.get("CSW"));
+        this.types.put("CSW", intermediate);
+
+        intermediate = this.types.get("NW");
+        this.types.put("NW", this.types.get("NE"));
+        this.types.put("NE", this.types.get("SE"));
+        this.types.put("SE", this.types.get("SW"));
+        this.types.put("SW", intermediate);
+
+        intermediate = this.types.get("NWW");
+        this.types.put("NWW", this.types.get("NNE"));
+        this.types.put("NNE", this.types.get("SEE"));
+        this.types.put("SEE", this.types.get("SSW"));
+        this.types.put("SSW", intermediate);
+
+        intermediate = this.types.get("NNW");
+        this.types.put("NNE", this.types.get("NEE"));
+        this.types.put("NEE", this.types.get("SSE"));
+        this.types.put("SSE", this.types.get("SWW"));
+        this.types.put("SWW", intermediate);
+
+        return (true);
+    }
+
+    /**
+     * Rotates the tile's types from west to east (clockwise)
+     *
+     * @return true if the rotation is successfull
+     */
+    public boolean rotateRight()
+    {
+        AbstractType intermediate;
+        intermediate = this.types.get("N");
+        this.types.put("N", this.types.get("W"));
+        this.types.put("W", this.types.get("S"));
+        this.types.put("S", this.types.get("E"));
+        this.types.put("E", intermediate);
+
+        intermediate = this.types.get("CNW");
+        this.types.put("CNW", this.types.get("CSW"));
+        this.types.put("CSW", this.types.get("CSE"));
+        this.types.put("CSE", this.types.get("CNE"));
+        this.types.put("CNE", intermediate);
+
+        intermediate = this.types.get("NW");
+        this.types.put("NW", this.types.get("SW"));
+        this.types.put("SW", this.types.get("SE"));
+        this.types.put("SE", this.types.get("NE"));
+        this.types.put("NE", intermediate);
+
+        intermediate = this.types.get("NWW");
+        this.types.put("NWW", this.types.get("SSW"));
+        this.types.put("SSW", this.types.get("SEE"));
+        this.types.put("SEE", this.types.get("NNE"));
+        this.types.put("NNE", intermediate);
+
+        intermediate = this.types.get("NNW");
+        this.types.put("NNW", this.types.get("SWW"));
+        this.types.put("SWW", this.types.get("SSE"));
+        this.types.put("SSE", this.types.get("NNE"));
+        this.types.put("NNE", intermediate);
+
+        return (true);
     }
 
     public static void main(String str[])
     {
         CasualTile ct = new CasualTile("B", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North section
-                new FieldType(), //East section
+                new CityType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
-                new FieldType(), //West section
-                new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType() //Center section
+                new RiverType(), //West section
+                new FieldType(), new RoadType(), new CityType(), new RiverType()//Center section
         );
         System.out.println(ct);
+        ct.rotateLeft();
+        System.out.println(ct);
+        ct.rotateRight();
+        System.out.println(ct);
+
     }
 }
