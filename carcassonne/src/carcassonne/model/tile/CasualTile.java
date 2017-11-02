@@ -404,7 +404,7 @@ public class CasualTile extends AbstractTile
         this.types.put("SSW", intermediate);
 
         intermediate = this.types.get("NNW");
-        this.types.put("NNE", this.types.get("NEE"));
+        this.types.put("NNW", this.types.get("NEE"));
         this.types.put("NEE", this.types.get("SSE"));
         this.types.put("SSE", this.types.get("SWW"));
         this.types.put("SWW", intermediate);
@@ -447,8 +447,8 @@ public class CasualTile extends AbstractTile
         intermediate = this.types.get("NNW");
         this.types.put("NNW", this.types.get("SWW"));
         this.types.put("SWW", this.types.get("SSE"));
-        this.types.put("SSE", this.types.get("NNE"));
-        this.types.put("NNE", intermediate);
+        this.types.put("SSE", this.types.get("NEE"));
+        this.types.put("NEE", intermediate);
 
         return (true);
     }
