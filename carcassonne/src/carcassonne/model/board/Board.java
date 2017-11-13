@@ -39,7 +39,14 @@ public class Board implements BoardInterface
         //Put the first tile in the center of the Board
         grid[CENTER_ROW][CENTER_COLUMN] = baseTile;
     }
-
+    
+    /**
+     * adds a new tile on the board at the coordinate passed passed by parameters
+     * @param newTile
+     * @param row
+     * @param column
+     * @throws Exception 
+     */
     @Override
     public void addTile(AbstractTile newTile, int row, int column) throws Exception
     {
@@ -56,6 +63,13 @@ public class Board implements BoardInterface
         }
     }
 
+    /**
+     * gets the tile from the board on the coordinate passed by parameters
+     * @param row
+     * @param column
+     * @return
+     * @throws Exception 
+     */
     @Override
     public AbstractTile getTile(int row, int column) throws Exception
     {
@@ -66,25 +80,45 @@ public class Board implements BoardInterface
         }
     }
     
-    //Compare la face nord de la tuile 1 à la face sud de la tuile 2
+    /**
+     * Compare north side of tile 1 to south side of tile 2
+     * @param tile1
+     * @param tile2
+     * @return true if match
+     */
     public boolean compareTileNorth (CasualTile tile1, CasualTile tile2)
     {
         return tile1.getNNW() == tile2.getSSW() && tile1.getN() == tile2.getS() && tile1.getNNE() == tile2.getSSE();
     }
     
-    //Compare la face sud de la tuile 1 à la face nord de la tuile 2
+    /**
+     * Compare south side of tile 1 to north side of tile 2
+     * @param tile1
+     * @param tile2
+     * @return true if match
+     */
     public boolean compareTileSouth (CasualTile tile1, CasualTile tile2)
     {
         return tile1.getSSW() == tile2.getNNW() && tile1.getS() == tile2.getN() && tile1.getSSE() == tile2.getNNE();
     }
     
-    //Compare la face ouest de la tuile 1 à la face est de la tuile 2
+    /**
+     * Compare west side of tile 1 to east side of tile 2
+     * @param tile1
+     * @param tile2
+     * @return true if match
+     */
     public boolean compareTileWest (CasualTile tile1, CasualTile tile2)
     {
         return tile1.getNWW() == tile2.getNEE() && tile1.getW() == tile2.getE() && tile1.getSWW() == tile2.getSEE();
     }
     
-    //Compare la face est de la tuile 1 à la face ouest de la tuile 2
+    /**
+     * Compare east side of tile 1 to west side of tile 2
+     * @param tile1
+     * @param tile2
+     * @return true if match
+     */
     public boolean compareTileEast (CasualTile tile1, CasualTile tile2)
     {
         return tile1.getNEE() == tile2.getNWW() && tile1.getE() == tile2.getW() && tile1.getSEE() == tile2.getSWW();
