@@ -100,7 +100,7 @@ public class BoardTest
     @Test
     public void testCompareTileNorthTrue()
     {
-        System.out.println("compareTileNorth");
+        System.out.println("compareTileNorthTrue");
 
         CasualTile tile1 = new CasualTile("A", null, null, new CityType(), new FieldType(), new RoadType(), null, null, 
                                                     null, 
@@ -125,7 +125,7 @@ public class BoardTest
     @Test
     public void testCompareTileNorthFalse()
     {
-        System.out.println("compareTileNorth");
+        System.out.println("compareTileNorthFalse");
 
         CasualTile tile1 = new CasualTile("A", null, null, new CityType(), new FieldType(), new RoadType(), null, null, 
                                                     null, 
@@ -149,17 +149,48 @@ public class BoardTest
      * Test of compareTileSouth method, of class Board.
      */
     @Test
-    public void testCompareTileSouth()
+    public void testCompareTileSouthTrue()
     {
-        System.out.println("compareTileSouth");
-        CasualTile tile1 = null;
-        CasualTile tile2 = null;
+        System.out.println("compareTileSouthTrue");
+        CasualTile tile1 = new CasualTile("A", null, null, null, null, null, null, null, 
+                                                    null, 
+                                                    null, null, new CrossType(), new FieldType(), new CityType(), null, null, 
+                                                    null, 
+                                                    null, null, null, null);
+        
+        CasualTile tile2 = new CasualTile("A", null, null, new CityType(), new FieldType(), new CrossType(), null, null, 
+                                                    null, 
+                                                    null, null, null, null, null, null, null, 
+                                                    null, 
+                                                    null, null, null, null);
+        
         Board instance = new Board();
-        boolean expResult = false;
         boolean result = instance.compareTileSouth(tile1, tile2);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, result); 
+    }
+    
+    /**
+     * Test of compareTileSouth method, of class Board.
+     */
+    @Test
+    public void testCompareTileSouthFalse()
+    {
+        System.out.println("compareTileSouthFalse");
+        CasualTile tile1 = new CasualTile("A", null, null, null, null, null, null, null, 
+                                                    null, 
+                                                    null, null, new CrossType(), new FieldType(), new CityType(), null, null, 
+                                                    null, 
+                                                    null, null, null, null);
+        
+        CasualTile tile2 = new CasualTile("A", null, null, new CrossType(), new FieldType(), new CityType(), null, null, 
+                                                    null, 
+                                                    null, null, null, null, null, null, null, 
+                                                    null, 
+                                                    null, null, null, null);
+        
+        Board instance = new Board();
+        boolean result = instance.compareTileSouth(tile1, tile2);
+        assertEquals(false, result); 
     }
 
     /**
