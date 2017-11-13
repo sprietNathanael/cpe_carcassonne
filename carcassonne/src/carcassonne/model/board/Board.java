@@ -88,7 +88,9 @@ public class Board implements BoardInterface
      */
     public boolean compareTileNorth (CasualTile tile1, CasualTile tile2)
     {
-        return tile1.getNNW() == tile2.getSSW() && tile1.getN() == tile2.getS() && tile1.getNNE() == tile2.getSSE();
+        return tile1.getNNW().getClass() == tile2.getSSW().getClass() 
+                && tile1.getN().getClass() == tile2.getS().getClass() 
+                && tile1.getNNE().getClass() == tile2.getSSE().getClass();
     }
     
     /**
@@ -99,7 +101,9 @@ public class Board implements BoardInterface
      */
     public boolean compareTileSouth (CasualTile tile1, CasualTile tile2)
     {
-        return tile1.getSSW() == tile2.getNNW() && tile1.getS() == tile2.getN() && tile1.getSSE() == tile2.getNNE();
+        return tile1.getSSW().getClass() == tile2.getNNW().getClass() 
+                && tile1.getS().getClass() == tile2.getN().getClass() 
+                && tile1.getSSE().getClass() == tile2.getNNE().getClass();
     }
     
     /**
@@ -110,7 +114,9 @@ public class Board implements BoardInterface
      */
     public boolean compareTileWest (CasualTile tile1, CasualTile tile2)
     {
-        return tile1.getNWW() == tile2.getNEE() && tile1.getW() == tile2.getE() && tile1.getSWW() == tile2.getSEE();
+        return tile1.getNWW().getClass() == tile2.getNEE().getClass() 
+                && tile1.getW().getClass() == tile2.getE().getClass() 
+                && tile1.getSWW().getClass() == tile2.getSEE().getClass();
     }
     
     /**
@@ -121,6 +127,8 @@ public class Board implements BoardInterface
      */
     public boolean compareTileEast (CasualTile tile1, CasualTile tile2)
     {
-        return tile1.getNEE() == tile2.getNWW() && tile1.getE() == tile2.getW() && tile1.getSEE() == tile2.getSWW();
+        return tile1.getNEE().getClass() == tile2.getNWW().getClass() 
+                && tile1.getE().getClass() == tile2.getW().getClass() 
+                && tile1.getSEE().getClass() == tile2.getSWW().getClass();
     }
 }
