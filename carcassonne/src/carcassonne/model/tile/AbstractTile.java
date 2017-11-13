@@ -8,7 +8,7 @@ package carcassonne.model.tile;
 /**
  * Abstract class to represent a Tile
  */
-public class AbstractTile
+public abstract class AbstractTile
 {
 
     /**
@@ -47,4 +47,8 @@ public class AbstractTile
     {
         return true;
     }
+
+    @Override
+    public abstract String toString();
+
 }

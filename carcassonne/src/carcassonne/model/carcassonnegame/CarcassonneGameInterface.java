@@ -13,6 +13,17 @@ import carcassonne.model.tile.AbstractTile;
  */
 public interface CarcassonneGameInterface
 {
-    public void putTile(AbstractTile tile, int Row, int Column) throws Exception;
-    public AbstractTile pileTile();
+    /**
+     * Puts a Tile on the Board
+     * @param tile The tile to put
+     * @param row The row at which the tile has to be put
+     * @param column The column at which the tile has to be put
+     * @throws Exception 
+     */
+    public void putTile(AbstractTile tile, int row, int column) throws Exception;
+    
+    /**
+     * 
+     */
+    public void pileTile();
 }

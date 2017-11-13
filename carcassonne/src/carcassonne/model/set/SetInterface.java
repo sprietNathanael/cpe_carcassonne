@@ -17,7 +17,8 @@ public interface SetInterface
 {
 
     /**
-     *
+     * Gets the set's tiles
+     * 
      * @return All the tiles from the wanted extensions
      */
     public List<AbstractTile> getSet();

@@ -8,60 +8,119 @@ package carcassonne.model.carcassonnegame;
 import carcassonne.model.board.Board;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
+import carcassonne.model.set.BasicSet;
+import carcassonne.model.set.SetInterface;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Allows to play
+ * Represents a carcassonne game, which aggregates all the model entities
  */
 public class CarcassonneGame implements CarcassonneGameInterface
 {
 
-    private List<AbstractTile> players;
+    private List<Player> players;
     private Board board;
-    private Player current;
+    private int currentPlayerIndex;
     private List<AbstractTile> pile;
 
     public CarcassonneGame()
     {
         this.board = new Board();
-        this.pile = new ArrayList<>();
+
+        //Call the basic extension to get the basic tiles into the pile
+        SetInterface basicSet = new BasicSet();
+        this.pile = basicSet.getSet();
         this.players = new ArrayList<>();
+        this.currentPlayerIndex = 0;
     }
 
     /**
-     * Allows to take a new card in the pile
+     * Constructor for CarcassonneGame from an existing list of players
      *
-     * @return
+     * @param players existing list of players
      */
-    @Override
-    public AbstractTile pileTile()
+    public CarcassonneGame(ArrayList<Player> players)
     {
-        AbstractTile tile;
-        int Nbrand;
-        int Min = 1;
-        int Max = pile.size(); //Numbers maximum of cards 
+        this.board = new Board();
 
-        Nbrand = (int) (Math.random() * (Max - Min));
-        tile = pile.get(Nbrand);
-        pile.remove(Nbrand);
-
-        return tile;
+        //Call the basic extension to get the basic tiles into the pile
+        SetInterface basicSet = new BasicSet();
+        this.pile = basicSet.getSet();
+        this.players = players;
+        this.currentPlayerIndex = 0;
     }
 
     /**
-     * Allows to put a Tile on the board
+     * Gets the current Player
      *
-     * @param tile
-     * @param Row
-     * @param Column
+     * @return the current player
+     */
+    public Player getCurrentPlayer()
+    {
+        return (this.players.get(this.currentPlayerIndex));
+    }
+
+    /**
+     * Switches the turn to the next player
+     *
+     * @return the next Player
+     */
+    public Player nextPlayer()
+    {
+        this.currentPlayerIndex++;
+
+        /**
+         * If this is the end of the array, go back to the begining
+         */
+        if (this.currentPlayerIndex >= this.players.size()) {
+            this.currentPlayerIndex = 0;
+        }
+        return this.getCurrentPlayer();
+    }
+
+    /**
+     * Adds a new set of tiles to the current pile (Used to add a new extension
+     * to the game)
+     *
+     * @param newSet
+     * @author Étienne
+     */
+    public void addSetToPile(SetInterface newSet)
+    {
+        pile.addAll(newSet.getSet());
+    }
+
+    @Override
+    public void pileTile()
+    {
+        //Étienne: "- à quoi elle sert cette méthode ?"
+    }
+
+    /**
+     * Draws the first tile of the pile. Removes it from the pile and then
+     * returns it
+     *
+     * @return AbstractTile The first tile of the pile
+     */
+    public AbstractTile drawFromPile()
+    {
+        return this.pile.remove(0);
+    }
+
+    /**
+     * Puts a Tile on the Board
+     *
+     * @param tile The tile to put
+     * @param row The row at which the tile has to be put
+     * @param column The column at which the tile has to be put
      * @throws Exception
      */
     @Override
-    public void putTile(AbstractTile tile, int Row, int Column) throws Exception
+    public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         try {
-            board.addTile(tile, Row, Column);
+            board.addTile(tile, row, column);
         } catch (Exception ex) {
             throw ex;
         }

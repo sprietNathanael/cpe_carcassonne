@@ -6,69 +6,85 @@
 package carcassonne.model.player;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
 /**
- * Shows a Player
+ * Represents a player
  */
 public class Player
 {
+
     /**
-     * How much meeples the player has 
+     * How much meeples the player has
      */
     public static int NBMEEPLE = 8;
 
-    private Meeple[] meeple;
+    private ArrayList<Meeple> meeples;
     private String name;
     private int points;
-    Color color;
+    private Color color;
 
     /**
-     * Allows to create a new Player
-     * @param name
-     * @param color 
+     * Creates a new Player
+     *
+     * @param name the player's name
+     * @param color the player's color
      */
     public Player(String name, Color color)
     {
         this.name = name;
         this.color = color;
-        points = 0;
-        meeple = new Meeple[NBMEEPLE];
-        meeple[0].setIsBig(true);
+        this.points = 0;
+        this.meeples = new ArrayList<>();
+        for (int i = 0; i < NBMEEPLE; i++) {
+            if (i == 0) {
+                this.meeples.add(new Meeple(true));
+            }
+            else {
+                this.meeples.add(new Meeple());
+            }
+
+        }
     }
 
-    public Meeple[] getMeeple()
+    /**
+     * Gets the meeples of the player
+     *
+     * @return ArrayList<Meeple> the list of the meeples
+     */
+    public ArrayList<Meeple> getMeeple()
     {
-        return meeple;
+        return this.meeples;
     }
 
-    public void setMeeple(Meeple[] meeple)
-    {
-        this.meeple = meeple;
-    }
-
+    /**
+     * Gets the name of the player
+     *
+     * @return string the name of the player
+     */
     public String getName()
     {
         return name;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
+    /**
+     * Gets the points of the player
+     *
+     * @return integer the points of the player
+     */
     public int getPoints()
     {
         return points;
     }
 
+    /**
+     * Gets the color of the player
+     *
+     * @return Color the color of the player
+     */
     public Color getColor()
     {
         return color;
-    }
-
-    public void setColor(Color color)
-    {
-        this.color = color;
     }
 
 }

@@ -20,4 +20,14 @@ public class RiverType extends AbstractType
         this.isMeepable = false;
     }
 
+    /**
+     * Displays the abrevation of the type
+     *
+     * @return the type in string
+     */
+    @Override
+    public String toString()
+    {
+        return "Ri";
+    }
 }

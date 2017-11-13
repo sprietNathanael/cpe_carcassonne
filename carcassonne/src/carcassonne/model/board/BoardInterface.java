@@ -18,21 +18,21 @@ public interface BoardInterface
     public static final int CENTER_ROW = ROWS / 2, CENTER_COLUMN = COLUMNS / 2;
 
     /**
-     * Add a tile into the requested location on the Board
+     * Adds a tile into the requested location on the Board
      *
-     * @param newTile
-     * @param row
-     * @param column
+     * @param newTile The tile to be put
+     * @param row The row at which the tile has to be put
+     * @param column The column at which the tile has to be put
      * @exception ArrayIndexOutOfBoundsException if not in the grid
      * @exception Exception if there is already a tile in the location
      */
     public void addTile(AbstractTile newTile, int row, int column) throws Exception;
 
     /**
-     * Get the tile at the indexes asked
+     * Gets the tile at the indexes asked
      *
-     * @param row
-     * @param column
+     * @param row The row to look at
+     * @param column The column to look at
      * @exception ArrayIndexOutOfBoundsException if not in the grid
      * @return AbstractTile
      * @throws java.lang.Exception

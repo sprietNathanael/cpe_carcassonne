@@ -6,7 +6,7 @@
 package carcassonne.model.player;
 
 /**
- * Shows a meeeple
+ * Represents a "Meeple", the follower or pawn of a player
  */
 public class Meeple
 {
@@ -15,41 +15,54 @@ public class Meeple
     private boolean isBig;
 
     /**
-     * Allows to create a new meeple
+     * Creates a new meeple and to precise its size. A new meeple can
+     * not be used at its creation, so isUsed is set to false by default
      *
-     * @param isUsed
+     * @param isBig
      */
-    private Meeple(boolean isUsed)
+    public Meeple(boolean isBig)
     {
-        this.isUsed = isUsed;
+        this.isBig = isBig;
+        this.isUsed = false;
     }
 
     /**
-     * Allows to create a new meeple with isUsed=false
+     * Creates a default meeple
      */
     public Meeple()
     {
-        this(false);
+        this.isBig = false;
+        this.isUsed = false;
     }
 
+    /**
+     * Get the status of the meeple
+     *
+     * @return true if the meeple is used, false otherwise
+     */
     public boolean getIsUsed()
     {
         return isUsed;
     }
 
+    /**
+     * Set the status of the meeple
+     *
+     * @param isUsed
+     */
     public void setIsUsed(boolean isUsed)
     {
         this.isUsed = isUsed;
     }
 
+    /**
+     * Get the size of the meeple
+     *
+     * @return true if the meeple is a big one, false otherwise
+     */
     public boolean getIsBig()
     {
         return isBig;
-    }
-
-    public void setIsBig(boolean isBig)
-    {
-        this.isBig = isBig;
     }
 
 }

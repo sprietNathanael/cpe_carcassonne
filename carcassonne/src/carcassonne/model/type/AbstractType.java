@@ -26,13 +26,34 @@ public abstract class AbstractType
     }
 
     /**
-     * Get points of a type
+     * Gets the points of a type
      *
      * @return number of points
      */
     public int getPoints()
     {
         return 0;
+    }
+
+    /**
+     * Displays a default value
+     *
+     * @return default value in string
+     */
+    @Override
+    public String toString()
+    {
+        return "00";
+    }
+
+    /**
+     * Gets the Meeple of the type
+     *
+     * @return Meeple The current meeple of the type, null otherwise
+     */
+    public Meeple getMeeple()
+    {
+        return this.meeple;
     }
 
 }
