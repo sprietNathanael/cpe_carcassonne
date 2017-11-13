@@ -100,7 +100,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public AbstractTile drawFromPile()
     {
         return this.pile.remove(0);
-        /* A DEVELOPPER*/
+
     }
 
     /**
@@ -120,11 +120,6 @@ public class CarcassonneGame implements CarcassonneGameInterface
             throw ex;
         }
     }
-
-    @Override
-    public void pileTile()
-    {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
+    
 }
+

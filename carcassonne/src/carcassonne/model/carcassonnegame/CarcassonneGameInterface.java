@@ -25,5 +25,4 @@ public interface CarcassonneGameInterface
     /**
      * 
      */
-    public void pileTile();
 }
