@@ -90,13 +90,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     {
         pile.addAll(newSet.getSet());
     }
-
-    @Override
-    public void pileTile()
-    {
-        //Étienne: "- à quoi elle sert cette méthode ?"
-    }
-
+    
     /**
      * Draws the first tile of the pile. Removes it from the pile and then
      * returns it
@@ -106,6 +100,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public AbstractTile drawFromPile()
     {
         return this.pile.remove(0);
+        /* A DEVELOPPER*/
     }
 
     /**
@@ -124,6 +119,12 @@ public class CarcassonneGame implements CarcassonneGameInterface
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    @Override
+    public void pileTile()
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }
