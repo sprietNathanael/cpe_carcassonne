@@ -6,6 +6,7 @@
 package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
 
 /**
  * Manages the tiles on the board
@@ -64,5 +65,28 @@ public class Board implements BoardInterface
             throw new Exception("The position asked is out of the grid range");
         }
     }
-
+    
+    //Compare la face nord de la tuile 1 à la face sud de la tuile 2
+    public boolean compareTileNorth (CasualTile tile1, CasualTile tile2)
+    {
+        return tile1.getNNW() == tile2.getSSW() && tile1.getN() == tile2.getS() && tile1.getNNE() == tile2.getSSE();
+    }
+    
+    //Compare la face sud de la tuile 1 à la face nord de la tuile 2
+    public boolean compareTileSouth (CasualTile tile1, CasualTile tile2)
+    {
+        return tile1.getSSW() == tile2.getNNW() && tile1.getS() == tile2.getN() && tile1.getSSE() == tile2.getNNE();
+    }
+    
+    //Compare la face ouest de la tuile 1 à la face est de la tuile 2
+    public boolean compareTileWest (CasualTile tile1, CasualTile tile2)
+    {
+        return tile1.getNWW() == tile2.getNEE() && tile1.getW() == tile2.getE() && tile1.getSWW() == tile2.getSEE();
+    }
+    
+    //Compare la face est de la tuile 1 à la face ouest de la tuile 2
+    public boolean compareTileEast (CasualTile tile1, CasualTile tile2)
+    {
+        return tile1.getNEE() == tile2.getNWW() && tile1.getE() == tile2.getW() && tile1.getSEE() == tile2.getSWW();
+    }
 }
