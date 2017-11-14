@@ -145,6 +145,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
             }
             else {
                 type.setMeeple(meeple);
+                meeple.setIsUsed(true);
             }
         }
         
