@@ -11,6 +11,7 @@ import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
+import carcassonne.model.type.AbstractType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +20,12 @@ import java.util.List;
  */
 public class CarcassonneGame implements CarcassonneGameInterface
 {
-
+    
     private List<Player> players;
     private Board board;
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
-
+    
     public CarcassonneGame()
     {
         this.board = new Board();
@@ -101,7 +102,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public AbstractTile drawFromPile()
     {
         return this.pile.remove(0);
-
+        
     }
 
     /**
@@ -121,5 +122,32 @@ public class CarcassonneGame implements CarcassonneGameInterface
             throw ex;
         }
     }
+    
+    /**
+     * Alloxs to put a meeple on a type
+     * @param meeple
+     * @param tile
+     * @param player
+     * @param type
+     * @throws Exception 
+     */
+    public void putMeeple(Meeple meeple, AbstractTile tile, Player player, AbstractType type) throws Exception
+    {
+        if (player.checkMeepleAvailable() == false) {
+            throw new Exception("no meeple");
+        }
+        else {
+            /*Player has meeple*/
 
+ /*Check if a meeple can be to put on this tile*/
+            if (tile.isMeepable() == false) {
+                throw new Exception("no meepable");
+            }
+            else {
+                type.setMeeple(meeple);
+            }
+        }
+        
+    }
+    
 }
