@@ -87,20 +87,14 @@ public class Player
         return color;
     }
     
-        /**
+    /**
      * Allows to check if a player has meeple
      *
-     * @param player
-     * @return
+     * @return true if more than one meeple is available
      */
-    public boolean checkMeepleAvailable(Player player)
+    public boolean checkMeepleAvailable()
     {
-        boolean isOk = true;
-
-        if (player.getMeeple() == null) {
-            isOk = false;
-        }
-        return isOk;
+        return meeples.size() > 0;
     }
 
 
