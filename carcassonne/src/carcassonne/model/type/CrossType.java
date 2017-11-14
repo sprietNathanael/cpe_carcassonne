@@ -36,6 +36,10 @@ public class CrossType extends AbstractType
         return "Cr";
     }
 
+    /**
+     * Allows to put a meeple 
+     * @param m 
+     */
     @Override
     public void setMeeple(Meeple m)
     {
