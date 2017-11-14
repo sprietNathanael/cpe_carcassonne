@@ -36,15 +36,10 @@ public class Player
         this.color = color;
         this.points = 0;
         this.meeples = new ArrayList<>();
-        for (int i = 0; i < NBMEEPLE; i++) {
-            if (i == 0) {
-                this.meeples.add(new Meeple(true));
-            }
-            else {
+        this. meeples.add(new Meeple(true));
+        for (int i = 1; i < NBMEEPLE ; i++) {
                 this.meeples.add(new Meeple());
             }
-
-        }
     }
 
     /**
