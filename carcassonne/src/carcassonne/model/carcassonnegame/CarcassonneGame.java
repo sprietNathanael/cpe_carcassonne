@@ -6,6 +6,7 @@
 package carcassonne.model.carcassonnegame;
 
 import carcassonne.model.board.Board;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
@@ -90,7 +91,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     {
         pile.addAll(newSet.getSet());
     }
-    
+
     /**
      * Draws the first tile of the pile. Removes it from the pile and then
      * returns it
@@ -120,6 +121,5 @@ public class CarcassonneGame implements CarcassonneGameInterface
             throw ex;
         }
     }
-    
-}
 
+}
