@@ -15,8 +15,9 @@ public class Meeple
     private boolean isBig;
 
     /**
-     * Creates a new meeple and to precise its size. A new meeple can
-     * not be used at its creation, so isUsed is set to false by default
+     * Creates a new meeple and precise its size.
+     * A new meeple is not yet used when created,
+     * so isUsed is set to false by default
      *
      * @param isBig
      */
