@@ -6,6 +6,8 @@
 package carcassonne.view.ui_test;
 
 import java.awt.Container;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 
 /**
@@ -21,6 +23,8 @@ public class Client extends JFrame
         cleanContentPane();
         GameView gameView = new GameView();
         gameView.show(getContentPane());
+        //setLocation("L".equals(windowSize) ? 0 : dw/2, 0);*/
+        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
         
     }

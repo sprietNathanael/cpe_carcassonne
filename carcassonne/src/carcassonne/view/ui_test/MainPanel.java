@@ -7,6 +7,7 @@ package carcassonne.view.ui_test;
 
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.text.Position;
 
 /**
  *
@@ -19,6 +20,16 @@ public class MainPanel extends JPanel
     {
         super();
         setLayout(new BorderLayout());
+        GridPanel gridPanel = new GridPanel();
+        TestLayer testLayer = new TestLayer(gridPanel);
+        gridPanel.addLayer(testLayer);
+        testLayer.addPosition(new Coord(0, 0));
+        testLayer.addPosition(new Coord(1, 0));
+        testLayer.addPosition(new Coord(0, 1));
+        testLayer.addPosition(new Coord(0, -1));
+        testLayer.addPosition(new Coord(-1, 0));
+        
+        this.add(gridPanel);
     }
     
     
