@@ -5,6 +5,10 @@
  */
 package carcassonne.model.type;
 
+import carcassonne.model.player.Meeple;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * Represents a cross type
  */
@@ -30,6 +34,20 @@ public class CrossType extends AbstractType
     public String toString()
     {
         return "Cr";
+    }
+
+    /**
+     * Allows to put a meeple 
+     * @param m 
+     */
+    @Override
+    public void setMeeple(Meeple m)
+    {
+        try {
+            throw new Exception("Impossible to put !");
+        } catch (Exception ex) {
+            Logger.getLogger(CrossType.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 }

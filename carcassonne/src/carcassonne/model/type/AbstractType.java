@@ -55,5 +55,14 @@ public abstract class AbstractType
     {
         return this.meeple;
     }
+    
+    /**
+     * Allows to put a meeple for the differents types
+     * @param m 
+     */
+    public void setMeeple(Meeple m)
+    {
+        this.meeple = m;
+    }
 
 }
