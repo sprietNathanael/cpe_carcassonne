@@ -55,5 +55,11 @@ public abstract class AbstractType
     {
         return this.meeple;
     }
+    
+    
+    public void setMeeple(Meeple m)
+    {
+        this.meeple = m;
+    }
 
 }

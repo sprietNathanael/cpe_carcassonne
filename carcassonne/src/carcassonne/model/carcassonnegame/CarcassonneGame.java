@@ -122,4 +122,23 @@ public class CarcassonneGame implements CarcassonneGameInterface
         }
     }
 
+    public void putMeeple(Meeple meeple, AbstractTile tile, Player player)
+    {
+        if (player.checkMeepleAvailable(player) == false) {
+            System.out.println("No meeple available"); // A ADAPTER POUR L INTERFACE GRAPHIQUE
+        }
+        else {
+            /*Player has meeple*/
+
+ /*Check if a meeple can be to put on this tile*/
+            if (tile.isMeepable() == false) {
+                System.out.println("Can't put a meeple on this tile"); // A ADAPTER POUR L INTERFACE GRAPHIQUE
+            }
+            else {
+                /*A finir*/
+            }
+        }
+
+    }
+
 }
