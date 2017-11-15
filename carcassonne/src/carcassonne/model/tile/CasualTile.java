@@ -465,7 +465,7 @@ public class CasualTile extends AbstractTile
         /*ct.rotateLeft();
         System.out.println(ct);
         ct.rotateRight();
-        System.out.println(ct);*/
-        
+        System.out.println(ct);
+
     }
 }

@@ -90,15 +90,31 @@ public class Player
     public boolean checkMeepleAvailable()
     {
         boolean ret = true;
-        
+
         for (Meeple m : meeples) {
-            if (m.getIsUsed()){
+            if (m.getIsUsed()) {
                 ret = false;
                 break;
             }
         }
         return ret;
     }
-    
+
+    /**
+     * Get the first meeple no used
+     *
+     * @return
+     */
+    public Meeple getFirstMeepleAvailable()
+    {
+        Meeple ret = null;
+        for (Meeple m : meeples) {
+            if (m.getIsUsed() == false) {
+                ret = m;
+                break;
+            }
+        }
+        return ret;
+    }
 
 }

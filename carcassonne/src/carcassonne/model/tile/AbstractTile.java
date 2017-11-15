@@ -5,6 +5,9 @@
  */
 package carcassonne.model.tile;
 
+import carcassonne.model.player.Meeple;
+import carcassonne.model.type.AbstractType;
+
 /**
  * Abstract class to represent a Tile
  */
@@ -50,5 +53,22 @@ public abstract class AbstractTile
 
     @Override
     public abstract String toString();
+    
+    /**
+     * Gets the type of the tile from coordinates
+     * @param coordinates
+     * @return 
+     */
+    public abstract AbstractType getType(String coordinates);
+    
+    /**
+     * puts the meeple on the tile following the coordinate
+     * @param coordinates
+     * @param m 
+     */
+    public void putMeeple(String coordinates, Meeple m){
+        AbstractType type = getType(coordinates);
+        type.setMeeple(m);
+    }
 
 }

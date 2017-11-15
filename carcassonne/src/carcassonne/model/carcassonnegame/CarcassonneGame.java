@@ -116,11 +116,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     @Override
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
-        try {
-            board.addTile(tile, row, column);
-        } catch (Exception ex) {
-            throw ex;
-        }
+        board.addTile(tile, row, column);
     }
     
     /**

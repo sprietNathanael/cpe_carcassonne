@@ -7,6 +7,7 @@ package carcassonne.controller;
 
 import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 
@@ -57,15 +58,46 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public AbstractTile drawTile()
     {
-        return this.carcassonneGame.drawFromPile();
+        currentTile = this.carcassonneGame.drawFromPile();
+        return currentTile;
     }
 
-    public void putTile(Coord c, AbstractTile tile )
+    /**
+     * puts the tile drawed on the board
+     *
+     * @param c
+     * @throws Exception
+     */
+    public void putTile(Coord c) throws Exception
     {
-        
+        carcassonneGame.putTile(currentTile, c.row, c.col);
     }
-    
-    
-    
-    
+
+    /**
+     * gets the first meeple available of the current player
+     * @return 
+     * @throws Exception
+     */
+    private Meeple getCurrentPlayerMeepleAvailable() throws Exception
+    {
+        Meeple m = carcassonneGame.getCurrentPlayer().getFirstMeepleAvailable();
+        if (m == null) {
+            throw new Exception("Plus de pion disponible");
+        }
+        return m;
+    }
+
+    /**
+     * puts the first meeple available, of the current player, on a type of the
+     * current tile
+     *
+     * @param coordinates
+     * @throws Exception
+     */
+    public void putMeeple(String coordinates) throws Exception
+    {
+        Meeple m = getCurrentPlayerMeepleAvailable();
+        currentTile.putMeeple(coordinates, m);
+    }
+
 }
