@@ -86,7 +86,7 @@ public class Player
     {
         return color;
     }
-    
+
     /**
      * Allows to check if a player has meeple
      *
@@ -94,9 +94,16 @@ public class Player
      */
     public boolean checkMeepleAvailable()
     {
-        return meeples.size() > 0;
+        boolean ret = true;
+        
+        for (Meeple m : meeples) {
+            if (m.getIsUsed()){
+                ret = false;
+                break;
+            }
+        }
+        return ret;
     }
     
-
 
 }

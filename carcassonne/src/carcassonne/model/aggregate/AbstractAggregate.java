@@ -3,13 +3,17 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcasssonne.model.aggregate;
+package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.type.AbstractType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -19,9 +23,11 @@ import java.util.Set;
 public abstract class AbstractAggregate
 {
 
-    protected HashMap<Coord, AbstractTile> aggregatedTiles;
+    protected Map<Coord, AbstractTile> aggregatedTiles;
+    protected Map<AbstractTile, List<AbstractType>> aggregatedTypes;
     protected Set<Player> players;
     protected int meepleNumber;
+    protected boolean isCompleted;
 
     /**
      * Construct a new aggregate
@@ -29,12 +35,15 @@ public abstract class AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
+     * @param types List of all the new tile types that compose the aggregation
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
+        this.aggregatedTypes.put(firstTile, types);
         this.players = new HashSet();
+        this.isCompleted = false;
     }
 
     /**
@@ -43,15 +52,17 @@ public abstract class AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
+     * @param types List of all the new tile types that compose the aggregation
      * @param player
      * @param meeples
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, Player player, int meeples)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meeples)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
         this.players.add(player);
         this.meepleNumber = meeples;
+        this.isCompleted = false;
     }
 
     /**
@@ -75,23 +86,42 @@ public abstract class AbstractAggregate
     }
 
     /**
-     * Test if the tile at the given coordinates has a neighbor with this
-     * aggregate.
+     * Get the tile emplacements that are neighbored with those coordinates. Use
+     * this method to test every aggregate, to check which aggregate we have to
+     * enlarge
      *
-     * @param row
-     * @param col
-     * @return boolean
+     * @param row of the new emplacement to test
+     * @param col of the new emplacement to test
+     * @return List the coordinates of the neighbored emplacement, return
+     * [-1;-1] if the aggregate dosen't
      */
-    public boolean isNeighbor(int row, int col)
+    public List<Coord> getNeighboredCoordinates(int row, int col)
     {
-        boolean result = false;
-        if (aggregatedTiles.containsKey(new Coord(row - 1, col))
-                || aggregatedTiles.containsKey(new Coord(row + 1, col))
-                || aggregatedTiles.containsKey(new Coord(row, col - 1))
-                || aggregatedTiles.containsKey(new Coord(row, col + 1))) {
-            result = true;
+        /**
+         * Coordinates of the current aggregate tiles that are neighbored with
+         * the requested emplacement
+         */
+        List<Coord> neighboredTilesLocation;
+        neighboredTilesLocation = new ArrayList<>();
+
+        /**
+         * We test all the possible neighbored locations, and add every
+         * locations where the aggregation is present
+         */
+        if (aggregatedTiles.containsKey(new Coord(row - 1, col))) {
+            neighboredTilesLocation.add(new Coord(row - 1, col));
         }
-        return result;
+        if (aggregatedTiles.containsKey(new Coord(row + 1, col))) {
+            neighboredTilesLocation.add(new Coord(row + 1, col));
+        }
+        if (aggregatedTiles.containsKey(new Coord(row, col - 1))) {
+            neighboredTilesLocation.add(new Coord(row, col - 1));
+        }
+        if (aggregatedTiles.containsKey(new Coord(row, col + 1))) {
+            neighboredTilesLocation.add(new Coord(row, col + 1));
+        }
+
+        return neighboredTilesLocation;
     }
 
     /**
@@ -99,37 +129,25 @@ public abstract class AbstractAggregate
      *
      * @param row
      * @param col
-     * @param newTile null if the new tile coordinates was not already in the
-     * aggregate
-     * @return true if the aggregate has been successfully enlarged
+     * @param newTile
+     * @param types
      */
-    public boolean enlargeAggregate(int row, int col, AbstractTile newTile)
+    public void enlargeAggregate(int row, int col, AbstractTile newTile, List<AbstractType> types)
     {
-        boolean result = false;
-
-        if (this.isNeighbor(row, col)) {
-            aggregatedTiles.put(new Coord(row, col), newTile);
-            result = true;
-        }
-
-        return result;
+        aggregatedTiles.put(new Coord(row, col), newTile);
+        aggregatedTypes.put(newTile, types);
     }
 
-    /**
-     * Check if an aggregate neighbor has the same type and can be merged
-     *
-     * @param row
-     * @param col
-     * @param neighborAggregate
-     * @return boolean
-     */
-    public abstract boolean areSameType(int row, int col, AbstractAggregate neighborAggregate);
-
-    public HashMap<Coord, AbstractTile> getAggregatedTiles()
+    public Map<Coord, AbstractTile> getAggregatedTiles()
     {
         return aggregatedTiles;
     }
 
+    public Map<AbstractTile, List<AbstractType>> getAggregatedTypes()
+    {
+        return aggregatedTypes;
+    }
+    
     public Set<Player> getPlayers()
     {
         return players;
@@ -149,9 +167,10 @@ public abstract class AbstractAggregate
     {
         //First we add the new tiles to the aggregation
         aggregatedTiles.putAll(neighborAggregate.getAggregatedTiles());
+        aggregatedTypes.putAll(neighborAggregate.getAggregatedTypes());
 
         //Get the common players of these two aggregates
-        HashSet<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
+        Set<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
 
         //Case if there are common player(s) in these two aggregate
         if (winningPlayers.isEmpty() == false) {
@@ -177,7 +196,7 @@ public abstract class AbstractAggregate
      * @param playersSet2
      * @return winnigPlayers
      */
-    protected static HashSet<Player> getCommonPlayers(Set<Player> playersSet1, Set<Player> playersSet2)
+    protected static Set<Player> getCommonPlayers(Set<Player> playersSet1, Set<Player> playersSet2)
     {
         Iterable<Player> iterator1 = playersSet1;
         Iterable<Player> iterator2 = playersSet2;
@@ -194,4 +213,11 @@ public abstract class AbstractAggregate
 
         return winningPlayers;
     }
+
+    /**
+     * Set the aggregation to "completed" if the aggregation is closed
+     *
+     * @return true if it is completed
+     */
+    public abstract boolean checkIsCompleted();
 }
