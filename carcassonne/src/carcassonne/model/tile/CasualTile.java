@@ -364,11 +364,10 @@ public class CasualTile extends AbstractTile
     @Override
     public String toString()
     {
-        return ""  + getNWW() + getNW() + getNNW() + getN() + getNNE() + getNE() + getNEE() +
-                getE() + 
-                getSEE() + getSE() + getSSE() + getS() + getSSW() + getSW() + getSWW() +
-                getW() +
-                getCNW() + getCNE() + getCSE() + getCSW();
+        return ""  + getNWW() + getNW() + getNNW() + "  " + getN() + "  " + getNNE() + getNE() + getNEE() + "\n" +
+                "  "  + getW() + "  "  + getCNW() + getCSW() + getCNE() + getCSE() + " "  + getE() + "\n" +
+                getSWW() + getSW() + getSSW() + "  "  + getS() + "  "  + getSSE() + getSE() + getSEE()                
+                ;
     }
 
     /**
@@ -455,18 +454,18 @@ public class CasualTile extends AbstractTile
 
     public static void main(String str[])
     {
-        CasualTile ct = new CasualTile("B", //Id
-                new FieldType(), new FieldType(), new FieldType(), //North section
+        CasualTile ct = new CasualTile("D", //Id
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
                 new CityType(), //East section
-                new FieldType(), new RoadType(), new FieldType(), //South section
-                new RiverType(), //West section
-                new FieldType(), new RoadType(), new CityType(), new RiverType()//Center section
+                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
         System.out.println(ct);
-        ct.rotateLeft();
+        /*ct.rotateLeft();
         System.out.println(ct);
         ct.rotateRight();
-        System.out.println(ct);
-
+        System.out.println(ct);*/
+        
     }
 }
