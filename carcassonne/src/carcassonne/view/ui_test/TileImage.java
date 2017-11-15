@@ -32,8 +32,7 @@ public class TileImage extends Coord
         AffineTransform tx = new AffineTransform();
         try 
         {
-            System.out.println("try to read resources/"+this.name+".png");
-            this.image = ImageIO.read(new File("resources/"+this.name + ".png"));
+            this.image = ImageIO.read(new File("resources/"+this.name + ".jpg"));
             tx.rotate(this.rotation, this.image.getWidth()/2, this.image.getHeight()/2);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
             System.out.println(this.name+" "+this.rotation);
