@@ -5,6 +5,8 @@
  */
 package carcassonne.view.ui_test;
 
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,15 +22,22 @@ public class TileImage extends Coord
 {
     private BufferedImage image;
     private String name;
+    private double rotation;
 
-    public TileImage(int x, int y, String name)
+    public TileImage(int x, int y, String name, int rotation)
     {
         super(x,y);
         this.name = name;
+        this.rotation = rotation * Math.PI / 180.0; //get rotation in radians
+        AffineTransform tx = new AffineTransform();
         try 
         {
             System.out.println("try to read resources/"+this.name+".png");
             this.image = ImageIO.read(new File("resources/"+this.name + ".png"));
+            tx.rotate(this.rotation, this.image.getWidth()/2, this.image.getHeight()/2);
+            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+            System.out.println(this.name+" "+this.rotation);
+            this.image = op.filter(image, null);
         } catch (IOException ex) {
             Logger.getLogger(TilesLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
