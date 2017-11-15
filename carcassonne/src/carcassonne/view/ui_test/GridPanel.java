@@ -20,7 +20,7 @@ public class GridPanel extends JPanel
     public static int INITIAL_TILE_WIDTH = 120;
     private Coord graphicalCenter;
     private int tileSize;
-    private List<TestLayer> layers = new ArrayList<TestLayer>();
+    private List<AbstractLayer> layers = new ArrayList<AbstractLayer>();
 
     public GridPanel()
     {
@@ -30,7 +30,7 @@ public class GridPanel extends JPanel
         setLayout(new MigLayout());
     }
     
-    public void addLayer(TestLayer test)
+    public void addLayer(AbstractLayer test)
     {
         layers.add(test);
     }
@@ -43,7 +43,7 @@ public class GridPanel extends JPanel
         
         // X
         // Y
-        for(TestLayer layer : layers)
+        for(AbstractLayer layer : layers)
         {
             layer.paint(g2);
         }

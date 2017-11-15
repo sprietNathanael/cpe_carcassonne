@@ -8,38 +8,29 @@ package carcassonne.view.ui_test;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
-import java.util.Set;
 
 /**
  *
  * @author nathanael
  */
-public class TestLayer
+public class PlacementLayer extends AbstractLayer
 {
-    private ArrayList<Coord> positions;
-    GridPanel gc;
     
-
-    public TestLayer(GridPanel gc)
+    public PlacementLayer(GridPanel gc)
     {
-        this.gc = gc;
-        this.positions = new ArrayList<>();
+        super(gc);
+        this.positions = new ArrayList<Coord>();
     }
-    
-    public void addPosition(Coord pos)
-    {
-        this.positions.add(pos);
-    }
-    
+        
     public void paint(Graphics2D g2)
     {
+        System.out.println("carcassonne.view.ui_test.PlacementLayer.paint()");
         int placeHolderSize = this.gc.getTileSize();
         int shift = placeHolderSize/30;
         int thickness = placeHolderSize/14;
         int tileSize = placeHolderSize - (2*shift);
         Coord center = this.gc.getGraphicalCenter();
         g2.setColor(Color.LIGHT_GRAY);
-        System.out.println("carcassonne.view.ui_test.TestLayer.paint()");
         for(Coord p : this.positions)
         {
             int x = center.getX()+(placeHolderSize*p.getX())+shift;
