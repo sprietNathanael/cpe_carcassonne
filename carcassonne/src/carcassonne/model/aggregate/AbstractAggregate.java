@@ -41,27 +41,39 @@ public abstract class AbstractAggregate
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
+
+        this.aggregatedTypes = new HashMap();
         this.aggregatedTypes.put(firstTile, types);
+
         this.players = new HashSet();
+        this.meepleNumber = 0;
+
         this.isCompleted = false;
     }
 
     /**
-     * Construct a new aggregate, affected to a new player using a meeple
+     * Construct a new aggregate, affected to a new player using the meeple he
+     * just placed
      *
      * @param row
      * @param col
      * @param firstTile
      * @param types List of all the new tile types that compose the aggregation
      * @param player
-     * @param meeples
+     * @param meepleValue
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meeples)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meepleValue)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
+
+        this.aggregatedTypes = new HashMap();
+        this.aggregatedTypes.put(firstTile, types);
+
+        this.players = new HashSet();
         this.players.add(player);
-        this.meepleNumber = meeples;
+
+        this.meepleNumber = meepleValue;
         this.isCompleted = false;
     }
 
@@ -69,7 +81,7 @@ public abstract class AbstractAggregate
      * Add a Meeple to this aggregate. If this aggregate is already affected to
      * another player, the player can't add its own meeple on this aggregate
      *
-     * @param number number of meeple added
+     * @param number number of the new meeple value
      * @param player
      * @return true if a meeple has been added
      */
@@ -106,7 +118,7 @@ public abstract class AbstractAggregate
 
         /**
          * We test all the possible neighbored locations, and add every
-         * locations where the aggregation is present
+         * locations where this current aggregation is present
          */
         if (aggregatedTiles.containsKey(new Coord(row - 1, col))) {
             neighboredTilesLocation.add(new Coord(row - 1, col));
@@ -147,7 +159,7 @@ public abstract class AbstractAggregate
     {
         return aggregatedTypes;
     }
-    
+
     public Set<Player> getPlayers()
     {
         return players;

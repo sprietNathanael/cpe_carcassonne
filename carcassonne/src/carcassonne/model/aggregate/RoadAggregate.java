@@ -7,7 +7,6 @@ package carcassonne.model.aggregate;
 
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.type.AbstractType;
 import java.util.List;
 
@@ -38,11 +37,11 @@ public class RoadAggregate extends AbstractAggregate
      * @param firstTile
      * @param types
      * @param player
-     * @param meeples
+     * @param meepleValue
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meeples)
+    public RoadAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meepleValue)
     {
-        super(row, col, firstTile, types, player, meeples);
+        super(row, col, firstTile, types, player, meepleValue);
     }
 
     /**

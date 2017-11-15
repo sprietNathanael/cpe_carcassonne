@@ -38,11 +38,11 @@ public class CityAggregate extends AbstractAggregate
      * @param firstTile
      * @param types
      * @param player
-     * @param meeples
+     * @param meepleValue
      */
-    public CityAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meeples)
+    public CityAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meepleValue)
     {
-        super(row, col, firstTile, types, player, meeples);
+        super(row, col, firstTile, types, player, meepleValue);
     }
 
     /**
