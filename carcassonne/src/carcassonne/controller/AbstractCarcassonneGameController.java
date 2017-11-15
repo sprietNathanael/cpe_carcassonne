@@ -5,6 +5,7 @@
  */
 package carcassonne.controller;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
@@ -18,6 +19,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 {
 
     private CarcassonneGame carcassonneGame;
+    private AbstractTile currentTile;
 
     /**
      * Constructor for an AbstractCarcassonneGameController
@@ -58,4 +60,12 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         return this.carcassonneGame.drawFromPile();
     }
 
+    public void putTile(Coord c, AbstractTile tile )
+    {
+        
+    }
+    
+    
+    
+    
 }
