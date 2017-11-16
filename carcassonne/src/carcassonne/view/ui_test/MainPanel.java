@@ -22,17 +22,17 @@ public class MainPanel extends JPanel
         setLayout(new BorderLayout());
         GridPanel gridPanel = new GridPanel();
         TilesLayer tilesLayer = new TilesLayer(gridPanel);
-        PlacementLayer testLayer = new PlacementLayer(gridPanel);
-        gridPanel.addLayer(testLayer);
+        PlacementLayer placementLayer = new PlacementLayer(gridPanel);
+        gridPanel.addLayer(placementLayer);
         gridPanel.addLayer(tilesLayer);
         //testLayer.addPosition(new Coord(0, 0));
         tilesLayer.addPosition(new TileImage(0,0,"A",0));
         tilesLayer.addPosition(new TileImage(1,0,"B",90));
         tilesLayer.addPosition(new TileImage(2,0,"C",180));
         tilesLayer.addPosition(new TileImage(3,0,"D",270));
-        testLayer.addPosition(new Coord(0, 1));
-        testLayer.addPosition(new Coord(0, -1));
-        testLayer.addPosition(new Coord(-1, 0));
+        placementLayer.addPosition(new Coord(0, 1));
+        placementLayer.addPosition(new Coord(0, -1));
+        placementLayer.addPosition(new Coord(-1, 0));
         
         this.add(gridPanel);
     }
