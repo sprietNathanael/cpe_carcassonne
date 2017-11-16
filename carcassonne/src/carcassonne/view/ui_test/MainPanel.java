@@ -23,6 +23,7 @@ public class MainPanel extends JPanel
         GridPanel gridPanel = new GridPanel();
         TilesLayer tilesLayer = new TilesLayer(gridPanel);
         PlacementLayer placementLayer = new PlacementLayer(gridPanel);
+        placementLayer.setPreview(new TileImage(0,1,"E",0),false);
         gridPanel.addLayer(placementLayer);
         gridPanel.addLayer(tilesLayer);
         //testLayer.addPosition(new Coord(0, 0));
