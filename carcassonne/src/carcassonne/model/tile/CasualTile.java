@@ -465,7 +465,13 @@ public class CasualTile extends AbstractTile
         /*ct.rotateLeft();
         System.out.println(ct);
         ct.rotateRight();
-        System.out.println(ct);
+        System.out.println(ct);*/
 
+    }
+
+    @Override
+    public AbstractType getType(String coordinates)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

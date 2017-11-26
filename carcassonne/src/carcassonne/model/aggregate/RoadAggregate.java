@@ -24,7 +24,7 @@ public class RoadAggregate extends AbstractAggregate
      * @param firstTile
      * @param types
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types)
+    public RoadAggregate(int row, int col, AbstractTile firstTile, List<String> types)
     {
         super(row, col, firstTile, types);
     }
@@ -39,7 +39,7 @@ public class RoadAggregate extends AbstractAggregate
      * @param player
      * @param meepleValue
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meepleValue)
+    public RoadAggregate(int row, int col, AbstractTile firstTile, List<String> types, Player player, int meepleValue)
     {
         super(row, col, firstTile, types, player, meepleValue);
     }

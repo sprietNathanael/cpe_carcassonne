@@ -24,7 +24,7 @@ public abstract class AbstractAggregate
 {
 
     protected Map<Coord, AbstractTile> aggregatedTiles;
-    protected Map<AbstractTile, List<AbstractType>> aggregatedTypes;
+    protected Map<AbstractTile, List<String>> aggregatedPositionTypes;
     protected Set<Player> players;
     protected int meepleNumber;
     protected boolean isCompleted;
@@ -37,13 +37,13 @@ public abstract class AbstractAggregate
      * @param firstTile
      * @param types List of all the new tile types that compose the aggregation
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<String> types)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
 
-        this.aggregatedTypes = new HashMap();
-        this.aggregatedTypes.put(firstTile, types);
+        this.aggregatedPositionTypes = new HashMap();
+        this.aggregatedPositionTypes.put(firstTile, types);
 
         this.players = new HashSet();
         this.meepleNumber = 0;
@@ -62,13 +62,13 @@ public abstract class AbstractAggregate
      * @param player
      * @param meepleValue
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<AbstractType> types, Player player, int meepleValue)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<String> types, Player player, int meepleValue)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
 
-        this.aggregatedTypes = new HashMap();
-        this.aggregatedTypes.put(firstTile, types);
+        this.aggregatedPositionTypes = new HashMap();
+        this.aggregatedPositionTypes.put(firstTile, types);
 
         this.players = new HashSet();
         this.players.add(player);
@@ -144,10 +144,10 @@ public abstract class AbstractAggregate
      * @param newTile
      * @param types
      */
-    public void enlargeAggregate(int row, int col, AbstractTile newTile, List<AbstractType> types)
+    public void enlargeAggregate(int row, int col, AbstractTile newTile, List<String> types)
     {
         aggregatedTiles.put(new Coord(row, col), newTile);
-        aggregatedTypes.put(newTile, types);
+        aggregatedPositionTypes.put(newTile, types);
     }
 
     public Map<Coord, AbstractTile> getAggregatedTiles()
@@ -155,9 +155,9 @@ public abstract class AbstractAggregate
         return aggregatedTiles;
     }
 
-    public Map<AbstractTile, List<AbstractType>> getAggregatedTypes()
+    public Map<AbstractTile, List<String>> getAggregatedTypes()
     {
-        return aggregatedTypes;
+        return aggregatedPositionTypes;
     }
 
     public Set<Player> getPlayers()
@@ -179,7 +179,7 @@ public abstract class AbstractAggregate
     {
         //First we add the new tiles to the aggregation
         aggregatedTiles.putAll(neighborAggregate.getAggregatedTiles());
-        aggregatedTypes.putAll(neighborAggregate.getAggregatedTypes());
+        aggregatedPositionTypes.putAll(neighborAggregate.getAggregatedTypes());
 
         //Get the common players of these two aggregates
         Set<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
