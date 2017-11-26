@@ -89,7 +89,7 @@ public abstract class AbstractAggregate
     {
         boolean result = false;
 
-        if (player == null) {
+        if (this.players.isEmpty()) {
             this.players.add(player);
             this.meepleNumber += number;
             result = true;
