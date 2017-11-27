@@ -6,6 +6,7 @@
 package carcassonne.controller;
 
 import carcassonne.coord.Coord;
+import carcassonne.model.board.Board;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
@@ -110,6 +111,11 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         // TODO : compter les points
         return carcassonneGame.nextPlayer();
+    }
+    
+    public Board getBoard()
+    {
+        return carcassonneGame.getBoard();
     }
 
 }

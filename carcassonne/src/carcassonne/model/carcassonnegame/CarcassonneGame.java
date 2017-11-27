@@ -147,4 +147,9 @@ public class CarcassonneGame implements CarcassonneGameInterface
         
     }
     
+    public Board getBoard (){
+        return this.board;
+        
+    }
+    
 }
