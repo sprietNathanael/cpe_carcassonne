@@ -57,6 +57,7 @@ public class PlayerTest
         assertEquals(true, result);
     }
     
+<<<<<<< HEAD
     /**
      * Test of checkMeepleAvailable method, of class Player.
      */
@@ -90,4 +91,7 @@ public class PlayerTest
         }
         assertEquals(expResult, result);
     }    
+=======
+    
+>>>>>>> develop
 }
