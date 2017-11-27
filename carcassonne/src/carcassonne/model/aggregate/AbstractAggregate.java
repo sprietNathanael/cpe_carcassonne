@@ -8,7 +8,6 @@ package carcassonne.model.aggregate;
 import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.type.AbstractType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -107,14 +106,14 @@ public abstract class AbstractAggregate
      * @return List the coordinates of the neighbored emplacement, return
      * [-1;-1] if the aggregate dosen't
      */
-    public List<Coord> getNeighboredCoordinates(int row, int col)
+    public Set<Coord> getNeighboredCoordinates(int row, int col)
     {
         /**
          * Coordinates of the current aggregate tiles that are neighbored with
          * the requested emplacement
          */
-        List<Coord> neighboredTilesLocation;
-        neighboredTilesLocation = new ArrayList<>();
+        Set<Coord> neighboredTilesLocation;
+        neighboredTilesLocation = new HashSet<>();
 
         /**
          * We test all the possible neighbored locations, and add every
@@ -185,7 +184,7 @@ public abstract class AbstractAggregate
         Set<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
 
         //Case if there are common player(s) in these two aggregate
-        if (winningPlayers.isEmpty() == false) {
+        if (!winningPlayers.isEmpty()) {
             //Meeples number added up using the neighbor aggregate
             this.meepleNumber += neighborAggregate.getMeepleNumber();
             //Players updated using the winning players of these two aggregates
@@ -197,6 +196,11 @@ public abstract class AbstractAggregate
             this.players = neighborAggregate.getPlayers();
             //The meeplenumber corresponds to the winning players, e.i. the neighbor aggregate
             this.meepleNumber = neighborAggregate.getMeepleNumber();
+        }
+        //Case if the players of the current aggregate have the same meeples number than the players of the neighbored one
+        else if (this.meepleNumber == neighborAggregate.getMeepleNumber()) {
+            //The neighbor aggregate players are now the winning players
+            this.players.addAll(neighborAggregate.getPlayers());
         }
     }
 
@@ -211,18 +215,16 @@ public abstract class AbstractAggregate
     protected static Set<Player> getCommonPlayers(Set<Player> playersSet1, Set<Player> playersSet2)
     {
         Iterable<Player> iterator1 = playersSet1;
-        Iterable<Player> iterator2 = playersSet2;
-        HashSet<Player> winningPlayers;
+        HashSet<Player> winningPlayers = new HashSet<>();
 
         winningPlayers = new HashSet<>();
         for (Player player1 : iterator1) {
-            for (Player player2 : iterator2) {
-                if (player1 == player2) {
-                    winningPlayers.add(player1);
-                }
+            //Test if we can add the player 1 in the other collection, if not that means it is already present in it
+            if (!playersSet2.add(player1)) {
+                winningPlayers.add(player1);
             }
-        }
-
+        }    
+        
         return winningPlayers;
     }
 

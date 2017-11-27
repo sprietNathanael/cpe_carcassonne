@@ -10,11 +10,11 @@ import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
-import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,17 +31,50 @@ import static org.junit.Assert.*;
  */
 public class AbstractAggregateTest
 {
-    private static AbstractTile initiateAbstractTile(){
+
+    public static AbstractTile initiateAbstractTile()
+    {
         return new CasualTile("A", //Id
-            new FieldType(), new FieldType(), new FieldType(), //North section
-            new FieldType(), //East section
-            new FieldType(), new RoadType(), new FieldType(), //South section
-            new FieldType(), //West section
-            new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType() //Center section
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new RoadType(), //East section
+                new FieldType(), new RoadType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new RoadType(), new RoadType(), new RoadType(), new RoadType() //Center section
         );
     }
-    
-    private static Player initiatePlayer(){
+
+    public static AbstractTile initiateAbstractTileBis()
+    {
+        return new CasualTile("B", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new RoadType(), //East section
+                new FieldType(), new FieldType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType() //Center section
+        );
+    }
+
+    public static AbstractAggregate initiateAggregate(int x, int y)
+    {
+        List<String> types = new ArrayList<>();
+        types.add("S");
+        types.add("E");
+
+        return new CityAggregate(x, y, initiateAbstractTile(), types);
+    }
+
+    public static List<String> initiateTypes()
+    {
+        List<String> types = new ArrayList<>();
+        types.add("S");
+        types.add("E");
+        types.add("CNE");
+
+        return types;
+    }
+
+    public static Player initiatePlayer()
+    {
         return new Player("Etidur :)", Color.GREEN);
     }
 
@@ -75,13 +108,7 @@ public class AbstractAggregateTest
     @Test
     public void testAddMeeple()
     {
-        System.out.println("addMeeple");
-        
-        AbstractTile tile = initiateAbstractTile();
-        List<String> types = new ArrayList<>();
-        types.add("S");
-        
-        AbstractAggregate instance = new CityAggregate(0, 0, tile, types);
+        AbstractAggregate instance = new AbstractAggregateImpl();
 
         Player player = initiatePlayer();
         boolean result = instance.addMeeple(2, player);
@@ -94,14 +121,8 @@ public class AbstractAggregateTest
     @Test
     public void testAddMeeple2()
     {
-        System.out.println("addMeeple");
-        
-        AbstractTile tile = initiateAbstractTile();
-        List<String> types = new ArrayList<>();
-        types.add("S");
         Player player = initiatePlayer();
-        
-        AbstractAggregate instance = new CityAggregate(0, 0, tile, types, player, 1);
+        AbstractAggregate instance = new AbstractAggregateImpl(2, player);
 
         boolean result = instance.addMeeple(2, player);
         assertEquals(false, result);
@@ -113,15 +134,44 @@ public class AbstractAggregateTest
     @Test
     public void testGetNeighboredCoordinates()
     {
-        System.out.println("getNeighboredCoordinates");
-        int row = 0;
-        int col = 0;
-        AbstractAggregate instance = null;
-        List<Coord> expResult = null;
-        List<Coord> result = instance.getNeighboredCoordinates(row, col);
+        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        Set<Coord> expResult = new HashSet<>();
+        expResult.add(new Coord(0,1));
+        
+        Set<Coord> result = instance.getNeighboredCoordinates(0, 0);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getNeighboredCoordinates method, of class AbstractAggregate.
+     */
+    @Test
+    public void testGetNeighboredCoordinates2()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        instance.enlargeAggregate(1, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
+        
+        Set<Coord> expResult = new HashSet<>();
+        expResult.add(new Coord(0,1));
+        expResult.add(new Coord(1,0));
+        
+        Set<Coord> result = instance.getNeighboredCoordinates(0,0);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getNeighboredCoordinates method, of class AbstractAggregate.
+     */
+    @Test
+    public void testGetNeighboredCoordinates3()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        instance.enlargeAggregate(1, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
+        
+        Set<Coord> expResult = new HashSet<>();
+        
+        Set<Coord> result = instance.getNeighboredCoordinates(2,2);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -130,60 +180,16 @@ public class AbstractAggregateTest
     @Test
     public void testEnlargeAggregate()
     {
-        System.out.println("enlargeAggregate");
-        int row = 0;
-        int col = 0;
-        AbstractTile newTile = null;
-        List<String> types = null;
-        AbstractAggregate instance = null;
-        instance.enlargeAggregate(row, col, newTile, types);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        AbstractAggregate instance = new AbstractAggregateImpl();
 
-    /**
-     * Test of getAggregatedTiles method, of class AbstractAggregate.
-     */
-    @Test
-    public void testGetAggregatedTiles()
-    {
-        System.out.println("getAggregatedTiles");
-        AbstractAggregate instance = null;
-        Map<Coord, AbstractTile> expResult = null;
-        Map<Coord, AbstractTile> result = instance.getAggregatedTiles();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        List<String> newTypes = new ArrayList<>();
+        newTypes.add("S");
+        newTypes.add("W");
+        AbstractTile newTile = initiateAbstractTileBis();
 
-    /**
-     * Test of getAggregatedTypes method, of class AbstractAggregate.
-     */
-    @Test
-    public void testGetAggregatedTypes()
-    {
-        System.out.println("getAggregatedTypes");
-        AbstractAggregate instance = null;
-        Map<AbstractTile, List<String>> expResult = null;
-        Map<AbstractTile, List<String>> result = instance.getAggregatedTypes();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getPlayers method, of class AbstractAggregate.
-     */
-    @Test
-    public void testGetPlayers()
-    {
-        System.out.println("getPlayers");
-        AbstractAggregate instance = null;
-        Set<Player> expResult = null;
-        Set<Player> result = instance.getPlayers();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //Ajout d'une tuile à l'aggrégat, sur la position 0;1
+        instance.enlargeAggregate(0, 1, newTile, newTypes);
+        assertEquals(instance.aggregatedTiles.get(new Coord(0, 1)), newTile);
     }
 
     /**
@@ -192,43 +198,180 @@ public class AbstractAggregateTest
     @Test
     public void testGetMeepleNumber()
     {
-        System.out.println("getMeepleNumber");
-        AbstractAggregate instance = null;
-        int expResult = 0;
+        AbstractAggregate instance = new AbstractAggregateImpl(2, AbstractAggregateTest.initiatePlayer());
+        int expResult = 2;
         int result = instance.getMeepleNumber();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
-     * Test of merge method, of class AbstractAggregate.
+     * Test of merge method, if the aggregates are from the same player(s)
      */
     @Test
     public void testMerge()
     {
-        System.out.println("merge");
-        AbstractAggregate neighborAggregate = null;
-        AbstractAggregate instance = null;
+        AbstractAggregate instance = new AbstractAggregateImpl();
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+
+        instance.addMeeple(2, new Player("Mo", Color.yellow));
+
         instance.merge(neighborAggregate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+
+        assertEquals(3, instance.meepleNumber);
     }
 
     /**
-     * Test of getCommonPlayers method, of class AbstractAggregate.
+     * Test of merge method, if the aggregates are from different player
+     */
+    @Test
+    public void testMerge2()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl();
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+
+        instance.addMeeple(2, new Player("test", Color.yellow));
+
+        instance.merge(neighborAggregate);
+
+        assertEquals(2, instance.meepleNumber);
+    }
+
+    /**
+     * Test of merge method, if the aggregates are from different player and have same meeple number
+     */
+    @Test
+    public void testMerge2Bis()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl();
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+
+        instance.addMeeple(2, new Player("test", Color.yellow));
+
+        instance.merge(neighborAggregate);
+        
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(new Player("test", Color.yellow));
+
+        assertEquals(expResult, instance.players);
+    }
+    
+    /**
+     * Test of merge method, if the aggregates are from different player and have same meeple number
+     */
+    @Test
+    public void testMerge3()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl();
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(2, new Player("Mo", Color.yellow));
+
+        instance.addMeeple(2, new Player("test", Color.yellow));
+
+        instance.merge(neighborAggregate);
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(new Player("Mo", Color.yellow));
+        expResult.add(new Player("test", Color.yellow));
+        
+        assertEquals(expResult, instance.players);
+    }
+    
+    /**
+     * Test of merge method, if the current aggregate doesn't have any player
+     */
+    @Test
+    public void testMerge4()
+    {
+        AbstractAggregate instance = new AbstractAggregateImpl();
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(2, new Player("Mo", Color.yellow));
+        
+        //Simulate an aggregate with already 2 players on it 
+        neighborAggregate.players.add(new Player("Koukou", Color.DARK_GRAY));
+        
+        instance.merge(neighborAggregate);
+        
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(new Player("Mo", Color.yellow));
+        expResult.add(new Player("Koukou", Color.DARK_GRAY));
+        
+        assertEquals(expResult, instance.players);
+    }
+
+    /**
+     * Test of getCommonPlayers, if there is one common player in these
+     * collections
      */
     @Test
     public void testGetCommonPlayers()
     {
-        System.out.println("getCommonPlayers");
-        Set<Player> playersSet1 = null;
-        Set<Player> playersSet2 = null;
-        Set<Player> expResult = null;
+        Set<Player> playersSet1 = new HashSet<>();
+        playersSet1.add(new Player("C'est moi ;)", Color.green));
+
+        Set<Player> playersSet2 = new HashSet<>();
+        playersSet2.add(new Player("C'est moi ;)", Color.green));
+        playersSet2.add(new Player("C'est pas moi :(", Color.red));
+
+        //Result expected
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(new Player("C'est moi ;)", Color.green));
+
         Set<Player> result = AbstractAggregate.getCommonPlayers(playersSet1, playersSet2);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+    }
+
+    /**
+     * Test of getCommonPlayers if there is no player in one of the collection
+     */
+    @Test
+    public void testGetCommonPlayers2()
+    {
+        Set<Player> playersSet1 = new HashSet<>();
+
+        Set<Player> playersSet2 = new HashSet<>();
+        playersSet2.add(new Player("C'est moi ;)", Color.green));
+        playersSet2.add(new Player("C'est pas moi :(", Color.red));
+
+        //Result expected
+        Set<Player> expResult = new HashSet<>();
+
+        Set<Player> result = AbstractAggregate.getCommonPlayers(playersSet1, playersSet2);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getCommonPlayers if there is no player in any collection
+     */
+    @Test
+    public void testGetCommonPlayers3()
+    {
+        Set<Player> playersSet1 = new HashSet<>();
+
+        Set<Player> playersSet2 = new HashSet<>();
+
+        //Result expected
+        Set<Player> expResult = new HashSet<>();
+
+        Set<Player> result = AbstractAggregate.getCommonPlayers(playersSet1, playersSet2);
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getCommonPlayers if there is no player in common
+     */
+    @Test
+    public void testGetCommonPlayers4()
+    {
+        Set<Player> playersSet1 = new HashSet<>();
+        playersSet1.add(new Player("C'est moi ;)", Color.green));
+        playersSet1.add(new Player("C'est pas moi :(", Color.red));
+        playersSet1.add(new Player("Bonjouue", Color.red));
+
+        Set<Player> playersSet2 = new HashSet<>();
+        playersSet2.add(new Player("C'est pas moi non plus !", Color.red));
+
+        //Result expected
+        Set<Player> expResult = new HashSet<>();
+
+        Set<Player> result = AbstractAggregate.getCommonPlayers(playersSet1, playersSet2);
+        assertEquals(expResult, result);
     }
 
     /**
@@ -237,13 +380,10 @@ public class AbstractAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
-        System.out.println("checkIsCompleted");
-        AbstractAggregate instance = null;
-        boolean expResult = false;
-        boolean result = instance.checkIsCompleted();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        System.out.println("Tester 'checkIsCompleted' pour chaque classe qui étend AbstractAggregate");
+        AbstractAggregate abstractAggregate = new AbstractAggregateImpl();
+        boolean result = abstractAggregate.checkIsCompleted();
+        assertEquals(false, result);
     }
 
     public class AbstractAggregateImpl extends AbstractAggregate
@@ -251,7 +391,12 @@ public class AbstractAggregateTest
 
         public AbstractAggregateImpl()
         {
-            super(0, 0, null, null);
+            super(0, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
+        }
+
+        public AbstractAggregateImpl(int number, Player player)
+        {
+            super(0, 1, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes(), player, number);
         }
 
         public boolean checkIsCompleted()
