@@ -20,13 +20,12 @@ public class Coord
         this.col = col;
     }
 
-    //@TODO: fonctionnement des deux override ?
     @Override
     public int hashCode()
     {
-        int hash = 7;
-        hash = 71 * hash + this.row;
-        hash = 71 * hash + this.col;
+        int hash = 3;
+        hash = 89 * hash + this.row;
+        hash = 89 * hash + this.col;
         return hash;
     }
 
@@ -51,5 +50,5 @@ public class Coord
         }
         return true;
     }
-
+    
 }

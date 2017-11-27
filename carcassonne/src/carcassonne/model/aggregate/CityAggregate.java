@@ -45,7 +45,7 @@ public class CityAggregate extends AbstractAggregate
     }
 
     /**
-     * @TODO: Gérer les tests pour obtenir une ville complétée
+     * TODO: Gérer les tests pour obtenir une ville complétée
      *
      * @return true if the city is completed
      */
