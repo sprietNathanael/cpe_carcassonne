@@ -50,7 +50,6 @@ public class PlacementLayer extends AbstractLayer implements GridMouseListener
         
     public void paint(Graphics2D g2)
     {
-        System.out.println("carcassonne.view.ui_test.PlacementLayer.paint()");
         int placeHolderSize = this.gc.getTileSize();
         int shift = placeHolderSize/30;
         int thickness = placeHolderSize/14;
@@ -102,7 +101,14 @@ public class PlacementLayer extends AbstractLayer implements GridMouseListener
     @Override
     public void mouseClicked(MouseEvent e, Coord p)
     {
-        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        if (e.getButton() == MouseEvent.BUTTON3) {
+            if (this.previewImage != null) {
+                System.out.println("clicked : "+e.getButton());
+                e.consume();
+                this.previewImage.turnRight();
+                this.gc.repaint();
+            }
+        }
     }
     
 }

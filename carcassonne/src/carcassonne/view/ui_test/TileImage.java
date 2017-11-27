@@ -28,20 +28,39 @@ public class TileImage extends Coord
     {
         super(x,y);
         this.name = name;
-        this.rotation = rotation * Math.PI / 180.0; //get rotation in radians
+        this.rotation = rotation;
+        this.buildImage();
+    }
+    
+    private void buildImage()
+    {
         AffineTransform tx = new AffineTransform();
+        this.image = null;
         try 
         {
+            double rad_rotation = this.rotation * Math.PI / 180.0; //get rotation in radians
             this.image = ImageIO.read(new File("resources/"+this.name + ".jpg"));
-            tx.rotate(this.rotation, this.image.getWidth()/2, this.image.getHeight()/2);
+            tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
             System.out.println(this.name+" "+this.rotation);
             this.image = op.filter(image, null);
         } catch (IOException ex) {
             Logger.getLogger(TilesLayer.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
 
-        
+    
+    public void turnRight()
+    {
+        this.rotation += 90;
+        this.rotation = this.rotation > 360 ? this.rotation - 360 : this.rotation; 
+        this.buildImage();
+    }
+    
+    public void turnLeft()
+    {
+        this.rotation -= 90;
+        this.rotation = this.rotation > 360 ? this.rotation - 360 : this.rotation;       
     }
     
     public void setX(int x)
@@ -62,7 +81,6 @@ public class TileImage extends Coord
     
     public BufferedImage getImage()
     {
-        System.out.println("carcassonne.view.ui_test.TileImage.getImage()");
         return this.image;
     }
     

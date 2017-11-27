@@ -28,7 +28,6 @@ public class TilesLayer extends AbstractLayer
     
     public void paint(Graphics2D g2)
     {
-        System.out.println("carcassonne.view.ui_test.TilesLayer.paint()");
         int tileSize = this.gc.getTileSize();
         Coord center = this.gc.getGraphicalCenter();
         for(Coord p : this.positions)
