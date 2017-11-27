@@ -45,7 +45,7 @@ public class RoadAggregate extends AbstractAggregate
     }
 
     /**
-     * @TODO: Gérer les tests pour savoir si une route est terminée
+     * TODO: Gérer les tests pour savoir si une route est terminée
      *
      * @return True if the aggregation is completed
      */
