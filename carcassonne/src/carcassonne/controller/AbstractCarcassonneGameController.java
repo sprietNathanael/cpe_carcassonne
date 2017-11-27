@@ -75,7 +75,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     /**
      * gets the first meeple available of the current player
-     * @return 
+     *
+     * @return
      * @throws Exception
      */
     private Meeple getCurrentPlayerMeepleAvailable() throws Exception
@@ -98,6 +99,17 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         Meeple m = getCurrentPlayerMeepleAvailable();
         currentTile.putMeeple(coordinates, m);
+    }
+
+    /**
+     * Ends the turn of a player
+     *
+     * @return the next player
+     */
+    public Player endTurn()
+    {
+        // TODO : compter les points
+        return carcassonneGame.nextPlayer();
     }
 
 }
