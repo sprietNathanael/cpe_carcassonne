@@ -44,6 +44,22 @@ public class TileImage extends Coord
         
     }
     
+    public void setX(int x)
+    {
+        this.x = x;
+    }
+    
+    public void setY(int y)
+    {
+        this.y = y;
+    }
+    
+    public void setCoord(Coord c)
+    {
+        this.setX(c.getX());
+        this.setY(c.getY());
+    }
+    
     public BufferedImage getImage()
     {
         System.out.println("carcassonne.view.ui_test.TileImage.getImage()");

@@ -6,7 +6,9 @@
 package carcassonne.view.ui_test;
 
 import java.awt.Graphics2D;
+import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
+import javax.swing.event.MouseInputListener;
 
 /**
  *
@@ -16,6 +18,8 @@ public class AbstractLayer
 {
     GridPanel gc;
     protected ArrayList<Coord> positions;
+    private GridMouseAdapter mouseListener;
+    private boolean visible;
     
     public AbstractLayer(GridPanel gc)
     {
@@ -32,4 +36,31 @@ public class AbstractLayer
     {
     }
     
+    public void attachMouseInputListener(GridMouseAdapter mouseListener) {
+        this.mouseListener = mouseListener;
+        this.gc.addMouseListener(this.mouseListener);
+        this.gc.addMouseMotionListener(this.mouseListener);
+    }
+    
+    public boolean isVisible()
+    {
+        return this.visible;
+    }
+    
+    public void onShow()
+    {
+        this.visible = true;
+    }
+    
+    public void onHide()
+    {
+        this.visible = false;
+        if(this.mouseListener != null)
+        {
+            this.gc.removeMouseMotionListener(this.mouseListener);
+            this.gc.removeMouseListener(this.mouseListener);
+            this.mouseListener = null;
+        }
+    }
+            
 }

@@ -11,8 +11,8 @@ package carcassonne.view.ui_test;
  */
 public class Coord
 {
-    private int x;
-    private int y;
+    protected int x;
+    protected int y;
 
     public Coord(int x, int y)
     {
@@ -29,6 +29,37 @@ public class Coord
     {
         return y;
     }
+
+    @Override
+    public String toString()
+    {
+        return "x="+this.x+",y="+this.y;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Coord other = (Coord) obj;
+        if (this.x != other.x) {
+            return false;
+        }
+        if (this.y != other.y) {
+            return false;
+        }
+        return true;
+    }
+    
+    
+    
     
     
     

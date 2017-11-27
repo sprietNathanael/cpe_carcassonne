@@ -9,13 +9,14 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 /**
  *
  * @author nathanael
  */
-public class PlacementLayer extends AbstractLayer
+public class PlacementLayer extends AbstractLayer implements GridMouseListener
 {
     private TileImage previewImage;
     private static final Composite ALLOWED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f);
@@ -27,12 +28,24 @@ public class PlacementLayer extends AbstractLayer
         super(gc);
         this.positions = new ArrayList<Coord>();
         this.previewImage = null;
+        this.allowedPreview = false;
     }
     
-    public void setPreview(TileImage preview, boolean allowed)
+    public void onShow()
     {
+        super.onShow();
+        this.attachMouseInputListener(new GridMouseAdapter(this.gc,this));
+    }
+    
+    public void onHide()
+    {
+        super.onHide();
+    }
+    
+    public void setPreview(TileImage preview)
+    {
+        this.previewImage = null;
         this.previewImage = preview;
-        this.allowedPreview = allowed;
     }
         
     public void paint(Graphics2D g2)
@@ -67,6 +80,29 @@ public class PlacementLayer extends AbstractLayer
             
             
         }
+    }
+
+    @Override
+    public void tileEntered(MouseEvent e, Coord c)
+    {
+        if(this.positions.contains(c))
+        {
+            this.previewImage.setCoord(c);
+            this.gc.repaint();
+        }
+    }
+
+    @Override
+    public void tileExited(MouseEvent e, Coord p)
+    {
+        this.previewImage.setCoord(new Coord(-1,-1));
+        this.gc.repaint();
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e, Coord p)
+    {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
 }

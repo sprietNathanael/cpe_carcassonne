@@ -33,6 +33,7 @@ public class GridPanel extends JPanel
     public void addLayer(AbstractLayer test)
     {
         layers.add(test);
+        test.onShow();
     }
 
     @Override
@@ -58,6 +59,17 @@ public class GridPanel extends JPanel
     public Coord getGraphicalCenter()
     {
         return this.graphicalCenter;
+    }
+    
+    public Coord getGridPositionFromCoordinates(double x, double y)
+    {
+        double adjustedX = x - this.graphicalCenter.getX();
+        double adjustedY = y - this.graphicalCenter.getY();
+        int gridX = (int)((x-this.graphicalCenter.getX()) / this.tileSize);
+        int gridY = (int)((y-this.graphicalCenter.getY()) / this.tileSize);
+        gridX = adjustedX > 0 ? gridX : gridX - 1;
+        gridY = adjustedY > 0 ? gridY : gridY -1;
+        return new Coord(gridX,gridY);
     }
     
     
