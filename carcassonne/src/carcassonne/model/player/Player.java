@@ -7,6 +7,7 @@ package carcassonne.model.player;
 
 import java.awt.Color;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * Represents a player
@@ -50,6 +51,37 @@ public class Player
     public ArrayList<Meeple> getMeeple()
     {
         return this.meeples;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 59 * hash + Objects.hashCode(this.name);
+        hash = 59 * hash + Objects.hashCode(this.color);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj)
+    {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Player other = (Player) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.color, other.color)) {
+            return false;
+        }
+        return true;
     }
 
     /**
