@@ -5,9 +5,9 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.type.AbstractType;
 import java.util.List;
 
 /**
@@ -45,6 +45,30 @@ public class RoadAggregate extends AbstractAggregate
     }
 
     /**
+     * Complete the road in case of a loop into a crossroad: when the beginning
+     * and the ending of a road is in the same tile
+     *
+     * @param loopTile the similar type tile that just added into the aggregate
+     * @param locationType location of the last segment road ("S", "N", "E" or
+     * "W")
+     * @return true if the road is now complete
+     */
+    public boolean completeRoad(AbstractTile loopTile, String locationType)
+    {
+        boolean result = false;
+
+        if (aggregatedPositionTypes.containsKey(loopTile)) {
+            List<String> locationsTypes = this.aggregatedPositionTypes.get(loopTile);
+            locationsTypes.add(locationType);
+            this.aggregatedPositionTypes.put(loopTile, locationsTypes);
+            this.isCompleted = true;
+            result = true;
+        }
+
+        return result;
+    }
+
+    /**
      * TODO: Gérer les tests pour savoir si une route est terminée
      *
      * @return True if the aggregation is completed
@@ -56,6 +80,7 @@ public class RoadAggregate extends AbstractAggregate
 
         if (!result) {
             this.isCompleted = false;
+
         }
 
         return result;
