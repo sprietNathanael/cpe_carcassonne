@@ -46,7 +46,7 @@ public class Player
     /**
      * Gets the meeples of the player
      *
-     * @return ArrayList<Meeple> the list of the meeples
+     * @return ArrayList Meeple the list of the meeples
      */
     public ArrayList<Meeple> getMeeple()
     {
