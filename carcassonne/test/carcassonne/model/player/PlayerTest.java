@@ -69,5 +69,25 @@ public class PlayerTest
         boolean result = p.checkMeepleAvailable();
         assertEquals(false, result);
     }
-    
+
+    /**
+     * Test of getFirstMeepleAvailable method, of class Player.
+     */
+    @Test
+    public void testGetFirstMeepleAvailable()
+    {
+        System.out.println("getFirstMeepleAvailable");
+        Player player = new Player("Joueur", Color.black);
+        Meeple result = player.getFirstMeepleAvailable();
+        ArrayList<Meeple> meeples = player.getMeeple();
+        Meeple expResult = null;
+        for (Meeple m: meeples)
+        {
+            if (m.getIsUsed() == false) {
+                expResult = m;
+                break;
+            }
+        }
+        assertEquals(expResult, result);
+    }    
 }
