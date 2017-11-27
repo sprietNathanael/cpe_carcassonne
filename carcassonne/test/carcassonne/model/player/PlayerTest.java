@@ -57,17 +57,5 @@ public class PlayerTest
         assertEquals(true, result);
     }
     
-    /**
-     * Test of checkMeepleAvailable method, of class Player.
-     */
-    @Test
-    public void testCheckMeepleAvailableFalse()
-    {
-        System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", Color.yellow);  
-        p.getMeeple().forEach(m -> m.setIsUsed(true));
-        boolean result = p.checkMeepleAvailable();
-        assertEquals(false, result);
-    }
     
 }
