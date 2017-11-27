@@ -62,7 +62,7 @@ public class CasualTileTest
                 new RiverType(), // West
                 new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
         );
-        String expResult = "CiRoRiRoRiCiRoCiRoFiRiFiCiRiFiRiRoCiFiRi";
+        String expResult = "CiRoRi  Ro  RiCiRo\n  Ri  RoRiCiFi Ci\nFiRiCi  Fi  RiFiRo";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -81,7 +81,7 @@ public class CasualTileTest
                 new FieldType(), // West
                 new RoadType(), new CityType(), new RiverType(), new FieldType() // Center
         );
-        String expResult = "RoRoRoCiRiRiRiFiRoRoRoCiRiRiRiFiRoCiRiFi";
+        String expResult = "RoRoRo  Ci  RiRiRi\n  Fi  RoFiCiRi Fi\nRiRiRi  Ci  RoRoRo";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -512,14 +512,14 @@ public class CasualTileTest
     public void testToString()
     {
         System.out.println("toString");
-        CasualTile instance = new CasualTile("A",
-                new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
-                new CityType(), // East
-                new RoadType(), new FieldType(), new RiverType(), new FieldType(), new CityType(), new RiverType(), new FieldType(), // Southern line
-                new RiverType(), // West
-                new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
+        CasualTile instance = new CasualTile("D", //Id
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
+                new CityType(), //East section
+                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
-        String expResult = "CiRoRiRoRiCiRoCiRoFiRiFiCiRiFiRiRoCiFiRi";
+        String expResult = "FiFiFi  Ro  FiFiCi\n  Fi  RoRoFiFi Ci\nFiFiFi  Ro  FiFiCi";
         String result = instance.toString();
         assertEquals(expResult, result);
        
@@ -532,15 +532,15 @@ public class CasualTileTest
     public void testRotateLeft()
     {
         System.out.println("rotateLeft");
-        CasualTile instance = new CasualTile("A",
-                new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
-                new CityType(), // East
-                new RoadType(), new FieldType(), new RiverType(), new FieldType(), new CityType(), new RiverType(), new FieldType(), // Southern line
-                new RiverType(), // West
-                new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
+        CasualTile instance = new CasualTile("D", //Id
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
+                new CityType(), //East section
+                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
         instance.rotateLeft();
-        String expResult = "RiCiRoCiRoFiRiFiCiRiFiRiCiRoRiRoCiFiRiRo";
+        String expResult = "FiFiCi  Ci  CiFiFi\n  Ro  FiRoFiRo Ro\nFiFiFi  Fi  FiFiFi";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
@@ -552,15 +552,15 @@ public class CasualTileTest
     public void testRotateRight()
     {
         System.out.println("rotateRight");
-        CasualTile instance = new CasualTile("A",
-                new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
-                new CityType(), // East
-                new RoadType(), new FieldType(), new RiverType(), new FieldType(), new CityType(), new RiverType(), new FieldType(), // Southern line
-                new RiverType(), // West
-                new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
+        CasualTile instance = new CasualTile("D", //Id
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
+                new CityType(), //East section
+                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
+                new FieldType(), //West section
+                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
         instance.rotateRight();
-        String expResult = "CiRiFiRiCiRoRiRoRiCiRoCiRoFiRiFiRiRoCiFi";
+        String expResult = "FiFiFi  Fi  FiFiFi\n  Ro  RoFiRoFi Ro\nFiFiCi  Ci  CiFiFi";
         String result = instance.toString();
         assertEquals(expResult, result);
     }
