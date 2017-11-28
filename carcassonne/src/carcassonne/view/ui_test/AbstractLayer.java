@@ -18,7 +18,7 @@ public class AbstractLayer
 {
     GridPanel gc;
     protected ArrayList<Coord> positions;
-    private GridMouseAdapter mouseListener;
+    private LayerMouseAdapter mouseListener;
     private boolean visible;
     
     public AbstractLayer(GridPanel gc)
@@ -36,7 +36,7 @@ public class AbstractLayer
     {
     }
     
-    public void attachMouseInputListener(GridMouseAdapter mouseListener) {
+    public void attachMouseInputListener(LayerMouseAdapter mouseListener) {
         this.mouseListener = mouseListener;
         this.gc.addMouseListener(this.mouseListener);
         this.gc.addMouseMotionListener(this.mouseListener);
@@ -55,12 +55,6 @@ public class AbstractLayer
     public void onHide()
     {
         this.visible = false;
-        if(this.mouseListener != null)
-        {
-            this.gc.removeMouseMotionListener(this.mouseListener);
-            this.gc.removeMouseListener(this.mouseListener);
-            this.mouseListener = null;
-        }
     }
             
 }

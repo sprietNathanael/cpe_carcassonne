@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
  *
  * @author nathanael
  */
-public interface GridMouseListener
+public interface LayerMouseListener
 {
     void tileEntered(MouseEvent e, Coord p);
     void tileExited(MouseEvent e, Coord p);

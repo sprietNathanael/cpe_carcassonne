@@ -7,7 +7,7 @@ package carcassonne.view.ui_test;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.geom.Point2D;
+import java.awt.event.MouseWheelEvent;
 
 /**
  *
@@ -15,62 +15,49 @@ import java.awt.geom.Point2D;
  */
 public class GridMouseAdapter extends MouseAdapter
 {
+    private MouseEvent dragSource;
     private GridPanel gridPanel;
-    private GridMouseListener listener;
+    private Coord sourceCenter;
     
-    private Coord currentCoord;
-    
-    GridMouseAdapter(GridPanel gridPanel, GridMouseListener listener)
+    GridMouseAdapter(GridPanel gridPane)
     {
-        this.gridPanel = gridPanel;
-        this.listener = listener;
+        this.gridPanel = gridPane;
     }
-       
-    public Coord getCurrentCoord()
+
+    @Override
+    public void mouseDragged(MouseEvent e)
     {
-        return this.currentCoord;
+        //System.out.println("drag : "+e.getX());
+        int dx = e.getX() - this.dragSource.getX();
+        int dy = e.getY() - this.dragSource.getY();
+        //System.out.println("drag : x="+e.getX()+";y="+e.getY()+" : dx="+dx+";dy="+dy);
+        Coord newCenter = new Coord(this.sourceCenter.getX()+dx, this.sourceCenter.getY()+dy);
+        //System.out.println("new center : "+newCenter);
+        this.gridPanel.moveCenterTo(newCenter);
+        
+    }
+
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
+        this.gridPanel.zoom(-e.getWheelRotation());
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        this.dragSource = null;
+        this.sourceCenter = null;
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        this.dragSource = e;
+        this.sourceCenter = this.gridPanel.getGraphicalCenter();
+        System.out.println("pressed at : x="+e.getX()+" ; y="+e.getY());
     }
     
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        Point2D point = e.getPoint();
-        Coord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
-        if (this.currentCoord != null && ! this.currentCoord.equals(c))
-        {
-            listener.tileExited(e, this.currentCoord);
-            this.currentCoord = null;
-        }
-        if (c != null && ! c.equals(this.currentCoord)) {
-            this.currentCoord = c;
-            listener.tileEntered(e, this.currentCoord);
-        }
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Point2D point = e.getPoint();
-        Coord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
-        if (c != null) {
-            listener.mouseClicked(e, c);
-        }
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        mouseMoved(e);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        if (this.currentCoord != null) {
-            listener.tileExited(e, this.currentCoord);
-            this.currentCoord = null;
-        }
-
-    }
+    
     
 }

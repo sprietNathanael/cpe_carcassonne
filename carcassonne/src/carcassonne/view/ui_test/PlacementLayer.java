@@ -16,7 +16,7 @@ import java.util.ArrayList;
  *
  * @author nathanael
  */
-public class PlacementLayer extends AbstractLayer implements GridMouseListener
+public class PlacementLayer extends AbstractLayer implements LayerMouseListener
 {
     private TileImage previewImage;
     private static final Composite ALLOWED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f);
@@ -34,7 +34,7 @@ public class PlacementLayer extends AbstractLayer implements GridMouseListener
     public void onShow()
     {
         super.onShow();
-        this.attachMouseInputListener(new GridMouseAdapter(this.gc,this));
+        this.attachMouseInputListener(new LayerMouseAdapter(this.gc,this));
     }
     
     public void onHide()
@@ -103,12 +103,10 @@ public class PlacementLayer extends AbstractLayer implements GridMouseListener
     {
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (this.previewImage != null) {
-                System.out.println("clicked : "+e.getButton());
                 e.consume();
                 this.previewImage.turnRight();
                 this.gc.repaint();
             }
         }
-    }
-    
+    }    
 }
