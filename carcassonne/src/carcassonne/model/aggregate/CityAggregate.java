@@ -18,29 +18,29 @@ public class CityAggregate extends AbstractAggregate
     /**
      * Construct a road aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes
      */
-    public CityAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
+    public CityAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
-        super(row, col, firstTile, locationTypes);
+        super(col, row, firstTile, locationTypes);
     }
 
     /**
      * Construct a city aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes
      * @param player
      * @param meepleValue
      */
-    public CityAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
+    public CityAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
-        super(row, col, firstTile, locationTypes, player, meepleValue);
+        super(col, row, firstTile, locationTypes, player, meepleValue);
     }
 
     /**

@@ -29,15 +29,15 @@ public abstract class AbstractAggregate
     /**
      * Construct a new aggregate
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes Set of all the new tile types that compose the aggregation
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
+    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         this.aggregatedTiles = new HashMap();
-        this.aggregatedTiles.put(new Coord(row, col), firstTile);
+        this.aggregatedTiles.put(new Coord(col, row), firstTile);
 
         this.aggregatedPositionTypes = new HashMap();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
@@ -52,17 +52,17 @@ public abstract class AbstractAggregate
      * Construct a new aggregate, affected to a new player using the meeple he
      * just placed
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes Set of all the new tile types that compose the aggregation
      * @param player
      * @param meepleValue
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
+    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
         this.aggregatedTiles = new HashMap();
-        this.aggregatedTiles.put(new Coord(row, col), firstTile);
+        this.aggregatedTiles.put(new Coord(col, row), firstTile);
 
         this.aggregatedPositionTypes = new HashMap();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
@@ -104,7 +104,7 @@ public abstract class AbstractAggregate
      * @return List the coordinates of the neighbored emplacement, return
      * [-1;-1] if the aggregate dosen't
      */
-    public Set<Coord> getNeighboredCoordinates(int row, int col)
+    public Set<Coord> getNeighboredCoordinates(int col, int row)
     {
         /**
          * Coordinates of the current aggregate tiles that are neighbored with
@@ -117,17 +117,17 @@ public abstract class AbstractAggregate
          * We test all the possible neighbored locations, and add every
          * locations where this current aggregation is present
          */
-        if (aggregatedTiles.containsKey(new Coord(row - 1, col))) {
-            neighboredTilesLocation.add(new Coord(row - 1, col));
+        if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
+            neighboredTilesLocation.add(new Coord(col - 1, row));
         }
-        if (aggregatedTiles.containsKey(new Coord(row + 1, col))) {
-            neighboredTilesLocation.add(new Coord(row + 1, col));
+        if (aggregatedTiles.containsKey(new Coord(col + 1, row))) {
+            neighboredTilesLocation.add(new Coord(col + 1, row));
         }
-        if (aggregatedTiles.containsKey(new Coord(row, col - 1))) {
-            neighboredTilesLocation.add(new Coord(row, col - 1));
+        if (aggregatedTiles.containsKey(new Coord(col, row - 1))) {
+            neighboredTilesLocation.add(new Coord(col, row - 1));
         }
-        if (aggregatedTiles.containsKey(new Coord(row, col + 1))) {
-            neighboredTilesLocation.add(new Coord(row, col + 1));
+        if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
+            neighboredTilesLocation.add(new Coord(col, row + 1));
         }
 
         return neighboredTilesLocation;
@@ -141,9 +141,9 @@ public abstract class AbstractAggregate
      * @param newTile
      * @param locationTypes
      */
-    public void enlargeAggregate(int row, int col, AbstractTile newTile, Set<String> locationTypes)
+    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
-        aggregatedTiles.put(new Coord(row, col), newTile);
+        aggregatedTiles.put(new Coord(col, row), newTile);
         aggregatedPositionTypes.put(newTile, locationTypes);
     }
 

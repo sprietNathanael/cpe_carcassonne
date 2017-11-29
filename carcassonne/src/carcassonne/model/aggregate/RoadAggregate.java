@@ -5,8 +5,10 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,29 +20,29 @@ public class RoadAggregate extends AbstractAggregate
     /**
      * Construct a road aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
+    public RoadAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
-        super(row, col, firstTile, locationTypes);
+        super(col, row, firstTile, locationTypes);
     }
 
     /**
      * Construct a road aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationTypes
      * @param player
      * @param meepleValue
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
+    public RoadAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
-        super(row, col, firstTile, locationTypes, player, meepleValue);
+        super(col, row, firstTile, locationTypes, player, meepleValue);
     }
 
     /**

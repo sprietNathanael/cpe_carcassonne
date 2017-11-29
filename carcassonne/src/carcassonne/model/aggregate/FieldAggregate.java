@@ -19,29 +19,29 @@ public class FieldAggregate extends AbstractAggregate
     /**
      * Construct a field aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationtypes
      */
-    public FieldAggregate(int row, int col, AbstractTile firstTile, Set<String> locationtypes)
+    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationtypes)
     {
-        super(row, col, firstTile, locationtypes);
+        super(col, row, firstTile, locationtypes);
     }
 
     /**
      * Construct a field aggregation
      *
-     * @param row
      * @param col
+     * @param row
      * @param firstTile
      * @param locationtypes
      * @param player
      * @param meepleValue
      */
-    public FieldAggregate(int row, int col, AbstractTile firstTile, Set<String> locationtypes, Player player, int meepleValue)
+    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationtypes, Player player, int meepleValue)
     {
-        super(row, col, firstTile, locationtypes, player, meepleValue);
+        super(col, row, firstTile, locationtypes, player, meepleValue);
     }
 
     /**

@@ -14,7 +14,7 @@ public class Coord
 
     public int row, col;
 
-    public Coord(int row, int col)
+    public Coord(int col, int row)
     {
         this.row = row;
         this.col = col;
@@ -50,5 +50,4 @@ public class Coord
         }
         return true;
     }
-    
 }
