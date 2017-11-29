@@ -89,5 +89,21 @@ public class PlayerTest
             }
         }
         assertEquals(expResult, result);
-    }    
+    }   
+
+    /**
+     * Test of getBigMeeple method, of class Player.
+     */
+    @Test
+    public void testGetBigMeepleFalse()
+    {
+        System.out.println("checkMeepleAvailableFalse");
+        Player p = new Player("test", Color.yellow);        
+        Meeple bigMeeple = p.getBigMeeple();
+        bigMeeple.setIsUsed(true);
+        
+        Meeple result = p.getBigMeepleAvailable();
+        Meeple expResult = null;
+        assertEquals(expResult, result);
+    }
 }

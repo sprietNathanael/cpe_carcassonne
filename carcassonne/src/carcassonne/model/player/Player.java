@@ -20,6 +20,7 @@ public class Player
      */
     public static int NBMEEPLE = 8;
 
+    private Meeple bigMeeple;
     private ArrayList<Meeple> meeples;
     private String name;
     private int points;
@@ -36,11 +37,11 @@ public class Player
         this.name = name;
         this.color = color;
         this.points = 0;
+        this.bigMeeple = new Meeple(true);
         this.meeples = new ArrayList<>();
-        this. meeples.add(new Meeple(true));
-        for (int i = 1; i < NBMEEPLE ; i++) {
-                this.meeples.add(new Meeple());
-            }
+        for (int i = 1; i < NBMEEPLE; i++) {
+            this.meeples.add(new Meeple());
+        }
     }
 
     /**
@@ -133,6 +134,21 @@ public class Player
     }
 
     /**
+     * Get the big meeple of the player if it is available
+     *
+     * @return
+     */
+    public Meeple getBigMeepleAvailable()
+    {
+        Meeple ret = null;
+
+        if (!bigMeeple.getIsUsed()) {
+            ret = bigMeeple;
+        }
+        return ret;
+    }
+
+    /**
      * Get the first meeple no used
      *
      * @return
@@ -149,4 +165,8 @@ public class Player
         return ret;
     }
 
+    public Meeple getBigMeeple()
+    {
+        return bigMeeple;
+    }
 }
