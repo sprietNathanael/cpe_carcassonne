@@ -8,10 +8,8 @@ package carcassonne.model.aggregate;
 import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,7 +21,7 @@ public abstract class AbstractAggregate
 {
 
     protected Map<Coord, AbstractTile> aggregatedTiles;
-    protected Map<AbstractTile, List<String>> aggregatedPositionTypes;
+    protected Map<AbstractTile, Set<String>> aggregatedPositionTypes;
     protected Set<Player> players;
     protected int meepleNumber;
     protected boolean isCompleted;
@@ -34,15 +32,15 @@ public abstract class AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types List of all the new tile types that compose the aggregation
+     * @param locationTypes Set of all the new tile types that compose the aggregation
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<String> types)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
 
         this.aggregatedPositionTypes = new HashMap();
-        this.aggregatedPositionTypes.put(firstTile, types);
+        this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
         this.players = new HashSet();
         this.meepleNumber = 0;
@@ -57,17 +55,17 @@ public abstract class AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types List of all the new tile types that compose the aggregation
+     * @param locationTypes Set of all the new tile types that compose the aggregation
      * @param player
      * @param meepleValue
      */
-    public AbstractAggregate(int row, int col, AbstractTile firstTile, List<String> types, Player player, int meepleValue)
+    public AbstractAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(row, col), firstTile);
 
         this.aggregatedPositionTypes = new HashMap();
-        this.aggregatedPositionTypes.put(firstTile, types);
+        this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
         this.players = new HashSet();
         this.players.add(player);
@@ -141,12 +139,12 @@ public abstract class AbstractAggregate
      * @param row
      * @param col
      * @param newTile
-     * @param types
+     * @param locationTypes
      */
-    public void enlargeAggregate(int row, int col, AbstractTile newTile, List<String> types)
+    public void enlargeAggregate(int row, int col, AbstractTile newTile, Set<String> locationTypes)
     {
         aggregatedTiles.put(new Coord(row, col), newTile);
-        aggregatedPositionTypes.put(newTile, types);
+        aggregatedPositionTypes.put(newTile, locationTypes);
     }
 
     public Map<Coord, AbstractTile> getAggregatedTiles()
@@ -154,7 +152,7 @@ public abstract class AbstractAggregate
         return aggregatedTiles;
     }
 
-    public Map<AbstractTile, List<String>> getAggregatedTypes()
+    public Map<AbstractTile, Set<String>> getAggregatedTypes()
     {
         return aggregatedPositionTypes;
     }
@@ -215,7 +213,7 @@ public abstract class AbstractAggregate
     protected static Set<Player> getCommonPlayers(Set<Player> playersSet1, Set<Player> playersSet2)
     {
         Iterable<Player> iterator1 = playersSet1;
-        HashSet<Player> winningPlayers = new HashSet<>();
+        Set<Player> winningPlayers = new HashSet<>();
 
         winningPlayers = new HashSet<>();
         for (Player player1 : iterator1) {

@@ -7,10 +7,9 @@ package carcassonne.model.aggregate;
 
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import java.util.List;
+import java.util.Set;
 
 /**
- *
  * @author Étienne
  */
 public class CityAggregate extends AbstractAggregate
@@ -22,11 +21,11 @@ public class CityAggregate extends AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types
+     * @param locationTypes
      */
-    public CityAggregate(int row, int col, AbstractTile firstTile, List<String> types)
+    public CityAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
     {
-        super(row, col, firstTile, types);
+        super(row, col, firstTile, locationTypes);
     }
 
     /**
@@ -35,13 +34,13 @@ public class CityAggregate extends AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types
+     * @param locationTypes
      * @param player
      * @param meepleValue
      */
-    public CityAggregate(int row, int col, AbstractTile firstTile, List<String> types, Player player, int meepleValue)
+    public CityAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
-        super(row, col, firstTile, types, player, meepleValue);
+        super(row, col, firstTile, locationTypes, player, meepleValue);
     }
 
     /**

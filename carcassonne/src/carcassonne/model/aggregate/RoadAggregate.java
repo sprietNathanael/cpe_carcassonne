@@ -5,10 +5,9 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Étienne
@@ -22,11 +21,11 @@ public class RoadAggregate extends AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types
+     * @param locationTypes
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, List<String> types)
+    public RoadAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes)
     {
-        super(row, col, firstTile, types);
+        super(row, col, firstTile, locationTypes);
     }
 
     /**
@@ -35,13 +34,13 @@ public class RoadAggregate extends AbstractAggregate
      * @param row
      * @param col
      * @param firstTile
-     * @param types
+     * @param locationTypes
      * @param player
      * @param meepleValue
      */
-    public RoadAggregate(int row, int col, AbstractTile firstTile, List<String> types, Player player, int meepleValue)
+    public RoadAggregate(int row, int col, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
     {
-        super(row, col, firstTile, types, player, meepleValue);
+        super(row, col, firstTile, locationTypes, player, meepleValue);
     }
 
     /**
@@ -58,7 +57,7 @@ public class RoadAggregate extends AbstractAggregate
         boolean result = false;
 
         if (aggregatedPositionTypes.containsKey(loopTile)) {
-            List<String> locationsTypes = this.aggregatedPositionTypes.get(loopTile);
+            Set<String> locationsTypes = this.aggregatedPositionTypes.get(loopTile);
             locationsTypes.add(locationType);
             this.aggregatedPositionTypes.put(loopTile, locationsTypes);
             this.isCompleted = true;

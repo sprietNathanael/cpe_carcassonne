@@ -13,10 +13,7 @@ import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.awt.Color;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -56,16 +53,16 @@ public class AbstractAggregateTest
 
     public static AbstractAggregate initiateAggregate(int x, int y)
     {
-        List<String> types = new ArrayList<>();
+        Set<String> types = new HashSet<>();
         types.add("S");
         types.add("E");
 
         return new CityAggregate(x, y, initiateAbstractTile(), types);
     }
 
-    public static List<String> initiateTypes()
+    public static Set<String> initiateTypes()
     {
-        List<String> types = new ArrayList<>();
+        Set<String> types = new HashSet<>();
         types.add("S");
         types.add("E");
         types.add("CNE");
@@ -182,7 +179,7 @@ public class AbstractAggregateTest
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
 
-        List<String> newTypes = new ArrayList<>();
+        Set<String> newTypes = new HashSet<>();
         newTypes.add("S");
         newTypes.add("W");
         AbstractTile newTile = initiateAbstractTileBis();
