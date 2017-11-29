@@ -5,6 +5,7 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import java.util.Set;
@@ -37,11 +38,11 @@ public class FieldAggregate extends AbstractAggregate
      * @param firstTile
      * @param locationtypes
      * @param player
-     * @param meepleValue
+     * @param meeple
      */
-    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationtypes, Player player, int meepleValue)
+    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationtypes, Player player, Meeple meeple)
     {
-        super(col, row, firstTile, locationtypes, player, meepleValue);
+        super(col, row, firstTile, locationtypes, player, meeple);
     }
 
     /**

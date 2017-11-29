@@ -6,6 +6,7 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import java.util.HashMap;
@@ -32,7 +33,8 @@ public abstract class AbstractAggregate
      * @param col
      * @param row
      * @param firstTile
-     * @param locationTypes Set of all the new tile types that compose the aggregation
+     * @param locationTypes Set of all the new tile types that compose the
+     * aggregation
      */
     public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
@@ -55,11 +57,12 @@ public abstract class AbstractAggregate
      * @param col
      * @param row
      * @param firstTile
-     * @param locationTypes Set of all the new tile types that compose the aggregation
+     * @param locationTypes Set of all the new tile types that compose the
+     * aggregation
      * @param player
-     * @param meepleValue
+     * @param meeple
      */
-    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
+    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(col, row), firstTile);
@@ -70,7 +73,12 @@ public abstract class AbstractAggregate
         this.players = new HashSet();
         this.players.add(player);
 
-        this.meepleNumber = meepleValue;
+        if (meeple.getIsBig()) {
+            this.meepleNumber = 2;
+        }
+        else {
+            this.meepleNumber = 1;
+        }
         this.isCompleted = false;
     }
 
@@ -78,17 +86,23 @@ public abstract class AbstractAggregate
      * Add a Meeple to this aggregate. If this aggregate is already affected to
      * another player, the player can't add its own meeple on this aggregate
      *
-     * @param number number of the new meeple value
      * @param player
+     * @param meeple number of the new meeple value
      * @return true if a meeple has been added
      */
-    public boolean addMeeple(int number, Player player)
+    public boolean addMeeple(Player player, Meeple meeple)
     {
         boolean result = false;
 
         if (this.players.isEmpty()) {
             this.players.add(player);
-            this.meepleNumber += number;
+            if (meeple.getIsBig()) {
+                this.meepleNumber = 2;
+            }
+            else {
+                this.meepleNumber = 1;
+            }
+
             result = true;
         }
         return result;
@@ -221,8 +235,8 @@ public abstract class AbstractAggregate
             if (!playersSet2.add(player1)) {
                 winningPlayers.add(player1);
             }
-        }    
-        
+        }
+
         return winningPlayers;
     }
 
@@ -232,4 +246,11 @@ public abstract class AbstractAggregate
      * @return true if it is completed
      */
     public abstract boolean checkIsCompleted();
+
+    @Override
+    public String toString()
+    {
+        return "AbstractAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", meepleNumber=" + meepleNumber + ", isCompleted=" + isCompleted + '}';
+    }
+
 }

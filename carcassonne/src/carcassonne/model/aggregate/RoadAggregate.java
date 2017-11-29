@@ -6,8 +6,10 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -38,11 +40,11 @@ public class RoadAggregate extends AbstractAggregate
      * @param firstTile
      * @param locationTypes
      * @param player
-     * @param meepleValue
+     * @param meeple
      */
-    public RoadAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, int meepleValue)
+    public RoadAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple)
     {
-        super(col, row, firstTile, locationTypes, player, meepleValue);
+        super(col, row, firstTile, locationTypes, player, meeple);
     }
 
     /**
@@ -85,5 +87,40 @@ public class RoadAggregate extends AbstractAggregate
         }
 
         return result;
+    }
+    
+    public static void main(String str[]){
+        //Démarrer jeu
+        CarcassonneGame game = new CarcassonneGame();
+        //Piocher tuile
+        AbstractTile firstTile = game.drawFromPile();
+        
+        //Poser la tuile à un index ...
+        
+        //Parcourir les emplacements de la tuile (locationType)
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        RoadAggregate aggregate = new RoadAggregate(0, 0, firstTile, locationTypes);
+        
+        //Fin du tour
+        
+       
+        //Tour suivant, avec la pioche d'une pièce compatible, on pose la pièce à 0,-1
+        Player player2 = new Player("C'est moi", Color.yellow);
+        AbstractTile nextTile = game.drawFromPileIndex(9);
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");        
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("CSW");
+        
+        System.out.println("La nouvelle pièce est voisine de l'aggrégat de test avec cette liste de coordonnées : \n" + aggregate.getNeighboredCoordinates(0, -1));
+        aggregate.enlargeAggregate(0, -1, nextTile, locationTypes);
+        System.out.println("L'aggrégat est maintenant composé de deux tuiles :");
+        System.out.println(aggregate.aggregatedTiles);
+        if (player2.checkMeepleAvailable()){
+            aggregate.addMeeple(player2, player2.getFirstMeepleAvailable());
+        }
+        System.out.println(aggregate.players);
     }
 }

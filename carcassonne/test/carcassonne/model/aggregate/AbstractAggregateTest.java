@@ -6,6 +6,7 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
@@ -108,7 +109,7 @@ public class AbstractAggregateTest
         AbstractAggregate instance = new AbstractAggregateImpl();
 
         Player player = initiatePlayer();
-        boolean result = instance.addMeeple(2, player);
+        boolean result = instance.addMeeple(player, player.getFirstMeepleAvailable());
         assertEquals(true, result);
     }
 
@@ -119,9 +120,9 @@ public class AbstractAggregateTest
     public void testAddMeeple2()
     {
         Player player = initiatePlayer();
-        AbstractAggregate instance = new AbstractAggregateImpl(2, player);
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
 
-        boolean result = instance.addMeeple(2, player);
+        boolean result = instance.addMeeple(player, player.getFirstMeepleAvailable());
         assertEquals(false, result);
     }
 
@@ -131,10 +132,11 @@ public class AbstractAggregateTest
     @Test
     public void testGetNeighboredCoordinates()
     {
-        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        Player player = new Player("Omg", Color.BLUE);
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
         Set<Coord> expResult = new HashSet<>();
-        expResult.add(new Coord(0,1));
-        
+        expResult.add(new Coord(0, 1));
+
         Set<Coord> result = instance.getNeighboredCoordinates(0, 0);
         assertEquals(expResult, result);
     }
@@ -145,14 +147,15 @@ public class AbstractAggregateTest
     @Test
     public void testGetNeighboredCoordinates2()
     {
-        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        Player player = new Player("Omg", Color.BLUE);
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
         instance.enlargeAggregate(1, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
-        
+
         Set<Coord> expResult = new HashSet<>();
-        expResult.add(new Coord(0,1));
-        expResult.add(new Coord(1,0));
-        
-        Set<Coord> result = instance.getNeighboredCoordinates(0,0);
+        expResult.add(new Coord(0, 1));
+        expResult.add(new Coord(1, 0));
+
+        Set<Coord> result = instance.getNeighboredCoordinates(0, 0);
         assertEquals(expResult, result);
     }
 
@@ -162,12 +165,13 @@ public class AbstractAggregateTest
     @Test
     public void testGetNeighboredCoordinates3()
     {
-        AbstractAggregate instance = new AbstractAggregateImpl(1, new Player("Omg", Color.BLUE));
+        Player player = new Player("Omg", Color.BLUE);
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
         instance.enlargeAggregate(1, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
-        
+
         Set<Coord> expResult = new HashSet<>();
-        
-        Set<Coord> result = instance.getNeighboredCoordinates(2,2);
+
+        Set<Coord> result = instance.getNeighboredCoordinates(2, 2);
         assertEquals(expResult, result);
     }
 
@@ -195,7 +199,8 @@ public class AbstractAggregateTest
     @Test
     public void testGetMeepleNumber()
     {
-        AbstractAggregate instance = new AbstractAggregateImpl(2, AbstractAggregateTest.initiatePlayer());
+        Player player = AbstractAggregateTest.initiatePlayer();
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getBigMeepleAvailable());
         int expResult = 2;
         int result = instance.getMeepleNumber();
         assertEquals(expResult, result);
@@ -208,9 +213,11 @@ public class AbstractAggregateTest
     public void testMerge()
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+        Player player = new Player("Mo", Color.yellow);
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getBigMeepleAvailable());
 
-        instance.addMeeple(2, new Player("Mo", Color.yellow));
+        Player player2 = new Player("Mo", Color.yellow);
+        instance.addMeeple(player2, player2.getFirstMeepleAvailable());
 
         instance.merge(neighborAggregate);
 
@@ -224,9 +231,11 @@ public class AbstractAggregateTest
     public void testMerge2()
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+        Player player = new Player("Mo", Color.yellow);
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getBigMeepleAvailable());
 
-        instance.addMeeple(2, new Player("test", Color.yellow));
+        Player player2 = new Player("test", Color.yellow);
+        instance.addMeeple(player2, player2.getBigMeepleAvailable());
 
         instance.merge(neighborAggregate);
 
@@ -234,43 +243,49 @@ public class AbstractAggregateTest
     }
 
     /**
-     * Test of merge method, if the aggregates are from different player and have same meeple number
+     * Test of merge method, if the aggregates are from different player and the
+     * second player wins
      */
     @Test
     public void testMerge2Bis()
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(1, new Player("Mo", Color.yellow));
+        Player player = new Player("Mo", Color.yellow);
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
 
-        instance.addMeeple(2, new Player("test", Color.yellow));
+        Player player2 = new Player("test", Color.yellow);
+        instance.addMeeple(player2, player2.getBigMeepleAvailable());
 
         instance.merge(neighborAggregate);
-        
+
         Set<Player> expResult = new HashSet<>();
         expResult.add(new Player("test", Color.yellow));
 
         assertEquals(expResult, instance.players);
     }
-    
+
     /**
-     * Test of merge method, if the aggregates are from different player and have same meeple number
+     * Test of merge method, if the aggregates are from different player and
+     * have same meeple number
      */
     @Test
     public void testMerge3()
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(2, new Player("Mo", Color.yellow));
+        Player player = new Player("Mo", Color.yellow);
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
 
-        instance.addMeeple(2, new Player("test", Color.yellow));
+        Player player2 = new Player("test", Color.yellow);
+        instance.addMeeple(player2, player2.getFirstMeepleAvailable());
 
         instance.merge(neighborAggregate);
         Set<Player> expResult = new HashSet<>();
         expResult.add(new Player("Mo", Color.yellow));
         expResult.add(new Player("test", Color.yellow));
-        
+
         assertEquals(expResult, instance.players);
     }
-    
+
     /**
      * Test of merge method, if the current aggregate doesn't have any player
      */
@@ -278,17 +293,18 @@ public class AbstractAggregateTest
     public void testMerge4()
     {
         AbstractAggregate instance = new AbstractAggregateImpl();
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(2, new Player("Mo", Color.yellow));
-        
+        Player player = new Player("Mo", Color.yellow);
+        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
+
         //Simulate an aggregate with already 2 players on it 
         neighborAggregate.players.add(new Player("Koukou", Color.DARK_GRAY));
-        
+
         instance.merge(neighborAggregate);
-        
+
         Set<Player> expResult = new HashSet<>();
         expResult.add(new Player("Mo", Color.yellow));
         expResult.add(new Player("Koukou", Color.DARK_GRAY));
-        
+
         assertEquals(expResult, instance.players);
     }
 
@@ -391,9 +407,9 @@ public class AbstractAggregateTest
             super(0, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
         }
 
-        public AbstractAggregateImpl(int number, Player player)
+        public AbstractAggregateImpl(Player player, Meeple meeple)
         {
-            super(0, 1, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes(), player, number);
+            super(0, 1, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes(), player, meeple);
         }
 
         public boolean checkIsCompleted()
