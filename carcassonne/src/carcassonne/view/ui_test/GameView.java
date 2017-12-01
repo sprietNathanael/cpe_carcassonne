@@ -8,18 +8,25 @@ package carcassonne.view.ui_test;
 import java.awt.Container;
 
 /**
- *
- * @author nathanael
+ * The Main game view class
  */
 public class GameView
 {
 
+    /**
+     * Game view constructor
+     */
     public GameView()
     {
     }
     
+    /**
+     * Shows the view
+     * @param pane Container that receives the main panel
+     */
     public void show(Container pane)
     {
+        //Construct the main panel and adds it to the main container
         MainPanel mainPanel = new MainPanel();
         
         pane.add(mainPanel);

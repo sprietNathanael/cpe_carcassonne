@@ -8,16 +8,18 @@ package carcassonne.view.ui_test;
 import javax.swing.JFrame;
 
 /**
- *
- * @author nathanael
+ * The Main UI class
  */
 public class Main
 {
 
+    /**
+     * Main methode
+     */
     public static void main(String[] args) {
-        Client client = new Client();
-        client.setVisible(true);
-        client.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        ClientWindow clientWindow = new ClientWindow();
+        clientWindow.setVisible(true);
+        clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
 
     

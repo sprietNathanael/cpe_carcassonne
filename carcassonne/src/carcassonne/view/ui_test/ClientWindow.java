@@ -6,29 +6,33 @@
 package carcassonne.view.ui_test;
 
 import java.awt.Container;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import javax.swing.JFrame;
 
 /**
- *
- * @author nathanael
+ * The Main client window class
  */
-public class Client extends JFrame
+public class ClientWindow extends JFrame
 {
 
-    public Client()
+    /**
+     * Window constructor
+     */
+    public ClientWindow()
     {
-        super("test");
+        super("Carcassonne");
         cleanContentPane();
         GameView gameView = new GameView();
         gameView.show(getContentPane());
-        //setLocation("L".equals(windowSize) ? 0 : dw/2, 0);*/
+        
+        // Maximize the window
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
         
     }
     
+    /**
+     * Clean the window
+     */
     public void cleanContentPane() {
         Container pane = getContentPane();
         pane.setVisible(false);

@@ -6,52 +6,73 @@
 package carcassonne.view.ui_test;
 
 import java.awt.Graphics2D;
-import java.awt.event.MouseAdapter;
 import java.util.ArrayList;
-import javax.swing.event.MouseInputListener;
 
 /**
- *
- * @author nathanael
+ * Abstraction of a layer
  */
-public class AbstractLayer
+public abstract class AbstractLayer
 {
-    GridPanel gc;
+    GridPanel gridPanel;
     protected ArrayList<Coord> positions;
     private LayerMouseAdapter mouseListener;
     private boolean visible;
     
-    public AbstractLayer(GridPanel gc)
+    /**
+     * Construction of an abstract layer
+     * @param gridPanel Grid panel
+     */
+    public AbstractLayer(GridPanel gridPanel)
     {
-        this.gc = gc;
-        this.positions = new ArrayList<Coord>();
+        this.gridPanel = gridPanel;
+        this.positions = new ArrayList<>();
     }
     
+    /**
+     * Adds a position to the list
+     * @param pos Position to add
+     */
     public void addPosition(Coord pos)
     {
         this.positions.add(pos);
     }
     
-    public void paint(Graphics2D g2)
-    {
-    }
+    /**
+     * Paints the layer
+     * @param g2 
+     */
+    public abstract void paint(Graphics2D g2);
     
+    /**
+     * Saves and attaches a mouse input listener to the gridPanel
+     * @param mouseListener 
+     */
     public void attachMouseInputListener(LayerMouseAdapter mouseListener) {
         this.mouseListener = mouseListener;
-        this.gc.addMouseListener(this.mouseListener);
-        this.gc.addMouseMotionListener(this.mouseListener);
+        this.gridPanel.addMouseListener(this.mouseListener);
+        this.gridPanel.addMouseMotionListener(this.mouseListener);
     }
     
+    /**
+     * Test if the layer is visible
+     * @return 
+     */
     public boolean isVisible()
     {
         return this.visible;
     }
     
+    /**
+     * Set the layer visible
+     */
     public void onShow()
     {
         this.visible = true;
     }
     
+    /**
+     * Hides the layer
+     */
     public void onHide()
     {
         this.visible = false;

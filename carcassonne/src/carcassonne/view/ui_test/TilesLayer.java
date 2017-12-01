@@ -5,36 +5,43 @@
  */
 package carcassonne.view.ui_test;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
- *
- * @author nathanael
+ * Layer that contains all the placed tiles
  */
 public class TilesLayer extends AbstractLayer
 {
-    public TilesLayer(GridPanel gc)
+    /**
+     * Layer constructor
+     * @param gridPanel The grid panel which the layer is rattached to
+     */
+    public TilesLayer(GridPanel gridPanel)
     {
-        super(gc);
+        super(gridPanel);
     }
     
+    /**
+     * Paint the layer
+     * @param g2 
+     */
     public void paint(Graphics2D g2)
     {
-        int tileSize = this.gc.getTileSize();
-        Coord center = this.gc.getGraphicalCenter();
-        for(Coord p : this.positions)
+        // Get the grid panel properties
+        int tileSize = this.gridPanel.getTileSize();
+        Coord center = this.gridPanel.getGraphicalCenter();
+        
+        // Browse the placed tiles
+        for(Coord coord : this.positions)
         {
-            int x = center.getX()+(tileSize*p.getX());
-            int y = center.getY()+(tileSize*p.getY());
-            TileImage tileImage = (TileImage)p;
+            // Computes the pixel component of the tile
+            int x = center.getX()+(tileSize*coord.getX());
+            int y = center.getY()+(tileSize*coord.getY());
+            
+            // Cast the coordinates into a Tile Image
+            TileImage tileImage = (TileImage)coord;
+            
+            // Draw the tile at the computed coordinates
             g2.drawImage(tileImage.getImage(), x, y, tileSize, tileSize, null);
         }
     }

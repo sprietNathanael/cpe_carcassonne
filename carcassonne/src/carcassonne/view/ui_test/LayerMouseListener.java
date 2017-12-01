@@ -8,7 +8,7 @@ package carcassonne.view.ui_test;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * Mouse listener for layers
  * @author nathanael
  */
 public interface LayerMouseListener

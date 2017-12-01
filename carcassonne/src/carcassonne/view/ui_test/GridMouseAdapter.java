@@ -10,8 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 /**
- *
- * @author nathanael
+ * A mouse adapter for the grid
  */
 public class GridMouseAdapter extends MouseAdapter
 {
@@ -19,37 +18,38 @@ public class GridMouseAdapter extends MouseAdapter
     private GridPanel gridPanel;
     private Coord sourceCenter;
     
-    GridMouseAdapter(GridPanel gridPane)
+    /**
+     * Constructs a grid mouse adapter
+     * @param gridPanel 
+     */
+    GridMouseAdapter(GridPanel gridPanel)
     {
-        this.gridPanel = gridPane;
+        this.gridPanel = gridPanel;
     }
 
+    /**
+     * When the mouse is dragged
+     * @param e 
+     */
     @Override
     public void mouseDragged(MouseEvent e)
     {
-        //System.out.println("drag : "+e.getX());
+        // Get the delta component of the dragging
         int dx = e.getX() - this.dragSource.getX();
         int dy = e.getY() - this.dragSource.getY();
-        //System.out.println("drag : x="+e.getX()+";y="+e.getY()+" : dx="+dx+";dy="+dy);
+        
+        // Get the new graphical center
         Coord newCenter = new Coord(this.sourceCenter.getX()+dx, this.sourceCenter.getY()+dy);
-        //System.out.println("new center : "+newCenter);
+        
+        // Set the new graphical center of the gridpanel
         this.gridPanel.moveCenterTo(newCenter);
         
     }
-
-    @Override
-    public void mouseWheelMoved(MouseWheelEvent e)
-    {
-        this.gridPanel.zoom(-e.getWheelRotation());
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e)
-    {
-        this.dragSource = null;
-        this.sourceCenter = null;
-    }
-
+    
+    /**
+     * When the mouse is pressed, saves the drag source and the current graphical centers
+     * @param e 
+     */
     @Override
     public void mousePressed(MouseEvent e)
     {
@@ -57,6 +57,31 @@ public class GridMouseAdapter extends MouseAdapter
         this.sourceCenter = this.gridPanel.getGraphicalCenter();
         System.out.println("pressed at : x="+e.getX()+" ; y="+e.getY());
     }
+    
+    /**
+     * When the mouse is released, reset the drag source
+     * @param e 
+     */
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        this.dragSource = null;
+        this.sourceCenter = null;
+    }   
+
+    /**
+     * When the mouse wheel moved
+     * @param e 
+     */
+    @Override
+    public void mouseWheelMoved(MouseWheelEvent e)
+    {
+        // Update the zoom of the gridPanel
+        this.gridPanel.zoom(-e.getWheelRotation());
+    }
+    
+    
+   
     
     
     
