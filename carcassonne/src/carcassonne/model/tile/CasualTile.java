@@ -472,6 +472,6 @@ public class CasualTile extends AbstractTile
     @Override
     public AbstractType getType(String coordinates)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return this.types.get(coordinates);
     }
 }
