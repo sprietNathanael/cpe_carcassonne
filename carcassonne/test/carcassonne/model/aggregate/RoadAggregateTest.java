@@ -6,11 +6,15 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
+import carcassonne.model.type.CityType;
+import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
@@ -203,13 +207,84 @@ public class RoadAggregateTest
     }
 
     /**
-     * Test of completeRoad method, of class RoadAggregate.
+     * Test of manageLoopRoad method, if we make a loop with the third tile
+     * placed
      */
     @Test
     public void testManageLoopRoad()
     {
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        AbstractTile firstTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSW");
+        locationTypes.add("W");
+
+        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
+
+        AbstractTile secondTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSE");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
+        Player player = new Player("heelo !", Color.yellow);
+        instance.addMeeple(player, player.getFirstMeepleAvailable());
+
+        AbstractTile thirdTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        instance.enlargeAggregate(-1, -1, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(0, -1, fourthTile, locationTypes);
+
+        int result = instance.getRoadExtremities();
+        assertEquals(2, result);
+    }
+
+    /**
+     * Test of manageLoopRoad method, if we make a loop with the last tile
+     * placed
+     */
+    @Test
+    public void testManageLoopRoadLastTile()
+    {
+        AbstractTile firstTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSW");
+        locationTypes.add("W");
+
+        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
+
+        AbstractTile secondTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSE");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
+        Player player = new Player("heelo !", Color.yellow);
+        instance.addMeeple(player, player.getFirstMeepleAvailable());
+
+        AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(0, -1, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, -1, fourthTile, locationTypes);
+
+        int result = instance.getRoadExtremities();
+        assertEquals(2, result);
     }
 
     /**
@@ -218,26 +293,37 @@ public class RoadAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
-        System.out.println("checkIsCompleted");
-        RoadAggregate instance = null;
-        boolean expResult = false;
+        AbstractTile firstTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSW");
+        locationTypes.add("W");
+
+        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
+
+        AbstractTile secondTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSE");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
+        Player player = new Player("heelo !", Color.yellow);
+        instance.addMeeple(player, player.getFirstMeepleAvailable());
+
+        AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(0, -1, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, -1, fourthTile, locationTypes);
+
         boolean result = instance.checkIsCompleted();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(true, result);
     }
-
-    /**
-     * Test of main method, of class RoadAggregate.
-     */
-    @Test
-    public void testMain()
-    {
-        System.out.println("main");
-        String[] str = null;
-        RoadAggregate.main(str);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }

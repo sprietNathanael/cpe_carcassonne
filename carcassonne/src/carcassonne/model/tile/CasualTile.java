@@ -8,6 +8,7 @@ package carcassonne.model.tile;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
+import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
@@ -364,10 +365,9 @@ public class CasualTile extends AbstractTile
     @Override
     public String toString()
     {
-        return "\n"  + getNWW() + getNW() + getNNW() + "  " + getN() + "  " + getNNE() + getNE() + getNEE() + "\n" +
-                "  "  + getW() + "  "  + getCNW() + getCSW() + getCNE() + getCSE() + " "  + getE() + "\n" +
-                getSWW() + getSW() + getSSW() + "  "  + getS() + "  "  + getSSE() + getSE() + getSEE() + "\n"
-                ;
+        return "\n" + getNWW() + getNW() + getNNW() + "  " + getN() + "  " + getNNE() + getNE() + getNEE() + "\n"
+                + "  " + getW() + "  " + getCNW() + getCSW() + getCNE() + getCSE() + " " + getE() + "\n"
+                + getSWW() + getSW() + getSSW() + "  " + getS() + "  " + getSSE() + getSE() + getSEE() + "\n";
     }
 
     /**
@@ -450,6 +450,25 @@ public class CasualTile extends AbstractTile
         this.types.put("NEE", intermediate);
 
         return (true);
+    }
+
+    /**
+     * Check quickly if the tile is composed of a cross road
+     *
+     * @return boolean
+     */
+    public boolean isCrossRoad()
+    {
+        boolean result = false;
+
+        if (this.getCNE() instanceof CrossType
+                && this.getCNW() instanceof CrossType
+                && this.getCSE() instanceof CrossType
+                && this.getCSW() instanceof CrossType) {
+            result = true;
+        }
+
+        return result;
     }
 
     public static void main(String str[])

@@ -62,6 +62,13 @@ public abstract class AbstractTile
     public abstract AbstractType getType(String coordinates);
     
     /**
+     * Quickly check if the tile is composed of a cross road
+     *
+     * @return boolean
+     */
+    public abstract boolean isCrossRoad();
+    
+    /**
      * puts the meeple on the tile following the coordinate
      * @param coordinates
      * @param m 

@@ -87,8 +87,16 @@ public class RoadAggregate extends AbstractAggregate
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
 
+        //Manage the extremities of the road
         if (isAnExtremity(newTile)) {
-            roadExtremities++;
+            //If the new tile is a cross road with to elements, that means this tile is a loop and the road is completed
+            if (newTile.isCrossRoad() && locationTypes.size() == 2) {
+                roadExtremities = 2;
+            }
+            //If it isn't, it is just a regular extremity:
+            else {
+                roadExtremities++;
+            }
         }
 
         //To manage the loop possibilities, we call the corresponding method each time the aggregate has a neighbor

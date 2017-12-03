@@ -20,12 +20,12 @@ import java.util.List;
  */
 public class CarcassonneGame implements CarcassonneGameInterface
 {
-    
+
     private List<Player> players;
     private Board board;
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
-    
+
     public CarcassonneGame()
     {
         this.board = new Board();
@@ -102,7 +102,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public AbstractTile drawFromPile()
     {
         return this.pile.remove(0);
-        
+
     }
 
     /**
@@ -118,14 +118,14 @@ public class CarcassonneGame implements CarcassonneGameInterface
     {
         board.addTile(tile, row, column);
     }
-    
+
     /**
      * Alloxs to put a meeple on a type
      * @param meeple
      * @param tile
      * @param player
      * @param type
-     * @throws Exception 
+     * @throws Exception
      */
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, AbstractType type) throws Exception
     {
@@ -144,12 +144,17 @@ public class CarcassonneGame implements CarcassonneGameInterface
                 meeple.setIsUsed(true);
             }
         }
-        
+
     }
-    
+
     public Board getBoard (){
         return this.board;
-        
+
     }
-    
+
+    public AbstractTile drawFromPileIndex(int i)
+    {
+        return this.pile.remove(i);
+    }
+
 }
