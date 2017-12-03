@@ -169,4 +169,10 @@ public class Player
     {
         return bigMeeple;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Player{name=" + name + ", points=" + points + ", color=" + color + '}';
+    }
 }

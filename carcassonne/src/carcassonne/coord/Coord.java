@@ -50,4 +50,10 @@ public class Coord
         }
         return true;
     }
+
+    @Override
+    public String toString()
+    {
+        return "Coord{" + "row=" + row + ", col=" + col + '}';
+    }
 }
