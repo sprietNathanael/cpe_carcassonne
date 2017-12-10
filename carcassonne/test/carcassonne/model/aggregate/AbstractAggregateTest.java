@@ -58,7 +58,7 @@ public class AbstractAggregateTest
         types.add("S");
         types.add("E");
 
-        return new CityAggregate(x, y, initiateAbstractTile(), types);
+        return new RoadAggregate(x, y, initiateAbstractTile(), types);
     }
 
     public static Set<String> initiateTypes()

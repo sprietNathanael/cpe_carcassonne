@@ -5,7 +5,6 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
@@ -207,6 +206,88 @@ public class RoadAggregateTest
     }
 
     /**
+     * Test of merge method, (Those tiles are not correctly placed)
+     */
+    @Test
+    public void testMergeBisLoop()
+    {
+        AbstractTile firstTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSE");
+        locationTypes.add("E");
+        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
+
+        AbstractTile secondTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        instance.enlargeAggregate(0, -1, secondTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("E");
+        RoadAggregate neighbor = new RoadAggregate(0, -1, secondTile, locationTypes);
+
+        AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("W");
+        neighbor.enlargeAggregate(1, -1, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(1, 0, fourthTile, locationTypes);
+
+        instance.merge(neighbor);
+
+        assertEquals(4, instance.getAggregatedTiles().size());
+    }
+
+    /**
+     * Test of merge method, (Those tiles are not correctly placed)
+     */
+    @Test
+    public void testMergeBisLoopBis()
+    {
+        AbstractTile firstTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSE");
+        locationTypes.add("E");
+        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
+
+        AbstractTile secondTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        instance.enlargeAggregate(0, -1, secondTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("E");
+        RoadAggregate neighbor = new RoadAggregate(0, -1, secondTile, locationTypes);
+
+        AbstractTile thirdTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("CSW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(1, 0, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("CNW");
+        locationTypes.add("W");
+        instance.enlargeAggregate(1, -1, fourthTile, locationTypes);
+
+        instance.merge(neighbor);
+        System.out.println("Le problème c'est que la liste des locationType de chaque tuile et surchargée, on ne prend pas en compte les location types déjà présentes à ces coordonnées");
+        assertEquals(true, instance.checkIsCompleted());
+    }
+
+    /**
      * Test of manageLoopRoad method, if we make a loop with the third tile
      * placed
      */
@@ -310,18 +391,18 @@ public class RoadAggregateTest
         Player player = new Player("heelo !", Color.yellow);
         instance.addMeeple(player, player.getFirstMeepleAvailable());
 
-        AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
+        AbstractTile thirdTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("E");
+        instance.enlargeAggregate(-1, -1, thirdTile, locationTypes);
+
+        AbstractTile fourthTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
         locationTypes = new HashSet<>();
         locationTypes.add("N");
         locationTypes.add("CNW");
         locationTypes.add("W");
-        instance.enlargeAggregate(0, -1, thirdTile, locationTypes);
-
-        AbstractTile fourthTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("S");
-        locationTypes.add("E");
-        instance.enlargeAggregate(-1, -1, fourthTile, locationTypes);
+        instance.enlargeAggregate(0, -1, fourthTile, locationTypes);
 
         boolean result = instance.checkIsCompleted();
         assertEquals(true, result);
