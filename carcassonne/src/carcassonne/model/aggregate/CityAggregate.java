@@ -20,7 +20,12 @@ import java.util.Set;
 public class CityAggregate extends AbstractAggregate
 {
 
-    private Map<Coord, Set<CityEdge>> cityEdges;
+    private Map<Coord, Set<CityEdgeEnum>> cityEdges;
+
+    public Map<Coord, Set<CityEdgeEnum>> getCityEdges()
+    {
+        return cityEdges;
+    }
 
     /**
      * Construct a city aggregation
@@ -68,10 +73,9 @@ public class CityAggregate extends AbstractAggregate
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         //We get the city edges of this new tile; using the list of location's tile composing the aggregate
-        Set<CityEdge> currentTileEdges = getCityEdges(locationTypes);
-
+        Set<CityEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
         //For each edges, we set the coord of its neighbor
-        currentTileEdges.forEach((CityEdge cityEdge) -> {
+        currentTileEdges.forEach((CityEdgeEnum cityEdge) -> {
             int neighborCol = col, neighborRow = row;
             switch (cityEdge) {
                 case NORTH:
@@ -88,10 +92,11 @@ public class CityAggregate extends AbstractAggregate
                     break;
             }
             //We then get the current neighbor
-            Set<CityEdge> neighborTileEdges = cityEdges.get(new Coord(neighborCol, neighborRow));
-            CityEdge neighborTileEdge = CityEdge.getOpposite(cityEdge);
+            Set<CityEdgeEnum> neighborTileEdges = cityEdges.get(new Coord(neighborCol, neighborRow));
+            CityEdgeEnum neighborTileEdge = CityEdgeEnum.getOpposite(cityEdge);
+
             //If the neighbor has an edge incomplete, we delete it 
-            if (neighborTileEdges.contains(neighborTileEdge)) {
+            if (neighborTileEdges != null && neighborTileEdges.contains(neighborTileEdge)) {
                 //Delete the needed edge of the current tile
                 currentTileEdges.remove(cityEdge);
                 //Delete the needed edge of the neighbor tile
@@ -101,19 +106,24 @@ public class CityAggregate extends AbstractAggregate
                     cityEdges.remove(new Coord(neighborCol, neighborRow));
                 }
                 else {
-                    //Update the set if there is no more edges for this neighbor tile
+                    //Update the set if there is still edges for this neighbor tile
                     cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
                 }
-                if (!currentTileEdges.isEmpty()) {
-                    //If there is still edges incomplete on this current tile, we put them
-                    cityEdges.put(new Coord(col, row), currentTileEdges);
-                }
+            }
+            if (!currentTileEdges.isEmpty()) {
+                //If there is still edges incomplete on this current tile, we put them
+                cityEdges.put(new Coord(col, row), currentTileEdges);
             }
         });
 
         super.enlargeAggregate(col, row, newTile, locationTypes);
     }
-    
+
+    public void merge(CityAggregate neighborAggregate)
+    {
+        //mergeSet(neighborAggregate.getCityEdges(), cityEdges);
+    }
+
     @Override
     public boolean checkIsCompleted()
     {
@@ -126,24 +136,32 @@ public class CityAggregate extends AbstractAggregate
         return result;
     }
 
-    private static Set<CityEdge> getCityEdges(Set<String> locationTypes)
+    private static Set<CityEdgeEnum> getCityEdges(Set<String> locationTypes)
     {
-        Set<CityEdge> cityEdges = new HashSet<>();
+        Set<CityEdgeEnum> cityEdges = new HashSet<>();
 
         if (locationTypes.contains("N")) {
-            cityEdges.add(CityEdge.NORTH);
+            cityEdges.add(CityEdgeEnum.NORTH);
         }
         if (locationTypes.contains("E")) {
-            cityEdges.add(CityEdge.EAST);
+            cityEdges.add(CityEdgeEnum.EAST);
         }
         if (locationTypes.contains("S")) {
-            cityEdges.add(CityEdge.SOUTH);
+            cityEdges.add(CityEdgeEnum.SOUTH);
         }
         if (locationTypes.contains("W")) {
-            cityEdges.add(CityEdge.WEST);
+            cityEdges.add(CityEdgeEnum.WEST);
         }
 
         return cityEdges;
     }
 
+    public static Map<Coord, Set<CityEdgeEnum>> mergeCityEdgesSet(Map<Coord, Set<CityEdgeEnum>> map1, Map<Coord, Set<CityEdgeEnum>> map2)
+    {
+        map1.forEach((key1, value1) -> {
+            map2.merge(key1, value1, (key2, value2) -> key2).addAll(value1);
+        });
+
+        return map2;
+    }
 }
