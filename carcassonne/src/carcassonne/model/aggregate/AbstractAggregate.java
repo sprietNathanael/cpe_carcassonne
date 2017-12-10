@@ -36,7 +36,7 @@ public abstract class AbstractAggregate
      * @param locationTypes Set of all the new tile types that compose the
      * aggregation
      */
-    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
+    protected AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(col, row), firstTile);
@@ -62,7 +62,7 @@ public abstract class AbstractAggregate
      * @param player
      * @param meeple
      */
-    public AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple)
+    protected AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple)
     {
         this.aggregatedTiles = new HashMap();
         this.aggregatedTiles.put(new Coord(col, row), firstTile);
@@ -155,7 +155,7 @@ public abstract class AbstractAggregate
      * @param newTile
      * @param locationTypes
      */
-    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
+    protected void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         aggregatedTiles.put(new Coord(col, row), newTile);
         aggregatedPositionTypes.put(newTile, locationTypes);
@@ -186,11 +186,13 @@ public abstract class AbstractAggregate
      *
      * @param neighborAggregate
      */
-    public void merge(AbstractAggregate neighborAggregate)
+    protected void merge(AbstractAggregate neighborAggregate)
     {
         //First we add the new tiles to the aggregation
         aggregatedTiles.putAll(neighborAggregate.getAggregatedTiles());
-        aggregatedPositionTypes.putAll(neighborAggregate.getAggregatedTypes());
+        
+        Map<AbstractTile, Set<String>> newPositionTypes = mergeLocationTypesSet(aggregatedPositionTypes, neighborAggregate.getAggregatedTypes());
+        aggregatedPositionTypes.putAll(newPositionTypes);
 
         //Get the common players of these two aggregates
         Set<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
@@ -240,6 +242,15 @@ public abstract class AbstractAggregate
         return winningPlayers;
     }
 
+    protected static Map<AbstractTile, Set<String>> mergeLocationTypesSet(Map<AbstractTile, Set<String>> map1, Map<AbstractTile, Set<String>> map2)
+    {
+        map1.forEach((key1, value1) -> {
+            map2.merge(key1, value1, (key2, value2) -> key2).addAll(value1);
+        });
+
+        return map2;
+    }
+
     /**
      * Set the aggregation to "completed" if the aggregation is closed
      *
@@ -252,5 +263,4 @@ public abstract class AbstractAggregate
     {
         return "AbstractAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", meepleNumber=" + meepleNumber + ", isCompleted=" + isCompleted + '}';
     }
-
 }

@@ -89,32 +89,13 @@ public class RoadAggregate extends AbstractAggregate
 
         //Manage the extremities of the road
         if (isAnExtremity(newTile)) {
-            //If the new tile is a cross road with to elements, that means this tile is a loop and the road is completed
+            //If the new tile is a cross road with two edges, that means this tile is a loop and the road is completed
             if (newTile.isCrossRoad() && locationTypes.size() == 2) {
                 roadExtremities = 2;
             }
             //If it isn't, it is just a regular extremity:
             else {
                 roadExtremities++;
-            }
-        }
-
-        //To manage the loop possibilities, we call the corresponding method each time the aggregate has a neighbor
-        for (String location : locationTypes) {
-            //For each case, we check if the suposibly neighbor exists into this aggregate
-            switch (location) {
-                case "N":
-                    this.manageLoopRoad(col, row + 1, "S");
-                    break;
-                case "E":
-                    this.manageLoopRoad(col + 1, row, "W");
-                    break;
-                case "S":
-                    this.manageLoopRoad(col, row - 1, "N");
-                    break;
-                case "W":
-                    this.manageLoopRoad(col - 1, row, "E");
-                    break;
             }
         }
     }
@@ -128,33 +109,6 @@ public class RoadAggregate extends AbstractAggregate
     {
         super.merge(neighborAggregate);
         roadExtremities += neighborAggregate.getRoadExtremities();
-    }
-
-    /**
-     * Complete the road in case of a loop into a crossroad: when the beginning
-     * and the ending of a road is in the same tile
-     *
-     * @param col the possible x position of the loop tile
-     * @param row the possible y position of the loop tile
-     * @param locationType location of the last segment road ("S", "N", "E" or
-     * "W")
-     */
-    public void manageLoopRoad(int col, int row, String locationType)
-    {
-        Coord coord = new Coord(col, row);
-
-        //Check if the tile already exists in the aggregate
-        if (aggregatedTiles.containsKey(coord)) {
-            AbstractTile loopTile = aggregatedTiles.get(coord);
-            if (isAnExtremity(loopTile)) {
-                Set<String> locationsTypes = aggregatedPositionTypes.get(loopTile);
-                //If the tile doesn't contain the type, it means it is a loop and we need to add it
-                if (!locationsTypes.contains(locationType)) {
-                    aggregatedPositionTypes.put(loopTile, locationsTypes);
-                    roadExtremities++;
-                }
-            }
-        }
     }
 
     /**

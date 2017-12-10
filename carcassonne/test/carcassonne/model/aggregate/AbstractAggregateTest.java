@@ -14,7 +14,9 @@ import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.awt.Color;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -416,6 +418,36 @@ public class AbstractAggregateTest
         {
             return false;
         }
+    }
+    
+
+    /**
+     * Test of mergeSet method, of class CityAggregate.
+     */
+    @Test
+    public void testMergeSet()
+    {
+        Map<AbstractTile, Set<String>> map1 = new HashMap<>();
+        AbstractTile id = initiateAbstractTile();
+        Set<String> enums = new HashSet<>();
+        enums.add("1");
+        enums.add("2");
+        map1.put(id, enums);
+        
+        Map<AbstractTile, Set<String>> map2 = new HashMap<>();
+        enums = new HashSet<>();
+        enums.add("2");
+        enums.add("3");
+        map2.put(id, enums);
+        
+        Map<AbstractTile, Set<String>> expResult = new HashMap<>();
+        enums = new HashSet<>();
+        enums.add("1");
+        enums.add("2");
+        enums.add("3");
+        expResult.put(id, enums);
+        System.out.println(AbstractAggregate.mergeLocationTypesSet(map1, map2).get(id));
+        assertEquals(expResult, AbstractAggregate.mergeLocationTypesSet(map1, map2));
     }
 
 }
