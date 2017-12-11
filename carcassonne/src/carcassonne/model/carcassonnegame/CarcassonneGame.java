@@ -5,6 +5,7 @@
  */
 package carcassonne.model.carcassonnegame;
 
+import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.board.Board;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
@@ -25,6 +26,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     private Board board;
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
+    private List<AbstractAggregate> abstractAggregates;
 
     public CarcassonneGame()
     {
@@ -61,6 +63,15 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public Player getCurrentPlayer()
     {
         return (this.players.get(this.currentPlayerIndex));
+    }
+    
+    /**
+     * Get the abstractAggregates
+     * @return 
+     */
+    public List<AbstractAggregate> getAbstractAggregates() 
+    {
+        return abstractAggregates;
     }
 
     /**
