@@ -9,8 +9,12 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -74,6 +78,7 @@ public class CityAggregate extends AbstractAggregate
     {
         //We get the city edges of this new tile; using the list of location's tile composing the aggregate
         Set<CityEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
+        List<CityEdgeEnum> completedEdges = new ArrayList<>();
         //For each edges, we set the coord of its neighbor
         currentTileEdges.forEach((CityEdgeEnum cityEdge) -> {
             int neighborCol = col, neighborRow = row;
@@ -95,26 +100,42 @@ public class CityAggregate extends AbstractAggregate
             Set<CityEdgeEnum> neighborTileEdges = cityEdges.get(new Coord(neighborCol, neighborRow));
             CityEdgeEnum neighborTileEdge = CityEdgeEnum.getOpposite(cityEdge);
 
-            //If the neighbor has an edge incomplete, we delete it 
-            if (neighborTileEdges != null && neighborTileEdges.contains(neighborTileEdge)) {
-                //Delete the needed edge of the current tile
-                currentTileEdges.remove(cityEdge);
-                //Delete the needed edge of the neighbor tile
-                neighborTileEdges.remove(neighborTileEdge);
-                if (neighborTileEdges.isEmpty()) {
-                    //Remove the set if there is no more edges for this neighbor tile
-                    cityEdges.remove(new Coord(neighborCol, neighborRow));
-                }
-                else {
-                    //Update the set if there is still edges for this neighbor tile
-                    cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
+            AbstractTile neighborTile = aggregatedTiles.get(new Coord(neighborCol, neighborRow));
+            boolean isLoopCase = false;
+            if (neighborTile != null) {
+                AbstractType loopCase = neighborTile.getType(CityEdgeEnum.convertToString(neighborTileEdge));
+                isLoopCase = loopCase instanceof CityType;
+            }
+            //If the neighbor has an incompleted edge that match the current edge, this edge is now completed
+            if (neighborTileEdges != null) {
+                if (neighborTileEdges.contains(neighborTileEdge)) {
+                    //Update the list of the edges that have been completed
+                    completedEdges.add(cityEdge);
+                    //Delete the needed edge of the neighbor tile
+                    neighborTileEdges.remove(neighborTileEdge);
+                    if (neighborTileEdges.isEmpty()) {
+                        //Remove the set if there is no more edges for this neighbor tile
+                        cityEdges.remove(new Coord(neighborCol, neighborRow));
+                    }
+                    else {
+                        //Update the set if there is still edges for this neighbor tile
+                        cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
+                    }
                 }
             }
-            if (!currentTileEdges.isEmpty()) {
-                //If there is still edges incomplete on this current tile, we put them
-                cityEdges.put(new Coord(col, row), currentTileEdges);
+            else if (isLoopCase) {
+                //Manage the case when we have a city edge on the new aggregate
+                completedEdges.add(cityEdge);
             }
         });
+        //We delete each edges that have been completed
+        completedEdges.forEach((completedEdge) -> {
+            currentTileEdges.remove(completedEdge);
+        });
+        if (!currentTileEdges.isEmpty()) {
+            //If there is still incompleted edges on this current tile, we put them
+            cityEdges.put(new Coord(col, row), currentTileEdges);
+        }
 
         super.enlargeAggregate(col, row, newTile, locationTypes);
     }
