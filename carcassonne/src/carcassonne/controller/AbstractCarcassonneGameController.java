@@ -25,8 +25,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     /**
      * Constructor for an AbstractCarcassonneGameController
+     * @throws java.lang.Exception
      */
-    public AbstractCarcassonneGameController()
+    public AbstractCarcassonneGameController() throws Exception
     {
         this.carcassonneGame = new CarcassonneGame();
     }
@@ -97,7 +98,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      * @throws Exception
      */
     public void putMeeple(String coordinates) throws Exception
-    {
+    { 
         Meeple m = getCurrentPlayerMeepleAvailable();
         currentTile.putMeeple(coordinates, m);
     }
@@ -112,7 +113,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         // TODO : compter les points
         return carcassonneGame.nextPlayer();
     }
-
+    
     public Board getBoard()
     {
         return carcassonneGame.getBoard();

@@ -14,11 +14,11 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 public class CarcassonneGameControllerMulti extends AbstractCarcassonneGameController
 {
 
-    public CarcassonneGameControllerMulti()
+    public CarcassonneGameControllerMulti() throws Exception
     {
     }
 
-    public CarcassonneGameControllerMulti(CarcassonneGame model)
+    public CarcassonneGameControllerMulti(CarcassonneGame model) throws Exception
     {
         super(model);
     }

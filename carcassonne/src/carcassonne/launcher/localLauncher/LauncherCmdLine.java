@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class LauncherCmdLine
 {
 
-    public static void main(String[] args)
+    public static void main(String[] args) throws Exception
     {
         CarcassonneGame model;
         CarcassonneGameControllerMulti controller;

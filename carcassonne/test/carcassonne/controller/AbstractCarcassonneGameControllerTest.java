@@ -42,7 +42,7 @@ public class AbstractCarcassonneGameControllerTest
      * AbstractCarcassonneGameController.
      */
     @Test
-    public void testGetCurrentPlayer()
+    public void testGetCurrentPlayer() throws Exception
     {
         Player j1 = new Player("bertrand", Color.pink);
         Player j2 = new Player("thomas", Color.orange);
