@@ -32,12 +32,12 @@ public class Board implements BoardInterface
      *
      * @param baseTile
      */
-    public Board(AbstractTile baseTile)
+    public Board(AbstractTile baseTile) throws Exception
     {
         grid = new AbstractTile[ROWS][COLUMNS];
 
         //Put the first tile in the center of the Board
-        grid[CENTER_ROW][CENTER_COLUMN] = baseTile;
+        addTile(baseTile, CENTER_ROW, CENTER_COLUMN);
     }
     
     /**

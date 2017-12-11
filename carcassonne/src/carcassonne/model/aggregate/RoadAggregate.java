@@ -128,7 +128,7 @@ public class RoadAggregate extends AbstractAggregate
         return result;
     }
 
-    public static void main(String str[])
+    public static void main(String str[]) throws Exception
     {
         //Démarrer jeu
         CarcassonneGame game = new CarcassonneGame();

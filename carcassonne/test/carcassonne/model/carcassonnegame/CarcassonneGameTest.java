@@ -58,7 +58,7 @@ public class CarcassonneGameTest
      * Test of getCurrentPlayer method, of class CarcassonneGame.
      */
     @Test
-    public void testGetCurrentPlayer()
+    public void testGetCurrentPlayer() throws Exception
     {
         System.out.println("getCurrentPlayer");
         Player J1 = new Player("Thomas", Color.yellow);
@@ -77,7 +77,7 @@ public class CarcassonneGameTest
      * Test of nextPlayer method, of class CarcassonneGame.
      */
     @Test
-    public void testNextPlayer()
+    public void testNextPlayer() throws Exception
     {
          System.out.println("getCurrentPlayer");
         Player J1 = new Player("Thomas", Color.yellow);
