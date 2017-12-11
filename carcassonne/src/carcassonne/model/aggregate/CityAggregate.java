@@ -100,12 +100,6 @@ public class CityAggregate extends AbstractAggregate
             Set<CityEdgeEnum> neighborTileEdges = cityEdges.get(new Coord(neighborCol, neighborRow));
             CityEdgeEnum neighborTileEdge = CityEdgeEnum.getOpposite(cityEdge);
 
-            AbstractTile neighborTile = aggregatedTiles.get(new Coord(neighborCol, neighborRow));
-            boolean isLoopCase = false;
-            if (neighborTile != null) {
-                AbstractType loopCase = neighborTile.getType(CityEdgeEnum.convertToString(neighborTileEdge));
-                isLoopCase = loopCase instanceof CityType;
-            }
             //If the neighbor has an incompleted edge that match the current edge, this edge is now completed
             if (neighborTileEdges != null) {
                 if (neighborTileEdges.contains(neighborTileEdge)) {
@@ -122,10 +116,6 @@ public class CityAggregate extends AbstractAggregate
                         cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
                     }
                 }
-            }
-            else if (isLoopCase) {
-                //Manage the case when we have a city edge on the new aggregate
-                completedEdges.add(cityEdge);
             }
         });
         //We delete each edges that have been completed

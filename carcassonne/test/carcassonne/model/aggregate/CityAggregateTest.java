@@ -281,7 +281,7 @@ public class CityAggregateTest
      * Test of enlargeAggregate method, of class CityAggregate.
      */
     @Test
-    public void testEnlargeAggregateLoop()
+    public void testMergeLoop()
     {
         AbstractTile newTile = getTileI();
         Set<String> locationTypes = new HashSet<>();
@@ -289,6 +289,12 @@ public class CityAggregateTest
         locationTypes.add("E");
         locationTypes.add("SEE");
         CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+        
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        CityAggregate instanceBis = new CityAggregate(0, 0, newTile, locationTypes);
 
         newTile = getTileN();
         newTile.rotateLeft();
@@ -323,9 +329,9 @@ public class CityAggregateTest
         locationTypes.add("NEE");
         locationTypes.add("E");
         locationTypes.add("SEE");
-        System.out.println("Je teste");
         instance.enlargeAggregate(0, -1, newTile, locationTypes);
-        System.out.println("Je teste plus");
+        
+        instance.merge(instanceBis);
         
         //We expect map map with no incomplete edges
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
