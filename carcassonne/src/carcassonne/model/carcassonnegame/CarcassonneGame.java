@@ -28,15 +28,9 @@ public class CarcassonneGame implements CarcassonneGameInterface
     private List<AbstractTile> pile;
     private List<AbstractAggregate> abstractAggregates;
 
-    public CarcassonneGame()
+    public CarcassonneGame() throws Exception
     {
-        this.board = new Board();
-
-        //Call the basic extension to get the basic tiles into the pile
-        SetInterface basicSet = new BasicSet();
-        this.pile = basicSet.getSet();
-        this.players = new ArrayList<>();
-        this.currentPlayerIndex = 0;
+        this(new ArrayList<Player>());
     }
 
     /**
@@ -44,15 +38,37 @@ public class CarcassonneGame implements CarcassonneGameInterface
      *
      * @param players existing list of players
      */
-    public CarcassonneGame(ArrayList<Player> players)
+    public CarcassonneGame(ArrayList<Player> players) throws Exception
     {
-        this.board = new Board();
+        AbstractTile startTile = getStartPile();
+        this.board = new Board(startTile);
 
         //Call the basic extension to get the basic tiles into the pile
         SetInterface basicSet = new BasicSet();
         this.pile = basicSet.getSet();
         this.players = players;
         this.currentPlayerIndex = 0;
+    }
+
+    /**
+     * Gets the start Pile and remote it from the pile
+     * @return the start Pile
+     * @throws Exception 
+     */
+    private AbstractTile getStartPile() throws Exception
+    {
+        AbstractTile startTile = null;
+        for (AbstractTile t : pile) {
+            if (t.getId() == "D"){
+                startTile = t;
+                break;
+            }
+        }
+        if (startTile == null)
+            throw new Exception("La tuile de départ n'a pas été trouvée dans la pile");       
+        
+        pile.remove((Object)startTile);
+        return startTile;
     }
 
     /**
@@ -64,12 +80,13 @@ public class CarcassonneGame implements CarcassonneGameInterface
     {
         return (this.players.get(this.currentPlayerIndex));
     }
-    
+
     /**
      * Get the abstractAggregates
-     * @return 
+     *
+     * @return
      */
-    public List<AbstractAggregate> getAbstractAggregates() 
+    public List<AbstractAggregate> getAbstractAggregates()
     {
         return abstractAggregates;
     }
@@ -132,6 +149,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
 
     /**
      * Alloxs to put a meeple on a type
+     *
      * @param meeple
      * @param tile
      * @param player
@@ -158,7 +176,8 @@ public class CarcassonneGame implements CarcassonneGameInterface
 
     }
 
-    public Board getBoard (){
+    public Board getBoard()
+    {
         return this.board;
 
     }

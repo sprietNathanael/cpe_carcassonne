@@ -13,12 +13,22 @@ import carcassonne.model.type.AbstractType;
  */
 public abstract class AbstractTile
 {
-
+    protected String id;
     /**
      * Constructor
      */
     public AbstractTile()
     {
+    }
+    
+    /**
+     * Get the id of the tile
+     *
+     * @return the id of the tile
+     */
+    public String getId()
+    {
+        return this.id;
     }
 
     /**
