@@ -293,14 +293,13 @@ public class CityAggregateTest
         newTile = getTileN();
         newTile.rotateLeft();
         locationTypes = new HashSet<>();
-        locationTypes.add("SSE");        
+        locationTypes.add("SSE");
         locationTypes.add("S");
         locationTypes.add("SSW");
         locationTypes.add("SW");
         locationTypes.add("SWW");
         locationTypes.add("W");
         locationTypes.add("NWW");
-        
         instance.enlargeAggregate(1, 0, newTile, locationTypes);
 
         newTile = getTileN();
@@ -312,7 +311,6 @@ public class CityAggregateTest
         locationTypes.add("NNW");
         locationTypes.add("NNE");
         locationTypes.add("N");
-        System.out.println("Test !");
         instance.enlargeAggregate(1, -1, newTile, locationTypes);
 
         newTile = getTileN();
@@ -325,9 +323,10 @@ public class CityAggregateTest
         locationTypes.add("NEE");
         locationTypes.add("E");
         locationTypes.add("SEE");
-        
+        System.out.println("Je teste");
         instance.enlargeAggregate(0, -1, newTile, locationTypes);
-
+        System.out.println("Je teste plus");
+        
         //We expect map map with no incomplete edges
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
         assertEquals(expResult, instance.getCityEdges());
@@ -387,22 +386,22 @@ public class CityAggregateTest
         Set<CityEdgeEnum> enums = new HashSet<>();
         enums.add(CityEdgeEnum.WEST);
         enums.add(CityEdgeEnum.EAST);
-        map1.put(new Coord(0,0), enums);
-        
+        map1.put(new Coord(0, 0), enums);
+
         Map<Coord, Set<CityEdgeEnum>> map2 = new HashMap<>();
         enums = new HashSet<>();
         enums.add(CityEdgeEnum.NORTH);
-        map2.put(new Coord(0,0), enums);
-        map2.put(new Coord(1,0), enums);
-        
+        map2.put(new Coord(0, 0), enums);
+        map2.put(new Coord(1, 0), enums);
+
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
         Set<CityEdgeEnum> finalEnums = new HashSet<>();
         finalEnums.add(CityEdgeEnum.NORTH);
         finalEnums.add(CityEdgeEnum.WEST);
         finalEnums.add(CityEdgeEnum.EAST);
-        expResult.put(new Coord(0,0), finalEnums);
-        expResult.put(new Coord(1,0), enums);
-        
+        expResult.put(new Coord(0, 0), finalEnums);
+        expResult.put(new Coord(1, 0), enums);
+
         assertEquals(expResult, CityAggregate.mergeCityEdgesSet(map1, map2));
     }
 
