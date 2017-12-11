@@ -24,7 +24,6 @@ public class CasualTile extends AbstractTile
 {
 
     private HashMap<String, AbstractType> types;
-    private String id;
     static private HashMap<String, String[]> neighbouring;
 
     static {
@@ -145,16 +144,6 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
-    }
-
-    /**
-     * Get the id of the tile
-     *
-     * @return the id of the tile
-     */
-    public String getId()
-    {
-        return this.id;
     }
 
     /**
