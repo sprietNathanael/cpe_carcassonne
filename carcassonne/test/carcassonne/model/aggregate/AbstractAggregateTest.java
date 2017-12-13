@@ -196,19 +196,6 @@ public class AbstractAggregateTest
     }
 
     /**
-     * Test of getMeepleNumber method, of class AbstractAggregate.
-     */
-    @Test
-    public void testGetMeepleNumber()
-    {
-        Player player = AbstractAggregateTest.initiatePlayer();
-        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getBigMeepleAvailable());
-        int expResult = 2;
-        int result = instance.getMeepleNumber();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of merge method, if the aggregates are from the same player(s)
      */
     @Test
@@ -223,7 +210,7 @@ public class AbstractAggregateTest
 
         instance.merge(neighborAggregate);
 
-        assertEquals(3, instance.meepleNumber);
+        //assertEquals(3, instance.meepleNumber);
     }
 
     /**
@@ -241,7 +228,7 @@ public class AbstractAggregateTest
 
         instance.merge(neighborAggregate);
 
-        assertEquals(2, instance.meepleNumber);
+        //assertEquals(2, instance.meepleNumber);
     }
 
     /**
@@ -260,10 +247,7 @@ public class AbstractAggregateTest
 
         instance.merge(neighborAggregate);
 
-        Set<Player> expResult = new HashSet<>();
-        expResult.add(new Player("test", Color.yellow));
-
-        assertEquals(expResult, instance.players);
+        assertEquals(instance.getBiggestPoints(), 2);
     }
 
     /**
@@ -281,32 +265,17 @@ public class AbstractAggregateTest
         instance.addMeeple(player2, player2.getFirstMeepleAvailable());
 
         instance.merge(neighborAggregate);
-        Set<Player> expResult = new HashSet<>();
-        expResult.add(new Player("Mo", Color.yellow));
-        expResult.add(new Player("test", Color.yellow));
+        Map<Player, Set<Meeple>> expResult = new HashMap<>();
+        Set<Meeple> meeps = new HashSet();
+        meeps.add(player.getMeeple().get(0));
+        expResult.put(player, meeps);
+        meeps = new HashSet();
+        meeps.add(player2.getMeeple().get(0));
+        expResult.put(player2, meeps);
 
-        assertEquals(expResult, instance.players);
-    }
+        System.out.println(instance.getBiggestPoints());
 
-    /**
-     * Test of merge method, if the current aggregate doesn't have any player
-     */
-    @Test
-    public void testMerge4()
-    {
-        AbstractAggregate instance = new AbstractAggregateImpl();
-        Player player = new Player("Mo", Color.yellow);
-        AbstractAggregate neighborAggregate = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
-
-        //Simulate an aggregate with already 2 players on it 
-        neighborAggregate.players.add(new Player("Koukou", Color.DARK_GRAY));
-
-        instance.merge(neighborAggregate);
-
-        Set<Player> expResult = new HashSet<>();
-        expResult.add(new Player("Mo", Color.yellow));
-        expResult.add(new Player("Koukou", Color.DARK_GRAY));
-
+        System.out.println(instance.players);
         assertEquals(expResult, instance.players);
     }
 
@@ -395,7 +364,7 @@ public class AbstractAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
-        System.out.println("Tester 'checkIsCompleted' pour chaque classe qui étend AbstractAggregate");
+        //System.out.println("Tester 'checkIsCompleted' pour chaque classe qui étend AbstractAggregate");
         AbstractAggregate abstractAggregate = new AbstractAggregateImpl();
         boolean result = abstractAggregate.checkIsCompleted();
         assertEquals(false, result);
@@ -419,7 +388,6 @@ public class AbstractAggregateTest
             return false;
         }
     }
-    
 
     /**
      * Test of mergeSet method, of class CityAggregate.
@@ -433,21 +401,128 @@ public class AbstractAggregateTest
         enums.add("1");
         enums.add("2");
         map1.put(id, enums);
-        
+
         Map<AbstractTile, Set<String>> map2 = new HashMap<>();
         enums = new HashSet<>();
         enums.add("2");
         enums.add("3");
         map2.put(id, enums);
-        
+
         Map<AbstractTile, Set<String>> expResult = new HashMap<>();
         enums = new HashSet<>();
         enums.add("1");
         enums.add("2");
         enums.add("3");
         expResult.put(id, enums);
-        System.out.println(AbstractAggregate.mergeLocationTypesSet(map1, map2).get(id));
+
         assertEquals(expResult, AbstractAggregate.mergeLocationTypesSet(map1, map2));
+    }
+
+    /**
+     * Test of mergeMeeplesSet method, of class AbstractAggregate.
+     */
+    @Test
+    public void testMergeMeeplesSet()
+    {
+        Player p1 = new Player("No", Color.red);
+        Player p2 = new Player("Bo", Color.red);
+        Map<Player, Set<Meeple>> m1 = new HashMap();
+        Map<Player, Set<Meeple>> m2 = new HashMap();
+        Map<Player, Set<Meeple>> expResult = new HashMap();
+
+        Set<Meeple> meeps = new HashSet();
+        meeps.add(p1.getBigMeeple());
+        m1.put(p1, meeps);
+
+        meeps = new HashSet();
+        meeps.add(p1.getMeeple().get(0));
+
+        Set<Meeple> meeps2 = new HashSet();
+        meeps2.add(p2.getMeeple().get(0));
+        m2.put(p2, meeps2);
+
+        expResult = m1;
+        expResult.put(p1, meeps);
+        expResult.put(p2, meeps2);
+
+        assertEquals(expResult, AbstractAggregate.mergeMeeplesSet(m1, m2));
+    }
+
+    /**
+     * Test of getBiggestMeepleNumber method, of class AbstractAggregate.
+     */
+    @Test
+    public void testGetBiggestPoints()
+    {
+        System.out.println("getBiggestMeepleNumber");
+        Player p = new Player("Bonjour", Color.yellow);
+        AbstractAggregateImpl instance = new AbstractAggregateImpl(p, p.getFirstMeepleAvailable());
+
+        Player p2 = new Player("Aurevoir", Color.red);
+        AbstractAggregateImpl instance2 = new AbstractAggregateImpl(p2, p2.getBigMeepleAvailable());
+        instance.merge(instance2);
+
+        int expResult = 2;
+        int result = instance.getBiggestPoints();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getWinningPlayers method, of class AbstractAggregate.
+     */
+    @Test
+    public void testGetWinningPlayers()
+    {
+        System.out.println("getBiggestMeepleNumber");
+        Player p = new Player("Bonjour", Color.yellow);
+        AbstractAggregateImpl instance = new AbstractAggregateImpl(p, p.getFirstMeepleAvailable());
+
+        Player p2 = new Player("Aurevoir", Color.red);
+        AbstractAggregateImpl instance2 = new AbstractAggregateImpl(p2, p2.getBigMeepleAvailable());
+        instance.merge(instance2);
+
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(p2);
+        Set<Player> result = instance.getWinningPlayers();
+        assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of getWinningPlayers method, when several players won
+     */
+    @Test
+    public void testGetWinningPlayersBis()
+    {
+        System.out.println("getBiggestMeepleNumber");
+        Player p = new Player("Bonjour", Color.yellow);
+        AbstractAggregateImpl instance = new AbstractAggregateImpl(p, p.getFirstMeepleAvailable());
+
+        Player p2 = new Player("Aurevoir", Color.red);
+        AbstractAggregateImpl instance2 = new AbstractAggregateImpl(p2, p2.getBigMeepleAvailable());
+        instance.merge(instance2);
+
+        Player p3 = new Player("Heho", Color.green);
+        Meeple meeple = p3.getFirstMeepleAvailable();
+        AbstractAggregateImpl instance3 = new AbstractAggregateImpl(p3, meeple);
+        meeple.setIsUsed(true);
+
+        meeple = p3.getFirstMeepleAvailable();
+        AbstractAggregateImpl instance4 = new AbstractAggregateImpl();
+        instance4.addMeeple(p3, meeple);
+        meeple.setIsUsed(true);
+
+        instance3.merge(instance4);
+        System.out.println(instance4.getBiggestPoints());
+        System.out.println(instance3.getBiggestPoints());
+
+        instance.merge(instance3);
+
+        Set<Player> expResult = new HashSet<>();
+        expResult.add(p3);
+        expResult.add(p2);
+
+        Set<Player> result = instance.getWinningPlayers();
+        assertEquals(expResult, result);
     }
 
 }

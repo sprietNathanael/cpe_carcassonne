@@ -23,8 +23,7 @@ public abstract class AbstractAggregate
 
     protected Map<Coord, AbstractTile> aggregatedTiles;
     protected Map<AbstractTile, Set<String>> aggregatedPositionTypes;
-    protected Set<Player> players;
-    protected int meepleNumber;
+    protected Map<Player, Set<Meeple>> players;
     protected boolean isCompleted;
 
     /**
@@ -44,8 +43,7 @@ public abstract class AbstractAggregate
         this.aggregatedPositionTypes = new HashMap();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
-        this.players = new HashSet();
-        this.meepleNumber = 0;
+        this.players = new HashMap();
 
         this.isCompleted = false;
     }
@@ -70,15 +68,11 @@ public abstract class AbstractAggregate
         this.aggregatedPositionTypes = new HashMap();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
-        this.players = new HashSet();
-        this.players.add(player);
+        Set<Meeple> meeples = new HashSet();
+        meeples.add(meeple);
+        this.players = new HashMap();
+        this.players.put(player, meeples);
 
-        if (meeple.getIsBig()) {
-            this.meepleNumber = 2;
-        }
-        else {
-            this.meepleNumber = 1;
-        }
         this.isCompleted = false;
     }
 
@@ -94,15 +88,10 @@ public abstract class AbstractAggregate
     {
         boolean result = false;
 
-        if (this.players.isEmpty()) {
-            this.players.add(player);
-            if (meeple.getIsBig()) {
-                this.meepleNumber = 2;
-            }
-            else {
-                this.meepleNumber = 1;
-            }
-
+        if (players.isEmpty()) {
+            Set<Meeple> meeples = new HashSet();
+            meeples.add(meeple);
+            players.put(player, meeples);
             result = true;
         }
         return result;
@@ -171,14 +160,9 @@ public abstract class AbstractAggregate
         return aggregatedPositionTypes;
     }
 
-    public Set<Player> getPlayers()
+    public Map<Player, Set<Meeple>> getPlayers()
     {
         return players;
-    }
-
-    public int getMeepleNumber()
-    {
-        return meepleNumber;
     }
 
     /**
@@ -190,32 +174,12 @@ public abstract class AbstractAggregate
     {
         //First we add the new tiles to the aggregation
         aggregatedTiles.putAll(neighborAggregate.getAggregatedTiles());
-        
+
         Map<AbstractTile, Set<String>> newPositionTypes = mergeLocationTypesSet(aggregatedPositionTypes, neighborAggregate.getAggregatedTypes());
         aggregatedPositionTypes.putAll(newPositionTypes);
 
         //Get the common players of these two aggregates
-        Set<Player> winningPlayers = getCommonPlayers(this.players, neighborAggregate.getPlayers());
-
-        //Case if there are common player(s) in these two aggregate
-        if (!winningPlayers.isEmpty()) {
-            //Meeples number added up using the neighbor aggregate
-            this.meepleNumber += neighborAggregate.getMeepleNumber();
-            //Players updated using the winning players of these two aggregates
-            this.players = winningPlayers;
-        }
-        //Case if the players of the neighbor aggregate have more meeples than the players of the current one
-        else if (this.meepleNumber < neighborAggregate.getMeepleNumber()) {
-            //The neighbor aggregate players are now the winning players
-            this.players = neighborAggregate.getPlayers();
-            //The meeplenumber corresponds to the winning players, e.i. the neighbor aggregate
-            this.meepleNumber = neighborAggregate.getMeepleNumber();
-        }
-        //Case if the players of the current aggregate have the same meeples number than the players of the neighbored one
-        else if (this.meepleNumber == neighborAggregate.getMeepleNumber()) {
-            //The neighbor aggregate players are now the winning players
-            this.players.addAll(neighborAggregate.getPlayers());
-        }
+        players = mergeMeeplesSet(players, neighborAggregate.getPlayers());
     }
 
     /**
@@ -242,6 +206,15 @@ public abstract class AbstractAggregate
         return winningPlayers;
     }
 
+    protected static Map<Player, Set<Meeple>> mergeMeeplesSet(Map<Player, Set<Meeple>> map1, Map<Player, Set<Meeple>> map2)
+    {
+        map1.forEach((key1, value1) -> {
+            map2.merge(key1, value1, (key2, value2) -> key2).addAll(value1);
+        });
+
+        return map2;
+    }
+
     protected static Map<AbstractTile, Set<String>> mergeLocationTypesSet(Map<AbstractTile, Set<String>> map1, Map<AbstractTile, Set<String>> map2)
     {
         map1.forEach((key1, value1) -> {
@@ -261,6 +234,36 @@ public abstract class AbstractAggregate
     @Override
     public String toString()
     {
-        return "AbstractAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", meepleNumber=" + meepleNumber + ", isCompleted=" + isCompleted + '}';
+        return "AbstractAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
     }
+
+    public int getBiggestPoints()
+    {
+        int max = 0, current;
+        for (Map.Entry player : players.entrySet()) {
+            current = Player.countPoints((Set<Meeple>) player.getValue());
+            if (current > max) {
+                max = current;
+            }
+        }
+
+        return max;
+    }
+
+    public Set<Player> getWinningPlayers()
+    {
+        Set<Player> winningPlayers = new HashSet();
+        int maxNumber = this.getBiggestPoints(), currentNumber;
+
+        for (Map.Entry player : players.entrySet()) {
+            System.out.println(player.getKey());
+            currentNumber = Player.countPoints((Set<Meeple>) player.getValue());
+            if (currentNumber == maxNumber) {
+                winningPlayers.add((Player) player.getKey());
+            }
+        }
+
+        return winningPlayers;
+    }
+;
 }

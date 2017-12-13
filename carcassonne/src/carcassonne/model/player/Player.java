@@ -8,6 +8,7 @@ package carcassonne.model.player;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Represents a player
@@ -175,4 +176,20 @@ public class Player
     {
         return "Player{name=" + name + ", points=" + points + ", color=" + color + '}';
     }
+
+    public static int countPoints(Set<Meeple> meeples)
+    {
+        int total = 0;
+        
+        for (Meeple meeple : meeples){
+            if (meeple.getIsBig()){
+                total+=2;
+            } else {
+                total++;
+            }
+        }
+        
+        return total;
+    }
 }
+
