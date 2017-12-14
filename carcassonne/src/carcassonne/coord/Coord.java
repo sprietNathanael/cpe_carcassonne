@@ -19,6 +19,12 @@ public class Coord
         this.row = row;
         this.col = col;
     }
+    
+    public Coord(Coord coord)
+    {
+        this.row = coord.row;
+        this.col = coord.col;
+    }
 
     @Override
     public int hashCode()

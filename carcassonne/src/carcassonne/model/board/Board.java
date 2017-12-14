@@ -95,22 +95,36 @@ public class Board implements BoardInterface
         {
             if(nw == null)
             {
-                nw = coord;
+                nw = new Coord(coord);
             }
             else
             {
-                nw.col = coord.col < nw.col ? coord.col : nw.col;
-                nw.row = coord.row < nw.row ? coord.row : nw.row;
+                if(coord.col < nw.col)
+                {
+                    nw.col = coord.col;
+                }
+                
+                if(coord.row < nw.row)
+                {
+                    nw.row = coord.row;
+                }
             }
             
             if(se == null)
             {
-                se = coord;
+                se = new Coord(coord);
             }
             else
             {
-                se.col = coord.col > nw.col ? coord.col : nw.col;
-                se.row = coord.row > se.row ? coord.row : se.row;
+                if(coord.col > se.col)
+                {
+                    se.col = coord.col;
+                }
+                
+                if(coord.row > se.row)
+                {
+                    se.row = coord.row;
+                }
             }
         }
         HashMap map = new HashMap<String,Coord>() {};

@@ -12,6 +12,7 @@ import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Observable;
 import javax.swing.JPanel;
 
@@ -23,6 +24,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private AbstractCarcassonneGameController controller;
     private TilesLayer tilesLayer;
     private PlacementLayer placementLayer;
+    private GridPanel gridPanel;
     /**
      * Main panel constructor
      */
@@ -33,7 +35,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         setLayout(new BorderLayout());
         
         // Construct a grid panel
-        GridPanel gridPanel = new GridPanel();
+        this.gridPanel = new GridPanel();
         
         // Construct tiles layer
         this.tilesLayer = new TilesLayer(gridPanel, this.controller);
@@ -68,12 +70,13 @@ public class MainPanel extends JPanel implements java.util.Observer
             this.placementLayer.addPosition(new UICoord(placements.get(i)));
         }
         
-        System.out.println(board.get(new Coord(0,0)));
-        AbstractTile currTile = board.get(new Coord(0,0));
-        if(currTile != null)
-        {
-            this.tilesLayer.addPosition(new TileImage(0,0,currTile));
+        for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+            Coord key = entry.getKey();
+            AbstractTile value = entry.getValue();
+            this.tilesLayer.addPosition(new TileImage(key.col, key.row, value));
         }
+        
+        this.gridPanel.repaint();
         
         
     }

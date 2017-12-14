@@ -57,6 +57,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<Coord>();
+        this.players = players;
     }
     
     /**
@@ -202,7 +203,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyObservers()
     {   
         super.setChanged();
-        ArrayList<Coord> placements = new ArrayList<Coord>();
         super.notifyObservers(new ObserverMessage(this.board.getAllTiles(), this.currentTile, this.placements));
     }
 

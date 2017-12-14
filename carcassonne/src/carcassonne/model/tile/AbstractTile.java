@@ -57,10 +57,10 @@ public abstract class AbstractTile
      */
     public boolean rotateLeft()
     {
-        rotation -= 90;
-        if(rotation < 0)
+        this.rotation -= 90;
+        if(this.rotation < 0)
         {
-            rotation += 360;
+            this.rotation += 360;
         }
         return true;
     }
@@ -72,10 +72,10 @@ public abstract class AbstractTile
      */
     public boolean rotateRight()
     {
-        rotation += 90;
-        if(rotation >= 360)
+        this.rotation += 90;
+        if(this.rotation >= 360)
         {
-            rotation -= 360;
+            this.rotation -= 360;
         }
         return true;
     }

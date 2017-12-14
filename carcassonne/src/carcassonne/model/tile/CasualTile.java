@@ -370,6 +370,7 @@ public class CasualTile extends AbstractTile
      */
     public boolean rotateLeft()
     {
+        super.rotateLeft();
         AbstractType intermediate;
         intermediate = this.types.get("N");
         this.types.put("N", this.types.get("E"));
@@ -411,6 +412,7 @@ public class CasualTile extends AbstractTile
      */
     public boolean rotateRight()
     {
+        super.rotateRight();
         AbstractType intermediate;
         intermediate = this.types.get("N");
         this.types.put("N", this.types.get("W"));
