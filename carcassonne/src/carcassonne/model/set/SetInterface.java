@@ -22,4 +22,6 @@ public interface SetInterface
      * @return All the tiles from the wanted extensions
      */
     public List<AbstractTile> getSet();
+
+    public AbstractTile getFirstTile();
 }
