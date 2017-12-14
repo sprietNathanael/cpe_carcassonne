@@ -5,6 +5,7 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.controller.AbstractCarcassonneGameController;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -26,11 +27,12 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     
     /**
      * Layer contstructor
-     * @param gc 
+     * @param gridPanel 
+     * @param controller 
      */
-    public PlacementLayer(GridPanel gc)
+    public PlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
-        super(gc);
+        super(gridPanel,controller);
         // Initialise the position array
         this.positions = new ArrayList<UICoord>();
         
@@ -107,16 +109,26 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     {
         if(this.positions.contains(c))
         {
-            this.previewImage.setCoord(c);
-            this.gridPanel.repaint();
+            //TODO
+            // Call the controller to know if the tile can be placed with the current roation
+            if(this.previewImage != null)
+            {
+                this.previewImage.setCoord(c);
+                this.gridPanel.repaint();
+                
+            }
         }
     }
 
     @Override
     public void tileExited(MouseEvent e, UICoord p)
     {
+        if(this.previewImage != null)
+        {
             this.previewImage.setCoord(new UICoord(-1,-1));
             this.gridPanel.repaint();
+            
+        }
     }
 
     @Override
@@ -126,6 +138,8 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
             if (this.previewImage != null) {
                 e.consume();
                 this.previewImage.turnRight();
+                // TODO
+                // Call the controller to turn the tile model
                 this.gridPanel.repaint();
             }
         }

@@ -5,6 +5,7 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.model.tile.AbstractTile;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
 import java.awt.image.BufferedImage;
@@ -39,6 +40,18 @@ public class TileImage extends UICoord
     }
     
     /**
+     * Contruct a tile image from an abstract tile
+     * @param x
+     * @param y
+     * @param tile 
+     */
+    public TileImage(int x, int y, AbstractTile tile)
+    {
+        this(x,y,tile.getName(),tile.getRotation());
+        
+    }
+    
+    /**
      * Builds the tile image representation based on its name
      */
     private void buildImage()
@@ -56,7 +69,7 @@ public class TileImage extends UICoord
             // Applies the rotation on the affine transform
             tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);
             AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-            System.out.println(this.name+" "+this.rotation);
+            //System.out.println(this.name+" "+this.rotation);
             
             // Applies the affine transform on the image
             this.image = op.filter(image, null);

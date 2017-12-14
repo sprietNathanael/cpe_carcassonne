@@ -60,8 +60,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public AbstractTile drawTile()
     {
-        currentTile = this.carcassonneGame.drawFromPile();
-        return currentTile;
+        this.currentTile = this.carcassonneGame.drawFromPile();
+        return this.currentTile;
     }
 
     /**
@@ -70,9 +70,31 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      * @param c
      * @throws Exception
      */
-    public void putTile(Coord c) throws Exception
+    public void putCurrentTile(Coord c) throws Exception
     {
-        carcassonneGame.putTile(currentTile, c.row, c.col);
+        this.putTile(currentTile, c);
+    }
+
+    /**
+     * Puts a tile on the board
+     *
+     * @param tile
+     * @param c
+     * @throws Exception
+     */
+    public void putTile(AbstractTile tile, Coord c) throws Exception
+    {
+        this.carcassonneGame.putTile(tile, c.row, c.col);
+    }
+
+    /**
+     * Put the first tile on the board
+     *
+     * @throws Exception
+     */
+    public void putFirstTile() throws Exception
+    {
+        this.carcassonneGame.putTile(this.carcassonneGame.getFirstTile(), 0, 0);
     }
 
     /**
@@ -98,9 +120,29 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      * @throws Exception
      */
     public void putMeeple(String coordinates) throws Exception
-    { 
+    {
         Meeple m = getCurrentPlayerMeepleAvailable();
         currentTile.putMeeple(coordinates, m);
+    }
+
+    public Board getBoard()
+    {
+        return carcassonneGame.getBoard();
+    }
+
+    /**
+     * Begin a game
+     */
+    public void beginGame() throws Exception
+    {
+        this.putFirstTile();
+        this.beginTurn();
+    }
+
+    public void beginTurn()
+    {
+        this.drawTile();
+        this.carcassonneGame.notifyObservers();
     }
 
     /**
@@ -112,11 +154,6 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         // TODO : compter les points
         return carcassonneGame.nextPlayer();
-    }
-    
-    public Board getBoard()
-    {
-        return carcassonneGame.getBoard();
     }
 
 }

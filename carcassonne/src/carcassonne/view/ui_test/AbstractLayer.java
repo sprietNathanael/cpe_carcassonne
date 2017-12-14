@@ -5,6 +5,7 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.controller.AbstractCarcassonneGameController;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
@@ -17,15 +18,17 @@ public abstract class AbstractLayer
     protected ArrayList<UICoord> positions;
     private LayerMouseAdapter mouseListener;
     private boolean visible;
+    protected AbstractCarcassonneGameController controller;
     
     /**
      * Construction of an abstract layer
      * @param gridPanel Grid panel
      */
-    public AbstractLayer(GridPanel gridPanel)
+    public AbstractLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
         this.gridPanel = gridPanel;
         this.positions = new ArrayList<>();
+        this.controller = controller;
     }
     
     /**

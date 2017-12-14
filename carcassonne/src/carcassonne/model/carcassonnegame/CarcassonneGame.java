@@ -6,6 +6,7 @@
 package carcassonne.model.carcassonnegame;
 
 import carcassonne.model.aggregate.AbstractAggregate;
+import carcassonne.coord.Coord;
 import carcassonne.model.board.Board;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
@@ -13,19 +14,26 @@ import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.type.AbstractType;
+import carcassonne.notifyMessage.ObserverMessage;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  * Represents a carcassonne game, which aggregates all the model entities
  */
-public class CarcassonneGame implements CarcassonneGameInterface
+public class CarcassonneGame extends Observable implements CarcassonneGameInterface
 {
 
     private List<Player> players;
     private Board board;
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
+    private AbstractTile firstTile;
+    private AbstractTile currentTile;
+    private ArrayList<Coord> placements;
     private List<AbstractAggregate> abstractAggregates;
 
     public CarcassonneGame() throws Exception
@@ -40,35 +48,24 @@ public class CarcassonneGame implements CarcassonneGameInterface
      */
     public CarcassonneGame(ArrayList<Player> players) throws Exception
     {
-        AbstractTile startTile = getStartPile();
-        this.board = new Board(startTile);
+        this.board = new Board();
 
         //Call the basic extension to get the basic tiles into the pile
         SetInterface basicSet = new BasicSet();
         this.pile = basicSet.getSet();
-        this.players = players;
+        Collections.shuffle(this.pile);
+        this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
+        this.placements = new ArrayList<Coord>();
     }
-
+    
     /**
-     * Gets the start Pile and remote it from the pile
-     * @return the start Pile
-     * @throws Exception 
+     * Get the first tile of the game
+     * @return 
      */
-    private AbstractTile getStartPile() throws Exception
+    public AbstractTile getFirstTile()
     {
-        AbstractTile startTile = null;
-        for (AbstractTile t : pile) {
-            if (t.getId() == "D"){
-                startTile = t;
-                break;
-            }
-        }
-        if (startTile == null)
-            throw new Exception("La tuile de départ n'a pas été trouvée dans la pile");       
-        
-        pile.remove((Object)startTile);
-        return startTile;
+        return this.firstTile;
     }
 
     /**
@@ -129,7 +126,9 @@ public class CarcassonneGame implements CarcassonneGameInterface
      */
     public AbstractTile drawFromPile()
     {
-        return this.pile.remove(0);
+        this.currentTile = this.pile.remove(0);
+        this.refreshPlacements();
+        return this.currentTile;
 
     }
 
@@ -145,6 +144,7 @@ public class CarcassonneGame implements CarcassonneGameInterface
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         board.addTile(tile, row, column);
+        this.notifyObservers();
     }
 
     /**
@@ -182,9 +182,37 @@ public class CarcassonneGame implements CarcassonneGameInterface
 
     }
 
+    //TODO
+    // REMOVE !!
     public AbstractTile drawFromPileIndex(int i)
     {
         return this.pile.remove(i);
     }
+    
+    private void refreshPlacements()
+    {
+        this.placements.clear();
+        if(this.currentTile != null)
+        {
+            this.placements = this.board.getTilePossiblePlacements(this.currentTile);            
+        }
+    }
+
+    @Override
+    public void notifyObservers()
+    {   
+        super.setChanged();
+        ArrayList<Coord> placements = new ArrayList<Coord>();
+        super.notifyObservers(new ObserverMessage(this.board.getAllTiles(), this.currentTile, this.placements));
+    }
+
+    @Override
+    public synchronized void addObserver(Observer o)
+    {
+        super.addObserver(o);
+        this.notifyObservers();
+    }
+    
+    
 
 }
