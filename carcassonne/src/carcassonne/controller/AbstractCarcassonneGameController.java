@@ -155,5 +155,34 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         // TODO : compter les points
         return carcassonneGame.nextPlayer();
     }
-
+    
+    /**
+     * Check if the tile can be placed here
+     * @param coordinates
+     * @param tile
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
+    {
+        return this.carcassonneGame.checkTilePosition(coordinates, tile);
+    }
+    
+    /**
+     * Check if the current tile can be placed here
+     * @param coordinates
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates)
+    {
+        return this.carcassonneGame.checkTilePosition(coordinates);
+    }
+    
+    /**
+     * Turn the current tile
+     */
+    public void turnRight()
+    {
+        this.currentTile.rotateRight();
+    }
+    
 }

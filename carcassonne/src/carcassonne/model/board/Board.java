@@ -129,7 +129,6 @@ public class Board implements BoardInterface
         HashMap<String,Coord> boardDimensions = this.getBoardDimensions();
         Coord nw = boardDimensions.get("nw");
         Coord se = boardDimensions.get("se");
-        System.out.println(boardDimensions);
         // Get the coordinates of board corners plus one tile
         int north = nw.row-1;
         int west = nw.col-1;

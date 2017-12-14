@@ -6,6 +6,7 @@
 package carcassonne.view.ui_test;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.coord.Coord;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
@@ -19,7 +20,8 @@ import java.util.ArrayList;
 public class PlacementLayer extends AbstractLayer implements LayerMouseListener
 {
     // Color constants applied to the allowed or forbidded preview
-    private static final Composite ALLOWED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .8f);
+    private static final Composite ALLOWED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+    private static final Composite CLEAR = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
     private static final Composite FORBIDDED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .4f);
     
     private TileImage previewImage;
@@ -86,6 +88,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
             if(this.previewImage != null && (p.getX() == this.previewImage.getX() && p.getY() == this.previewImage.getY()))
             {
                 Composite compositeBackup = g2.getComposite();
+                g2.setComposite(CLEAR);
                 g2.setComposite(this.allowedPreview ? ALLOWED : FORBIDDED);
                 g2.drawImage(this.previewImage.getImage(), x, y, placeHolderSize, placeHolderSize, null);
                 g2.setComposite(compositeBackup);
@@ -109,8 +112,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     {
         if(this.positions.contains(c))
         {
-            //TODO
-            // Call the controller to know if the tile can be placed with the current roation
+            this.allowedPreview = this.controller.checkTilePosition(new Coord(c.getX(), c.getY()));
             if(this.previewImage != null)
             {
                 this.previewImage.setCoord(c);
@@ -137,6 +139,8 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (this.previewImage != null) {
                 e.consume();
+                this.controller.turnRight();
+                this.allowedPreview = this.controller.checkTilePosition(new Coord(this.previewImage.getX(), this.previewImage.getY()));
                 this.previewImage.turnRight();
                 // TODO
                 // Call the controller to turn the tile model

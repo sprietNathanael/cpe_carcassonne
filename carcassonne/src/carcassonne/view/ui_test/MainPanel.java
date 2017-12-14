@@ -45,22 +45,6 @@ public class MainPanel extends JPanel implements java.util.Observer
         gridPanel.addLayer(placementLayer);
         gridPanel.addLayer(tilesLayer);
         
-        
-        // ONLY FOR TESTS        
-        // Set the tile preview for the placement layer
-        /*placementLayer.setPreview(new TileImage(-1,-1,"E",0));
-        
-        // Add some tiles to the tile layer
-        tilesLayer.addPosition(new TileImage(0,0,"A",0));
-        tilesLayer.addPosition(new TileImage(1,0,"B",90));
-        tilesLayer.addPosition(new TileImage(2,0,"C",180));
-        tilesLayer.addPosition(new TileImage(3,0,"D",270));
-        
-        // Add some possible placements to the placement layer
-        placementLayer.addPosition(new Coord(0, 1));
-        placementLayer.addPosition(new Coord(0, -1));
-        placementLayer.addPosition(new Coord(-1, 0));*/
-        
         // Add the grid panel to the main panel
         this.add(gridPanel);
     }
