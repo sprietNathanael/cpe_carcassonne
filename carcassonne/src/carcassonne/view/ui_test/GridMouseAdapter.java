@@ -16,7 +16,7 @@ public class GridMouseAdapter extends MouseAdapter
 {
     private MouseEvent dragSource;
     private GridPanel gridPanel;
-    private Coord sourceCenter;
+    private UICoord sourceCenter;
     
     /**
      * Constructs a grid mouse adapter
@@ -39,7 +39,7 @@ public class GridMouseAdapter extends MouseAdapter
         int dy = e.getY() - this.dragSource.getY();
         
         // Get the new graphical center
-        Coord newCenter = new Coord(this.sourceCenter.getX()+dx, this.sourceCenter.getY()+dy);
+        UICoord newCenter = new UICoord(this.sourceCenter.getX()+dx, this.sourceCenter.getY()+dy);
         
         // Set the new graphical center of the gridpanel
         this.gridPanel.moveCenterTo(newCenter);

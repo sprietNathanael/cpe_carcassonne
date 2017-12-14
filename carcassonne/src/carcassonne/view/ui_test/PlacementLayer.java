@@ -32,7 +32,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     {
         super(gc);
         // Initialise the position array
-        this.positions = new ArrayList<Coord>();
+        this.positions = new ArrayList<UICoord>();
         
         this.previewImage = null;
         
@@ -75,9 +75,9 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
         int shift = placeHolderSize/30;
         int thickness = placeHolderSize/14;
         int tileSize = placeHolderSize - (2*shift);
-        Coord center = this.gridPanel.getGraphicalCenter();
+        UICoord center = this.gridPanel.getGraphicalCenter();
         g2.setColor(Color.LIGHT_GRAY);
-        for(Coord p : this.positions)
+        for(UICoord p : this.positions)
         {
             int x = center.getX()+(placeHolderSize*p.getX());
             int y = center.getY()+(placeHolderSize*p.getY());
@@ -103,7 +103,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     }
 
     @Override
-    public void tileEntered(MouseEvent e, Coord c)
+    public void tileEntered(MouseEvent e, UICoord c)
     {
         if(this.positions.contains(c))
         {
@@ -113,14 +113,14 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     }
 
     @Override
-    public void tileExited(MouseEvent e, Coord p)
+    public void tileExited(MouseEvent e, UICoord p)
     {
-        this.previewImage.setCoord(new Coord(-1,-1));
-        this.gridPanel.repaint();
+            this.previewImage.setCoord(new UICoord(-1,-1));
+            this.gridPanel.repaint();
     }
 
     @Override
-    public void mouseClicked(MouseEvent e, Coord p)
+    public void mouseClicked(MouseEvent e, UICoord p)
     {
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (this.previewImage != null) {

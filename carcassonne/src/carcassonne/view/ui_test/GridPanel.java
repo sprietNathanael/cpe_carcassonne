@@ -24,7 +24,7 @@ public class GridPanel extends JPanel
     public static double MOVE_BORDER_LIMIT = 0.25;
     public static double ZOOM_FACTOR = 1.3;
     
-    private Coord graphicalCenter;
+    private UICoord graphicalCenter;
     private int tileSize;
     private List<AbstractLayer> layers = new ArrayList<AbstractLayer>();
     private GridMouseAdapter mouseListener;
@@ -59,7 +59,7 @@ public class GridPanel extends JPanel
         
 
         // Set graphical centenr
-        this.graphicalCenter = new Coord(0,0);
+        this.graphicalCenter = new UICoord(0,0);
         this.firstPaint = true;
     }
     
@@ -106,7 +106,7 @@ public class GridPanel extends JPanel
         {
             this.firstPaint = false;
             // Moves the graphical center to the component center
-            this.moveCenterTo(new Coord(this.getWidth()/2,this.getHeight()/2));
+            this.moveCenterTo(new UICoord(this.getWidth()/2,this.getHeight()/2));
         }
     }
     
@@ -123,7 +123,7 @@ public class GridPanel extends JPanel
      * Get the graphical center
      * @return 
      */
-    public Coord getGraphicalCenter()
+    public UICoord getGraphicalCenter()
     {
         return this.graphicalCenter;
     }
@@ -134,9 +134,9 @@ public class GridPanel extends JPanel
      * @param y
      * @return 
      */
-    public Coord getGridPositionFromCoordinates(double x, double y)
+    public UICoord getGridPositionFromCoordinates(double x, double y)
     {
-        return new Coord(this.getGridXFromPixel(x),this.getGridYFromPixel(y));
+        return new UICoord(this.getGridXFromPixel(x),this.getGridYFromPixel(y));
     }
     
     /**
@@ -175,7 +175,7 @@ public class GridPanel extends JPanel
      * Moves the graphical center to a new Coordinate
      * @param newCoord Desired Coordinate 
      */
-    public void moveCenterTo(Coord newCoord)
+    public void moveCenterTo(UICoord newCoord)
     {
         // Get desired coordinates components
         int newX = newCoord.getX();
@@ -212,7 +212,7 @@ public class GridPanel extends JPanel
         }
         
         // Assign the new graphical center
-        this.graphicalCenter = new Coord(newX,newY);
+        this.graphicalCenter = new UICoord(newX,newY);
         
         // Repaint the component
         this.repaint();

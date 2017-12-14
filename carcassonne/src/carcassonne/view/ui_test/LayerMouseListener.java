@@ -13,8 +13,8 @@ import java.awt.event.MouseEvent;
  */
 public interface LayerMouseListener
 {
-    void tileEntered(MouseEvent e, Coord p);
-    void tileExited(MouseEvent e, Coord p);
+    void tileEntered(MouseEvent e, UICoord p);
+    void tileExited(MouseEvent e, UICoord p);
 
-    void mouseClicked(MouseEvent e, Coord p);
+    void mouseClicked(MouseEvent e, UICoord p);
 }

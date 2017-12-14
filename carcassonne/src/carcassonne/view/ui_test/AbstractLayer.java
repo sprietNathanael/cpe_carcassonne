@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public abstract class AbstractLayer
 {
     GridPanel gridPanel;
-    protected ArrayList<Coord> positions;
+    protected ArrayList<UICoord> positions;
     private LayerMouseAdapter mouseListener;
     private boolean visible;
     
@@ -32,7 +32,7 @@ public abstract class AbstractLayer
      * Adds a position to the list
      * @param pos Position to add
      */
-    public void addPosition(Coord pos)
+    public void addPosition(UICoord pos)
     {
         this.positions.add(pos);
     }

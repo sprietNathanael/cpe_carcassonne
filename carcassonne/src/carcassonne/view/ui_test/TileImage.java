@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
 /**
  * Graphical representation of a Tile
  */
-public class TileImage extends Coord
+public class TileImage extends UICoord
 {
     private BufferedImage image;
     private String name;
@@ -110,7 +110,7 @@ public class TileImage extends Coord
      * Set the coordinates of the image
      * @param c 
      */
-    public void setCoord(Coord c)
+    public void setCoord(UICoord c)
     {
         this.setX(c.getX());
         this.setY(c.getY());
