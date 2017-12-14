@@ -80,5 +80,13 @@ public abstract class AbstractLayer
     {
         this.visible = false;
     }
+    
+    /**
+     * Clean all positions
+     */
+    public void cleanPositions()
+    {
+        this.positions = new ArrayList<>();
+    }
             
 }
