@@ -24,6 +24,7 @@ public class BasicSet implements SetInterface
 {
 
     private List<AbstractTile> tileList;
+    private AbstractTile firstTile;
 
     /**
      * Initilializes the basic set with all its tiles
@@ -73,8 +74,8 @@ public class BasicSet implements SetInterface
                 new CityType(true), //West section
                 new CityType(true), new CityType(true), new CityType(true), new CityType(true) //Center section
         ));
-        //Tiles D (x4)
-        for (int i = 1; i <= 4; i++) {
+        //Tiles D (x3)
+        for (int i = 1; i <= 3; i++) {
             tileList.add(new CasualTile("D","D" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North West section
                     new RoadType(), //North
@@ -87,6 +88,18 @@ public class BasicSet implements SetInterface
                     new RoadType(), new FieldType(), new FieldType(), new RoadType() //Center section
             ));
         }
+        //First Tile is a D tils
+        this.firstTile = new CasualTile("D","D0", //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North West section
+                    new RoadType(), //North
+                    new FieldType(), new FieldType(), new CityType(), //North East section
+                    new CityType(), //East
+                    new CityType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new FieldType(), //South West section
+                    new FieldType(), //West
+                    new RoadType(), new FieldType(), new FieldType(), new RoadType() //Center section
+            );
         //Tiles E (x5)
         for (int i = 1; i <= 5; i++) {
             tileList.add(new CasualTile("E","E" + i, //Id
@@ -343,5 +356,11 @@ public class BasicSet implements SetInterface
                 new RoadType(), //West section
                 new CrossType(), new CrossType(), new CrossType(), new CrossType() //Center section
         ));
+    }
+
+    @Override
+    public AbstractTile getFirstTile()
+    {
+        return this.firstTile;
     }
 }
