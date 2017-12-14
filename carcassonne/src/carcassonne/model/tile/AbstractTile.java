@@ -15,6 +15,7 @@ public abstract class AbstractTile
 {
     protected String id;
     protected String name;
+    private int rotation;
     /**
      * Constructor
      * @param name
@@ -22,6 +23,7 @@ public abstract class AbstractTile
     public AbstractTile(String name)
     {
         this.name = name;
+        this.rotation = 0;
     }
     
     /**
@@ -33,6 +35,12 @@ public abstract class AbstractTile
     {
         return this.id;
     }
+    
+    public int getRotation()
+    {
+        return this.rotation;
+    }
+    
     /**
      * Get the name of the Tile
      * @return 
@@ -49,6 +57,11 @@ public abstract class AbstractTile
      */
     public boolean rotateLeft()
     {
+        rotation -= 90;
+        if(rotation < 0)
+        {
+            rotation += 360;
+        }
         return true;
     }
 
@@ -59,6 +72,11 @@ public abstract class AbstractTile
      */
     public boolean rotateRight()
     {
+        rotation += 90;
+        if(rotation >= 360)
+        {
+            rotation -= 360;
+        }
         return true;
     }
 
