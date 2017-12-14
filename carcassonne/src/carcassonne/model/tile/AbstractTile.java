@@ -14,11 +14,14 @@ import carcassonne.model.type.AbstractType;
 public abstract class AbstractTile
 {
     protected String id;
+    protected String name;
     /**
      * Constructor
+     * @param name
      */
-    public AbstractTile()
+    public AbstractTile(String name)
     {
+        this.name = name;
     }
     
     /**
@@ -29,6 +32,14 @@ public abstract class AbstractTile
     public String getId()
     {
         return this.id;
+    }
+    /**
+     * Get the name of the Tile
+     * @return 
+     */
+    public String getName()
+    {
+        return this.name;
     }
 
     /**

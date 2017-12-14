@@ -47,7 +47,7 @@ public class BasicSet implements SetInterface
     {
         //Tiles A (x2)
         for (int i = 1; i <= 2; i++) {
-            tileList.add(new CasualTile("A" + i, //Id
+            tileList.add(new CasualTile("A","A" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
                     new FieldType(), new RoadType(), new FieldType(), //South section
@@ -57,7 +57,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles B (x4)
         for (int i = 1; i <= 4; i++) {
-            tileList.add(new CasualTile("B" + i, //Id
+            tileList.add(new CasualTile("B","B" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
                     new FieldType(), new FieldType(), new FieldType(), //South section
@@ -66,7 +66,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile C (x1)
-        tileList.add(new CasualTile("C", //Id
+        tileList.add(new CasualTile("C","C", //Id
                 new CityType(true), new CityType(true), new CityType(true), //North section
                 new CityType(true), //East section
                 new CityType(true), new CityType(true), new CityType(true), //South section
@@ -75,7 +75,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles D (x4)
         for (int i = 1; i <= 4; i++) {
-            tileList.add(new CasualTile("D" + i, //Id
+            tileList.add(new CasualTile("D","D" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North West section
                     new RoadType(), //North
                     new FieldType(), new FieldType(), new CityType(), //North East section
@@ -89,7 +89,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles E (x5)
         for (int i = 1; i <= 5; i++) {
-            tileList.add(new CasualTile("E" + i, //Id
+            tileList.add(new CasualTile("E","E" + i, //Id
                     new FieldType(), new FieldType(), new CityType(), //North West section
                     new CityType(), //North
                     new CityType(), new FieldType(), new FieldType(), //North East section
@@ -103,7 +103,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles F (x2)
         for (int i = 1; i <= 2; i++) {
-            tileList.add(new CasualTile("F" + i, //Id
+            tileList.add(new CasualTile("F","F" + i, //Id
                     new CityType(true), new FieldType(), new FieldType(), //North West section
                     new FieldType(), //North
                     new FieldType(), new FieldType(), new CityType(true), //North East section
@@ -116,7 +116,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile G (x1)
-        tileList.add(new CasualTile("G", //Id
+        tileList.add(new CasualTile("G","G", //Id
                 new FieldType(), new FieldType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
@@ -129,7 +129,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles H (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("H" + i, //Id
+            tileList.add(new CasualTile("H","H" + i, //Id
                     new CityType(), new FieldType(), new FieldType(), //North West section
                     new FieldType(), //North
                     new FieldType(), new FieldType(), new CityType(), //North East section
@@ -143,7 +143,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles I (x2)
         for (int i = 1; i <= 2; i++) {
-            tileList.add(new CasualTile("I" + i, //Id
+            tileList.add(new CasualTile("I","I" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North West section
                     new FieldType(), //North
                     new FieldType(), new FieldType(), new CityType(), //North East section
@@ -157,7 +157,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles J (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("J" + i, //Id
+            tileList.add(new CasualTile("J","J" + i, //Id
                     new FieldType(), new FieldType(), new CityType(), //North West section
                     new CityType(), //North
                     new CityType(), new FieldType(), new FieldType(), //North East section
@@ -171,7 +171,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles K (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("K" + i, //Id
+            tileList.add(new CasualTile("K","K" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North West section
                     new RoadType(), //North
                     new FieldType(), new FieldType(), new CityType(), //North East section
@@ -185,7 +185,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles L (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("L" + i, //Id
+            tileList.add(new CasualTile("L","L" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North West section
                     new RoadType(), //North
                     new FieldType(), new FieldType(), new CityType(), //North East section
@@ -199,7 +199,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles M (x2)
         for (int i = 1; i <= 2; i++) {
-            tileList.add(new CasualTile("M" + i, //Id
+            tileList.add(new CasualTile("M","M" + i, //Id
                     new CityType(true), new CityType(true), new CityType(true), //North West section
                     new CityType(true), //North
                     new CityType(true), new FieldType(), new FieldType(), //North East section
@@ -213,7 +213,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles N (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("N" + i, //Id
+            tileList.add(new CasualTile("N","N" + i, //Id
                     new CityType(), new CityType(), new CityType(), //North West section
                     new CityType(), //North
                     new CityType(), new FieldType(), new FieldType(), //North East section
@@ -227,7 +227,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles O (x2)
         for (int i = 1; i <= 2; i++) {
-            tileList.add(new CasualTile("O" + i, //Id
+            tileList.add(new CasualTile("O","O" + i, //Id
                     new CityType(true), new CityType(true), new CityType(true), //North West section
                     new CityType(true), //North
                     new CityType(true), new FieldType(), new FieldType(), //North East section
@@ -241,7 +241,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles P (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("P" + i, //Id
+            tileList.add(new CasualTile("P","P" + i, //Id
                     new CityType(), new CityType(), new CityType(), //North West section
                     new CityType(), //North
                     new CityType(), new FieldType(), new FieldType(), //North East section
@@ -254,7 +254,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile Q (x1)
-        tileList.add(new CasualTile("Q", //Id
+        tileList.add(new CasualTile("Q","Q", //Id
                 new CityType(true), new CityType(true), new CityType(true), //North West section
                 new CityType(true), //North
                 new CityType(true), new CityType(true), new CityType(true), //North East section
@@ -267,7 +267,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles R (x3)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("R" + i, //Id
+            tileList.add(new CasualTile("R","R" + i, //Id
                     new CityType(), new CityType(), new CityType(), //North West section
                     new CityType(), //North
                     new CityType(), new CityType(), new CityType(), //North East section
@@ -281,7 +281,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles S (x2)
         for (int i = 1; i <= 3; i++) {
-            tileList.add(new CasualTile("S" + i, //Id
+            tileList.add(new CasualTile("S","S" + i, //Id
                     new CityType(true), new CityType(true), new CityType(true), //North West section
                     new CityType(true), //North
                     new CityType(true), new CityType(true), new CityType(true), //North East section
@@ -294,7 +294,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile T (x1)
-        tileList.add(new CasualTile("T", //Id
+        tileList.add(new CasualTile("T","T1", //Id
                 new CityType(), new CityType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new CityType(), new CityType(), //North East section
@@ -307,7 +307,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles U (x8)
         for (int i = 1; i <= 8; i++) {
-            tileList.add(new CasualTile("U" + i, //Id
+            tileList.add(new CasualTile("U","U" + i, //Id
                     new FieldType(), new RoadType(), new FieldType(), //North section
                     new FieldType(), //East section
                     new FieldType(), new RoadType(), new FieldType(), //South section
@@ -317,7 +317,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles V (x9)
         for (int i = 1; i <= 9; i++) {
-            tileList.add(new CasualTile("V" + i, //Id
+            tileList.add(new CasualTile("V","V" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
                     new FieldType(), new RoadType(), new FieldType(), //South section
@@ -327,7 +327,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles W (x4)
         for (int i = 1; i <= 4; i++) {
-            tileList.add(new CasualTile("W" + i, //Id
+            tileList.add(new CasualTile("W","W" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new RoadType(), //East section
                     new FieldType(), new RoadType(), new FieldType(), //South section
@@ -336,7 +336,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile X (x1)
-        tileList.add(new CasualTile("X", //Id
+        tileList.add(new CasualTile("X","X1", //Id
                 new FieldType(), new RoadType(), new FieldType(), //North section
                 new RoadType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
