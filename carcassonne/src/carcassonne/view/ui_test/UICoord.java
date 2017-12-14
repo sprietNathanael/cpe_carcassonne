@@ -5,10 +5,12 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.coord.Coord;
+
 /**
  * A mere coordinates class
  */
-public class Coord
+public class UICoord
 {
     protected int x;
     protected int y;
@@ -18,10 +20,16 @@ public class Coord
      * @param x
      * @param y 
      */
-    public Coord(int x, int y)
+    public UICoord(int x, int y)
     {
         this.x = x;
         this.y = y;
+    }
+
+    public UICoord(Coord coord)
+    {
+        this.x = coord.col;
+        this.y = coord.row;
     }
 
     /**
@@ -69,7 +77,7 @@ public class Coord
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Coord other = (Coord) obj;
+        final UICoord other = (UICoord) obj;
         if (this.x != other.x) {
             return false;
         }
