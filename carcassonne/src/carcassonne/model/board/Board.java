@@ -7,6 +7,10 @@ package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
+import carcassonne.coord.Coord;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Manages the tiles on the board
@@ -16,7 +20,8 @@ import carcassonne.model.tile.CasualTile;
 public class Board implements BoardInterface
 {
 
-    private AbstractTile[][] grid;
+    // private AbstractTile[][] grid;
+    private HashMap<Coord, AbstractTile> grid;
 
     /**
      * Initializes an empty board
@@ -24,20 +29,8 @@ public class Board implements BoardInterface
      */
     public Board()
     {
-        grid = new AbstractTile[ROWS][COLUMNS];
-    }
-
-    /**
-     * Initializes the board using the baseTile as the first tile of the game
-     *
-     * @param baseTile
-     */
-    public Board(AbstractTile baseTile) throws Exception
-    {
-        grid = new AbstractTile[ROWS][COLUMNS];
-
-        //Put the first tile in the center of the Board
-        addTile(baseTile, CENTER_ROW, CENTER_COLUMN);
+        //grid = new AbstractTile[ROWS][COLUMNS];
+        grid = new HashMap();
     }
     
     /**
@@ -51,8 +44,8 @@ public class Board implements BoardInterface
     public void addTile(AbstractTile newTile, int row, int column) throws Exception
     {
         try {
-            if (grid[row][column] == null) {
-                grid[row][column] = newTile;
+            if (!grid.containsKey(new Coord(column, row))) {
+                grid.put(new Coord(column, row), newTile);
             }
             else {
                 throw new Exception("There is already a tile in the location ["
@@ -74,7 +67,7 @@ public class Board implements BoardInterface
     public AbstractTile getTile(int row, int column) throws Exception
     {
         try {
-            return grid[row][column];
+            return grid.get(new Coord(column, row));
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new Exception("The position asked is out of the grid range");
         }
