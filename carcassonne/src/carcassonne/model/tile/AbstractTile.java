@@ -116,5 +116,33 @@ public abstract class AbstractTile
         AbstractType type = getType(coordinates);
         type.setMeeple(m);
     }
+    
+    /**
+     * Compare north side of the tile with the south side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileNorth (AbstractTile tile);
+    
+    /**
+     * Compare south side of the tile with the north tile of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileSouth (AbstractTile tile);
+    
+    /**
+     * Compare east side of the tile with the west side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileEast (AbstractTile tile);
+    
+    /**
+     * Compare west side of the tile with the east side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileWest (AbstractTile tile);
 
 }

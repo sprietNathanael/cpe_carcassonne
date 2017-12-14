@@ -74,54 +74,164 @@ public class Board implements BoardInterface
     }
     
     /**
-     * Compare north side of tile 1 to south side of tile 2
-     * @param tile1
-     * @param tile2
-     * @return true if match
+     * Get all tiles array
+     * @return 
      */
-    public boolean compareTileNorth (CasualTile tile1, CasualTile tile2)
+    public HashMap getAllTiles()
     {
-        return tile1.getNNW().getClass() == tile2.getSSW().getClass() 
-                && tile1.getN().getClass() == tile2.getS().getClass() 
-                && tile1.getNNE().getClass() == tile2.getSSE().getClass();
+        return this.grid;
     }
     
     /**
-     * Compare south side of tile 1 to north side of tile 2
-     * @param tile1
-     * @param tile2
-     * @return true if match
+     * Get the board NW ans SE corner coordinates
+     * @return 
      */
-    public boolean compareTileSouth (CasualTile tile1, CasualTile tile2)
+    public HashMap<String,Coord> getBoardDimensions()
     {
-        return tile1.getSSW().getClass() == tile2.getNNW().getClass() 
-                && tile1.getS().getClass() == tile2.getN().getClass() 
-                && tile1.getSSE().getClass() == tile2.getNNE().getClass();
+        Coord nw = null;
+        Coord se = null;
+        // Loop over the positions to get the sout-east and north-west
+        for(Coord coord : this.grid.keySet())
+        {
+            if(nw == null)
+            {
+                nw = coord;
+            }
+            else
+            {
+                nw.col = coord.col < nw.col ? coord.col : nw.col;
+                nw.row = coord.row < nw.row ? coord.row : nw.row;
+            }
+            
+            if(se == null)
+            {
+                se = coord;
+            }
+            else
+            {
+                se.col = coord.col > nw.col ? coord.col : nw.col;
+                se.row = coord.row > se.row ? coord.row : se.row;
+            }
+        }
+        HashMap map = new HashMap<String,Coord>() {};
+        map.put("nw", nw);
+        map.put("se", se);
+        return map;        
     }
     
     /**
-     * Compare west side of tile 1 to east side of tile 2
-     * @param tile1
-     * @param tile2
-     * @return true if match
+     * 
+     * @param tile
+     * @return 
      */
-    public boolean compareTileWest (CasualTile tile1, CasualTile tile2)
+    public ArrayList<Coord> getTilePossiblePlacements(AbstractTile tile)
     {
-        return tile1.getNWW().getClass() == tile2.getNEE().getClass() 
-                && tile1.getW().getClass() == tile2.getE().getClass() 
-                && tile1.getSWW().getClass() == tile2.getSEE().getClass();
+        HashMap<String,Coord> boardDimensions = this.getBoardDimensions();
+        Coord nw = boardDimensions.get("nw");
+        Coord se = boardDimensions.get("se");
+        System.out.println(boardDimensions);
+        // Get the coordinates of board corners plus one tile
+        int north = nw.row-1;
+        int west = nw.col-1;
+        int south = se.row+1;
+        int east = se.col+1;
+        ArrayList<Coord> res = new ArrayList<Coord>();
+        
+        // Loop over all the positions between NW and SE corners
+        for(int verticalIterate = north; verticalIterate <= south; verticalIterate++)
+        {
+            for(int horizontalIterate = west; horizontalIterate <= east; horizontalIterate++)
+            {
+                Coord tempCoord = new Coord(horizontalIterate, verticalIterate);
+                if(!this.grid.containsKey(tempCoord))
+                {
+                    System.out.println("=========================================");
+                    System.out.println("Try for coordinates : "+tempCoord);
+                    if(this.canTileBePlacedHere(tempCoord, tile))
+                    {
+                        res.add(tempCoord);
+                    }
+                }
+            }
+        }
+        return res;
     }
     
     /**
-     * Compare east side of tile 1 to west side of tile 2
-     * @param tile1
-     * @param tile2
-     * @return true if match
+     * Test if a tile can be placed at coordinates
+     * @param coordinates
+     * @param tile
+     * @return 
      */
-    public boolean compareTileEast (CasualTile tile1, CasualTile tile2)
+    public boolean canTileBePlacedHere(Coord coordinates, AbstractTile tile)
     {
-        return tile1.getNEE().getClass() == tile2.getNWW().getClass() 
-                && tile1.getE().getClass() == tile2.getW().getClass() 
-                && tile1.getSEE().getClass() == tile2.getSWW().getClass();
+        boolean res = true;
+        boolean surrounded = false;
+        AbstractTile tempTile;
+        
+        // Test North tile
+        Coord tempCoord = new Coord(coordinates.col,coordinates.row -1);
+        if(this.grid.containsKey(tempCoord))
+        {
+            tempTile = this.grid.get(tempCoord);
+            System.out.println("Comparing :");
+            System.out.println(tempTile);
+            System.out.println("To :");
+            System.out.println(tile);
+            boolean tempRes = tile.compareTileNorth(tempTile);
+            System.out.println("North : "+tempRes);
+            res =  tempRes && res;
+            surrounded = true;
+        }
+        
+        // Test South tile
+        tempCoord.row = coordinates.row+1;
+        if(this.grid.containsKey(tempCoord))
+        {
+            tempTile = this.grid.get(tempCoord);
+            System.out.println("Comparing :");
+            System.out.println(tempTile);
+            System.out.println("To :");
+            System.out.println(tile);
+            boolean tempRes = tile.compareTileSouth(tempTile);
+            res = tempRes && res;
+            System.out.println("South : "+tempRes);
+            surrounded = true;
+        }
+        
+        // Test East tile
+        tempCoord.row = coordinates.row;
+        tempCoord.col = coordinates.col-1;
+        if(this.grid.containsKey(tempCoord))
+        {
+            tempTile = this.grid.get(tempCoord);
+            System.out.println("Comparing :");
+            System.out.println(tempTile);
+            System.out.println("To :");
+            System.out.println(tile);
+            boolean tempRes = tile.compareTileWest(tempTile);
+            res = tempRes && res;
+            System.out.println("East: "+tempRes);
+            surrounded = true;
+        }
+        
+        // Test West tile
+        tempCoord.col = coordinates.col+1;
+        if(this.grid.containsKey(tempCoord))
+        {
+            tempTile = this.grid.get(tempCoord);
+            System.out.println("Comparing :");
+            System.out.println(tempTile);
+            System.out.println("To :");
+            System.out.println(tile);
+            boolean tempRes = tempTile.compareTileEast(tile);
+            res =  tempRes && res;
+            System.out.println("West : "+tempRes);
+            surrounded = true;
+        }
+        res = res && surrounded;
+        System.out.println("=> "+res);
+        return res;
     }
+   
 }

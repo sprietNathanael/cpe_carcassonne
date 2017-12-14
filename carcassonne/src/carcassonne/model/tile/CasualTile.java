@@ -488,4 +488,65 @@ public class CasualTile extends AbstractTile
     {
         return this.types.get(coordinates);
     }
+    
+     /**
+     * Compare north side of the tile to south side of another tile
+     * @param tile_a
+     * @return true if match
+     */
+    @Override
+    public boolean compareTileNorth (AbstractTile tile_a)
+    {
+        CasualTile tile = (CasualTile)tile_a;
+        System.out.println(""+this.getNNW().getClass()+" == "+tile.getSSW().getClass()+" "+this.getN().getClass() +"=="+ tile.getS().getClass()+" "+this.getNNE().getClass() +"=="+ tile.getSSE().getClass());
+        return this.getNNW().getClass() == tile.getSSW().getClass() 
+                && this.getN().getClass() == tile.getS().getClass() 
+                && this.getNNE().getClass() == tile.getSSE().getClass();
+    }
+    
+    /**
+     * Compare south side of the tile to north side of another tile
+     * @param tile_a
+     * @return true if match
+     */
+    @Override
+    public boolean compareTileSouth (AbstractTile tile_a)
+    {
+        CasualTile tile = (CasualTile)tile_a;
+        System.out.println(""+this.getSSW().getClass() +"=="+ tile.getNNW().getClass() +" "+ this.getS().getClass() +"=="+ tile.getN().getClass() +" "+this.getSSE().getClass() +"=="+ tile.getNNE().getClass());
+        return this.getSSW().getClass() == tile.getNNW().getClass() 
+                && this.getS().getClass() == tile.getN().getClass() 
+                && this.getSSE().getClass() == tile.getNNE().getClass();
+    }
+    
+    /**
+     * Compare west side of the tile to east side of another tile
+     * @param tile_a
+     * @return true if match
+     */
+    @Override
+    public boolean compareTileWest (AbstractTile tile_a)
+    {
+        CasualTile tile = (CasualTile)tile_a;
+        System.out.println(""+this.getNWW().getClass() +"=="+ tile.getNEE().getClass()+" "+this.getW().getClass() +"=="+ tile.getE().getClass()+" "+this.getSWW().getClass() +"=="+ tile.getSEE().getClass());
+        return this.getNWW().getClass() == tile.getNEE().getClass() 
+                && this.getW().getClass() == tile.getE().getClass() 
+                && this.getSWW().getClass() == tile.getSEE().getClass();
+    }
+    
+    /**
+     * Compare east side the tile to west side of another tile
+     * @param tile_a
+     * @param tile
+     * @return true if match
+     */
+    @Override
+    public boolean compareTileEast (AbstractTile tile_a)
+    {
+        CasualTile tile = (CasualTile)tile_a;
+        System.out.println(""+this.getNEE().getClass() +"=="+ tile.getNWW().getClass() +" "+this.getE().getClass() +"=="+ tile.getW().getClass()+" "+this.getSEE().getClass() +"=="+ tile.getSWW().getClass());
+        return this.getNEE().getClass() == tile.getNWW().getClass() 
+                && this.getE().getClass() == tile.getW().getClass() 
+                && this.getSEE().getClass() == tile.getSWW().getClass();
+    }
 }
