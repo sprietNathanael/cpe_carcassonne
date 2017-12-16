@@ -5,6 +5,7 @@
  */
 package carcassonne.model.tile;
 
+import carcassonne.model.aggregate.EnumAggregate;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
@@ -13,6 +14,8 @@ import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Class that represents a casual Tile It is cut in 20 parts, in two layers The
@@ -24,8 +27,8 @@ public class CasualTile extends AbstractTile
 {
 
     private HashMap<String, AbstractType> types;
+    private Set<Set<String>> aggregateEmplacements;
     static private HashMap<String, String[]> neighbouring;
-
     static {
         neighbouring = new HashMap<>();
         neighbouring.put("NWW", new String[]{"W", "NW"});
@@ -77,7 +80,7 @@ public class CasualTile extends AbstractTile
      * @param CSE Center-south-eastern type
      * @param CSW Center-south-western type
      */
-    public CasualTile(String name, String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    public CasualTile(String name, String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
         super(name);
         this.id = tileId;
@@ -102,6 +105,7 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
+        aggregateEmplacements = aggregates;
     }
 
     /**
@@ -123,7 +127,7 @@ public class CasualTile extends AbstractTile
      * @param CSE Same as usual
      * @param CSW Same as usual
      */
-    public CasualTile(String name, String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    public CasualTile(String name, String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
         super(name);
         this.id = tileId;
@@ -148,6 +152,7 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
+        aggregateEmplacements = aggregates;
     }
 
     /**
@@ -466,7 +471,7 @@ public class CasualTile extends AbstractTile
 
     public static void main(String str[])
     {
-        CasualTile ct = new CasualTile(
+      /*  CasualTile ct = new CasualTile(
                 "D", // Name
                 "D0", //Id
                 new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
@@ -475,7 +480,7 @@ public class CasualTile extends AbstractTile
                 new FieldType(), //West section
                 new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
-        System.out.println(ct);
+        System.out.println(ct);*/
         /*ct.rotateLeft();
         System.out.println(ct);
         ct.rotateRight();
