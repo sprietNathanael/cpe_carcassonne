@@ -17,7 +17,7 @@ public class LayerMouseAdapter extends MouseAdapter
     private GridPanel gridPanel;
     private LayerMouseListener listener;
     
-    private Coord currentCoord;
+    private UICoord currentCoord;
     
     /**
      * Construction of layer mouse adapter
@@ -34,7 +34,7 @@ public class LayerMouseAdapter extends MouseAdapter
      * Get coordinates
      * @return 
      */
-    public Coord getCurrentCoord()
+    public UICoord getCurrentCoord()
     {
         return this.currentCoord;
     }
@@ -50,7 +50,7 @@ public class LayerMouseAdapter extends MouseAdapter
         Point2D point = e.getPoint();
         
         // Get the grid equivalent of the pixel coordinates
-        Coord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
+        UICoord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
         
         // If there was coordinates and it was not the current tile
         if (this.currentCoord != null && ! this.currentCoord.equals(c))
@@ -78,7 +78,7 @@ public class LayerMouseAdapter extends MouseAdapter
     public void mouseClicked(MouseEvent e) {
         Point2D point = e.getPoint();
         // Get grid equivalent
-        Coord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
+        UICoord c = this.gridPanel.getGridPositionFromCoordinates(point.getX(), point.getY());
         if (c != null) {
             listener.mouseClicked(e, c);
         }

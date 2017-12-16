@@ -62,7 +62,7 @@ public class AbstractCarcassonneGameControllerTest
     }
 
     /**
-     * Test of putTile method, of class AbstractCarcassonneGameController.
+     * Test of putCurrentTile method, of class AbstractCarcassonneGameController.
      */
     @Test
     public void testPutTile() throws Exception

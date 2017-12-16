@@ -5,6 +5,7 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.controller.AbstractCarcassonneGameController;
 import java.awt.Graphics2D;
 
 /**
@@ -15,10 +16,11 @@ public class TilesLayer extends AbstractLayer
     /**
      * Layer constructor
      * @param gridPanel The grid panel which the layer is rattached to
+     * @param controller
      */
-    public TilesLayer(GridPanel gridPanel)
+    public TilesLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
-        super(gridPanel);
+        super(gridPanel, controller);
     }
     
     /**
@@ -29,10 +31,10 @@ public class TilesLayer extends AbstractLayer
     {
         // Get the grid panel properties
         int tileSize = this.gridPanel.getTileSize();
-        Coord center = this.gridPanel.getGraphicalCenter();
+        UICoord center = this.gridPanel.getGraphicalCenter();
         
         // Browse the placed tiles
-        for(Coord coord : this.positions)
+        for(UICoord coord : this.positions)
         {
             // Computes the pixel component of the tile
             int x = center.getX()+(tileSize*coord.getX());

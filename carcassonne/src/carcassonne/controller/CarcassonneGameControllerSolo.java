@@ -5,11 +5,18 @@
  */
 package carcassonne.controller;
 
+import carcassonne.model.carcassonnegame.CarcassonneGame;
+
 /**
  *
  * @author thomas
  */
-public class CarcassonneGameControllerSolo
+public class CarcassonneGameControllerSolo extends AbstractCarcassonneGameController
 {
+
+    public CarcassonneGameControllerSolo(CarcassonneGame game)
+    {
+        super(game);
+    }
     
 }

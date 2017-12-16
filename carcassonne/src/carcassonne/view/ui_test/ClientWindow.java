@@ -5,6 +5,7 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.controller.AbstractCarcassonneGameController;
 import java.awt.Container;
 import javax.swing.JFrame;
 
@@ -13,7 +14,6 @@ import javax.swing.JFrame;
  */
 public class ClientWindow extends JFrame
 {
-
     /**
      * Window constructor
      */

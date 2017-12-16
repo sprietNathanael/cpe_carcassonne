@@ -14,11 +14,16 @@ import carcassonne.model.type.AbstractType;
 public abstract class AbstractTile
 {
     protected String id;
+    protected String name;
+    private int rotation;
     /**
      * Constructor
+     * @param name
      */
-    public AbstractTile()
+    public AbstractTile(String name)
     {
+        this.name = name;
+        this.rotation = 0;
     }
     
     /**
@@ -30,6 +35,20 @@ public abstract class AbstractTile
     {
         return this.id;
     }
+    
+    public int getRotation()
+    {
+        return this.rotation;
+    }
+    
+    /**
+     * Get the name of the Tile
+     * @return 
+     */
+    public String getName()
+    {
+        return this.name;
+    }
 
     /**
      * Rotates the tile by 90° from east to west
@@ -38,6 +57,11 @@ public abstract class AbstractTile
      */
     public boolean rotateLeft()
     {
+        this.rotation -= 90;
+        if(this.rotation < 0)
+        {
+            this.rotation += 360;
+        }
         return true;
     }
 
@@ -48,6 +72,11 @@ public abstract class AbstractTile
      */
     public boolean rotateRight()
     {
+        this.rotation += 90;
+        if(this.rotation >= 360)
+        {
+            this.rotation -= 360;
+        }
         return true;
     }
 
@@ -87,5 +116,33 @@ public abstract class AbstractTile
         AbstractType type = getType(coordinates);
         type.setMeeple(m);
     }
+    
+    /**
+     * Compare north side of the tile with the south side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileNorth (AbstractTile tile);
+    
+    /**
+     * Compare south side of the tile with the north tile of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileSouth (AbstractTile tile);
+    
+    /**
+     * Compare east side of the tile with the west side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileEast (AbstractTile tile);
+    
+    /**
+     * Compare west side of the tile with the east side of another tile
+     * @param tile
+     * @return true if match
+     */
+    public abstract boolean compareTileWest (AbstractTile tile);
 
 }

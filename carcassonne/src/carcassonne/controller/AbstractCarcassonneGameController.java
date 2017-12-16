@@ -60,8 +60,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public AbstractTile drawTile()
     {
-        currentTile = this.carcassonneGame.drawFromPile();
-        return currentTile;
+        this.currentTile = this.carcassonneGame.drawFromPile();
+        return this.currentTile;
     }
 
     /**
@@ -70,9 +70,32 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      * @param c
      * @throws Exception
      */
-    public void putTile(Coord c) throws Exception
+    public void putCurrentTile(Coord c) throws Exception
     {
-        carcassonneGame.putTile(currentTile, c.row, c.col);
+        this.putTile(this.currentTile, c);
+        this.endTurn();
+    }
+
+    /**
+     * Puts a tile on the board
+     *
+     * @param tile
+     * @param c
+     * @throws Exception
+     */
+    public void putTile(AbstractTile tile, Coord c) throws Exception
+    {
+        this.carcassonneGame.putTile(tile, c.row, c.col);
+    }
+
+    /**
+     * Put the first tile on the board
+     *
+     * @throws Exception
+     */
+    public void putFirstTile() throws Exception
+    {
+        this.carcassonneGame.putTile(this.carcassonneGame.getFirstTile(), 0, 0);
     }
 
     /**
@@ -98,9 +121,33 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      * @throws Exception
      */
     public void putMeeple(String coordinates) throws Exception
-    { 
+    {
         Meeple m = getCurrentPlayerMeepleAvailable();
         currentTile.putMeeple(coordinates, m);
+    }
+
+    public Board getBoard()
+    {
+        return carcassonneGame.getBoard();
+    }
+
+    /**
+     * Begin a game
+     */
+    public void beginGame() throws Exception
+    {
+        this.putFirstTile();
+        this.beginTurn();
+    }
+
+    public void beginTurn()
+    {
+        System.out.println("======================================================================================================");
+        System.out.println("C'est au tour de "+this.carcassonneGame.getCurrentPlayer().getName());
+        this.drawTile();
+        System.out.println("La pièce piochée est : "+this.currentTile.getName());
+        System.out.println(this.currentTile);
+        this.carcassonneGame.notifyObservers();
     }
 
     /**
@@ -111,12 +158,38 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public Player endTurn()
     {
         // TODO : compter les points
-        return carcassonneGame.nextPlayer();
+        Player player = this.carcassonneGame.nextPlayer();
+        this.beginTurn();
+        return player;
     }
     
-    public Board getBoard()
+    /**
+     * Check if the tile can be placed here
+     * @param coordinates
+     * @param tile
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
-        return carcassonneGame.getBoard();
+        return this.carcassonneGame.checkTilePosition(coordinates, tile);
     }
-
+    
+    /**
+     * Check if the current tile can be placed here
+     * @param coordinates
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates)
+    {
+        return this.carcassonneGame.checkTilePosition(coordinates);
+    }
+    
+    /**
+     * Turn the current tile
+     */
+    public void turnRight()
+    {
+        this.currentTile.rotateRight();
+    }
+    
 }
