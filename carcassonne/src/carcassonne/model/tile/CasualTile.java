@@ -78,6 +78,7 @@ public class CasualTile extends AbstractTile
      * @param CNE Center-north-eastern type
      * @param CSE Center-south-eastern type
      * @param CSW Center-south-western type
+     * @param aggregates
      */
     public CasualTile(String name, String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
@@ -105,6 +106,59 @@ public class CasualTile extends AbstractTile
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
         aggregateEmplacements = aggregates;
+    }
+
+    /**
+     * Construct a Tile
+     *
+     * @param tileId
+     * @param NWW North-west-western type
+     * @param NW North-western type
+     * @param NNW North-north-western type
+     * @param N Northern type
+     * @param NNE North-north-eastern type
+     * @param NE North-eastern type
+     * @param NEE North-east-eastern type
+     * @param E Eastern type
+     * @param SEE South-east-eastern type
+     * @param SE South-eastern type
+     * @param SSE South-south-eastern type
+     * @param S Southern type
+     * @param SSW South-south-western type
+     * @param SW South-western type
+     * @param SWW South-west-western type
+     * @param W Western type
+     * @param CNW Center-north-western type
+     * @param CNE Center-north-eastern type
+     * @param CSE Center-south-eastern type
+     * @param CSW Center-south-western type
+     */
+    public CasualTile(String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    {
+        super("Null");
+        this.id = tileId;
+        this.types = new HashMap<>();
+        this.types.put("NWW", NWW);
+        this.types.put("NW", NW);
+        this.types.put("NNW", NNW);
+        this.types.put("N", N);
+        this.types.put("NNE", NNE);
+        this.types.put("NE", NE);
+        this.types.put("NEE", NEE);
+        this.types.put("E", E);
+        this.types.put("SEE", SEE);
+        this.types.put("SE", SE);
+        this.types.put("SSE", SSE);
+        this.types.put("S", S);
+        this.types.put("SSW", SSW);
+        this.types.put("SW", SW);
+        this.types.put("SWW", SWW);
+        this.types.put("W", W);
+        this.types.put("CNW", CNW);
+        this.types.put("CNE", CNE);
+        this.types.put("CSE", CSE);
+        this.types.put("CSW", CSW);
+        aggregateEmplacements = null;
     }
 
     /**
@@ -152,6 +206,52 @@ public class CasualTile extends AbstractTile
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
         aggregateEmplacements = aggregates;
+    }
+
+    /**
+     * Construct a none complex tile: using a 3*3 array for borders and the
+     * usual 4 boxes for the center
+     *
+     * @param tileId
+     * @param NW (NWW, NW, NNW)
+     * @param N Same as usual
+     * @param NE (NNE, NE, NEE)
+     * @param E Same as usual
+     * @param SE (SEE, SE, SSE)
+     * @param S Same as usual
+     * @param SW (SSW, SW, SSW)
+     * @param W Same as usual
+     * @param CNW Same as usual
+     * @param CNE Same as usual
+     * @param CSE Same as usual
+     * @param CSW Same as usual
+     */
+    public CasualTile(String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
+    {
+        super("Null");
+        this.id = tileId;
+        this.types = new HashMap<>();
+        this.types.put("NWW", NW);
+        this.types.put("NW", NW);
+        this.types.put("NNW", NW);
+        this.types.put("N", N);
+        this.types.put("NNE", NE);
+        this.types.put("NE", NE);
+        this.types.put("NEE", NE);
+        this.types.put("E", E);
+        this.types.put("SEE", SE);
+        this.types.put("SE", SE);
+        this.types.put("SSE", SE);
+        this.types.put("S", S);
+        this.types.put("SSW", SW);
+        this.types.put("SW", SW);
+        this.types.put("SWW", SW);
+        this.types.put("W", W);
+        this.types.put("CNW", CNW);
+        this.types.put("CNE", CNE);
+        this.types.put("CSE", CSE);
+        this.types.put("CSW", CSW);
+        aggregateEmplacements = null;
     }
 
     /**

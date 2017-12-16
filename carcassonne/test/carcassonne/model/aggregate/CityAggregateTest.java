@@ -399,20 +399,6 @@ public class CityAggregateTest
     }
 
     /**
-     * Test of merge method, of class CityAggregate.
-     */
-    @Test
-    public void testMerge()
-    {
-        System.out.println("merge");
-        CityAggregate neighborAggregate = null;
-        CityAggregate instance = null;
-        instance.merge(neighborAggregate);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
      * Test of mergeSet method, of class CityAggregate.
      */
     @Test
