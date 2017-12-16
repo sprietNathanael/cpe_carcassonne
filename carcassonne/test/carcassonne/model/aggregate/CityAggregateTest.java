@@ -289,7 +289,7 @@ public class CityAggregateTest
         locationTypes.add("E");
         locationTypes.add("SEE");
         CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
-        
+
         locationTypes = new HashSet<>();
         locationTypes.add("SSE");
         locationTypes.add("S");
@@ -330,9 +330,9 @@ public class CityAggregateTest
         locationTypes.add("E");
         locationTypes.add("SEE");
         instance.enlargeAggregate(0, -1, newTile, locationTypes);
-        
+
         instance.merge(instanceBis);
-        
+
         //We expect map map with no incomplete edges
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
         assertEquals(expResult, instance.getCityEdges());
@@ -344,28 +344,58 @@ public class CityAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
-        System.out.println("checkIsCompleted");
-        CityAggregate instance = null;
-        boolean expResult = false;
-        boolean result = instance.checkIsCompleted();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
 
-    /**
-     * Test of getCityEdges method, of class CityAggregate.
-     */
-    @Test
-    public void testGetCityEdges()
-    {
-        System.out.println("getCityEdges");
-        CityAggregate instance = null;
-        Map<Coord, Set<CityEdgeEnum>> expResult = null;
-        Map<Coord, Set<CityEdgeEnum>> result = instance.getCityEdges();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        AbstractTile newTile = getTileI();
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        CityAggregate instanceBis = new CityAggregate(0, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateLeft();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        locationTypes.add("SW");
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        instance.enlargeAggregate(1, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        locationTypes.add("NW");
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        instance.enlargeAggregate(1, -1, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateRight();
+        locationTypes = new HashSet<>();
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        locationTypes.add("NE");
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        instance.enlargeAggregate(0, -1, newTile, locationTypes);
+
+        instance.merge(instanceBis);
+
+        assertEquals(true, instance.checkIsCompleted());
     }
 
     /**

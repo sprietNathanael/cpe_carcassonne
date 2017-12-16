@@ -9,8 +9,6 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.type.AbstractType;
-import carcassonne.model.type.CityType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -132,7 +130,9 @@ public class CityAggregate extends AbstractAggregate
 
     public void merge(CityAggregate neighborAggregate)
     {
-        //mergeSet(neighborAggregate.getCityEdges(), cityEdges);
+        super.merge(neighborAggregate);
+        this.cityEdges = mergeCityEdgesSet(neighborAggregate.getCityEdges(), this.cityEdges);
+        cleanCityEdgesMap();
     }
 
     @Override
@@ -147,6 +147,12 @@ public class CityAggregate extends AbstractAggregate
         return result;
     }
 
+    /**
+     * Get the edge enum from a string of a border location
+     *
+     * @param locationTypes
+     * @return
+     */
     private static Set<CityEdgeEnum> getCityEdges(Set<String> locationTypes)
     {
         Set<CityEdgeEnum> cityEdges = new HashSet<>();
@@ -167,6 +173,13 @@ public class CityAggregate extends AbstractAggregate
         return cityEdges;
     }
 
+    /**
+     * Merge a specific map
+     *
+     * @param map1
+     * @param map2
+     * @return
+     */
     public static Map<Coord, Set<CityEdgeEnum>> mergeCityEdgesSet(Map<Coord, Set<CityEdgeEnum>> map1, Map<Coord, Set<CityEdgeEnum>> map2)
     {
         map1.forEach((key1, value1) -> {
@@ -174,5 +187,60 @@ public class CityAggregate extends AbstractAggregate
         });
 
         return map2;
+    }
+
+    /**
+     * Manage the cases where a map of cityedges references already completed
+     * edges
+     */
+    public void cleanCityEdgesMap()
+    {
+        Coord currentCoord, neighborCoord;
+        Set<CityEdgeEnum> currentEdges;
+        CityEdgeEnum neighborEdge;
+
+        Map<Coord, Set<CityEdgeEnum>> updatedCityEdges;
+        updatedCityEdges = new HashMap();
+        Set<CityEdgeEnum> updatedCurrentEdges;
+
+        for (Map.Entry currentLocalisation : cityEdges.entrySet()) {
+            //Get the current data
+            currentCoord = (Coord) currentLocalisation.getKey();
+            currentEdges = (Set<CityEdgeEnum>) currentLocalisation.getValue();
+            //By default the neighbor are similar to the current coord, the enum will change it
+            neighborCoord = new Coord(currentCoord.col, currentCoord.row);
+            System.out.println("Test first: ");
+            System.out.println("Coord: " + currentCoord);
+            System.out.println("Edges" + currentEdges);
+            updatedCurrentEdges = new HashSet();
+            //For each edge, test if the corresponding edge exists
+            for (CityEdgeEnum edge : currentEdges) {
+                neighborEdge = CityEdgeEnum.getOpposite(edge);
+                switch (edge) {
+                    case NORTH:
+                        neighborCoord.row++;
+                        break;
+                    case EAST:
+                        neighborCoord.col++;
+                        break;
+                    case SOUTH:
+                        neighborCoord.row--;
+                        break;
+                    case WEST:
+                        neighborCoord.col--;
+                        break;
+                }
+                if (!cityEdges.containsKey(neighborCoord)
+                        || !cityEdges.get(neighborCoord).contains(neighborEdge)) {
+                    System.out.println("Test loop: ");
+                    System.out.println("Coord: " + currentCoord + "  Neighbor: " + neighborCoord);
+                    updatedCurrentEdges.add(edge);
+                }
+            }
+            if (!updatedCurrentEdges.isEmpty()) {
+                updatedCityEdges.put(currentCoord, updatedCurrentEdges);
+            }
+        }
+        cityEdges = updatedCityEdges;
     }
 }
