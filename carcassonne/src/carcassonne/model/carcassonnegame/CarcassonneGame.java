@@ -57,6 +57,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<Coord>();
+        this.players = players;
     }
     
     /**
@@ -202,7 +203,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyObservers()
     {   
         super.setChanged();
-        ArrayList<Coord> placements = new ArrayList<Coord>();
         super.notifyObservers(new ObserverMessage(this.board.getAllTiles(), this.currentTile, this.placements));
     }
 
@@ -211,6 +211,27 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         super.addObserver(o);
         this.notifyObservers();
+    }
+    
+    /**
+     * Check if the tile can be placed here
+     * @param coordinates
+     * @param tile
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
+    {
+        return this.board.canTileBePlacedHere(coordinates, tile);
+    }
+    
+    /**
+     * Check if the current tile can be placed here
+     * @param coordinates
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates)
+    {
+        return this.checkTilePosition(coordinates, this.currentTile);
     }
     
     

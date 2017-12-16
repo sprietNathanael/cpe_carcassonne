@@ -55,7 +55,6 @@ public class GridMouseAdapter extends MouseAdapter
     {
         this.dragSource = e;
         this.sourceCenter = this.gridPanel.getGraphicalCenter();
-        System.out.println("pressed at : x="+e.getX()+" ; y="+e.getY());
     }
     
     /**

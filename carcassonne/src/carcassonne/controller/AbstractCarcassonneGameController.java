@@ -72,7 +72,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public void putCurrentTile(Coord c) throws Exception
     {
-        this.putTile(currentTile, c);
+        this.putTile(this.currentTile, c);
+        this.endTurn();
     }
 
     /**
@@ -141,7 +142,11 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     public void beginTurn()
     {
+        System.out.println("======================================================================================================");
+        System.out.println("C'est au tour de "+this.carcassonneGame.getCurrentPlayer().getName());
         this.drawTile();
+        System.out.println("La pièce piochée est : "+this.currentTile.getName());
+        System.out.println(this.currentTile);
         this.carcassonneGame.notifyObservers();
     }
 
@@ -153,7 +158,38 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public Player endTurn()
     {
         // TODO : compter les points
-        return carcassonneGame.nextPlayer();
+        Player player = this.carcassonneGame.nextPlayer();
+        this.beginTurn();
+        return player;
     }
-
+    
+    /**
+     * Check if the tile can be placed here
+     * @param coordinates
+     * @param tile
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
+    {
+        return this.carcassonneGame.checkTilePosition(coordinates, tile);
+    }
+    
+    /**
+     * Check if the current tile can be placed here
+     * @param coordinates
+     * @return 
+     */
+    public boolean checkTilePosition(Coord coordinates)
+    {
+        return this.carcassonneGame.checkTilePosition(coordinates);
+    }
+    
+    /**
+     * Turn the current tile
+     */
+    public void turnRight()
+    {
+        this.currentTile.rotateRight();
+    }
+    
 }

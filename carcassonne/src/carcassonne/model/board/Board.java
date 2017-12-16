@@ -95,22 +95,36 @@ public class Board implements BoardInterface
         {
             if(nw == null)
             {
-                nw = coord;
+                nw = new Coord(coord);
             }
             else
             {
-                nw.col = coord.col < nw.col ? coord.col : nw.col;
-                nw.row = coord.row < nw.row ? coord.row : nw.row;
+                if(coord.col < nw.col)
+                {
+                    nw.col = coord.col;
+                }
+                
+                if(coord.row < nw.row)
+                {
+                    nw.row = coord.row;
+                }
             }
             
             if(se == null)
             {
-                se = coord;
+                se = new Coord(coord);
             }
             else
             {
-                se.col = coord.col > nw.col ? coord.col : nw.col;
-                se.row = coord.row > se.row ? coord.row : se.row;
+                if(coord.col > se.col)
+                {
+                    se.col = coord.col;
+                }
+                
+                if(coord.row > se.row)
+                {
+                    se.row = coord.row;
+                }
             }
         }
         HashMap map = new HashMap<String,Coord>() {};
@@ -120,7 +134,7 @@ public class Board implements BoardInterface
     }
     
     /**
-     * 
+     * Get all the possible placements for a tile
      * @param tile
      * @return 
      */
@@ -129,7 +143,6 @@ public class Board implements BoardInterface
         HashMap<String,Coord> boardDimensions = this.getBoardDimensions();
         Coord nw = boardDimensions.get("nw");
         Coord se = boardDimensions.get("se");
-        System.out.println(boardDimensions);
         // Get the coordinates of board corners plus one tile
         int north = nw.row-1;
         int west = nw.col-1;
@@ -145,11 +158,13 @@ public class Board implements BoardInterface
                 Coord tempCoord = new Coord(horizontalIterate, verticalIterate);
                 if(!this.grid.containsKey(tempCoord))
                 {
-                    System.out.println("=========================================");
-                    System.out.println("Try for coordinates : "+tempCoord);
-                    if(this.canTileBePlacedHere(tempCoord, tile))
+                    for(int i = 0; i < 4; i++)
                     {
-                        res.add(tempCoord);
+                        if(this.canTileBePlacedHere(tempCoord, tile))
+                        {
+                            res.add(tempCoord);
+                        }
+                        tile.rotateRight();
                     }
                 }
             }
@@ -174,12 +189,7 @@ public class Board implements BoardInterface
         if(this.grid.containsKey(tempCoord))
         {
             tempTile = this.grid.get(tempCoord);
-            System.out.println("Comparing :");
-            System.out.println(tempTile);
-            System.out.println("To :");
-            System.out.println(tile);
             boolean tempRes = tile.compareTileNorth(tempTile);
-            System.out.println("North : "+tempRes);
             res =  tempRes && res;
             surrounded = true;
         }
@@ -189,48 +199,32 @@ public class Board implements BoardInterface
         if(this.grid.containsKey(tempCoord))
         {
             tempTile = this.grid.get(tempCoord);
-            System.out.println("Comparing :");
-            System.out.println(tempTile);
-            System.out.println("To :");
-            System.out.println(tile);
             boolean tempRes = tile.compareTileSouth(tempTile);
             res = tempRes && res;
-            System.out.println("South : "+tempRes);
             surrounded = true;
         }
         
-        // Test East tile
+        // Test West tile
         tempCoord.row = coordinates.row;
         tempCoord.col = coordinates.col-1;
         if(this.grid.containsKey(tempCoord))
         {
             tempTile = this.grid.get(tempCoord);
-            System.out.println("Comparing :");
-            System.out.println(tempTile);
-            System.out.println("To :");
-            System.out.println(tile);
             boolean tempRes = tile.compareTileWest(tempTile);
             res = tempRes && res;
-            System.out.println("East: "+tempRes);
             surrounded = true;
         }
         
-        // Test West tile
+        // Test East tile
         tempCoord.col = coordinates.col+1;
         if(this.grid.containsKey(tempCoord))
         {
             tempTile = this.grid.get(tempCoord);
-            System.out.println("Comparing :");
-            System.out.println(tempTile);
-            System.out.println("To :");
-            System.out.println(tile);
-            boolean tempRes = tempTile.compareTileEast(tile);
+            boolean tempRes = tile.compareTileEast(tempTile);
             res =  tempRes && res;
-            System.out.println("West : "+tempRes);
             surrounded = true;
         }
         res = res && surrounded;
-        System.out.println("=> "+res);
         return res;
     }
    
