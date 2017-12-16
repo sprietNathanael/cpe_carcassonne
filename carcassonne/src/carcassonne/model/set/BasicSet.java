@@ -14,6 +14,7 @@ import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -52,7 +53,7 @@ public class BasicSet implements SetInterface
         Set<Set<String>> aggregates;
         //Tiles A (x2)
         for (int i = 1; i <= 2; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("S"));
             aggregates.add(retTreeSet("SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
                     "NNE", "NE", "NEE", "E", "SSE", "SE", "SSE"));
@@ -68,7 +69,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles B (x4)
         for (int i = 1; i <= 4; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
                     "NNE", "NE", "NEE", "E", "SSE", "SE", "SSE"));
 
@@ -82,7 +83,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile C (x1)
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE", "S",
                 "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "CNW", "CNE", "CSW", "CSE"));
 
@@ -96,7 +97,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles D (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NEE", "E", "SEE"));
             aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
@@ -116,7 +117,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //First Tile is a D tils
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NEE", "E", "SEE"));
         aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
@@ -136,7 +137,7 @@ public class BasicSet implements SetInterface
         );
         //Tiles E (x5)
         for (int i = 1; i <= 5; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "N", "NNE"));
             aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "S", "SSE", "SE", "SEE", "E", "NEE", "NE"));
 
@@ -155,7 +156,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles F (x2)
         for (int i = 1; i <= 2; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE"));
             aggregates.add(retTreeSet("NW", "NNW", "N", "NNE", "NE"));
             aggregates.add(retTreeSet("NWW", "W", "SWW", "CSW", "CSE", "CNW", "CNE", "SEE", "E", "NEE"));
@@ -174,7 +175,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile G (x1)
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW"));
         aggregates.add(retTreeSet("NE", "NEE", "E", "SEE", "SE"));
         aggregates.add(retTreeSet("NNW", "N", "NNE", "CSW", "CSE", "CNW", "CNE", "SSW", "S", "SSE"));
@@ -193,7 +194,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles H (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE", "SSE", "S", "SSW", "SW")); //F
             aggregates.add(retTreeSet("NWW", "W", "SWW")); //C
             aggregates.add(retTreeSet("SEE", "E", "NEE")); //C
@@ -213,7 +214,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles I (x2)
         for (int i = 1; i <= 2; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SWW", "W", "NWW", "NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE")); //F
             aggregates.add(retTreeSet("NEE", "E", "SEE")); //C
             aggregates.add(retTreeSet("SSW", "S", "SSE")); //C
@@ -233,7 +234,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles J (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE")); //F
             aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
             aggregates.add(retTreeSet("S", "CSE", "E")); //R
@@ -254,7 +255,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles K (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNE", "NE", "CSE", "CSW", "CNE", "SE", "SSE", "S", "SSW", "SW", "SWW")); //F
             aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
             aggregates.add(retTreeSet("W", "CNW", "N")); //R
@@ -275,7 +276,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles L (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE")); //F
             aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
@@ -299,7 +300,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles M (x2)
         for (int i = 1; i <= 2; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NE", "NEE", "E", "SEE", "SE", "SSE", "S", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
             aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
 
@@ -318,7 +319,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles N (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NE", "NEE", "E", "SEE", "SE", "SSE", "S", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
             aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
 
@@ -337,7 +338,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles O (x2)
         for (int i = 1; i <= 2; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NE", "NEE", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
             aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
             aggregates.add(retTreeSet("S", "CSE", "E")); //R
@@ -358,7 +359,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles P (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NE", "NEE", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
             aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
             aggregates.add(retTreeSet("S", "CSE", "E")); //R
@@ -378,7 +379,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile Q (x1)
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE")); //F
         aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SEE",
                 "SWW", "W", "NWW", "NW", "NNW", "CNW", "CNE", "CSW", "CSE")); //C
@@ -397,7 +398,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles R (x3)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE")); //F
             aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SEE",
                     "SWW", "W", "NWW", "NW", "NNW", "CNW", "CNE", "CSW", "CSE")); //C
@@ -416,7 +417,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles S (x2)
         for (int i = 1; i <= 3; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW")); //F
             aggregates.add(retTreeSet("SSE", "SE")); //F
             aggregates.add(retTreeSet("S")); //R
@@ -437,7 +438,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile T (x1)
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("SW", "SSW")); //F
         aggregates.add(retTreeSet("SSE", "SE")); //F
         aggregates.add(retTreeSet("S")); //R
@@ -458,7 +459,7 @@ public class BasicSet implements SetInterface
         ));
         //Tiles U (x8)
         for (int i = 1; i <= 8; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW")); //F
             aggregates.add(retTreeSet("NNE", "NE", "NEE", "E", "SEE", "SE", "SSE")); //F
             aggregates.add(retTreeSet("N", "CNW", "CNE", "CSE", "CSW", "S")); //R
@@ -474,7 +475,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles V (x9)
         for (int i = 1; i <= 9; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "S", "CNW", "CNE", "CSE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
             aggregates.add(retTreeSet("W", "CSW", "S")); //R
@@ -490,7 +491,7 @@ public class BasicSet implements SetInterface
         }
         //Tiles W (x4)
         for (int i = 1; i <= 4; i++) {
-            aggregates = new TreeSet<>();
+            aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NWW", "NW", "NNW", "N", "NNE", "NE", "NEE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
             aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
@@ -508,7 +509,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tile X (x1)
-        aggregates = new TreeSet<>();
+        aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
         aggregates.add(retTreeSet("NNE", "NE", "NEE")); //F
         aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
@@ -517,6 +518,7 @@ public class BasicSet implements SetInterface
         aggregates.add(retTreeSet("W")); //R
         aggregates.add(retTreeSet("S")); //R
         aggregates.add(retTreeSet("E")); //R
+        
 
         tileList.add(new CasualTile("X", "X1", //Id
                 new FieldType(), new RoadType(), new FieldType(), //North section
@@ -530,7 +532,7 @@ public class BasicSet implements SetInterface
 
     private Set<String> retTreeSet(String... poss)
     {
-        Set tsPos = new TreeSet<String>();
+        Set tsPos = new HashSet<String>();
         for (String pos : poss) {
             tsPos.add(pos);
         }
