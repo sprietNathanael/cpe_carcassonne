@@ -5,7 +5,6 @@
  */
 package carcassonne.model.set;
 
-import carcassonne.model.aggregate.EnumAggregate;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
