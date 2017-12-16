@@ -5,7 +5,6 @@
  */
 package carcassonne.model.tile;
 
-import carcassonne.model.aggregate.EnumAggregate;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
