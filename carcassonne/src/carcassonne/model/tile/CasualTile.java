@@ -96,27 +96,26 @@ public class CasualTile extends AbstractTile
     
     static {
         aggRotateLeft = new HashMap<>();
-        aggRotateLeft.put("NWW", "SSW");
-        aggRotateLeft.put("NW", "SW");
-        aggRotateLeft.put("NNW", "SWW");
-        aggRotateLeft.put("N", "W");
-        aggRotateLeft.put("NNE", "NWW");
-        aggRotateLeft.put("NE", "NW");
-        aggRotateLeft.put("NEE", "NNW");
-        aggRotateLeft.put("E", "N");
-        aggRotateLeft.put("SEE", "NEE");
-        aggRotateLeft.put("SE", "NE");
-        aggRotateLeft.put("SSE", "NEE");
-        aggRotateLeft.put("S", "E");
-        aggRotateLeft.put("SSW", "SEE");
-        aggRotateLeft.put("SW", "SE");
-        aggRotateLeft.put("SWW", "SSE");
-        aggRotateLeft.put("W", "S");
-        aggRotateLeft.put("CNW", "CSW");
-        aggRotateLeft.put("CNE", "CNW");
-        aggRotateLeft.put("CSE", "CNE");
-        aggRotateLeft.put("CSW","CSE");
-
+        aggRotateLeft.put("NWW", "NNE");
+        aggRotateLeft.put("NW", "NE");
+        aggRotateLeft.put("NNW", "NEE");
+        aggRotateLeft.put("N", "E");
+        aggRotateLeft.put("NNE", "SEE");
+        aggRotateLeft.put("NE", "SE");
+        aggRotateLeft.put("NEE", "SSE");
+        aggRotateLeft.put("E", "S");
+        aggRotateLeft.put("SEE", "SSW");
+        aggRotateLeft.put("SE", "SW");
+        aggRotateLeft.put("SSE", "SWW");
+        aggRotateLeft.put("S", "W");
+        aggRotateLeft.put("SSW", "NWW");
+        aggRotateLeft.put("SW", "NW");
+        aggRotateLeft.put("SWW", "NNW");
+        aggRotateLeft.put("W", "N");
+        aggRotateLeft.put("CNW", "CNE");
+        aggRotateLeft.put("CNE", "CSE");
+        aggRotateLeft.put("CSE", "CSW");
+        aggRotateLeft.put("CSW","CNW");
     }
 
     /**
