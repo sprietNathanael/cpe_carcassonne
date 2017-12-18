@@ -43,28 +43,79 @@ public class CasualTile extends AbstractTile
     private HashMap<String, AbstractType> types;
     private Set<Set<String>> aggregateEmplacements;
     static private HashMap<String, String[]> neighbouring;
+    static private HashMap<String, String> aggRotateRight;
+    static private HashMap<String, String> aggRotateLeft;
+    
     static {
-        neighbouring = new HashMap<>();
-        neighbouring.put("NWW", new String[]{"W", "NW"});
-        neighbouring.put("NW", new String[]{"W", "NWW", "NNW", "N"});
-        neighbouring.put("NNW", new String[]{"NW", "N"});
-        neighbouring.put("N", new String[]{"NW", "NNW", "CNW", "CNE", "NNE", "NE"});
-        neighbouring.put("NNE", new String[]{"N", "NE"});
-        neighbouring.put("NE", new String[]{"N", "NNE", "NEE", "E"});
-        neighbouring.put("NEE", new String[]{"NE", "E"});
-        neighbouring.put("E", new String[]{"NE", "NEE", "CNE", "CSE", "SEE", "SE"});
-        neighbouring.put("SEE", new String[]{"E", "SE"});
-        neighbouring.put("SE", new String[]{"E", "SEE", "SSE", "S"});
-        neighbouring.put("SSE", new String[]{"SE", "S"});
-        neighbouring.put("S", new String[]{"SE", "SSE", "CSE", "CSW", "SSW", "SW"});
-        neighbouring.put("SSW", new String[]{"S", "SW"});
-        neighbouring.put("SW", new String[]{"S", "SSW", "SWW", "W"});
-        neighbouring.put("SWW", new String[]{"SW", "W"});
-        neighbouring.put("W", new String[]{"SW", "SWW", "CSW", "CNW", "NWW", "NW"});
-        neighbouring.put("CNW", new String[]{"W", "NW", "N", "CSW", "CNE"});
-        neighbouring.put("CNE", new String[]{"N", "NE", "E", "CNW", "CSE"});
-        neighbouring.put("CSE", new String[]{"E", "SE", "S", "CNE", "CSW"});
-        neighbouring.put("CSW", new String[]{"S", "SW", "W", "CSE", "CNW"});
+        neighbouring = new HashMap<>(); 
+        neighbouring.put("NWW", new String[]{"W", "NW"}); 
+        neighbouring.put("NW", new String[]{"W", "NWW", "NNW", "N"}); 
+        neighbouring.put("NNW", new String[]{"NW", "N"}); 
+        neighbouring.put("N", new String[]{"NW", "NNW", "CNW", "CNE", "NNE", "NE"}); 
+        neighbouring.put("NNE", new String[]{"N", "NE"}); 
+        neighbouring.put("NE", new String[]{"N", "NNE", "NEE", "E"}); 
+        neighbouring.put("NEE", new String[]{"NE", "E"}); 
+        neighbouring.put("E", new String[]{"NE", "NEE", "CNE", "CSE", "SEE", "SE"}); 
+        neighbouring.put("SEE", new String[]{"E", "SE"}); 
+        neighbouring.put("SE", new String[]{"E", "SEE", "SSE", "S"}); 
+        neighbouring.put("SSE", new String[]{"SE", "S"}); 
+        neighbouring.put("S", new String[]{"SE", "SSE", "CSE", "CSW", "SSW", "SW"}); 
+        neighbouring.put("SSW", new String[]{"S", "SW"}); 
+        neighbouring.put("SW", new String[]{"S", "SSW", "SWW", "W"}); 
+        neighbouring.put("SWW", new String[]{"SW", "W"}); 
+        neighbouring.put("W", new String[]{"SW", "SWW", "CSW", "CNW", "NWW", "NW"}); 
+        neighbouring.put("CNW", new String[]{"W", "NW", "N", "CSW", "CNE"}); 
+        neighbouring.put("CNE", new String[]{"N", "NE", "E", "CNW", "CSE"}); 
+        neighbouring.put("CSE", new String[]{"E", "SE", "S", "CNE", "CSW"}); 
+        neighbouring.put("CSW", new String[]{"S", "SW", "W", "CSE", "CNW"}); 
+    }
+    
+    static {
+        aggRotateRight = new HashMap<>();
+        aggRotateRight.put("NWW", "SSW");
+        aggRotateRight.put("NW", "SW");
+        aggRotateRight.put("NNW", "SWW");
+        aggRotateRight.put("N", "W");
+        aggRotateRight.put("NNE", "NWW");
+        aggRotateRight.put("NE", "NW");
+        aggRotateRight.put("NEE", "NNW");
+        aggRotateRight.put("E", "N");
+        aggRotateRight.put("SEE", "NNE");
+        aggRotateRight.put("SE", "NE");
+        aggRotateRight.put("SSE", "NEE");
+        aggRotateRight.put("S", "E");
+        aggRotateRight.put("SSW", "SEE");
+        aggRotateRight.put("SW", "SE");
+        aggRotateRight.put("SWW", "SSE");
+        aggRotateRight.put("W", "S");
+        aggRotateRight.put("CNW", "CSW");
+        aggRotateRight.put("CNE", "CNW");
+        aggRotateRight.put("CSE", "CNE");
+        aggRotateRight.put("CSW","CSE");
+    }
+    
+    static {
+        aggRotateLeft = new HashMap<>();
+        aggRotateLeft.put("NWW", "SSW");
+        aggRotateLeft.put("NW", "SW");
+        aggRotateLeft.put("NNW", "SWW");
+        aggRotateLeft.put("N", "W");
+        aggRotateLeft.put("NNE", "NWW");
+        aggRotateLeft.put("NE", "NW");
+        aggRotateLeft.put("NEE", "NNW");
+        aggRotateLeft.put("E", "N");
+        aggRotateLeft.put("SEE", "NEE");
+        aggRotateLeft.put("SE", "NE");
+        aggRotateLeft.put("SSE", "NEE");
+        aggRotateLeft.put("S", "E");
+        aggRotateLeft.put("SSW", "SEE");
+        aggRotateLeft.put("SW", "SE");
+        aggRotateLeft.put("SWW", "SSE");
+        aggRotateLeft.put("W", "S");
+        aggRotateLeft.put("CNW", "CSW");
+        aggRotateLeft.put("CNE", "CNW");
+        aggRotateLeft.put("CSE", "CNE");
+        aggRotateLeft.put("CSW","CSE");
 
     }
 
@@ -520,6 +571,14 @@ public class CasualTile extends AbstractTile
         this.types.put("NEE", this.types.get("SSE"));
         this.types.put("SSE", this.types.get("SWW"));
         this.types.put("SWW", intermediate);
+        
+        // Rotate aggregates     
+        /*for (Set<String> setAggragate : aggregateEmplacements)
+        {
+            for (String agg : setAggragate)
+            {
+            }
+        }*/
 
         return (true);
     }
