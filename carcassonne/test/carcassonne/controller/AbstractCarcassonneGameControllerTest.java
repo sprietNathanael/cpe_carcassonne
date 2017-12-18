@@ -8,6 +8,7 @@ package carcassonne.controller;
 import carcassonne.coord.Coord;
 import carcassonne.model.board.Board;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
@@ -98,15 +99,29 @@ public class AbstractCarcassonneGameControllerTest
     /**
      * Test of putMeeple method, of class AbstractCarcassonneGameController.
      */
-    /*@Test
-    public void testPutMeeple() throws Exception
+    @Test
+    public void testPutMeeple() throws Exception //IL FAUT PUSHER 
     {
-        System.out.println("putMeeple");
-        String coordinates = "";
-        AbstractCarcassonneGameController instance = new AbstractCarcassonneGameController();
-        instance.putMeeple(coordinates);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        Player j1 = new Player("bertrand", Color.pink);
+        Player j2 = new Player("thomas", Color.orange);
+        ArrayList<Player> list = new ArrayList();
+        list.add(j1);
+        list.add(j2);
+        CarcassonneGame jeu = new CarcassonneGame(list);
+        
+        Meeple m1 = new Meeple();
+        RoadType rot = new RoadType();
+        
+        CasualTile t1 = new CasualTile("A",
+                new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
+                new CityType(), // East
+                new RoadType(), new FieldType(), new RiverType(), new FieldType(), new CityType(), new RiverType(), new FieldType(), // Southern line
+                rot, // West
+                new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
+        );
+        
+        jeu.putMeeple(m1, t1, j1, rot);      
+        assertEquals(rot.getMeeple(), m1);
     }
-     */
+     
 }
