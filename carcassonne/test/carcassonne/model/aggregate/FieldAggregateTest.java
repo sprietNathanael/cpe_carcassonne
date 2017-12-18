@@ -5,6 +5,8 @@
  */
 package carcassonne.model.aggregate;
 
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -49,11 +51,15 @@ public class FieldAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
+        Set<CityAggregate> set = new HashSet();
+        set.add(new CityAggregate(0, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes()));
         FieldAggregate instance = new FieldAggregate(0, 0,
                 AbstractAggregateTest.initiateAbstractTile(),
-                AbstractAggregateTest.initiateTypes()
+                AbstractAggregateTest.initiateTypes(),
+                set
         );
         boolean expResult = false;
+        System.out.println(instance.neighborCities);
         boolean result = instance.checkIsCompleted();
         assertEquals(expResult, result);
     }
