@@ -5,15 +5,11 @@
  */
 package carcassonne.model.tile;
 
-import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
-import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
-import carcassonne.model.type.FieldType;
-import carcassonne.model.type.RiverType;
-import carcassonne.model.type.RoadType;
+import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -25,9 +21,33 @@ import java.util.Set;
 public class CasualTile extends AbstractTile
 {
 
+    public static boolean locationsAreBounded(Set<String> cityLocations, Set<String> locationTypes)
+    {
+        boolean result = false;
+        Set<String> neighborLocations = new HashSet();
+        //Get all the bonded locations corrsponding to the city locations
+        if (cityLocations != null) {
+            for (String cityLocation : cityLocations) {
+                neighborLocations.addAll(Arrays.asList(CasualTile.neighbouring.get(cityLocation)));
+
+            }
+            //Test every bonded location, if there is one the two aggregate are bonding
+            for (String locationType : locationTypes) {
+                if (neighborLocations.contains(locationType)) {
+                    result = true;
+                }
+            }
+        }
+
+        return result;
+    }
+
     private HashMap<String, AbstractType> types;
     private Set<Set<String>> aggregateEmplacements;
     static private HashMap<String, String[]> neighbouring;
+    static private HashMap<String, String> aggRotateRight;
+    static private HashMap<String, String> aggRotateLeft;
+
     static {
         neighbouring = new HashMap<>();
         neighbouring.put("NWW", new String[]{"W", "NW"});
@@ -50,8 +70,55 @@ public class CasualTile extends AbstractTile
         neighbouring.put("CNE", new String[]{"N", "NE", "E", "CNW", "CSE"});
         neighbouring.put("CSE", new String[]{"E", "SE", "S", "CNE", "CSW"});
         neighbouring.put("CSW", new String[]{"S", "SW", "W", "CSE", "CNW"});
+    } //neighbouring
 
-    }
+    static {
+        aggRotateRight = new HashMap<>();
+        aggRotateRight.put("NWW", "SSW");
+        aggRotateRight.put("NW", "SW");
+        aggRotateRight.put("NNW", "SWW");
+        aggRotateRight.put("N", "W");
+        aggRotateRight.put("NNE", "NWW");
+        aggRotateRight.put("NE", "NW");
+        aggRotateRight.put("NEE", "NNW");
+        aggRotateRight.put("E", "N");
+        aggRotateRight.put("SEE", "NNE");
+        aggRotateRight.put("SE", "NE");
+        aggRotateRight.put("SSE", "NEE");
+        aggRotateRight.put("S", "E");
+        aggRotateRight.put("SSW", "SEE");
+        aggRotateRight.put("SW", "SE");
+        aggRotateRight.put("SWW", "SSE");
+        aggRotateRight.put("W", "S");
+        aggRotateRight.put("CNW", "CSW");
+        aggRotateRight.put("CNE", "CNW");
+        aggRotateRight.put("CSE", "CNE");
+        aggRotateRight.put("CSW", "CSE");
+    } //aggRotateRight
+
+    static {
+        aggRotateLeft = new HashMap<>();
+        aggRotateLeft.put("NWW", "NNE");
+        aggRotateLeft.put("NW", "NE");
+        aggRotateLeft.put("NNW", "NEE");
+        aggRotateLeft.put("N", "E");
+        aggRotateLeft.put("NNE", "SEE");
+        aggRotateLeft.put("NE", "SE");
+        aggRotateLeft.put("NEE", "SSE");
+        aggRotateLeft.put("E", "S");
+        aggRotateLeft.put("SEE", "SSW");
+        aggRotateLeft.put("SE", "SW");
+        aggRotateLeft.put("SSE", "SWW");
+        aggRotateLeft.put("S", "W");
+        aggRotateLeft.put("SSW", "NWW");
+        aggRotateLeft.put("SW", "NW");
+        aggRotateLeft.put("SWW", "NNW");
+        aggRotateLeft.put("W", "N");
+        aggRotateLeft.put("CNW", "CNE");
+        aggRotateLeft.put("CNE", "CSE");
+        aggRotateLeft.put("CSE", "CSW");
+        aggRotateLeft.put("CSW", "CNW");
+    } //aggRotateLeft
 
     /**
      * Construct a Tile
@@ -506,6 +573,8 @@ public class CasualTile extends AbstractTile
         this.types.put("SSE", this.types.get("SWW"));
         this.types.put("SWW", intermediate);
 
+        rotateAggregate(false);
+
         return (true);
     }
 
@@ -548,7 +617,24 @@ public class CasualTile extends AbstractTile
         this.types.put("SSE", this.types.get("NEE"));
         this.types.put("NEE", intermediate);
 
+        rotateAggregate(true);
+
         return (true);
+    }
+
+    private void rotateAggregate(boolean right)
+    {
+        // Rotate aggregates     
+        for (Set<String> setAggragate : aggregateEmplacements) {
+            for (String agg : setAggragate) {
+                if (right == true) {
+                    agg = aggRotateRight.get(agg);
+                }
+                else {
+                    agg = aggRotateLeft.get(agg);
+                }
+            }
+        }
     }
 
     /**
@@ -572,7 +658,7 @@ public class CasualTile extends AbstractTile
 
     public static void main(String str[])
     {
-      /*  CasualTile ct = new CasualTile(
+        /*  CasualTile ct = new CasualTile(
                 "D", // Name
                 "D0", //Id
                 new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
@@ -582,7 +668,7 @@ public class CasualTile extends AbstractTile
                 new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
         );
         System.out.println(ct);*/
-        /*ct.rotateLeft();
+ /*ct.rotateLeft();
         System.out.println(ct);
         ct.rotateRight();
         System.out.println(ct);*/
@@ -594,60 +680,74 @@ public class CasualTile extends AbstractTile
     {
         return this.types.get(coordinates);
     }
-    
-     /**
+
+    /**
      * Compare north side of the tile to south side of another tile
+     *
      * @param tile_a
      * @return true if match
      */
     @Override
-    public boolean compareTileNorth (AbstractTile tile_a)
+    public boolean compareTileNorth(AbstractTile tile_a)
     {
-        CasualTile tile = (CasualTile)tile_a;
-        return this.getNNW().getClass() == tile.getSSW().getClass() 
-                && this.getN().getClass() == tile.getS().getClass() 
+        CasualTile tile = (CasualTile) tile_a;
+        return this.getNNW().getClass() == tile.getSSW().getClass()
+                && this.getN().getClass() == tile.getS().getClass()
                 && this.getNNE().getClass() == tile.getSSE().getClass();
     }
-    
+
     /**
      * Compare south side of the tile to north side of another tile
+     *
      * @param tile_a
      * @return true if match
      */
     @Override
-    public boolean compareTileSouth (AbstractTile tile_a)
+    public boolean compareTileSouth(AbstractTile tile_a)
     {
-        CasualTile tile = (CasualTile)tile_a;
-        return this.getSSW().getClass() == tile.getNNW().getClass() 
-                && this.getS().getClass() == tile.getN().getClass() 
+        CasualTile tile = (CasualTile) tile_a;
+        return this.getSSW().getClass() == tile.getNNW().getClass()
+                && this.getS().getClass() == tile.getN().getClass()
                 && this.getSSE().getClass() == tile.getNNE().getClass();
     }
-    
+
     /**
      * Compare west side of the tile to east side of another tile
+     *
      * @param tile_a
      * @return true if match
      */
     @Override
-    public boolean compareTileWest (AbstractTile tile_a)
+    public boolean compareTileWest(AbstractTile tile_a)
     {
-        CasualTile tile = (CasualTile)tile_a;
-        return this.getNWW().getClass() == tile.getNEE().getClass() 
-                && this.getW().getClass() == tile.getE().getClass() 
+        CasualTile tile = (CasualTile) tile_a;
+        return this.getNWW().getClass() == tile.getNEE().getClass()
+                && this.getW().getClass() == tile.getE().getClass()
                 && this.getSWW().getClass() == tile.getSEE().getClass();
     }
-    
+
     /**
      * Compare east side the tile to west side of another tile
+     *
      * @param tile_a
      * @return true if match
      */
     @Override
-    public boolean compareTileEast (AbstractTile tile_a)
+    public boolean compareTileEast(AbstractTile tile_a)
     {
-        CasualTile tile = (CasualTile)tile_a;
-        return this.getNEE().getClass() == tile.getNWW().getClass() 
-                && this.getE().getClass() == tile.getW().getClass() 
+        CasualTile tile = (CasualTile) tile_a;
+        return this.getNEE().getClass() == tile.getNWW().getClass()
+                && this.getE().getClass() == tile.getW().getClass()
                 && this.getSEE().getClass() == tile.getSWW().getClass();
+    }
+
+    public Set<Set<String>> getAggregateEmplacements()
+    {
+        return aggregateEmplacements;
+    }
+
+    public HashMap<String, String[]> getNeighbouring()
+    {
+        return neighbouring;
     }
 }

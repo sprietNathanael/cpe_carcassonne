@@ -7,6 +7,9 @@ package carcassonne.model.tile;
 
 import carcassonne.model.player.Meeple;
 import carcassonne.model.type.AbstractType;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Abstract class to represent a Tile
@@ -16,8 +19,10 @@ public abstract class AbstractTile
     protected String id;
     protected String name;
     private int rotation;
+
     /**
      * Constructor
+     *
      * @param name
      */
     public AbstractTile(String name)
@@ -25,7 +30,7 @@ public abstract class AbstractTile
         this.name = name;
         this.rotation = 0;
     }
-    
+
     /**
      * Get the id of the tile
      *
@@ -35,15 +40,16 @@ public abstract class AbstractTile
     {
         return this.id;
     }
-    
+
     public int getRotation()
     {
         return this.rotation;
     }
-    
+
     /**
      * Get the name of the Tile
-     * @return 
+     *
+     * @return
      */
     public String getName()
     {
@@ -58,8 +64,7 @@ public abstract class AbstractTile
     public boolean rotateLeft()
     {
         this.rotation -= 90;
-        if(this.rotation < 0)
-        {
+        if (this.rotation < 0) {
             this.rotation += 360;
         }
         return true;
@@ -73,8 +78,7 @@ public abstract class AbstractTile
     public boolean rotateRight()
     {
         this.rotation += 90;
-        if(this.rotation >= 360)
-        {
+        if (this.rotation >= 360) {
             this.rotation -= 360;
         }
         return true;
@@ -92,57 +96,64 @@ public abstract class AbstractTile
 
     @Override
     public abstract String toString();
-    
+
     /**
      * Gets the type of the tile from coordinates
+     *
      * @param coordinates
-     * @return 
+     * @return
      */
     public abstract AbstractType getType(String coordinates);
-    
+
     /**
      * Quickly check if the tile is composed of a cross road
      *
      * @return boolean
      */
     public abstract boolean isCrossRoad();
-    
+
     /**
      * puts the meeple on the tile following the coordinate
+     *
      * @param coordinates
-     * @param m 
+     * @param m
      */
-    public void putMeeple(String coordinates, Meeple m){
+    public void putMeeple(String coordinates, Meeple m)
+    {
         AbstractType type = getType(coordinates);
         type.setMeeple(m);
     }
-    
+
     /**
      * Compare north side of the tile with the south side of another tile
+     *
      * @param tile
      * @return true if match
      */
-    public abstract boolean compareTileNorth (AbstractTile tile);
-    
+    public abstract boolean compareTileNorth(AbstractTile tile);
+
     /**
      * Compare south side of the tile with the north tile of another tile
+     *
      * @param tile
      * @return true if match
      */
-    public abstract boolean compareTileSouth (AbstractTile tile);
-    
+    public abstract boolean compareTileSouth(AbstractTile tile);
+
     /**
      * Compare east side of the tile with the west side of another tile
+     *
      * @param tile
      * @return true if match
      */
-    public abstract boolean compareTileEast (AbstractTile tile);
-    
+    public abstract boolean compareTileEast(AbstractTile tile);
+
     /**
      * Compare west side of the tile with the east side of another tile
+     *
      * @param tile
      * @return true if match
      */
-    public abstract boolean compareTileWest (AbstractTile tile);
+    public abstract boolean compareTileWest(AbstractTile tile);
 
 }

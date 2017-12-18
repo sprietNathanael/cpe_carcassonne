@@ -10,6 +10,9 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -54,7 +57,6 @@ public class CasualTileTest
     @Test
     public void testConstruction()
     {
-        System.out.println("construction");
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
                 new CityType(), // East
@@ -73,7 +75,6 @@ public class CasualTileTest
     @Test
     public void testReducedConstruction()
     {
-        System.out.println("reduced construction");
         CasualTile instance = new CasualTile("A",
                 new RoadType(), new CityType(), new RiverType(), // Northen line
                 new FieldType(), // East
@@ -111,7 +112,6 @@ public class CasualTileTest
     @Test
     public void testGetNWW()
     {
-        System.out.println("getNWW");
         AbstractType cityTest = new CityType();
         CasualTile instance = new CasualTile("A",
                 cityTest, new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -131,7 +131,6 @@ public class CasualTileTest
     @Test
     public void testGetNW()
     {
-        System.out.println("getNW");
         AbstractType roadTest = new RoadType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), roadTest, new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -151,7 +150,6 @@ public class CasualTileTest
     @Test
     public void testGetNNW()
     {
-        System.out.println("getNNW");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), riverTest, new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -171,7 +169,6 @@ public class CasualTileTest
     @Test
     public void testGetN()
     {
-        System.out.println("getN");
         AbstractType roadTest = new RoadType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), roadTest, new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -191,7 +188,6 @@ public class CasualTileTest
     @Test
     public void testGetNNE()
     {
-        System.out.println("getNNE");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), riverTest, new CityType(), new RoadType(), // Northen line
@@ -211,7 +207,6 @@ public class CasualTileTest
     @Test
     public void testGetNE()
     {
-        System.out.println("getNE");
         AbstractType cityTest = new CityType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), cityTest, new RoadType(), // Northen line
@@ -231,7 +226,6 @@ public class CasualTileTest
     @Test
     public void testGetNEE()
     {
-        System.out.println("getNEE");
         AbstractType roadTest = new RoadType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), roadTest, // Northen line
@@ -251,7 +245,6 @@ public class CasualTileTest
     @Test
     public void testGetE()
     {
-        System.out.println("getE");
         AbstractType cityTest = new CityType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -271,7 +264,6 @@ public class CasualTileTest
     @Test
     public void testGetSEE()
     {
-        System.out.println("getSEE");
         AbstractType roadTest = new RoadType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -291,7 +283,6 @@ public class CasualTileTest
     @Test
     public void testGetSE()
     {
-        System.out.println("getSE");
         AbstractType fieldTest = new FieldType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -311,7 +302,6 @@ public class CasualTileTest
     @Test
     public void testGetSSE()
     {
-        System.out.println("getSSE");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -331,7 +321,6 @@ public class CasualTileTest
     @Test
     public void testGetS()
     {
-        System.out.println("getS");
         AbstractType fieldTest = new FieldType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -351,7 +340,6 @@ public class CasualTileTest
     @Test
     public void testGetSSW()
     {
-        System.out.println("getSSW");
         AbstractType cityTest = new CityType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -371,7 +359,6 @@ public class CasualTileTest
     @Test
     public void testGetSW()
     {
-        System.out.println("getSW");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -391,7 +378,6 @@ public class CasualTileTest
     @Test
     public void testGetSWW()
     {
-        System.out.println("getSWW");
         AbstractType fieldTest = new FieldType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -411,7 +397,6 @@ public class CasualTileTest
     @Test
     public void testGetW()
     {
-        System.out.println("getW");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -431,7 +416,6 @@ public class CasualTileTest
     @Test
     public void testGetCNW()
     {
-        System.out.println("getCNW");
         AbstractType roadTest = new RoadType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -451,7 +435,6 @@ public class CasualTileTest
     @Test
     public void testGetCNE()
     {
-        System.out.println("getCNE");
         AbstractType cityTest = new CityType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -471,7 +454,6 @@ public class CasualTileTest
     @Test
     public void testGetCSE()
     {
-        System.out.println("getCSE");
         AbstractType fieldTest = new FieldType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -491,7 +473,6 @@ public class CasualTileTest
     @Test
     public void testGetCSW()
     {
-        System.out.println("getCSW");
         AbstractType riverTest = new RiverType();
         CasualTile instance = new CasualTile("A",
                 new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
@@ -511,7 +492,6 @@ public class CasualTileTest
     @Test
     public void testToString()
     {
-        System.out.println("toString");
         CasualTile instance = new CasualTile("D", //Id
                 new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
                 new CityType(), //East section
@@ -522,7 +502,7 @@ public class CasualTileTest
         String expResult = "FiFiFi  Ro  FiFiCi\n  Fi  RoRoFiFi Ci\nFiFiFi  Ro  FiFiCi";
         String result = instance.toString();
         assertEquals(expResult, result);
-       
+
     }
 
     /**
@@ -531,7 +511,6 @@ public class CasualTileTest
     @Test
     public void testRotateLeft()
     {
-        System.out.println("rotateLeft");
         CasualTile instance = new CasualTile("D", //Id
                 new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
                 new CityType(), //East section
@@ -551,7 +530,6 @@ public class CasualTileTest
     @Test
     public void testRotateRight()
     {
-        System.out.println("rotateRight");
         CasualTile instance = new CasualTile("D", //Id
                 new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
                 new CityType(), //East section
@@ -565,4 +543,21 @@ public class CasualTileTest
         assertEquals(expResult, result);
     }
 
+    /**
+     * Test of locationsAreBounded method, of class CasualTile.
+     */
+    @Test
+    public void testLocationsAreBounded()
+    {
+        Set<String> cityLocations = new HashSet();
+        cityLocations.add("NNW");
+
+        Set<String> locationTypes = new HashSet();
+        locationTypes.add("NW");
+
+        boolean expResult = true;
+        boolean result = CasualTile.locationsAreBounded(cityLocations, locationTypes);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
 }

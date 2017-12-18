@@ -8,6 +8,8 @@ package carcassonne.model.aggregate;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -18,16 +20,35 @@ public class FieldAggregate extends AbstractAggregate
 {
 
     /**
-     * Construct a field aggregation
+     * Set of the cities that are linked to the fiedl
+     */
+    public Set<CityAggregate> neighborCities;
+
+    /**
+     * Construct a field aggregation, we have to put all the cityAggregates of
+     * this tile
      *
      * @param col
      * @param row
      * @param firstTile
-     * @param locationtypes
+     * @param locationTypes
+     * @param currentTileCities
      */
-    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationtypes)
+    public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
     {
-        super(col, row, firstTile, locationtypes);
+        super(col, row, firstTile, locationTypes);
+        Set<String> cityLocations;
+        neighborCities = new HashSet();
+
+        //Browse the city aggregates
+        for (CityAggregate city : currentTileCities) {
+            //We get the emplacement in the current tile where the aggregate is located
+            cityLocations = city.aggregatedPositionTypes.get(firstTile);
+            //Browse the aggregate tile locations
+            if (CasualTile.locationsAreBonded(cityLocations, locationTypes)) {
+                neighborCities.add(city);
+            }
+        }
     }
 
     /**
@@ -59,5 +80,4 @@ public class FieldAggregate extends AbstractAggregate
 
         return result;
     }
-
 }
