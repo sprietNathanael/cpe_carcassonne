@@ -9,7 +9,7 @@ import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CrossType;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -21,10 +21,28 @@ import java.util.Set;
 public class CasualTile extends AbstractTile
 {
 
+    public static boolean locationsAreBonded(Set<String> cityLocations, Set<String> locationTypes)
+    {
+        boolean result = false;
+        Set<String> neighborLocations = new HashSet();
+
+        //Get all the bonded locations corrsponding to the city locations
+        for (String cityLocation : cityLocations) {
+            neighborLocations.addAll(Arrays.asList(CasualTile.neighbouring.get(cityLocation)));
+        }
+        //Test every bonded location, if there is one the two aggregate are bonding
+        for (String locationType : locationTypes) {
+            if (neighborLocations.contains(locationType)) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     private HashMap<String, AbstractType> types;
     private Set<Set<String>> aggregateEmplacements;
-    static public HashMap<String, String[]> neighbouring;
-
+    static private HashMap<String, String[]> neighbouring;
     static {
         neighbouring = new HashMap<>();
         neighbouring.put("NWW", new String[]{"W", "NW"});
@@ -657,21 +675,8 @@ public class CasualTile extends AbstractTile
         return aggregateEmplacements;
     }
 
-    public static boolean locationsAreBonded(Set<String> cityLocations, Set<String> locationTypes)
+    public HashMap<String, String[]> getNeighbouring()
     {
-        boolean result = false;
-        List<String> neighbor;
-
-        //Get all the neighbors locations of this set of city locations
-        for (String cityLocation : cityLocations) {
-            neighbor = Arrays.asList(neighbouring.get(cityLocation));
-            for (String locationType : locationTypes) {
-                if (neighbor.contains(locationType)) {
-                    result = true;
-                }
-            }
-        }
-
-        return result;
+        return neighbouring;
     }
 }
