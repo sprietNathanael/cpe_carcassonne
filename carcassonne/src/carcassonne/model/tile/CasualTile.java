@@ -45,31 +45,31 @@ public class CasualTile extends AbstractTile
     static private HashMap<String, String[]> neighbouring;
     static private HashMap<String, String> aggRotateRight;
     static private HashMap<String, String> aggRotateLeft;
-    
+
     static {
-        neighbouring = new HashMap<>(); 
-        neighbouring.put("NWW", new String[]{"W", "NW"}); 
-        neighbouring.put("NW", new String[]{"W", "NWW", "NNW", "N"}); 
-        neighbouring.put("NNW", new String[]{"NW", "N"}); 
-        neighbouring.put("N", new String[]{"NW", "NNW", "CNW", "CNE", "NNE", "NE"}); 
-        neighbouring.put("NNE", new String[]{"N", "NE"}); 
-        neighbouring.put("NE", new String[]{"N", "NNE", "NEE", "E"}); 
-        neighbouring.put("NEE", new String[]{"NE", "E"}); 
-        neighbouring.put("E", new String[]{"NE", "NEE", "CNE", "CSE", "SEE", "SE"}); 
-        neighbouring.put("SEE", new String[]{"E", "SE"}); 
-        neighbouring.put("SE", new String[]{"E", "SEE", "SSE", "S"}); 
-        neighbouring.put("SSE", new String[]{"SE", "S"}); 
-        neighbouring.put("S", new String[]{"SE", "SSE", "CSE", "CSW", "SSW", "SW"}); 
-        neighbouring.put("SSW", new String[]{"S", "SW"}); 
-        neighbouring.put("SW", new String[]{"S", "SSW", "SWW", "W"}); 
-        neighbouring.put("SWW", new String[]{"SW", "W"}); 
-        neighbouring.put("W", new String[]{"SW", "SWW", "CSW", "CNW", "NWW", "NW"}); 
-        neighbouring.put("CNW", new String[]{"W", "NW", "N", "CSW", "CNE"}); 
-        neighbouring.put("CNE", new String[]{"N", "NE", "E", "CNW", "CSE"}); 
-        neighbouring.put("CSE", new String[]{"E", "SE", "S", "CNE", "CSW"}); 
-        neighbouring.put("CSW", new String[]{"S", "SW", "W", "CSE", "CNW"}); 
-    }
-    
+        neighbouring = new HashMap<>();
+        neighbouring.put("NWW", new String[]{"W", "NW"});
+        neighbouring.put("NW", new String[]{"W", "NWW", "NNW", "N"});
+        neighbouring.put("NNW", new String[]{"NW", "N"});
+        neighbouring.put("N", new String[]{"NW", "NNW", "CNW", "CNE", "NNE", "NE"});
+        neighbouring.put("NNE", new String[]{"N", "NE"});
+        neighbouring.put("NE", new String[]{"N", "NNE", "NEE", "E"});
+        neighbouring.put("NEE", new String[]{"NE", "E"});
+        neighbouring.put("E", new String[]{"NE", "NEE", "CNE", "CSE", "SEE", "SE"});
+        neighbouring.put("SEE", new String[]{"E", "SE"});
+        neighbouring.put("SE", new String[]{"E", "SEE", "SSE", "S"});
+        neighbouring.put("SSE", new String[]{"SE", "S"});
+        neighbouring.put("S", new String[]{"SE", "SSE", "CSE", "CSW", "SSW", "SW"});
+        neighbouring.put("SSW", new String[]{"S", "SW"});
+        neighbouring.put("SW", new String[]{"S", "SSW", "SWW", "W"});
+        neighbouring.put("SWW", new String[]{"SW", "W"});
+        neighbouring.put("W", new String[]{"SW", "SWW", "CSW", "CNW", "NWW", "NW"});
+        neighbouring.put("CNW", new String[]{"W", "NW", "N", "CSW", "CNE"});
+        neighbouring.put("CNE", new String[]{"N", "NE", "E", "CNW", "CSE"});
+        neighbouring.put("CSE", new String[]{"E", "SE", "S", "CNE", "CSW"});
+        neighbouring.put("CSW", new String[]{"S", "SW", "W", "CSE", "CNW"});
+    } //neighbouring
+
     static {
         aggRotateRight = new HashMap<>();
         aggRotateRight.put("NWW", "SSW");
@@ -91,9 +91,9 @@ public class CasualTile extends AbstractTile
         aggRotateRight.put("CNW", "CSW");
         aggRotateRight.put("CNE", "CNW");
         aggRotateRight.put("CSE", "CNE");
-        aggRotateRight.put("CSW","CSE");
-    }
-    
+        aggRotateRight.put("CSW", "CSE");
+    } //aggRotateRight
+
     static {
         aggRotateLeft = new HashMap<>();
         aggRotateLeft.put("NWW", "NNE");
@@ -115,8 +115,8 @@ public class CasualTile extends AbstractTile
         aggRotateLeft.put("CNW", "CNE");
         aggRotateLeft.put("CNE", "CSE");
         aggRotateLeft.put("CSE", "CSW");
-        aggRotateLeft.put("CSW","CNW");
-    }
+        aggRotateLeft.put("CSW", "CNW");
+    } //aggRotateLeft
 
     /**
      * Construct a Tile
@@ -570,14 +570,8 @@ public class CasualTile extends AbstractTile
         this.types.put("NEE", this.types.get("SSE"));
         this.types.put("SSE", this.types.get("SWW"));
         this.types.put("SWW", intermediate);
-        
-        // Rotate aggregates     
-        /*for (Set<String> setAggragate : aggregateEmplacements)
-        {
-            for (String agg : setAggragate)
-            {
-            }
-        }*/
+
+        rotateAggregate(false);
 
         return (true);
     }
@@ -621,7 +615,24 @@ public class CasualTile extends AbstractTile
         this.types.put("SSE", this.types.get("NEE"));
         this.types.put("NEE", intermediate);
 
+        rotateAggregate(true);
+
         return (true);
+    }
+
+    private void rotateAggregate(boolean right)
+    {
+        // Rotate aggregates     
+        for (Set<String> setAggragate : aggregateEmplacements) {
+            for (String agg : setAggragate) {
+                if (right == true) {
+                    agg = aggRotateRight.get(agg);
+                }
+                else {
+                    agg = aggRotateLeft.get(agg);
+                }
+            }
+        }
     }
 
     /**
