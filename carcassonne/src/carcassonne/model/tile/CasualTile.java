@@ -21,19 +21,21 @@ import java.util.Set;
 public class CasualTile extends AbstractTile
 {
 
-    public static boolean locationsAreBonded(Set<String> cityLocations, Set<String> locationTypes)
+    public static boolean locationsAreBounded(Set<String> cityLocations, Set<String> locationTypes)
     {
         boolean result = false;
         Set<String> neighborLocations = new HashSet();
-
         //Get all the bonded locations corrsponding to the city locations
-        for (String cityLocation : cityLocations) {
-            neighborLocations.addAll(Arrays.asList(CasualTile.neighbouring.get(cityLocation)));
-        }
-        //Test every bonded location, if there is one the two aggregate are bonding
-        for (String locationType : locationTypes) {
-            if (neighborLocations.contains(locationType)) {
-                result = true;
+        if (cityLocations != null) {
+            for (String cityLocation : cityLocations) {
+                neighborLocations.addAll(Arrays.asList(CasualTile.neighbouring.get(cityLocation)));
+
+            }
+            //Test every bonded location, if there is one the two aggregate are bonding
+            for (String locationType : locationTypes) {
+                if (neighborLocations.contains(locationType)) {
+                    result = true;
+                }
             }
         }
 
