@@ -29,11 +29,6 @@ public class FieldAggregate extends AbstractAggregate
         return boundedCities;
     }
 
-    public Set<CityAggregate> getNeighborCities()
-    {
-        return boundedCities;
-    }
-
     /**
      * Construct a field aggregation, we have to put all the cityAggregates of
      * this tile
@@ -65,7 +60,7 @@ public class FieldAggregate extends AbstractAggregate
     {
         super(col, row, firstTile, locationTypes, player, meeple);
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
-    }
+    }   
 
     /**
      * @return false in any cases, because a field is never completed

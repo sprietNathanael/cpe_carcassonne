@@ -528,7 +528,7 @@ public class BasicSet implements SetInterface
         ));
     }
 
-    private Set<String> retTreeSet(String... poss)
+    public static Set<String> retTreeSet(String... poss)
     {
         Set tsPos = new HashSet<>();
         for (String pos : poss) {
