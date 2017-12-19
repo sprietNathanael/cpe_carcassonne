@@ -23,12 +23,13 @@ public abstract class AbstractLayer
     /**
      * Construction of an abstract layer
      * @param gridPanel Grid panel
+     * @param controller AbstractCarcassonneGameController
      */
     public AbstractLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
-        this.gridPanel = gridPanel;
-        this.positions = new ArrayList<>();
+        this.gridPanel = gridPanel;        
         this.controller = controller;
+        this.positions = new ArrayList<>();
     }
     
     /**

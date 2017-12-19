@@ -5,9 +5,6 @@
  */
 package carcassonne.view.ui_test;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
-import carcassonne.controller.CarcassonneGameControllerSolo;
-import carcassonne.model.carcassonnegame.CarcassonneGame;
 import javax.swing.JFrame;
 
 /**
@@ -18,6 +15,7 @@ public class GUILauncher
 
     /**
      * Main methode
+     * @param args Strings[]
      */
     public static void main(String[] args) {
                 
@@ -26,6 +24,5 @@ public class GUILauncher
         clientWindow.setVisible(true);
         clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
     
 }

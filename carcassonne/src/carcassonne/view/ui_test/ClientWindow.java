@@ -5,7 +5,6 @@
  */
 package carcassonne.view.ui_test;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
 import java.awt.Container;
 import javax.swing.JFrame;
 
@@ -21,23 +20,28 @@ public class ClientWindow extends JFrame
     {
         super("Carcassonne");
         cleanContentPane();
+        createGameView();
+    }
+    
+    /**
+     * Clean the window
+     */
+    private void cleanContentPane() {
+        Container pane = getContentPane();
+        pane.setVisible(false);
+        pane.removeAll();        
+    }
+    
+    /**
+     * Create the game view
+     */    
+    private void createGameView() {
         GameView gameView = new GameView();
         gameView.show(getContentPane());
         
         // Maximize the window
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
-        
     }
-    
-    /**
-     * Clean the window
-     */
-    public void cleanContentPane() {
-        Container pane = getContentPane();
-        pane.setVisible(false);
-        pane.removeAll();
-    }
-    
     
 }
