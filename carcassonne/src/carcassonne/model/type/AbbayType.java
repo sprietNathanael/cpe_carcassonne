@@ -30,6 +30,5 @@ public class AbbayType extends AbstractType
     {
         return "Ab";
     }
-
-   
+    
 }

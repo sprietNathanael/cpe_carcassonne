@@ -6,11 +6,9 @@
 package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.tile.CasualTile;
 import carcassonne.coord.Coord;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Manages the tiles on the board
@@ -21,7 +19,7 @@ public class Board implements BoardInterface
 {
 
     // private AbstractTile[][] grid;
-    private HashMap<Coord, AbstractTile> grid;
+    private final HashMap<Coord, AbstractTile> grid;
 
     /**
      * Initializes an empty board
@@ -148,7 +146,7 @@ public class Board implements BoardInterface
         int west = nw.col-1;
         int south = se.row+1;
         int east = se.col+1;
-        ArrayList<Coord> res = new ArrayList<Coord>();
+        ArrayList<Coord> res = new ArrayList<>();
         
         // Loop over all the positions between NW and SE corners
         for(int verticalIterate = north; verticalIterate <= south; verticalIterate++)

@@ -12,7 +12,7 @@ public class Meeple
 {
 
     private boolean isUsed;
-    private boolean isBig;
+    private final boolean isBig;
 
     /**
      * Creates a new meeple and precise its size.

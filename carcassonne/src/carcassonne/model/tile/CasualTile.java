@@ -27,10 +27,9 @@ public class CasualTile extends AbstractTile
         Set<String> neighborLocations = new HashSet();
         //Get all the bonded locations corrsponding to the city locations
         if (cityLocations != null) {
-            for (String cityLocation : cityLocations) {
+            cityLocations.forEach((cityLocation) -> {
                 neighborLocations.addAll(Arrays.asList(CasualTile.neighbouring.get(cityLocation)));
-
-            }
+            });
             //Test every bonded location, if there is one the two aggregate are bonding
             for (String locationType : locationTypes) {
                 if (neighborLocations.contains(locationType)) {
@@ -42,8 +41,8 @@ public class CasualTile extends AbstractTile
         return result;
     }
 
-    private HashMap<String, AbstractType> types;
-    private Set<Set<String>> aggregateEmplacements;
+    private final HashMap<String, AbstractType> types;
+    private final Set<Set<String>> aggregateEmplacements;
     static private HashMap<String, String[]> neighbouring;
     static private HashMap<String, String> aggRotateRight;
     static private HashMap<String, String> aggRotateLeft;

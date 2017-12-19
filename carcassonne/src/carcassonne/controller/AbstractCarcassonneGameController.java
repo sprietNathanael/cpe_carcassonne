@@ -20,7 +20,7 @@ import carcassonne.model.tile.AbstractTile;
 public class AbstractCarcassonneGameController implements CarcassonneGameControllerInterface
 {
 
-    private CarcassonneGame carcassonneGame;
+    private final CarcassonneGame carcassonneGame;
     private AbstractTile currentTile;
 
     /**

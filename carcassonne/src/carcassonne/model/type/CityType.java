@@ -11,7 +11,7 @@ package carcassonne.model.type;
 public class CityType extends AbstractType
 {
 
-    private boolean hasShield;
+    private final boolean hasShield;
 
     /**
      * constructor

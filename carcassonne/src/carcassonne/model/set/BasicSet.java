@@ -13,11 +13,9 @@ import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * This is the basic set of the game
@@ -27,7 +25,7 @@ import java.util.TreeSet;
 public class BasicSet implements SetInterface
 {
 
-    private List<AbstractTile> tileList;
+    private final List<AbstractTile> tileList;
     private AbstractTile firstTile;
 
     /**
@@ -532,7 +530,7 @@ public class BasicSet implements SetInterface
 
     private Set<String> retTreeSet(String... poss)
     {
-        Set tsPos = new HashSet<String>();
+        Set tsPos = new HashSet<>();
         for (String pos : poss) {
             tsPos.add(pos);
         }

@@ -56,7 +56,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Collections.shuffle(this.pile);
         this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
-        this.placements = new ArrayList<Coord>();
+        this.placements = new ArrayList<>();
         this.players = players;
     }
     
@@ -233,7 +233,5 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return this.checkTilePosition(coordinates, this.currentTile);
     }
-    
-    
 
 }

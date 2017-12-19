@@ -16,9 +16,9 @@ import java.util.HashMap;
  */
 public class ObserverMessage
 {
-    private HashMap<Coord,AbstractTile> board;
-    private AbstractTile preview;
-    private ArrayList<Coord> placements;
+    private final HashMap<Coord,AbstractTile> board;
+    private final AbstractTile preview;
+    private final ArrayList<Coord> placements;
 
     public ObserverMessage(HashMap<Coord, AbstractTile> board, AbstractTile preview, ArrayList<Coord> placements)
     {

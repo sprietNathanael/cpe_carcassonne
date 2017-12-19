@@ -21,11 +21,11 @@ public class Player
      */
     public static int NBMEEPLE = 8;
 
-    private Meeple bigMeeple;
-    private ArrayList<Meeple> meeples;
-    private String name;
-    private int points;
-    private Color color;
+    private final Meeple bigMeeple;
+    private final ArrayList<Meeple> meeples;
+    private final String name;
+    private final int points;
+    private final Color color;
 
     /**
      * Creates a new Player
@@ -80,10 +80,7 @@ public class Player
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-        if (!Objects.equals(this.color, other.color)) {
-            return false;
-        }
-        return true;
+        return Objects.equals(this.color, other.color);
     }
 
     /**

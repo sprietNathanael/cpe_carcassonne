@@ -7,9 +7,6 @@ package carcassonne.model.tile;
 
 import carcassonne.model.player.Meeple;
 import carcassonne.model.type.AbstractType;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * Abstract class to represent a Tile
