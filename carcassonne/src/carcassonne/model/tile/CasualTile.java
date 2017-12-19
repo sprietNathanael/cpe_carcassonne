@@ -225,7 +225,7 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
-        aggregateEmplacements = null;
+        aggregateEmplacements = new HashSet();
     }
 
     /**

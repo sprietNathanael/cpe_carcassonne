@@ -5,7 +5,6 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;

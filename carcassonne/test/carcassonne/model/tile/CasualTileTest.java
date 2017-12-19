@@ -560,4 +560,23 @@ public class CasualTileTest
         System.out.println(result);
         assertEquals(expResult, result);
     }
+
+    /**
+     * Test of locationsAreBounded method, of class CasualTile.
+     */
+    @Test
+    public void testLocationsAreBounded2()
+    {
+        Set<String> cityLocations = new HashSet();
+        cityLocations.add("NNW");
+        cityLocations.add("SSW");
+
+        Set<String> locationTypes = new HashSet();
+        locationTypes.add("E");
+
+        boolean expResult = false;
+        boolean result = CasualTile.locationsAreBounded(cityLocations, locationTypes);
+        System.out.println(result);
+        assertEquals(expResult, result);
+    }
 }

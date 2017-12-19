@@ -59,7 +59,6 @@ public class FieldAggregateTest
                 set
         );
         boolean expResult = false;
-        System.out.println(instance.neighborCities);
         boolean result = instance.checkIsCompleted();
         assertEquals(expResult, result);
     }
