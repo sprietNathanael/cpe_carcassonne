@@ -81,9 +81,15 @@ public class UICoord
         if (this.x != other.x) {
             return false;
         }
-        if (this.y != other.y) {
-            return false;
-        }
-        return true;
+        return this.y == other.y;
+    }
+
+    @Override
+    public int hashCode()
+    {
+        int hash = 5;
+        hash = 37 * hash + this.x;
+        hash = 37 * hash + this.y;
+        return hash;
     }
 }

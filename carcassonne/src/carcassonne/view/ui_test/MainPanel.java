@@ -12,7 +12,6 @@ import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Observable;
 import javax.swing.JPanel;
 
@@ -21,18 +20,18 @@ import javax.swing.JPanel;
  */
 public class MainPanel extends JPanel implements java.util.Observer
 {
-    private AbstractCarcassonneGameController controller;
-    private TilesLayer tilesLayer;
-    private PlacementLayer placementLayer;
-    private GridPanel gridPanel;
+    private final AbstractCarcassonneGameController controller;
+    private final TilesLayer tilesLayer;
+    private final PlacementLayer placementLayer;
+    private final GridPanel gridPanel;
     /**
      * Main panel constructor
+     * @param controller AbstractCarcassonneGameController
      */
     public MainPanel(AbstractCarcassonneGameController controller)
     {
         super();
-        this.controller = controller;
-        setLayout(new BorderLayout());
+        this.controller = controller;        
         
         // Construct a grid panel
         this.gridPanel = new GridPanel();
@@ -47,7 +46,15 @@ public class MainPanel extends JPanel implements java.util.Observer
         gridPanel.addLayer(placementLayer);
         gridPanel.addLayer(tilesLayer);
         
-        // Add the grid panel to the main panel
+        addPanel();
+    }
+    
+    /*
+    * Add the grid panel to the main panel
+    */
+    private void addPanel() 
+    {        
+        setLayout(new BorderLayout());        
         this.add(gridPanel);
     }
 
@@ -70,16 +77,14 @@ public class MainPanel extends JPanel implements java.util.Observer
             this.placementLayer.addPosition(new UICoord(placements.get(i)));
         }
         
-        for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+        board.entrySet().forEach((entry) -> {
             Coord key = entry.getKey();
             AbstractTile value = entry.getValue();
             this.tilesLayer.addPosition(new TileImage(key.col, key.row, value));
-        }
+        });
         
         this.gridPanel.repaint();
-        
-        
+                
     }
-    
-    
+        
 }

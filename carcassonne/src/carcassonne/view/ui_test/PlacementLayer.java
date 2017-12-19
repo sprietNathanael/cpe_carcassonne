@@ -40,7 +40,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     {
         super(gridPanel, controller);
         // Initialise the position array
-        this.positions = new ArrayList<UICoord>();
+        this.positions = new ArrayList<>();
 
         this.previewImage = null;
 
@@ -51,6 +51,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
     /**
      * On layer show triggered
      */
+    @Override
     public void onShow()
     {
         super.onShow();
@@ -58,6 +59,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
         this.attachMouseInputListener(new LayerMouseAdapter(this.gridPanel, this));
     }
 
+    @Override
     public void onHide()
     {
         super.onHide();
@@ -79,6 +81,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
      *
      * @param g2
      */
+    @Override
     public void paint(Graphics2D g2)
     {
         int placeHolderSize = this.gridPanel.getTileSize();
@@ -87,7 +90,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
         int tileSize = placeHolderSize - (2 * shift);
         UICoord center = this.gridPanel.getGraphicalCenter();
         g2.setColor(Color.LIGHT_GRAY);
-        for (UICoord p : this.positions) {
+        this.positions.forEach((p) -> {
             int x = center.getX() + (placeHolderSize * p.getX());
             int y = center.getY() + (placeHolderSize * p.getY());
             if (this.previewImage != null && (p.getX() == this.previewImage.getX() && p.getY() == this.previewImage.getY())) {
@@ -105,8 +108,7 @@ public class PlacementLayer extends AbstractLayer implements LayerMouseListener
                 g2.fillRect(x, y, thickness, tileSize);
                 g2.fillRect(x + tileSize - thickness, y, thickness, tileSize);
             }
-
-        }
+        });
     }
 
     @Override

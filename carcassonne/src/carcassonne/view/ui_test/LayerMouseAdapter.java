@@ -14,8 +14,8 @@ import java.awt.geom.Point2D;
  */
 public class LayerMouseAdapter extends MouseAdapter
 {
-    private GridPanel gridPanel;
-    private LayerMouseListener listener;
+    private final GridPanel gridPanel;
+    private final LayerMouseListener listener;
     
     private UICoord currentCoord;
     

@@ -15,7 +15,7 @@ import java.awt.event.MouseWheelEvent;
 public class GridMouseAdapter extends MouseAdapter
 {
     private MouseEvent dragSource;
-    private GridPanel gridPanel;
+    private final GridPanel gridPanel;
     private UICoord sourceCenter;
     
     /**
@@ -42,8 +42,7 @@ public class GridMouseAdapter extends MouseAdapter
         UICoord newCenter = new UICoord(this.sourceCenter.getX()+dx, this.sourceCenter.getY()+dy);
         
         // Set the new graphical center of the gridpanel
-        this.gridPanel.moveCenterTo(newCenter);
-        
+        this.gridPanel.moveCenterTo(newCenter);        
     }
     
     /**
@@ -78,10 +77,5 @@ public class GridMouseAdapter extends MouseAdapter
         // Update the zoom of the gridPanel
         this.gridPanel.zoom(-e.getWheelRotation());
     }
-    
-    
-   
-    
-    
     
 }
