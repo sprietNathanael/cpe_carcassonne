@@ -26,8 +26,8 @@ public class GridPanel extends JPanel
     
     private UICoord graphicalCenter;
     private int tileSize;
-    private List<AbstractLayer> layers = new ArrayList<AbstractLayer>();
-    private GridMouseAdapter mouseListener;
+    private final List<AbstractLayer> layers = new ArrayList<>();
+    private final GridMouseAdapter mouseListener;
     private boolean firstPaint;
     private int upBorder;
     private int leftBorder;
@@ -39,28 +39,27 @@ public class GridPanel extends JPanel
         // Initialise tile size
         this.tileSize = INITIAL_TILE_WIDTH;
         
-        // Configure component
+        // Creates 
+        this.mouseListener = new GridMouseAdapter(this);
+        
+        configureComponent();
+        
+        // Set graphical centenr
+        this.graphicalCenter = new UICoord(0,0);
+        this.firstPaint = true;
+    }
+    
+    /**
+     * Configure component and adds a mouse listener
+     */
+    private void configureComponent() {
         setDoubleBuffered(true);
         setOpaque(false);
         setLayout(new MigLayout());
         
-        // Creates and adds a mouse listener
-        this.mouseListener = new GridMouseAdapter(this);
         this.addMouseListener(this.mouseListener);
         this.addMouseMotionListener(this.mouseListener);
         this.addMouseWheelListener(this.mouseListener);
-        
-        // ONLY FOR TEST
-        // set board borders
-        this.upBorder = 0;
-        this.leftBorder = 0;
-        this.rightBorder = 3;
-        this.downBorder = 0;
-        
-
-        // Set graphical centenr
-        this.graphicalCenter = new UICoord(0,0);
-        this.firstPaint = true;
     }
     
     /**
@@ -83,11 +82,10 @@ public class GridPanel extends JPanel
         Graphics2D g2 = (Graphics2D) g;
         
         // Browses layers
-        for(AbstractLayer layer : layers)
-        {
+        layers.forEach((layer) -> {
             // Paint the layers
             layer.paint(g2);
-        }
+        });
         
         // Call the super methode
         super.paintChildren(g);
@@ -235,6 +233,5 @@ public class GridPanel extends JPanel
         // Repaint the component
         this.repaint();
     }
-    
-    
+
 }

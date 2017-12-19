@@ -12,7 +12,6 @@ import javax.swing.JFrame;
  */
 public class GUILauncher
 {
-
     /**
      * Main methode
      * @param args Strings[]

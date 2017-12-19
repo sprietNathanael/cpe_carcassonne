@@ -27,6 +27,7 @@ public class TilesLayer extends AbstractLayer
      * Paint the layer
      * @param g2 
      */
+    @Override
     public void paint(Graphics2D g2)
     {
         // Get the grid panel properties
@@ -34,8 +35,7 @@ public class TilesLayer extends AbstractLayer
         UICoord center = this.gridPanel.getGraphicalCenter();
         
         // Browse the placed tiles
-        for(UICoord coord : this.positions)
-        {
+        this.positions.forEach((coord) -> {
             // Computes the pixel component of the tile
             int x = center.getX()+(tileSize*coord.getX());
             int y = center.getY()+(tileSize*coord.getY());
@@ -45,6 +45,6 @@ public class TilesLayer extends AbstractLayer
             
             // Draw the tile at the computed coordinates
             g2.drawImage(tileImage.getImage(), x, y, tileSize, tileSize, null);
-        }
+        });
     }
 }

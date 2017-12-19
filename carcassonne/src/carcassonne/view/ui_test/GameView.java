@@ -7,7 +7,6 @@ package carcassonne.view.ui_test;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
-import carcassonne.controller.CarcassonneGameControllerSolo;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import java.awt.Color;
@@ -60,7 +59,6 @@ public class GameView
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
         
     }
     
