@@ -138,13 +138,11 @@ public class CityAggregate extends AbstractAggregate
     @Override
     public boolean checkIsCompleted()
     {
-        boolean result = false;
-
         if (cityEdges.isEmpty()) {
-            result = true;
+            isCompleted = true;
         }
 
-        return result;
+        return isCompleted;
     }
 
     /**
