@@ -21,11 +21,11 @@ public class Player
      */
     public static int NBMEEPLE = 8;
 
-    private final Meeple bigMeeple;
-    private final ArrayList<Meeple> meeples;
-    private final String name;
-    private final int points;
-    private final Color color;
+    private Meeple bigMeeple;
+    private ArrayList<Meeple> meeples;
+    private String name;
+    private int points;
+    private String color;
 
     /**
      * Creates a new Player
@@ -33,7 +33,7 @@ public class Player
      * @param name the player's name
      * @param color the player's color
      */
-    public Player(String name, Color color)
+    public Player(String name, String color)
     {
         this.name = name;
         this.color = color;
@@ -108,7 +108,7 @@ public class Player
      *
      * @return Color the color of the player
      */
-    public Color getColor()
+    public String getColor()
     {
         return color;
     }

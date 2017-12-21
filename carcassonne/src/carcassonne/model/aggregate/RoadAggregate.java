@@ -143,7 +143,7 @@ public class RoadAggregate extends AbstractAggregate
 
         //Fin du tour
         //Tour suivant, avec la pioche d'une pièce compatible, on pose la pièce à 0,-1
-        Player player2 = new Player("C'est moi", Color.yellow);
+        Player player2 = new Player("C'est moi", "yellow");
         AbstractTile nextTile = game.drawFromPileIndex(9);
         locationTypes = new HashSet<>();
         locationTypes.add("S");

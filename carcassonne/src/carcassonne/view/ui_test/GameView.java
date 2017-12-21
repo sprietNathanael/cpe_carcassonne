@@ -30,10 +30,10 @@ public class GameView
     {
         try {
             ArrayList<Player> players = new ArrayList<>();
-            players.add(new Player("player1", Color.BLUE));
-            players.add(new Player("player2", Color.GREEN));
-            players.add(new Player("player3", Color.RED));
-            players.add(new Player("player4", Color.BLACK));
+            players.add(new Player("player1", "blue"));
+            players.add(new Player("player2", "green"));
+            players.add(new Player("player3", "red"));
+            players.add(new Player("player4", "black"));
             this.game = new CarcassonneGame(players);
             // TODO
             // Populate sets and initialize game
