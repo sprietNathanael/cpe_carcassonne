@@ -140,6 +140,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         this.beginTurn();
     }
 
+    /**
+     * Begins a turn
+     */
     public void beginTurn()
     {
         System.out.println("======================================================================================================");
@@ -147,7 +150,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         this.drawTile();
         System.out.println("La pièce piochée est : "+this.currentTile.getName());
         System.out.println(this.currentTile);
-        this.carcassonneGame.notifyObservers();
+        this.carcassonneGame.notifyBoardChanged();
     }
 
     /**
