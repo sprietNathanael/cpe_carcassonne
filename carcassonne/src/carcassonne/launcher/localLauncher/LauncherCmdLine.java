@@ -26,10 +26,10 @@ public class LauncherCmdLine
         CarcassonneGameControllerMulti controller;
 
         ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("player1", Color.BLUE));
-        players.add(new Player("player2", Color.GREEN));
-        players.add(new Player("player3", Color.RED));
-        players.add(new Player("player4", Color.BLACK));
+        players.add(new Player("player1", "blue"));
+        players.add(new Player("player2", "green"));
+        players.add(new Player("player3", "red"));
+        players.add(new Player("player4", "black"));
         model = new CarcassonneGame(players);
         controller = new CarcassonneGameControllerMulti(model);
         CarcassonneCmdLine view = new CarcassonneCmdLine(controller);
