@@ -13,7 +13,6 @@ import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
-import java.awt.Color;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

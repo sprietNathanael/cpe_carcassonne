@@ -9,9 +9,13 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
+import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -138,7 +142,7 @@ public class CityAggregate extends AbstractAggregate
     @Override
     public boolean checkIsCompleted()
     {
-        if (cityEdges.isEmpty()) {
+        if (!isCompleted && cityEdges.isEmpty()) {
             isCompleted = true;
         }
 
@@ -240,5 +244,43 @@ public class CityAggregate extends AbstractAggregate
             }
         }
         cityEdges = updatedCityEdges;
+    }
+
+    private boolean tileHasShield(AbstractTile tile, Set<String> locations)
+    {
+        boolean result = false;
+        String location;
+        Iterator iter = locations.iterator();
+
+        while (iter.hasNext()) {
+            location = (String) iter.next();
+            AbstractType type = tile.getType(location);
+            if (type instanceof CityType) {
+                CityType cityType = (CityType) type;
+                if (cityType.isShielded()) {
+                    return true;
+                }
+            }
+
+        }
+
+        return result;
+    }
+
+    @Override
+    public int countPoints()
+    {
+        int result = 0;
+
+        for (AbstractTile tile : aggregatedTiles.values()) {
+            if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
+                result += 4;
+            }
+            else {
+                result += 2;
+            }
+        }
+
+        return result;
     }
 }

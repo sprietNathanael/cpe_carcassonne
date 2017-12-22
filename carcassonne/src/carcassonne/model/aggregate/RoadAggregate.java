@@ -5,7 +5,6 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
@@ -14,7 +13,6 @@ import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -188,5 +186,11 @@ public class RoadAggregate extends AbstractAggregate
         }
 
         return result;
+    }
+
+    @Override
+    public int countPoints()
+    {
+        return aggregatedTiles.size();
     }
 }

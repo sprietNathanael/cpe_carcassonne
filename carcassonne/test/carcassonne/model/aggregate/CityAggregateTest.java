@@ -77,6 +77,21 @@ public class CityAggregateTest
         );
     }
 
+    public static AbstractTile getTileIShielded()
+    {
+        return new CasualTile("I", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North West section
+                new FieldType(), //North
+                new FieldType(), new FieldType(), new CityType(true), //North East section
+                new CityType(true), //East
+                new CityType(true), new FieldType(), new CityType(true), //South East section
+                new CityType(true), //South
+                new CityType(true), new FieldType(), new FieldType(), //South West section
+                new FieldType(), //West
+                new FieldType(), new FieldType(), new FieldType(), new FieldType() //Center section
+        );
+    }
+
     public static AbstractTile getTileN()
     {
         return new CasualTile("I", //Id
@@ -137,6 +152,32 @@ public class CityAggregateTest
         Map<Coord, Set<CityEdgeEnum>> result = instance.getCityEdges();
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
         assertEquals(expResult, result);
+    }
+
+    /**
+     * Test of enlargeAggregate method, of class CityAggregate.
+     */
+    @Test
+    public void testCountPoints()
+    {
+        AbstractTile newTile = getTileE();
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("N");
+        locationTypes.add("NNE");
+        locationTypes.add("NNW");
+
+        CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+
+        newTile = getTileI();
+        locationTypes = new HashSet<>();
+        locationTypes.add("S");
+        locationTypes.add("SSE");
+        locationTypes.add("SSW");
+        instance.enlargeAggregate(0, 1, newTile, locationTypes);
+
+        //We expect an empty map cause all the neighbors are completed
+        int result = instance.countPoints();
+        assertEquals(4, result);
     }
 
     /**
@@ -336,6 +377,189 @@ public class CityAggregateTest
         //We expect map map with no incomplete edges
         Map<Coord, Set<CityEdgeEnum>> expResult = new HashMap<>();
         assertEquals(expResult, instance.getCityEdges());
+    }
+
+    /**
+     * Test of enlargeAggregate method, of class CityAggregate.
+     */
+    @Test
+    public void testIsCompletedBis()
+    {
+        AbstractTile newTile = getTileI();
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        CityAggregate instanceBis = new CityAggregate(0, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateLeft();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        locationTypes.add("SW");
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        instance.enlargeAggregate(1, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        locationTypes.add("NW");
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        instance.enlargeAggregate(1, -1, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateRight();
+        locationTypes = new HashSet<>();
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        locationTypes.add("NE");
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        instance.enlargeAggregate(0, -1, newTile, locationTypes);
+
+        instance.merge(instanceBis);
+
+        //We expect map map with no incomplete edges
+        boolean expResult = instance.checkIsCompleted();
+        assertEquals(expResult, true);
+    }
+
+    /**
+     * Test of enlargeAggregate method, of class CityAggregate.
+     */
+    @Test
+    public void testCountPointsBis()
+    {
+        AbstractTile newTile = getTileI();
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        CityAggregate instanceBis = new CityAggregate(0, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateLeft();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        locationTypes.add("SW");
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        instance.enlargeAggregate(1, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        locationTypes.add("NW");
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        instance.enlargeAggregate(1, -1, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateRight();
+        locationTypes = new HashSet<>();
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        locationTypes.add("NE");
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        instance.enlargeAggregate(0, -1, newTile, locationTypes);
+
+        instance.merge(instanceBis);
+
+        //We expect map map with no incomplete edges
+        int expResult = instance.countPoints();
+        assertEquals(expResult, 8);
+    }
+
+    /**
+     * Test of enlargeAggregate method, of class CityAggregate.
+     */
+    @Test
+    public void testCountPointsShield()
+    {
+        AbstractTile newTile = getTileIShielded();
+        Set<String> locationTypes = new HashSet<>();
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        CityAggregate instance = new CityAggregate(0, 0, newTile, locationTypes);
+
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        CityAggregate instanceBis = new CityAggregate(0, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateLeft();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SSE");
+        locationTypes.add("S");
+        locationTypes.add("SSW");
+        locationTypes.add("SW");
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        instance.enlargeAggregate(1, 0, newTile, locationTypes);
+
+        newTile = getTileN();
+        locationTypes = new HashSet<>();
+        locationTypes.add("SWW");
+        locationTypes.add("W");
+        locationTypes.add("NWW");
+        locationTypes.add("NW");
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        instance.enlargeAggregate(1, -1, newTile, locationTypes);
+
+        newTile = getTileN();
+        newTile.rotateRight();
+        locationTypes = new HashSet<>();
+        locationTypes.add("NNW");
+        locationTypes.add("NNE");
+        locationTypes.add("N");
+        locationTypes.add("NE");
+        locationTypes.add("NEE");
+        locationTypes.add("E");
+        locationTypes.add("SEE");
+        instance.enlargeAggregate(0, -1, newTile, locationTypes);
+
+        instance.merge(instanceBis);
+
+        //We expect map map with no incomplete edges
+        int expResult = instance.countPoints();
+        assertEquals(expResult, 10);
     }
 
     /**

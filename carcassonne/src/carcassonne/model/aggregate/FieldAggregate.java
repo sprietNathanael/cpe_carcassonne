@@ -60,7 +60,7 @@ public class FieldAggregate extends AbstractAggregate
     {
         super(col, row, firstTile, locationTypes, player, meeple);
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
-    }   
+    }
 
     /**
      * @return false in any cases, because a field is never completed
@@ -107,5 +107,19 @@ public class FieldAggregate extends AbstractAggregate
                 }
             }
         }
+    }
+
+    @Override
+    public int countPoints()
+    {
+        int result = 0;
+
+        for (CityAggregate city : boundedCities) {
+            if (city.checkIsCompleted()) {
+                result += 2;
+            }
+        }
+
+        return result;
     }
 }

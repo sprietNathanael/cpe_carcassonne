@@ -160,12 +160,12 @@ public class FieldAggregateTest
         CasualTile tile = (CasualTile) getJTile();
 
         CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
-        
+
         Set<CityAggregate> citiesAggr = new HashSet();
         citiesAggr.add(aggr1);
-        
+
         FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
-        
+
         AbstractTile tile2 = getITile();
         tile2.rotateRight();
         CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
@@ -175,15 +175,84 @@ public class FieldAggregateTest
 
         FieldAggregate instance2 = new FieldAggregate(-1, 0, tile2, BasicSet.retTreeSet("SW", "SWW", "W", "NWW", "NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE"), citiesAggr);
 
-    
         instance.merge(instance2);
-        
+
         Set<CityAggregate> expRes = new HashSet();
         expRes.add(aggr1);
         expRes.add(aggr2);
-        
+
         Set<CityAggregate> result = instance.getBoundedCities();
 
         assertEquals(expRes, result);
+    }
+
+    /**
+     * Test of countPoints method, of class FieldAggregate.
+     */
+    @Test
+    public void testCountPoints()
+    {
+        CasualTile tile = (CasualTile) getJTile();
+
+        CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
+
+        Set<CityAggregate> citiesAggr = new HashSet();
+        citiesAggr.add(aggr1);
+
+        FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
+
+        AbstractTile tile2 = getITile();
+        tile2.rotateRight();
+        CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
+        citiesAggr = new HashSet();
+        citiesAggr.add(aggr2);
+        citiesAggr.add(aggr1);
+
+        FieldAggregate instance2 = new FieldAggregate(-1, 0, tile2, BasicSet.retTreeSet("SW", "SWW", "W", "NWW", "NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE"), citiesAggr);
+
+        instance.merge(instance2);
+
+        Set<CityAggregate> expRes = new HashSet();
+        expRes.add(aggr1);
+        expRes.add(aggr2);
+
+        int result = instance.countPoints();
+
+        assertEquals(0, result);
+    }
+
+    /**
+     * Test of countPoints method, of class FieldAggregate.
+     */
+    @Test
+    public void testCountPointsBis()
+    {
+        CasualTile tile = (CasualTile) getJTile();
+
+        CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
+        CasualTile tileBis = (CasualTile) getJTile();
+        tileBis.rotateLeft();
+        tileBis.rotateLeft();
+        aggr1.enlargeAggregate(0, 1, tile, BasicSet.retTreeSet("SSW", "S", "SSE"));
+
+        Set<CityAggregate> citiesAggr = new HashSet();
+        citiesAggr.add(aggr1);
+
+        FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
+
+        AbstractTile tile2 = getITile();
+        tile2.rotateRight();
+        CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
+        citiesAggr = new HashSet();
+        citiesAggr.add(aggr2);
+        citiesAggr.add(aggr1);
+
+        FieldAggregate instance2 = new FieldAggregate(-1, 0, tile2, BasicSet.retTreeSet("SW", "SWW", "W", "NWW", "NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE"), citiesAggr);
+
+        instance.merge(instance2);
+
+        int result = instance.countPoints();
+
+        assertEquals(2, result);
     }
 }
