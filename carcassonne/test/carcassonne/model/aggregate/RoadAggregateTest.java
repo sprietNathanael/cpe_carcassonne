@@ -308,7 +308,7 @@ public class RoadAggregateTest
         locationTypes.add("CSE");
         locationTypes.add("E");
         instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
-        Player player = new Player("heelo !", Color.yellow);
+        Player player = new Player("heelo !", "blue");
         instance.addMeeple(player, player.getFirstMeepleAvailable());
 
         AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
@@ -348,7 +348,7 @@ public class RoadAggregateTest
         locationTypes.add("CSE");
         locationTypes.add("E");
         instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
-        Player player = new Player("heelo !", Color.yellow);
+        Player player = new Player("heelo !", "blue");
         instance.addMeeple(player, player.getFirstMeepleAvailable());
 
         AbstractTile thirdTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
