@@ -186,23 +186,4 @@ public class FieldAggregateTest
 
         assertEquals(expRes, result);
     }
-
-    /**
-     * Test of enlargeAggregate method, of class FieldAggregate.
-     */
-    @Test
-    public void testEnlargeAggregate()
-    {
-        System.out.println("enlargeAggregate");
-        int col = 0;
-        int row = 0;
-        AbstractTile newTile = null;
-        Set<String> locationTypes = null;
-        Set<CityAggregate> currentTileCities = null;
-        FieldAggregate instance = null;
-        instance.enlargeAggregate(col, row, newTile, locationTypes, currentTileCities);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
 }
