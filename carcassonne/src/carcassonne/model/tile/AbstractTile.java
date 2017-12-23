@@ -7,6 +7,7 @@ package carcassonne.model.tile;
 
 import carcassonne.model.player.Meeple;
 import carcassonne.model.type.AbstractType;
+import java.util.Set;
 
 /**
  * Abstract class to represent a Tile
@@ -15,6 +16,7 @@ public abstract class AbstractTile
 {
     protected String id;
     protected String name;
+    protected Set<Set<String>> aggregateEmplacements;
     private int rotation;
 
     /**
@@ -26,6 +28,7 @@ public abstract class AbstractTile
     {
         this.name = name;
         this.rotation = 0;
+        this.aggregateEmplacements = null;
     }
 
     /**
@@ -152,5 +155,15 @@ public abstract class AbstractTile
      * @return true if match
      */
     public abstract boolean compareTileWest(AbstractTile tile);
+    
+    public abstract Set<Set<String>> getCityAggregateEmplacements();
+    
+    public abstract Set<Set<String>> getRoadAggregateEmplacements();
+    
+    public abstract Set<Set<String>> getFieldAggregateEmplacements();
 
+    public Set<Set<String>> getAggregateEmplacements()
+    {
+        return aggregateEmplacements;
+    }
 }

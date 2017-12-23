@@ -5,12 +5,12 @@
  */
 package carcassonne.model.tile;
 
+import static carcassonne.model.set.BasicSet.retTreeSet;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
@@ -579,4 +579,93 @@ public class CasualTileTest
         System.out.println(result);
         assertEquals(expResult, result);
     }
+
+    @Test
+    public void testGetCityAggregateEmplacements()
+    {
+        Set<Set<String>> aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("NEE", "E", "SEE"));
+        aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
+        aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
+        aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
+
+        CasualTile tile = new CasualTile("D", "D", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North West section
+                new RoadType(), //North
+                new FieldType(), new FieldType(), new CityType(), //North East section
+                new CityType(), //East
+                new CityType(), new FieldType(), new FieldType(), //South East section
+                new RoadType(), //South
+                new FieldType(), new FieldType(), new FieldType(), //South West section
+                new FieldType(), //West
+                new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
+                aggregates
+        );
+        
+        Set<Set<String>> cityAggregate = new HashSet<>();
+        cityAggregate.add(retTreeSet("NEE", "E", "SEE"));
+
+        Set<Set<String>> result = tile.getCityAggregateEmplacements();
+        assertEquals(cityAggregate, result);
+    }
+
+    @Test
+    public void testGetRoadAggregateEmplacements()
+    {
+        Set<Set<String>> aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("NEE", "E", "SEE"));
+        aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
+        aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
+        aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
+
+        CasualTile tile = new CasualTile("D", "D", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North West section
+                new RoadType(), //North
+                new FieldType(), new FieldType(), new CityType(), //North East section
+                new CityType(), //East
+                new CityType(), new FieldType(), new FieldType(), //South East section
+                new RoadType(), //South
+                new FieldType(), new FieldType(), new FieldType(), //South West section
+                new FieldType(), //West
+                new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
+                aggregates
+        );
+        
+        Set<Set<String>> roadAggregate = new HashSet<>();
+        roadAggregate.add(retTreeSet("S", "CNW", "CSW", "N"));
+
+        Set<Set<String>> result = tile.getRoadAggregateEmplacements();
+        assertEquals(roadAggregate, result);
+    }
+
+    @Test
+    public void testGetFieldAggregateEmplacements()
+    {
+        Set<Set<String>> aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("NEE", "E", "SEE"));
+        aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
+        aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
+        aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
+
+        CasualTile tile = new CasualTile("D", "D", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North West section
+                new RoadType(), //North
+                new FieldType(), new FieldType(), new CityType(), //North East section
+                new CityType(), //East
+                new CityType(), new FieldType(), new FieldType(), //South East section
+                new RoadType(), //South
+                new FieldType(), new FieldType(), new FieldType(), //South West section
+                new FieldType(), //West
+                new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
+                aggregates
+        );
+        
+        Set<Set<String>> fieldAggregate = new HashSet<>();
+        fieldAggregate.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
+        fieldAggregate.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
+
+        Set<Set<String>> result = tile.getFieldAggregateEmplacements();
+        assertEquals(fieldAggregate, result);
+    }
+
 }
