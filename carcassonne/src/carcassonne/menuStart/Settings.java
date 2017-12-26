@@ -23,9 +23,6 @@ import javax.swing.JPanel;
  */
 public class Settings extends JFrame
 {
-
-    private final JFrame Pwindow = new JFrame("Parameters");
-
     public Settings()
     {
 

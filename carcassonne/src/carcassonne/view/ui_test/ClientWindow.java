@@ -6,6 +6,7 @@
 package carcassonne.view.ui_test;
 
 import java.awt.Container;
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 /**
@@ -21,6 +22,7 @@ public class ClientWindow extends JFrame
         super("Carcassonne");
         cleanContentPane();
         createGameView();
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
     }
     
     /**
