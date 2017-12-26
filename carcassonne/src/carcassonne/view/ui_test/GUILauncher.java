@@ -5,6 +5,8 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.menuStart.GameMenu;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
@@ -16,12 +18,13 @@ public class GUILauncher
      * Main methode
      * @param args Strings[]
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
                 
-        ClientWindow clientWindow = new ClientWindow();
+        //ClientWindow clientWindow = new ClientWindow();
+        GameMenu gameMenu = new GameMenu();
         
-        clientWindow.setVisible(true);
-        clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameMenu.setVisible(true);
+        gameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
     
 }

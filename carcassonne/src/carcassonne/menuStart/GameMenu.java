@@ -9,6 +9,7 @@ package carcassonne.menuStart;
  *
  * @author thomas
  */
+import carcassonne.view.ui_test.ClientWindow;
 import carcassonne.view.ui_test.GUILauncher;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,11 +21,9 @@ import javax.swing.JLabel;
 
 public class GameMenu extends JFrame 
 {
-
-    private final JLabel image = new JLabel(new ImageIcon("resources/Fond parchemin.png"));
     private final BtGame play = new BtGame("resources/BtPlay.PNG");
     private final BtGame exit = new BtGame("resources/BtExit.PNG");
-    private final BtGame settings = new BtGame("resources/BtSettings.PNG");
+    private final BtGame Btsettings = new BtGame("resources/BtSettings.PNG");
 
     public GameMenu() throws IOException
     {
@@ -45,7 +44,9 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //GUILauncher;
+                ClientWindow clientWindow = new ClientWindow();
+                clientWindow.setVisible(true);
+                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
 
@@ -61,14 +62,16 @@ public class GameMenu extends JFrame
             }
         });
 
-        this.add(settings);
-        settings.setBounds(400, 500, 160, 85);
-        settings.addActionListener(new ActionListener()
+        this.add(Btsettings);
+        Btsettings.setBounds(400, 500, 160, 85);
+        Btsettings.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //Settings();
+               Settings settings = new Settings();
+                settings.setVisible(true);
+                settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
 
