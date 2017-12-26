@@ -21,12 +21,12 @@ import javax.swing.JPanel;
  *
  * @author thomas
  */
-public class MenuHelp extends JFrame
+public class Settings extends JFrame
 {
 
     private final JFrame Pwindow = new JFrame("Parameters");
 
-    public MenuHelp()
+    public Settings()
     {
 
     }

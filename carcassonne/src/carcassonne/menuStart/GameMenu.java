@@ -9,26 +9,22 @@ package carcassonne.menuStart;
  *
  * @author thomas
  */
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.LayoutManager;
+import carcassonne.view.ui_test.GUILauncher;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
-public class GameMenu extends JFrame
+
+public class GameMenu extends JFrame 
 {
 
     private final JLabel image = new JLabel(new ImageIcon("resources/Fond parchemin.png"));
     private final BtGame play = new BtGame("resources/BtPlay.PNG");
     private final BtGame exit = new BtGame("resources/BtExit.PNG");
-    private final BtGame help = new BtGame("resources/BtSettings.PNG");
+    private final BtGame settings = new BtGame("resources/BtSettings.PNG");
 
     public GameMenu() throws IOException
     {
@@ -43,12 +39,38 @@ public class GameMenu extends JFrame
 
         this.add(play);
         play.setBounds(400, 300, 160, 85);
+        
+        play.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //GUILauncher;
+            }
+        });
 
         this.add(exit);
         exit.setBounds(400, 400, 160, 85);
+        
+        exit.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.exit(0);
+            }
+        });
 
-        this.add(help);
-        help.setBounds(400, 500, 160, 85);
+        this.add(settings);
+        settings.setBounds(400, 500, 160, 85);
+        settings.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                //Settings();
+            }
+        });
 
         this.setVisible(true);
 
