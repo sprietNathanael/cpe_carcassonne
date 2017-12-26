@@ -5,7 +5,6 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
@@ -14,7 +13,6 @@ import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -143,7 +141,7 @@ public class RoadAggregate extends AbstractAggregate
 
         //Fin du tour
         //Tour suivant, avec la pioche d'une pièce compatible, on pose la pièce à 0,-1
-        Player player2 = new Player("C'est moi", Color.yellow);
+        Player player2 = new Player("C'est moi", "yellow");
         AbstractTile nextTile = game.drawFromPileIndex(9);
         locationTypes = new HashSet<>();
         locationTypes.add("S");
@@ -188,5 +186,11 @@ public class RoadAggregate extends AbstractAggregate
         }
 
         return result;
+    }
+
+    @Override
+    public int countPoints()
+    {
+        return aggregatedTiles.size();
     }
 }

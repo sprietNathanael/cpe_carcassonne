@@ -29,11 +29,6 @@ public class FieldAggregate extends AbstractAggregate
         return boundedCities;
     }
 
-    public Set<CityAggregate> getNeighborCities()
-    {
-        return boundedCities;
-    }
-
     /**
      * Construct a field aggregation, we have to put all the cityAggregates of
      * this tile
@@ -112,5 +107,19 @@ public class FieldAggregate extends AbstractAggregate
                 }
             }
         }
+    }
+
+    @Override
+    public int countPoints()
+    {
+        int result = 0;
+
+        for (CityAggregate city : boundedCities) {
+            if (city.checkIsCompleted()) {
+                result += 2;
+            }
+        }
+
+        return result;
     }
 }

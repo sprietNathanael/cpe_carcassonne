@@ -22,6 +22,7 @@ public class GameView
 {
     private AbstractCarcassonneGameController controller;
     private CarcassonneGame game;
+    private ArrayList<Player> players;
 
     /**
      * Game view constructor
@@ -29,11 +30,11 @@ public class GameView
     public GameView()
     {
         try {
-            ArrayList<Player> players = new ArrayList<>();
-            players.add(new Player("player1", Color.BLUE));
-            players.add(new Player("player2", Color.GREEN));
-            players.add(new Player("player3", Color.RED));
-            players.add(new Player("player4", Color.BLACK));
+            this.players = new ArrayList<>();
+            players.add(new Player("player1", "blue"));
+            players.add(new Player("player2", "green"));
+            players.add(new Player("player3", "red"));
+            players.add(new Player("player4", "black"));
             this.game = new CarcassonneGame(players);
             // TODO
             // Populate sets and initialize game
@@ -50,7 +51,7 @@ public class GameView
     public void show(Container pane)
     {
         //Construct the main panel and adds it to the main container
-        MainPanel mainPanel = new MainPanel(this.controller);
+        MainPanel mainPanel = new MainPanel(this.controller, this.players);
         this.game.addObserver(mainPanel);
         
         pane.add(mainPanel);

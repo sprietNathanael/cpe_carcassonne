@@ -27,7 +27,7 @@ import java.util.Observer;
 public class CarcassonneGame extends Observable implements CarcassonneGameInterface
 {
 
-    private List<Player> players;
+    private ArrayList<Player> players;
     private Board board;
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
@@ -35,6 +35,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private AbstractTile currentTile;
     private ArrayList<Coord> placements;
     private List<AbstractAggregate> abstractAggregates;
+    private String notifyMessage;
 
     public CarcassonneGame() throws Exception
     {
@@ -145,7 +146,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         board.addTile(tile, row, column);
-        this.notifyObservers();
+        this.notifyBoardChanged();
     }
 
     /**
@@ -203,15 +204,17 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyObservers()
     {   
         super.setChanged();
-        super.notifyObservers(new ObserverMessage(this.board.getAllTiles(), this.currentTile, this.placements));
+        super.notifyObservers(this.notifyMessage);
     }
 
     @Override
     public synchronized void addObserver(Observer o)
     {
         super.addObserver(o);
-        this.notifyObservers();
+        this.notifyBoardChanged();
+        
     }
+    
     
     /**
      * Check if the tile can be placed here
@@ -233,5 +236,37 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return this.checkTilePosition(coordinates, this.currentTile);
     }
+    
+    /**
+     * Notifies the observers when the board has changed with the right message
+     */
+    public void notifyBoardChanged()
+    {
+        this.notifyMessage = "boardChanged";
+        this.notifyObservers();
+    }
+
+    public AbstractTile getCurrentTile()
+    {
+        return currentTile;
+    }
+
+    public ArrayList<Coord> getPlacements()
+    {
+        return placements;
+    }
+    
+    public ArrayList<Player> getPlayers()
+    {
+        return this.players;
+    }
+    
+    public int getPileSize()
+    {
+        return this.pile.size();
+    }
+    
+    
+    
 
 }

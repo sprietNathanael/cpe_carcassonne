@@ -6,10 +6,14 @@
 package carcassonne.model.tile;
 
 import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
+import carcassonne.model.type.FieldType;
+import carcassonne.model.type.RoadType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 /**
@@ -42,7 +46,7 @@ public class CasualTile extends AbstractTile
     }
 
     private final HashMap<String, AbstractType> types;
-    private final Set<Set<String>> aggregateEmplacements;
+
     static private HashMap<String, String[]> neighbouring;
     static private HashMap<String, String> aggRotateRight;
     static private HashMap<String, String> aggRotateLeft;
@@ -740,13 +744,65 @@ public class CasualTile extends AbstractTile
                 && this.getSEE().getClass() == tile.getSWW().getClass();
     }
 
-    public Set<Set<String>> getAggregateEmplacements()
-    {
-        return aggregateEmplacements;
-    }
-
     public HashMap<String, String[]> getNeighbouring()
     {
         return neighbouring;
+    }
+
+    @Override
+    public Set<Set<String>> getCityAggregateEmplacements()
+    {
+        Set<Set<String>> cityAggregatesEmplacements = new HashSet();
+
+        for (Set<String> aggregateEmplacement : aggregateEmplacements) {
+            if (this.getAggregateClass(aggregateEmplacement) instanceof CityType) {
+                cityAggregatesEmplacements.add(aggregateEmplacement);
+            }
+        }
+
+        return cityAggregatesEmplacements;
+    }
+
+    @Override
+    public Set<Set<String>> getRoadAggregateEmplacements()
+    {
+        Set<Set<String>> roadAggregatesEmplacements = new HashSet();
+
+        for (Set<String> aggregateEmplacement : aggregateEmplacements) {
+            if (this.getAggregateClass(aggregateEmplacement) instanceof RoadType) {
+                roadAggregatesEmplacements.add(aggregateEmplacement);
+            }
+        }
+
+        return roadAggregatesEmplacements;
+    }
+
+    @Override
+    public Set<Set<String>> getFieldAggregateEmplacements()
+    {
+        Set<Set<String>> fieldAggregatesEmplacements = new HashSet();
+
+        for (Set<String> aggregateEmplacement : aggregateEmplacements) {
+            if (this.getAggregateClass(aggregateEmplacement) instanceof FieldType) {
+                fieldAggregatesEmplacements.add(aggregateEmplacement);
+            }
+        }
+
+        return fieldAggregatesEmplacements;
+    }
+
+    /**
+     * Get the type of an aggregate using its position on the tile
+     *
+     * @param locations
+     * @return
+     */
+    private AbstractType getAggregateClass(Set<String> locations)
+    {
+        String location;
+        Iterator iter = locations.iterator();
+        location = (String) iter.next();
+
+        return this.getType(location);
     }
 }

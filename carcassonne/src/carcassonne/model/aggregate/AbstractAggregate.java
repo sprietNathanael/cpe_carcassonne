@@ -21,9 +21,21 @@ import java.util.Set;
 public abstract class AbstractAggregate
 {
 
+    /**
+     * List of the tiles composing the aggregate
+     */
     protected Map<Coord, AbstractTile> aggregatedTiles;
+    /**
+     * Set of the locations type of each tile
+     */
     protected Map<AbstractTile, Set<String>> aggregatedPositionTypes;
+    /**
+     * List of the players and their meeples
+     */
     protected Map<Player, Set<Meeple>> players;
+    /**
+     * State of the aggregate, can be updated using "checkIsCompleted"
+     */
     protected boolean isCompleted;
 
     /**
@@ -206,6 +218,13 @@ public abstract class AbstractAggregate
         return winningPlayers;
     }
 
+    /**
+     * Merge specific Map
+     *
+     * @param map1
+     * @param map2
+     * @return
+     */
     protected static Map<Player, Set<Meeple>> mergeMeeplesSet(Map<Player, Set<Meeple>> map1, Map<Player, Set<Meeple>> map2)
     {
         map1.forEach((key1, value1) -> {
@@ -215,6 +234,13 @@ public abstract class AbstractAggregate
         return map2;
     }
 
+    /**
+     * Merge specific Map
+     *
+     * @param map1
+     * @param map2
+     * @return
+     */
     protected static Map<AbstractTile, Set<String>> mergeLocationTypesSet(Map<AbstractTile, Set<String>> map1, Map<AbstractTile, Set<String>> map2)
     {
         map1.forEach((key1, value1) -> {
@@ -237,6 +263,11 @@ public abstract class AbstractAggregate
         return "AbstractAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
     }
 
+    /**
+     * Get the biggest number of meeples a player has in this aggregate
+     *
+     * @return int
+     */
     public int getBiggestPoints()
     {
         int max = 0, current;
@@ -250,6 +281,11 @@ public abstract class AbstractAggregate
         return max;
     }
 
+    /**
+     * Get the list of the players that are winning the aggregate
+     *
+     * @return
+     */
     public Set<Player> getWinningPlayers()
     {
         Set<Player> winningPlayers = new HashSet();
@@ -265,5 +301,11 @@ public abstract class AbstractAggregate
 
         return winningPlayers;
     }
-;
+
+    /**
+     * Count the points of the aggregates
+     *
+     * @return points
+     */
+    public abstract int countPoints();
 }

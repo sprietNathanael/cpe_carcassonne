@@ -60,6 +60,10 @@ public class GridPanel extends JPanel
         this.addMouseListener(this.mouseListener);
         this.addMouseMotionListener(this.mouseListener);
         this.addMouseWheelListener(this.mouseListener);
+        
+        // Set graphical centenr
+        this.graphicalCenter = new UICoord(0,0);
+        this.firstPaint = true;
     }
     
     /**

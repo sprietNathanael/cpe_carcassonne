@@ -7,9 +7,11 @@ package carcassonne.view.ui_test;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.coord.Coord;
+import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -20,18 +22,22 @@ import javax.swing.JPanel;
  */
 public class MainPanel extends JPanel implements java.util.Observer
 {
-    private final AbstractCarcassonneGameController controller;
-    private final TilesLayer tilesLayer;
-    private final PlacementLayer placementLayer;
-    private final GridPanel gridPanel;
+    private AbstractCarcassonneGameController controller;
+    private TilesLayer tilesLayer;
+    private PlacementLayer placementLayer;
+    private GridPanel gridPanel;
+    private InfoPanel infoPanel;
+    private ArrayList<Player> players;
     /**
      * Main panel constructor
      * @param controller AbstractCarcassonneGameController
      */
-    public MainPanel(AbstractCarcassonneGameController controller)
+    public MainPanel(AbstractCarcassonneGameController controller, ArrayList<Player> players)
     {
         super();
-        this.controller = controller;        
+        this.players = players;
+        this.controller = controller;
+        setLayout(new BorderLayout());
         
         // Construct a grid panel
         this.gridPanel = new GridPanel();
@@ -46,45 +52,53 @@ public class MainPanel extends JPanel implements java.util.Observer
         gridPanel.addLayer(placementLayer);
         gridPanel.addLayer(tilesLayer);
         
-        addPanel();
+        this.infoPanel = new InfoPanel(this.players);
+        
+        // Add the grid panel to the main panel
+        this.infoPanel.setPreferredSize(new Dimension(300, 10));
+        this.add(this.infoPanel, BorderLayout.WEST);
+        this.add(gridPanel, BorderLayout.CENTER);
     }
     
-    /*
-    * Add the grid panel to the main panel
-    */
-    private void addPanel() 
-    {        
-        setLayout(new BorderLayout());        
-        this.add(gridPanel);
-    }
-
     @Override
     public void update(Observable o, Object arg)
     {
-        ObserverMessage message = (ObserverMessage)arg;
-        HashMap<Coord, AbstractTile> board = message.getBoard();
-        AbstractTile preview = message.getPreview();
-        ArrayList<Coord> placements = message.getPlacements();
-        
-        if(preview != null)
+        String messageType = (String)arg;
+        System.out.println(messageType);
+        // If the update is from a game change
+        if(messageType.equals("boardChanged"))
         {
-            this.placementLayer.setPreview(new TileImage(0,0,preview));
-        }
-        this.placementLayer.cleanPositions();
+            // Get the game's informations
+            CarcassonneGame game = (CarcassonneGame) o;
+            HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
+            AbstractTile preview = game.getCurrentTile();
+            ArrayList<Coord> placements = game.getPlacements();
+                        
+            // Set the preview image of the placement layer
+            if(preview != null)
+            {
+                this.placementLayer.setPreview(new TileImage(0,0,preview));
+            }
+            
+            // Clean and add positions of placement layer
+            this.placementLayer.cleanPositions();
+            for(int i = 0; i < placements.size(); i++)
+            {
+                this.placementLayer.addPosition(new UICoord(placements.get(i)));
+            }
+            
+            // Add positions of tiles layer
+            for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+                Coord key = entry.getKey();
+                AbstractTile value = entry.getValue();
+                this.tilesLayer.addPosition(new TileImage(key.col, key.row, value));
+            }
+            // Refresh info panel informations
+            this.infoPanel.refresh(game);
+            this.gridPanel.repaint();
+            this.infoPanel.repaint();
         
-        for(int i = 0; i < placements.size(); i++)
-        {
-            this.placementLayer.addPosition(new UICoord(placements.get(i)));
-        }
-        
-        board.entrySet().forEach((entry) -> {
-            Coord key = entry.getKey();
-            AbstractTile value = entry.getValue();
-            this.tilesLayer.addPosition(new TileImage(key.col, key.row, value));
-        });
-        
-        this.gridPanel.repaint();
-                
+        }        
+    
     }
-        
 }

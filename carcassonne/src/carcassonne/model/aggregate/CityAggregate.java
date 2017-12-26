@@ -9,9 +9,13 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
+import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -138,7 +142,7 @@ public class CityAggregate extends AbstractAggregate
     @Override
     public boolean checkIsCompleted()
     {
-        if (cityEdges.isEmpty()) {
+        if (!isCompleted && cityEdges.isEmpty()) {
             isCompleted = true;
         }
 
@@ -207,9 +211,6 @@ public class CityAggregate extends AbstractAggregate
             currentEdges = (Set<CityEdgeEnum>) currentLocalisation.getValue();
             //By default the neighbor are similar to the current coord, the enum will change it
             neighborCoord = new Coord(currentCoord.col, currentCoord.row);
-            System.out.println("Test first: ");
-            System.out.println("Coord: " + currentCoord);
-            System.out.println("Edges" + currentEdges);
             updatedCurrentEdges = new HashSet();
             //For each edge, test if the corresponding edge exists
             for (CityEdgeEnum edge : currentEdges) {
@@ -230,8 +231,6 @@ public class CityAggregate extends AbstractAggregate
                 }
                 if (!cityEdges.containsKey(neighborCoord)
                         || !cityEdges.get(neighborCoord).contains(neighborEdge)) {
-                    System.out.println("Test loop: ");
-                    System.out.println("Coord: " + currentCoord + "  Neighbor: " + neighborCoord);
                     updatedCurrentEdges.add(edge);
                 }
             }
@@ -240,5 +239,43 @@ public class CityAggregate extends AbstractAggregate
             }
         }
         cityEdges = updatedCityEdges;
+    }
+
+    private boolean tileHasShield(AbstractTile tile, Set<String> locations)
+    {
+        boolean result = false;
+        String location;
+        Iterator iter = locations.iterator();
+
+        while (iter.hasNext()) {
+            location = (String) iter.next();
+            AbstractType type = tile.getType(location);
+            if (type instanceof CityType) {
+                CityType cityType = (CityType) type;
+                if (cityType.isShielded()) {
+                    return true;
+                }
+            }
+
+        }
+
+        return result;
+    }
+
+    @Override
+    public int countPoints()
+    {
+        int result = 0;
+
+        for (AbstractTile tile : aggregatedTiles.values()) {
+            if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
+                result += 4;
+            }
+            else {
+                result += 2;
+            }
+        }
+
+        return result;
     }
 }
