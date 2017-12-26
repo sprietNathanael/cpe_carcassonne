@@ -25,7 +25,7 @@ public class ButtonLaunch extends JButton
     public ButtonLaunch()
     {
         try {
-            img = ImageIO.read(new File("C:\\Users\\thomas\\Desktop\\Programmation\\Carcassonne\\Bt_Play.jpg"));
+            img = ImageIO.read(new File("resources/Bt_Play.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

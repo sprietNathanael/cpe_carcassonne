@@ -16,7 +16,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
-public class Pannel extends JPanel
+public class Parchment extends JPanel
 {
 
     /**
@@ -27,7 +27,7 @@ public class Pannel extends JPanel
     public void paintComponent(Graphics g)
     {
         try {
-            Image img = ImageIO.read(new File("resources/Background.jpg"));
+            Image img = ImageIO.read(new File("resources/Fond parchemin.png"));
             //g.drawImage(img, 0, 0, this);
             //Image background
             g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
@@ -35,4 +35,5 @@ public class Pannel extends JPanel
             e.printStackTrace();
         }
     }
+
 }

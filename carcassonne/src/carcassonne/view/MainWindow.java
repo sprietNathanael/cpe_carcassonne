@@ -10,35 +10,57 @@ package carcassonne.view;
  * @author thomas
  */
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Dimension;
+import java.awt.Panel;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class MainWindow extends JFrame
 {
 
-    private final int height = 900;
-    private final int width = 600;
-    JLabel label = new JLabel();
+    private final int height = 1100;
+    private final int width = 650;
+    private final JPanel background = new Pannel();
+    private final JPanel parchment = new Parchment();
+    private final JButton play = new ButtonLaunch();
 
     public MainWindow()
     {
+        JFrame window = new JFrame("Carcasonne");
 
-        this.setTitle("Carcassonne");
-        this.setSize(height, width);
-        this.setLocationRelativeTo(null);
+        //window.setLocationRelativeTo(null);
+        window.setLayout(null);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        parchment.setPreferredSize(new Dimension(500, 550));
+        play.setPreferredSize(new Dimension(180, 50));
 
-        this.setContentPane(new Pannel());
+        //Définition de l'action du bouton
+        play.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent event)
+            {
+                System.out.println("SALUT MA POULE");
+            }
+        });
 
-        this.setLayout(new BorderLayout());
-        //On ajoute le bouton au content pane de la JFrame
-        //Au centre
-        //this.getContentPane().add(new ButtonLaunch());
-       
-        //this.getContentPane().add(label);
-          
-        this.setVisible(true);
+        background.add(play, BorderLayout.CENTER);
+        background.add(parchment, BorderLayout.CENTER);
+
+        window.setContentPane(background);
+
+        // quitter le programme lorsqu'on ferme la fenêtre
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // dimensionnement en affichage de la fenêtr
+        window.setSize(height, width);
+        window.setVisible(true);
+
+     
 
     }
 }
