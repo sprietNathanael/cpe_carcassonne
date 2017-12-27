@@ -76,7 +76,7 @@ public class CasualTile extends AbstractTile
     }
 
     /**
-     * Return the locations that are only an edge
+     * Return the accepted locations of the neighbor
      *
      * @param locations
      * @return
@@ -86,31 +86,46 @@ public class CasualTile extends AbstractTile
         Set<String> result = new HashSet<>();
 
         for (String location : locations) {
-            switch (location){
-                case "NNW": 
+            switch (location) {
+                case "NNW":
                     result.add("SSW");
-                case "N": 
+                    break;
+                case "N":
                     result.add("S");
-                case "NNE": 
+                    break;
+                case "NNE":
                     result.add("SSE");
-                case "NEE": 
+                    break;
+                case "NEE":
                     result.add("NWW");
-                case "E": 
+                    break;
+                case "E":
                     result.add("W");
-                case "SEE": 
+                    break;
+                case "SEE":
                     result.add("SWW");
-                case "SSE": 
+                    break;
+                case "SSE":
                     result.add("NNE");
-                case "S": 
+                    break;
+                case "S":
                     result.add("W");
-                case "SSW": 
+                    break;
+                case "SSW":
                     result.add("NNW");
-                case "SWW": 
+                    break;
+                case "SWW":
                     result.add("SEE");
-                case "W": 
+                    break;
+                case "W":
                     result.add("E");
-                case "NWW": 
+                    break;
+                case "NWW":
                     result.add("NEE");
+                    break;
+                default:
+                    break;
+
             }
         }
 
@@ -597,19 +612,6 @@ public class CasualTile extends AbstractTile
     }
 
     /**
-     * Displays the tile in command line
-     *
-     * @return string represents the tile
-     */
-    @Override
-    public String toString()
-    {
-        return "\n" + getNWW() + getNW() + getNNW() + "  " + getN() + "  " + getNNE() + getNE() + getNEE() + "\n"
-                + "  " + getW() + "  " + getCNW() + getCSW() + getCNE() + getCSE() + " " + getE() + "\n"
-                + getSWW() + getSW() + getSSW() + "  " + getS() + "  " + getSSE() + getSE() + getSEE() + "\n";
-    }
-
-    /**
      * Rotates the tile's types from east to west (counter clockwise)
      *
      * @return true if the rotation is successfull
@@ -872,8 +874,7 @@ public class CasualTile extends AbstractTile
     private AbstractType getAggregateClass(Set<String> locations)
     {
         String location;
-        Iterator iter = locations.iterator();
-        location = (String) iter.next();
+        location = (String) locations.iterator().next();
 
         return this.getType(location);
     }

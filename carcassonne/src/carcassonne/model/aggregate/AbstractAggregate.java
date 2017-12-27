@@ -110,34 +110,6 @@ public abstract class AbstractAggregate
     }
 
     /**
-     * Return all the coordinates that are nieghbored with the given location
-     *
-     * @param col
-     * @param row
-     * @return
-     */
-    public Set<Coord> getNeighborOf(int col, int row)
-    {
-        Set<Coord> result = new HashSet();
-
-        
-        if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
-            result.add(new Coord(col - 1, row));
-        }
-        if (aggregatedTiles.containsKey(new Coord(col + 1, row))) {
-            result.add(new Coord(col + 1, row));
-        }
-        if (aggregatedTiles.containsKey(new Coord(col, row - 1))) {
-            result.add(new Coord(col, row - 1));
-        }
-        if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
-            result.add(new Coord(col, row + 1));
-        }
-
-        return result;
-    }
-
-    /**
      * Get the tile emplacements that are neighbored with those coordinates. Use
      * this method to test every aggregate, to check which aggregate we have to
      * enlarge
@@ -149,31 +121,22 @@ public abstract class AbstractAggregate
      */
     public Set<Coord> getNeighboredCoordinates(int col, int row)
     {
-        /**
-         * Coordinates of the current aggregate tiles that are neighbored with
-         * the requested emplacement
-         */
-        Set<Coord> neighboredTilesLocation;
-        neighboredTilesLocation = new HashSet<>();
+        Set<Coord> result = new HashSet();
 
-        /**
-         * We test all the possible neighbored locations, and add every
-         * locations where this current aggregation is present
-         */
         if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
-            neighboredTilesLocation.add(new Coord(col - 1, row));
+            result.add(new Coord(-1, 0));
         }
         if (aggregatedTiles.containsKey(new Coord(col + 1, row))) {
-            neighboredTilesLocation.add(new Coord(col + 1, row));
+            result.add(new Coord(1, 0));
         }
         if (aggregatedTiles.containsKey(new Coord(col, row - 1))) {
-            neighboredTilesLocation.add(new Coord(col, row - 1));
+            result.add(new Coord(0, -1));
         }
         if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
-            neighboredTilesLocation.add(new Coord(col, row + 1));
+            result.add(new Coord(0, 1));
         }
 
-        return neighboredTilesLocation;
+        return result;
     }
 
     /**
@@ -203,7 +166,7 @@ public abstract class AbstractAggregate
     public Set<String> getAggregatedTypesByCoord(int col, int row)
     {
         AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
-
+        
         return aggregatedPositionTypes.get(tile);
     }
 

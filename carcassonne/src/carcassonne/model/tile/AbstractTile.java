@@ -94,9 +94,6 @@ public abstract class AbstractTile
         return true;
     }
 
-    @Override
-    public abstract String toString();
-
     /**
      * Gets the type of the tile from coordinates
      *

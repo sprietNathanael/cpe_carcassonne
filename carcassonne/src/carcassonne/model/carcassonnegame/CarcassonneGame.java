@@ -174,7 +174,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         board.addTile(tile, row, column);
         this.notifyBoardChanged();
-        //this.manageNewTileAggregates(tile, row, column);
+        this.manageNewTileAggregates(tile, row, column);
+        System.out.println(roadAggregates);
+        System.out.println(roadAggregates.get(0).getAggregatedTiles().size());
     }
 
     /**
@@ -298,12 +300,58 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return this.pile.size();
     }
 
-    private void manageNewTileAggregates(AbstractTile tile, int col, int row)
+    private void manageNewTileAggregates(AbstractTile tile, int y, int x)
     {
+        Coord convertedCoord = convertCoord(x, y);
+        int col = convertedCoord.col, row = convertedCoord.row;
+
         //Get all the different aggregates of the tile
         Set<Set<String>> roadAggregatesEmplacements = tile.getRoadAggregateEmplacements();
         Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
         Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
+        System.out.println("Test roadaggr " + roadAggregatesEmplacements);
+        
+        //First we browse all the existing aggregates, to test if they need to be completed
+        for (RoadAggregate road : roadAggregates) {
+            //Get the coordinates of the neighbored tiles of this aggregate
+            Set<Coord> neighboredTilesLocations = road.getNeighboredCoordinates(col, row);
+
+            //Test if there is at least one neighbor for this aggregate
+            if (!neighboredTilesLocations.isEmpty()) {
+                Set<String> neighborTileLocations;
+                Set<String> neededLocations;
+                //Browse all the 4 directions
+                for (Coord neighboredTilesEmplacement : neighboredTilesLocations) {
+                    //Get the locations of the current aggregate, of the neighbor tile
+                    neighborTileLocations = road.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
+                    if (neighborTileLocations != null) {
+                        
+                        //Attribute available locations corresponding to the direction the neigbor tile has
+                        neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
+                        
+                        //We browse all the aggregates of the current tile
+                        Set<Set<String>> newRoadAggregatesEmplacements = new HashSet();
+                        newRoadAggregatesEmplacements.addAll(roadAggregatesEmplacements);
+                        System.out.println("Types requis: " + neededLocations);
+                        System.out.println("Types de la tuile: " + roadAggregatesEmplacements);
+                        for (Set<String> locationInNewTile : roadAggregatesEmplacements) {
+                            for (String neededLocation : neededLocations) {
+                                boolean alreadyAdded = false;
+
+                                if (locationInNewTile.contains(neededLocation) && !alreadyAdded) {
+                                    road.enlargeAggregate(col, row, tile, locationInNewTile);
+                                    //We update the Aggregate emplacements
+                                    newRoadAggregatesEmplacements.remove(locationInNewTile);
+                                    System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
+                                    alreadyAdded = true;
+                                }
+                            }
+                        }
+                        roadAggregatesEmplacements = newRoadAggregatesEmplacements;
+                    }
+                }
+            }
+        }
 
         /**
          * A la fin : *
@@ -323,6 +371,55 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
             fieldAggregates.add(newField);
         }
+    }
+
+    private static Set<String> filterSetString(Set<String> neighborTileLocations, Set<String> authorizedString)
+    {
+        Set<String> result = new HashSet();
+
+        for (String currentString : neighborTileLocations) {
+            if (authorizedString.contains(currentString)) {
+                result.add(currentString);
+            }
+        }
+
+        return result;
+    }
+
+    private Coord convertCoord(int x, int y)
+    {
+        return new Coord(x, y * -1);
+    }
+    
+    /**
+     * Get the locations that are linked to the aggregate we test
+     * @param neighboredTilesEmplacement
+     * @param neighborTileLocations
+     * @return 
+     */
+    private static Set<String> getLocationsAuthorized(Coord neighboredTilesEmplacement, Set<String> neighborTileLocations)
+    {
+        //neighborTileLocations = CasualTile.getNeighborEdgesLocations(neighborTileLocations);
+        Set<String> authorizedString = new HashSet();
+        
+        if (neighboredTilesEmplacement.equals(new Coord(-1, 0))) {
+            authorizedString = BasicSet.retTreeSet("NWW", "W", "SWW");
+        }
+        else if (neighboredTilesEmplacement.equals(new Coord(1, 0))) {
+            authorizedString = BasicSet.retTreeSet("NEE", "E", "SEE");
+        }
+        else if (neighboredTilesEmplacement.equals(new Coord(0, -1))) {
+            authorizedString = BasicSet.retTreeSet("SSW", "S", "SSE");
+        }
+        else if (neighboredTilesEmplacement.equals(new Coord(0, 1))) {
+            authorizedString = BasicSet.retTreeSet("NNW", "N", "NNE");
+        }
+        System.out.println("autorisétest:" + authorizedString);
+        System.out.println("autorisébis:" + neighborTileLocations);
+        //Filter the locations using the authorized locations
+        neighborTileLocations = filterSetString(neighborTileLocations, authorizedString);
+        System.out.println("autorisé:" + neighborTileLocations);
+        return neighborTileLocations;
     }
 
 }

@@ -122,4 +122,10 @@ public class FieldAggregate extends AbstractAggregate
 
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "FieldAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
+    }
 }
