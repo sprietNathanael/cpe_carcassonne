@@ -523,20 +523,20 @@ public class CasualTileTest
         String result = instance.toString();
         assertEquals(expResult, result);
     }
-    
+
     /**
      * Test of rotateLeft method, of class CasualTile.
      */
     @Test
-    public void testRotateLeftAgg()
+    public void testRotateRightAgg()
     {
+        System.out.println("testRotateRightAgg");
         Set<Set<String>> aggregates;
         aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NEE", "E", "SEE"));
         aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
-
         CasualTile ctD = new CasualTile("D", "D0", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new RoadType(), //North
@@ -549,17 +549,15 @@ public class CasualTileTest
                 new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
                 aggregates
         );
-        ctD.rotateLeft();
-        
+        ctD.rotateRight();
         Set<Set<String>> expResult;
         expResult = new HashSet<>();
-        
-        expResult.add(retTreeSet("SEE", "S", "SSW"));
-        expResult.add(retTreeSet("E", "CNE", "CNW", "E"));
+
+        expResult.add(retTreeSet("SSE", "S", "SSW"));
+        expResult.add(retTreeSet("W", "CNE", "CNW", "E"));
         expResult.add(retTreeSet("NEE", "NE", "NNE", "N", "NNW", "NW", "NWW"));
-        expResult.add(retTreeSet("SEE", "SE", "CSE", "CNW", "SW", "SWW"));
-        
- 
+        expResult.add(retTreeSet("SEE", "SE", "CSE", "CSW", "SW", "SWW"));
+
         assertEquals(expResult, ctD.getAggregateEmplacements());
     }
 
@@ -580,7 +578,6 @@ public class CasualTileTest
        
         assertEquals(expResult, result);
     }*/
-
     /**
      * Test of locationsAreBounded method, of class CasualTile.
      */
@@ -617,7 +614,7 @@ public class CasualTileTest
         System.out.println(result);
         assertEquals(expResult, result);
     }
-    
+
     private Set<String> retTreeSet(String... poss)
     {
         Set tsPos = new HashSet<String>();
@@ -648,7 +645,7 @@ public class CasualTileTest
                 new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
                 aggregates
         );
-        
+
         Set<Set<String>> cityAggregate = new HashSet<>();
         cityAggregate.add(retTreeSet("NEE", "E", "SEE"));
 
@@ -677,7 +674,7 @@ public class CasualTileTest
                 new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
                 aggregates
         );
-        
+
         Set<Set<String>> roadAggregate = new HashSet<>();
         roadAggregate.add(retTreeSet("S", "CNW", "CSW", "N"));
 
@@ -706,7 +703,7 @@ public class CasualTileTest
                 new RoadType(), new FieldType(), new FieldType(), new RoadType(), //Center section
                 aggregates
         );
-        
+
         Set<Set<String>> fieldAggregate = new HashSet<>();
         fieldAggregate.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         fieldAggregate.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));

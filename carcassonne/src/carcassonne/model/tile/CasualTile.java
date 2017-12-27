@@ -10,11 +10,13 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Class that represents a casual Tile It is cut in 20 parts, in two layers The
@@ -163,52 +165,52 @@ public class CasualTile extends AbstractTile
     } //neighbouring
 
     static {
-        aggRotateRight = new HashMap<>();
-        aggRotateRight.put("NWW", "SSW");
-        aggRotateRight.put("NW", "SW");
-        aggRotateRight.put("NNW", "SWW");
-        aggRotateRight.put("N", "W");
-        aggRotateRight.put("NNE", "NWW");
-        aggRotateRight.put("NE", "NW");
-        aggRotateRight.put("NEE", "NNW");
-        aggRotateRight.put("E", "N");
-        aggRotateRight.put("SEE", "NNE");
-        aggRotateRight.put("SE", "NE");
-        aggRotateRight.put("SSE", "NEE");
-        aggRotateRight.put("S", "E");
-        aggRotateRight.put("SSW", "SEE");
-        aggRotateRight.put("SW", "SE");
-        aggRotateRight.put("SWW", "SSE");
-        aggRotateRight.put("W", "S");
-        aggRotateRight.put("CNW", "CSW");
-        aggRotateRight.put("CNE", "CNW");
-        aggRotateRight.put("CSE", "CNE");
-        aggRotateRight.put("CSW", "CSE");
-    } //aggRotateRight
+        aggRotateLeft = new HashMap<>();
+        aggRotateLeft.put("NWW", "SSW");
+        aggRotateLeft.put("NW", "SW");
+        aggRotateLeft.put("NNW", "SWW");
+        aggRotateLeft.put("N", "W");
+        aggRotateLeft.put("NNE", "NWW");
+        aggRotateLeft.put("NE", "NW");
+        aggRotateLeft.put("NEE", "NNW");
+        aggRotateLeft.put("E", "N");
+        aggRotateLeft.put("SEE", "NNE");
+        aggRotateLeft.put("SE", "NE");
+        aggRotateLeft.put("SSE", "NEE");
+        aggRotateLeft.put("S", "E");
+        aggRotateLeft.put("SSW", "SEE");
+        aggRotateLeft.put("SW", "SE");
+        aggRotateLeft.put("SWW", "SSE");
+        aggRotateLeft.put("W", "S");
+        aggRotateLeft.put("CNW", "CSW");
+        aggRotateLeft.put("CNE", "CNW");
+        aggRotateLeft.put("CSE", "CNE");
+        aggRotateLeft.put("CSW", "CSE");
+    }//aggRotateLeft
 
     static {
-        aggRotateLeft = new HashMap<>();
-        aggRotateLeft.put("NWW", "NNE");
-        aggRotateLeft.put("NW", "NE");
-        aggRotateLeft.put("NNW", "NEE");
-        aggRotateLeft.put("N", "E");
-        aggRotateLeft.put("NNE", "SEE");
-        aggRotateLeft.put("NE", "SE");
-        aggRotateLeft.put("NEE", "SSE");
-        aggRotateLeft.put("E", "S");
-        aggRotateLeft.put("SEE", "SSW");
-        aggRotateLeft.put("SE", "SW");
-        aggRotateLeft.put("SSE", "SWW");
-        aggRotateLeft.put("S", "W");
-        aggRotateLeft.put("SSW", "NWW");
-        aggRotateLeft.put("SW", "NW");
-        aggRotateLeft.put("SWW", "NNW");
-        aggRotateLeft.put("W", "N");
-        aggRotateLeft.put("CNW", "CNE");
-        aggRotateLeft.put("CNE", "CSE");
-        aggRotateLeft.put("CSE", "CSW");
-        aggRotateLeft.put("CSW", "CNW");
-    } //aggRotateLeft
+        aggRotateRight = new HashMap<>();
+        aggRotateRight.put("NWW", "NNE");
+        aggRotateRight.put("NW", "NE");
+        aggRotateRight.put("NNW", "NEE");
+        aggRotateRight.put("N", "E");
+        aggRotateRight.put("NNE", "SEE");
+        aggRotateRight.put("NE", "SE");
+        aggRotateRight.put("NEE", "SSE");
+        aggRotateRight.put("E", "S");
+        aggRotateRight.put("SEE", "SSW");
+        aggRotateRight.put("SE", "SW");
+        aggRotateRight.put("SSE", "SWW");
+        aggRotateRight.put("S", "W");
+        aggRotateRight.put("SSW", "NWW");
+        aggRotateRight.put("SW", "NW");
+        aggRotateRight.put("SWW", "NNW");
+        aggRotateRight.put("W", "N");
+        aggRotateRight.put("CNW", "CNE");
+        aggRotateRight.put("CNE", "CSE");
+        aggRotateRight.put("CSE", "CSW");
+        aggRotateRight.put("CSW", "CNW");
+    } //aggRotateRight
 
     /**
      * Construct a Tile
@@ -702,7 +704,23 @@ public class CasualTile extends AbstractTile
     private void rotateAggregate(boolean right)
     {
         // Rotate aggregates     
+        /*for (Set<String> setAggragate : aggregateEmplacements) {
+            for (String agg : setAggragate) {
+                if (right == true) {
+                    agg = aggRotateRight.get(agg);
+                    int i = 0;
+                }
+                else {
+                    agg = aggRotateLeft.get(agg);
+                }
+            }
+        }*/
+
+        Set<Set<String>> aggregateEmpTemp = new HashSet<>();
+        Set<String> aggSetTemp;
+
         for (Set<String> setAggragate : aggregateEmplacements) {
+            aggSetTemp = new HashSet<>();
             for (String agg : setAggragate) {
                 if (right == true) {
                     agg = aggRotateRight.get(agg);
@@ -710,8 +728,11 @@ public class CasualTile extends AbstractTile
                 else {
                     agg = aggRotateLeft.get(agg);
                 }
+                aggSetTemp.add(agg);
             }
+            aggregateEmpTemp.add(aggSetTemp);
         }
+        aggregateEmplacements = aggregateEmpTemp;
     }
 
     /**
