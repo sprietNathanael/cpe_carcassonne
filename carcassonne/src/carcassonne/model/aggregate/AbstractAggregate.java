@@ -110,6 +110,34 @@ public abstract class AbstractAggregate
     }
 
     /**
+     * Return all the coordinates that are nieghbored with the given location
+     *
+     * @param col
+     * @param row
+     * @return
+     */
+    public Set<Coord> getNeighborOf(int col, int row)
+    {
+        Set<Coord> result = new HashSet();
+
+        
+        if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
+            result.add(new Coord(col - 1, row));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col + 1, row))) {
+            result.add(new Coord(col + 1, row));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col, row - 1))) {
+            result.add(new Coord(col, row - 1));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
+            result.add(new Coord(col, row + 1));
+        }
+
+        return result;
+    }
+
+    /**
      * Get the tile emplacements that are neighbored with those coordinates. Use
      * this method to test every aggregate, to check which aggregate we have to
      * enlarge
@@ -170,6 +198,13 @@ public abstract class AbstractAggregate
     public Map<AbstractTile, Set<String>> getAggregatedTypes()
     {
         return aggregatedPositionTypes;
+    }
+
+    public Set<String> getAggregatedTypesByCoord(int col, int row)
+    {
+        AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
+
+        return aggregatedPositionTypes.get(tile);
     }
 
     public Map<Player, Set<Meeple>> getPlayers()
