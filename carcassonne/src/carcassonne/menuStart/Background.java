@@ -19,15 +19,20 @@ import javax.swing.JPanel;
 public class Background extends JPanel
 {
 
-    public void paintComponent(Graphics g)
+    private Image img;
+
+    public Background(String back) throws IOException
     {
         try {
-            Image img = ImageIO.read(new File("resources/Back.png"));
-            g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+            img = ImageIO.read(new File(back));
         } catch (IOException e) {
             e.printStackTrace();
-
         }
 
+    }
+
+    public void paintComponent(Graphics g)
+    {
+        g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
     }
 }

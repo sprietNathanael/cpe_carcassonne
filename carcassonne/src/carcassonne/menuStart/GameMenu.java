@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -26,8 +28,10 @@ public class GameMenu extends JFrame
     private final BtGame play = new BtGame("resources/BtPlay.PNG");
     private final BtGame exit = new BtGame("resources/BtExit.PNG");
     private final BtGame Btsettings = new BtGame("resources/BtSettings.PNG");
+    private String path = "resources/musicMenu.mp3";
+    private final Sounds music = new Sounds(path);
 
-    public GameMenu() throws IOException
+    public GameMenu() throws IOException, Exception
     {
         this.setTitle("Carcassonne");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
@@ -35,7 +39,7 @@ public class GameMenu extends JFrame
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
-        this.setContentPane(new Background());
+        this.setContentPane(new Background("resources/Back.png"));
 
         this.setLayout(null);
 
@@ -50,6 +54,11 @@ public class GameMenu extends JFrame
                 ClientWindow clientWindow = new ClientWindow();
                 clientWindow.setVisible(true);
                 clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                try {
+                    music.stop();
+                } catch (Exception ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
@@ -60,10 +69,17 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Settings settings = new Settings();
+                Settings settings = null;
+                try {
+                    settings = new Settings();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 settings.setVisible(true);
                 settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
             }
+
         });
 
         this.add(exit);
@@ -79,6 +95,8 @@ public class GameMenu extends JFrame
         });
 
         this.setVisible(true);
+
+        music.play();
 
     }
 }

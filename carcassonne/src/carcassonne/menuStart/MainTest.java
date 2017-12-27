@@ -14,11 +14,11 @@ import java.io.IOException;
 public class MainTest
 {
 
-    public static void main(String[] args) throws IOException
+    public static void main(String[] args) throws IOException, Exception
     {
 
         GameMenu fen = new GameMenu();
-
+   
     }
 
 }

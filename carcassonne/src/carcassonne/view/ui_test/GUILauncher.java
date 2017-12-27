@@ -18,7 +18,7 @@ public class GUILauncher
      * Main methode
      * @param args Strings[]
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, Exception {
                 
         //ClientWindow clientWindow = new ClientWindow();
         GameMenu gameMenu = new GameMenu();
