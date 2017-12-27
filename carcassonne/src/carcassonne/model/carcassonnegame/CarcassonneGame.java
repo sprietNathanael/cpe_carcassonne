@@ -5,21 +5,27 @@
  */
 package carcassonne.model.carcassonnegame;
 
-import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.coord.Coord;
+import carcassonne.model.aggregate.CityAggregate;
+import carcassonne.model.aggregate.FieldAggregate;
+import carcassonne.model.aggregate.RoadAggregate;
 import carcassonne.model.board.Board;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
+import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbstractType;
-import carcassonne.notifyMessage.ObserverMessage;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Set;
 
 /**
  * Represents a carcassonne game, which aggregates all the model entities
@@ -27,6 +33,31 @@ import java.util.Observer;
 public class CarcassonneGame extends Observable implements CarcassonneGameInterface
 {
 
+    /**
+     * private Map<RoadAggregate, Set<Coord>> getNeighborRoads(int col, int row)
+     * { Map<RoadAggregate, Set<Coord>> result = new HashMap<>();
+     *
+     * for (RoadAggregate currentRoad : roadAggregates) { if
+     * (currentRoad.isNeighborOf(col, row)) { result.add(currentRoad); } }
+     *
+     * return result; }
+     *
+     * private List<CityAggregate> getNeighborCities(int col, int row) {
+     * List<CityAggregate> result = new ArrayList<>();
+     *
+     * for (CityAggregate currentCity : cityAggregates) { if
+     * (currentCity.isNeighborOf(col, row)) { result.add(currentCity); } }
+     *
+     * return result; }
+     *
+     * private List<FieldAggregate> getNeighborFields(int col, int row) {
+     * List<FieldAggregate> result = new ArrayList<>();
+     *
+     * for (FieldAggregate currentField : fieldAggregates) { if
+     * (currentField.isNeighborOf(col, row)) { result.add(currentField); } }
+     *
+     * return result; }
+     */
     private ArrayList<Player> players;
     private Board board;
     private int currentPlayerIndex;
@@ -34,7 +65,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private AbstractTile firstTile;
     private AbstractTile currentTile;
     private ArrayList<Coord> placements;
-    private List<AbstractAggregate> abstractAggregates;
+    private List<RoadAggregate> roadAggregates;
+    private List<CityAggregate> cityAggregates;
+    private List<FieldAggregate> fieldAggregates;
     private String notifyMessage;
 
     public CarcassonneGame() throws Exception
@@ -59,11 +92,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<>();
         this.players = players;
+        roadAggregates = new ArrayList<>();
+        cityAggregates = new ArrayList<>();
+        fieldAggregates = new ArrayList<>();
     }
-    
+
     /**
      * Get the first tile of the game
-     * @return 
+     *
+     * @return
      */
     public AbstractTile getFirstTile()
     {
@@ -78,16 +115,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public Player getCurrentPlayer()
     {
         return (this.players.get(this.currentPlayerIndex));
-    }
-
-    /**
-     * Get the abstractAggregates
-     *
-     * @return
-     */
-    public List<AbstractAggregate> getAbstractAggregates()
-    {
-        return abstractAggregates;
     }
 
     /**
@@ -147,6 +174,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         board.addTile(tile, row, column);
         this.notifyBoardChanged();
+        //this.manageNewTileAggregates(tile, row, column);
     }
 
     /**
@@ -185,24 +213,27 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     //TODO
-    // REMOVE !!
+    // REMOVE !! Please laissez pour mes tests :'(
     public AbstractTile drawFromPileIndex(int i)
     {
         return this.pile.remove(i);
     }
-    
+
+    /**
+     * Used to complete the actions of the tile that has been drawn
+     *
+     */
     private void refreshPlacements()
     {
         this.placements.clear();
-        if(this.currentTile != null)
-        {
-            this.placements = this.board.getTilePossiblePlacements(this.currentTile);            
+        if (this.currentTile != null) {
+            this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
     }
 
     @Override
     public void notifyObservers()
-    {   
+    {
         super.setChanged();
         super.notifyObservers(this.notifyMessage);
     }
@@ -212,31 +243,32 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         super.addObserver(o);
         this.notifyBoardChanged();
-        
+
     }
-    
-    
+
     /**
      * Check if the tile can be placed here
+     *
      * @param coordinates
      * @param tile
-     * @return 
+     * @return
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
         return this.board.canTileBePlacedHere(coordinates, tile);
     }
-    
+
     /**
      * Check if the current tile can be placed here
+     *
      * @param coordinates
-     * @return 
+     * @return
      */
     public boolean checkTilePosition(Coord coordinates)
     {
         return this.checkTilePosition(coordinates, this.currentTile);
     }
-    
+
     /**
      * Notifies the observers when the board has changed with the right message
      */
@@ -255,18 +287,42 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return placements;
     }
-    
+
     public ArrayList<Player> getPlayers()
     {
         return this.players;
     }
-    
+
     public int getPileSize()
     {
         return this.pile.size();
     }
-    
-    
-    
+
+    private void manageNewTileAggregates(AbstractTile tile, int col, int row)
+    {
+        //Get all the different aggregates of the tile
+        Set<Set<String>> roadAggregatesEmplacements = tile.getRoadAggregateEmplacements();
+        Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
+        Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
+
+        /**
+         * A la fin : *
+         */
+        for (Set<String> currentRoadEmplacement : roadAggregatesEmplacements) {
+            roadAggregates.add(new RoadAggregate(col, row, tile, currentRoadEmplacement));
+        }
+
+        Set<CityAggregate> tileCities = new HashSet<>();
+        for (Set<String> currentCityEmplacement : cityAggregatesEmplacements) {
+            CityAggregate newCity = new CityAggregate(col, row, tile, currentCityEmplacement);
+            cityAggregates.add(newCity);
+            tileCities.add(newCity);
+        }
+
+        for (Set<String> currentFieldEmplacement : fieldAggregatesEmplacements) {
+            FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
+            fieldAggregates.add(newField);
+        }
+    }
 
 }

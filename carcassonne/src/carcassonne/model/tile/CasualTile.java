@@ -45,6 +45,78 @@ public class CasualTile extends AbstractTile
         return result;
     }
 
+    /**
+     * Return the locations that are only an edge
+     *
+     * @param locations
+     * @return
+     */
+    public static Set<String> filterLocationEdges(Set<String> locations)
+    {
+        Set<String> result = new HashSet<>();
+
+        for (String location : locations) {
+            if (location.equals("NNW")
+                    || location.equals("N")
+                    || location.equals("NNE")
+                    || location.equals("NEE")
+                    || location.equals("E")
+                    || location.equals("SEE")
+                    || location.equals("SSE")
+                    || location.equals("S")
+                    || location.equals("SSW")
+                    || location.equals("SWW")
+                    || location.equals("W")
+                    || location.equals("NWWW")) {
+                result.add(location);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Return the locations that are only an edge
+     *
+     * @param locations
+     * @return
+     */
+    public static Set<String> getNeighborEdgesLocations(Set<String> locations)
+    {
+        Set<String> result = new HashSet<>();
+
+        for (String location : locations) {
+            switch (location){
+                case "NNW": 
+                    result.add("SSW");
+                case "N": 
+                    result.add("S");
+                case "NNE": 
+                    result.add("SSE");
+                case "NEE": 
+                    result.add("NWW");
+                case "E": 
+                    result.add("W");
+                case "SEE": 
+                    result.add("SWW");
+                case "SSE": 
+                    result.add("NNE");
+                case "S": 
+                    result.add("W");
+                case "SSW": 
+                    result.add("NNW");
+                case "SWW": 
+                    result.add("SEE");
+                case "W": 
+                    result.add("E");
+                case "NWW": 
+                    result.add("NEE");
+            }
+        }
+
+        return result;
+    }
+
     private final HashMap<String, AbstractType> types;
 
     static private HashMap<String, String[]> neighbouring;
