@@ -46,6 +46,7 @@ public class GameMenu extends JFrame
 
         this.add(btinstructions);
         btinstructions.setBounds(840, 730, 160, 85);
+        btinstructions.setBorderPainted(false);
 
         btinstructions.addActionListener(new ActionListener()
         {
@@ -55,13 +56,9 @@ public class GameMenu extends JFrame
             }
         });
 
-        
-        
-        
-        
-        
         this.add(play);
         play.setBounds(400, 300, 160, 85);
+        play.setBorderPainted(false);
 
         play.addActionListener(new ActionListener()
         {
@@ -81,6 +78,7 @@ public class GameMenu extends JFrame
 
         this.add(btsettings);
         btsettings.setBounds(400, 400, 160, 85);
+        btsettings.setBorderPainted(false);
         btsettings.addActionListener(new ActionListener()
         {
             @Override
@@ -101,7 +99,7 @@ public class GameMenu extends JFrame
 
         this.add(exit);
         exit.setBounds(400, 500, 160, 85);
-
+        exit.setBorderPainted(false);
         exit.addActionListener(new ActionListener()
         {
             @Override
