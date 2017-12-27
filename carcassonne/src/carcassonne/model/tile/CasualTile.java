@@ -703,19 +703,6 @@ public class CasualTile extends AbstractTile
 
     private void rotateAggregate(boolean right)
     {
-        // Rotate aggregates     
-        /*for (Set<String> setAggragate : aggregateEmplacements) {
-            for (String agg : setAggragate) {
-                if (right == true) {
-                    agg = aggRotateRight.get(agg);
-                    int i = 0;
-                }
-                else {
-                    agg = aggRotateLeft.get(agg);
-                }
-            }
-        }*/
-
         Set<Set<String>> aggregateEmpTemp = new HashSet<>();
         Set<String> aggSetTemp;
 
