@@ -27,7 +27,8 @@ public class GameMenu extends JFrame
 
     private final BtGame play = new BtGame("resources/BtPlay.PNG");
     private final BtGame exit = new BtGame("resources/BtExit.PNG");
-    private final BtGame Btsettings = new BtGame("resources/BtSettings.PNG");
+    private final BtGame btsettings = new BtGame("resources/BtSettings.PNG");
+    private final BtGame btinstructions = new BtGame("resources/instructions.PNG");
     private String path = "resources/musicMenu.mp3";
     private final Sounds music = new Sounds(path);
 
@@ -43,6 +44,22 @@ public class GameMenu extends JFrame
 
         this.setLayout(null);
 
+        this.add(btinstructions);
+        btinstructions.setBounds(840, 730, 160, 85);
+
+        btinstructions.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+            }
+        });
+
+        
+        
+        
+        
+        
         this.add(play);
         play.setBounds(400, 300, 160, 85);
 
@@ -62,9 +79,9 @@ public class GameMenu extends JFrame
             }
         });
 
-        this.add(Btsettings);
-        Btsettings.setBounds(400, 400, 160, 85);
-        Btsettings.addActionListener(new ActionListener()
+        this.add(btsettings);
+        btsettings.setBounds(400, 400, 160, 85);
+        btsettings.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
