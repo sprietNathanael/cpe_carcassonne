@@ -278,4 +278,10 @@ public class CityAggregate extends AbstractAggregate
 
         return result;
     }
+
+    @Override
+    public String toString()
+    {
+        return "CityAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
+    }
 }

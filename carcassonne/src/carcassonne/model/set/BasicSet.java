@@ -474,7 +474,7 @@ public class BasicSet implements SetInterface
         //Tiles V (x9)
         for (int i = 1; i <= 9; i++) {
             aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "S", "CNW", "CNE", "CSE")); //F
+            aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "CNW", "CNE", "CSE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
             aggregates.add(retTreeSet("W", "CSW", "S")); //R
 
