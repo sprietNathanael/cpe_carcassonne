@@ -12,11 +12,14 @@ package carcassonne.menuStart;
 import carcassonne.view.ui_test.ClientWindow;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javazoom.jl.player.Player;
 
 public class GameMenu extends JFrame
 {
@@ -25,8 +28,7 @@ public class GameMenu extends JFrame
     private final BtGame btSettings = new BtGame("resources/Settings.PNG");
     private final BtGame btInstructions = new BtGame("resources/instructions.PNG");
     private final BtGame btExit = new BtGame("resources/Exit.PNG");
-    private final String path = "resources/musicMenu.mp3";
-    private final Sounds music = new Sounds(path);
+    private final Player musicPlayer = new Player(new BufferedInputStream(new FileInputStream("resources/musicMenu.mp3")));
 
     public GameMenu() throws IOException, Exception
     {
@@ -64,14 +66,10 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                musicPlayer.close();
                 ClientWindow clientWindow = new ClientWindow();
                 clientWindow.setVisible(true);
-                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                try {
-                    music.stop();
-                } catch (Exception ex) {
-                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);                
             }
         });
 
@@ -114,6 +112,6 @@ public class GameMenu extends JFrame
 
         this.setVisible(true);
 
-        music.play();
+        musicPlayer.play();
     }
 }
