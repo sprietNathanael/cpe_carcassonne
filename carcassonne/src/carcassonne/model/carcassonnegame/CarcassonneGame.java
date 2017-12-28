@@ -19,8 +19,10 @@ import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbstractType;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -304,58 +306,79 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Coord convertedCoord = convertCoord(x, y);
         int col = convertedCoord.col, row = convertedCoord.row;
 
-        //Get all the different aggregates of the tile
+        //Récupère tous les aggrégats des différents types
         Set<Set<String>> roadAggregatesEmplacements = tile.getRoadAggregateEmplacements();
         Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
         Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
-        System.out.println(tile.getAggregateEmplacements());
 
-        //First we browse all the existing aggregates, to test if they need to be completed
+        /**
+         * Map qui est modifiée lors des parcours des aggrégats existants.
+         * Renseigne lorsqu'un nouvel aggrégat de la tuile a été affecté. Si
+         * c'est le cas, les autres matchs deviendront des merge du road
+         * aggregate de la map, au lieu d'un enlarge aggregate
+         */
+        Map<Set<String>, RoadAggregate> roadAlreadyAffected = new HashMap();
+
+        /**
+         * Set qui informe les aggrégats qui n'ont pas été enregistré dans un
+         * aggrégats déjà existant. Un nouvel aggrégat sera alors créé
+         */
+        Set<Set<String>> newRoadAggregatesEmplacements = new HashSet();
+        newRoadAggregatesEmplacements.addAll(roadAggregatesEmplacements);
+
+        //D'abord, on parcours les aggrégate existant
         for (RoadAggregate road : roadAggregates) {
-            //Get the coordinates of the neighbored tiles of this aggregate
+            //Récupère tous les différences de coordonnées entre la road courante et le nouvel index, si ce sont des voisins directs
             Set<Coord> neighboredTilesEmplacements = road.getNeighboredCoordinates(col, row);
 
-            //Test if there is at least one neighbor for this aggregate
+            //Test si la road est voisine au nouvel index
             if (!neighboredTilesEmplacements.isEmpty()) {
                 Set<String> neighborTileLocations;
                 Set<String> neededLocations;
-                //Browse all the 4 directions
+                //Parcours de ces différences de coordonnées
                 for (Coord neighboredTilesEmplacement : neighboredTilesEmplacements) {
-                    //Get the locations of the current aggregate, of the neighbor tile
+                    //Récupère les types de la road, de la tuile voisine à l'index
                     neighborTileLocations = road.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
 
-                    //Test if there are corresponding locations
+                    //Test s'il y a bien des types pour cette tuile
                     if (neighborTileLocations != null) {
                         //Donne la localisation des types de la nouvelle tuile qui sont potentiellement compatibles avec cet aggrégat
                         neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
-                        Set<Set<String>> newRoadAggregatesEmplacements = new HashSet();
-                        newRoadAggregatesEmplacements.addAll(roadAggregatesEmplacements);
                         System.out.println("Types requis: " + neededLocations);
                         System.out.println("Types de la tuile: " + roadAggregatesEmplacements);
 
-                        //We browse all the aggregates locations of the new tile
+                        //Parcours tous les morceaux d'aggrégats de la nouvelle tuile
                         for (Set<String> locationInNewTile : roadAggregatesEmplacements) {
-                            //We combine it with the possible locations 
+                            //Parcours des localisation autorisées
                             for (String neededLocation : neededLocations) {
-                                boolean alreadyAdded = false;
 
-                                //Teste si les emplacments nécessaires matchent la nouvelle tuile 
-                                if (locationInNewTile.contains(neededLocation) && !alreadyAdded) {
-                                    road.enlargeAggregate(col, row, tile, locationInNewTile);
-                                    //On ajoute la tuile à cet emplacement
-                                    newRoadAggregatesEmplacements.remove(locationInNewTile);
-                                    alreadyAdded = true;
+                                //Teste si les emplacments nécessaires matchent avec le morceau d'aggrégat courant
+                                if (locationInNewTile.contains(neededLocation)) {
+                                    //Si le morceau n'a pas déjà été affecté à un aggrégat, on l'ajoute
+                                    if (!roadAlreadyAffected.containsKey(locationInNewTile)) {
+                                        //On ajoute la tuile à cet emplacement
+                                        road.enlargeAggregate(col, row, tile, locationInNewTile);
 
-                                    System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
+                                        roadAlreadyAffected.put(locationInNewTile, road);
+                                        newRoadAggregatesEmplacements.remove(locationInNewTile);
+
+                                        System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
+                                    }
+                                    //S'il a déjà été affecté, on merge les deux aggrégats car ils sont maintenant communs
+                                    else {
+                                        RoadAggregate roadToBeCompleted = roadAlreadyAffected.get(locationInNewTile);
+                                        roadToBeCompleted.merge(road);
+                                    }
                                 }
                             }
                         }
                         //Les restes des aggrégats de la nouvelle tuile qui n'ont pas été complété, sont gardé dans la liste pour être créé en tant que nouvel aggrégat
-                        roadAggregatesEmplacements = newRoadAggregatesEmplacements;
                     }
                 }
             }
         }
+
+        roadAggregatesEmplacements = newRoadAggregatesEmplacements;
 
         /**
          * A la fin : *
@@ -396,7 +419,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     /**
-     * Get the locations that can be linked to the aggregate we test, in function of the different locations
+     * Get the locations that can be linked to the aggregate we test, in
+     * function of the different locations
      *
      * @param neighboredTilesEmplacement
      * @param neighborTileLocations
