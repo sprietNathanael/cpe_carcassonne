@@ -111,7 +111,7 @@ public class CasualTile extends AbstractTile
                     result.add("NNE");
                     break;
                 case "S":
-                    result.add("W");
+                    result.add("N");
                     break;
                 case "SSW":
                     result.add("NNW");

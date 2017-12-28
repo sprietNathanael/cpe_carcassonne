@@ -197,6 +197,6 @@ public class RoadAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "RoadAggregate{" + "Tuiles=" + aggregatedTiles + "}\n";
+        return "RoadAggregate{" + "Tuiles=" + aggregatedTiles + "Types" + this.aggregatedPositionTypes + "\n}\n";
     }
 }
