@@ -26,11 +26,11 @@ public class Background extends JPanel
         try {
             img = ImageIO.read(new File(back));
         } catch (IOException e) {
-            e.printStackTrace();
         }
 
     }
 
+    @Override
     public void paintComponent(Graphics g)
     {
         g.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);

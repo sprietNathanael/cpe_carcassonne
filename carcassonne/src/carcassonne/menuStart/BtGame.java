@@ -27,7 +27,6 @@ public class BtGame extends JButton
         try {
             img = ImageIO.read(new File(image));
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

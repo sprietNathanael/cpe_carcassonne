@@ -21,8 +21,7 @@ public class ClientWindow extends JFrame
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView();
-        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
+        createGameView();        
     }
     
     /**
@@ -44,6 +43,7 @@ public class ClientWindow extends JFrame
         // Maximize the window
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
     }
     
 }
