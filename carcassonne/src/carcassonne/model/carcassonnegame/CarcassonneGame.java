@@ -197,7 +197,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         else {
             /*Player has meeple*/
 
-            /*Check if a meeple can be to put on this tile*/
+ /*Check if a meeple can be to put on this tile*/
             if (tile.isMeepable() == false) {
                 throw new Exception("no meepable");
             }
@@ -320,6 +320,14 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Map<Set<String>, RoadAggregate> roadAlreadyAffected = new HashMap();
 
         /**
+         * Met à jour la liste des aggrégats de route, si une route est mergée
+         * sur une autre, on l'a supprime
+         *
+         */
+        List<RoadAggregate> updatedRoadAggregates = new ArrayList();
+        updatedRoadAggregates.addAll(roadAggregates);
+
+        /**
          * Set qui informe les aggrégats qui n'ont pas été enregistré dans un
          * aggrégats déjà existant. Un nouvel aggrégat sera alors créé
          */
@@ -356,10 +364,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                                 if (locationInNewTile.contains(neededLocation)) {
                                     //Si le morceau n'a pas déjà été affecté à un aggrégat, on l'ajoute
                                     if (!roadAlreadyAffected.containsKey(locationInNewTile)) {
-                                        //On ajoute la tuile à cet emplacement
+                                        //Ajout de la tuile à cet emplacement dans la route courante
                                         road.enlargeAggregate(col, row, tile, locationInNewTile);
-
+                                        //Informe sur quel aggrégat le morceau vient d'être affecté
                                         roadAlreadyAffected.put(locationInNewTile, road);
+                                        //Suppression du morceau d'aggrégat pour ne pas qu'il soit créé dans un nouvel aggrégat
                                         newRoadAggregatesEmplacements.remove(locationInNewTile);
 
                                         System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
@@ -367,7 +376,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                                     //S'il a déjà été affecté, on merge les deux aggrégats car ils sont maintenant communs
                                     else {
                                         RoadAggregate roadToBeCompleted = roadAlreadyAffected.get(locationInNewTile);
+                                        //Merge des deux route
                                         roadToBeCompleted.merge(road);
+                                        //Suppression de la route mergée
+                                        updatedRoadAggregates.remove(road);
                                     }
                                 }
                             }
@@ -379,6 +391,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
 
         roadAggregatesEmplacements = newRoadAggregatesEmplacements;
+        roadAggregates = updatedRoadAggregates;
 
         /**
          * A la fin : *
