@@ -5,25 +5,17 @@
  */
 package carcassonne.controller;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.board.Board;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
-import carcassonne.model.type.AbbayType;
-import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
-import java.awt.Color;
 import java.util.ArrayList;
-import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -41,12 +33,13 @@ public class AbstractCarcassonneGameControllerTest
     /**
      * Test of getCurrentPlayer method, of class
      * AbstractCarcassonneGameController.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetCurrentPlayer() throws Exception
     {
-        Player j1 = new Player("bertrand", Color.pink);
-        Player j2 = new Player("thomas", Color.orange);
+        Player j1 = new Player("bertrand", "pink");
+        Player j2 = new Player("thomas", "orange");
         ArrayList list = new ArrayList();
         list.add(0, j1);
         list.add(1, j2);
@@ -64,13 +57,14 @@ public class AbstractCarcassonneGameControllerTest
 
     /**
      * Test of putCurrentTile method, of class AbstractCarcassonneGameController.
+     * @throws java.lang.Exception
      */
     @Test
     public void testPutTile() throws Exception
     {
         
-        Player j1 = new Player("bertrand", Color.pink);
-        Player j2 = new Player("thomas", Color.orange);
+        Player j1 = new Player("bertrand", "pink");
+        Player j2 = new Player("thomas", "orange");
         ArrayList<Player> list = new ArrayList();
         list.add(j1);
         list.add(j2);
@@ -98,12 +92,13 @@ public class AbstractCarcassonneGameControllerTest
     }
     /**
      * Test of putMeeple method, of class AbstractCarcassonneGameController.
+     * @throws java.lang.Exception
      */
     @Test
     public void testPutMeeple() throws Exception //IL FAUT PUSHER 
     {
-        Player j1 = new Player("bertrand", Color.pink);
-        Player j2 = new Player("thomas", Color.orange);
+        Player j1 = new Player("bertrand", "pink");
+        Player j2 = new Player("thomas", "orange");
         ArrayList<Player> list = new ArrayList();
         list.add(j1);
         list.add(j2);

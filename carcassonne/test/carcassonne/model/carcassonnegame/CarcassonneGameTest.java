@@ -6,15 +6,6 @@
 package carcassonne.model.carcassonnegame;
 
 import carcassonne.model.player.Player;
-import carcassonne.model.set.SetInterface;
-import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.tile.CasualTile;
-import carcassonne.model.type.AbbayType;
-import carcassonne.model.type.CityType;
-import carcassonne.model.type.FieldType;
-import carcassonne.model.type.RiverType;
-import carcassonne.model.type.RoadType;
-import java.awt.Color;
 import java.util.ArrayList;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -56,14 +47,15 @@ public class CarcassonneGameTest
 
     /**
      * Test of getCurrentPlayer method, of class CarcassonneGame.
+     * @throws java.lang.Exception
      */
     @Test
     public void testGetCurrentPlayer() throws Exception
     {
         System.out.println("getCurrentPlayer");
-        Player J1 = new Player("Thomas", Color.yellow);
-        Player J2 = new Player("Etienne", Color.pink);
-        ArrayList<Player> list = new ArrayList<Player>();
+        Player J1 = new Player("Thomas", "yellow");
+        Player J2 = new Player("Etienne", "pink");
+        ArrayList<Player> list = new ArrayList<>();
         list.add(J1);
         list.add(J2);
         
@@ -75,14 +67,15 @@ public class CarcassonneGameTest
 
     /**
      * Test of nextPlayer method, of class CarcassonneGame.
+     * @throws java.lang.Exception
      */
     @Test
     public void testNextPlayer() throws Exception
     {
          System.out.println("getCurrentPlayer");
-        Player J1 = new Player("Thomas", Color.yellow);
-        Player J2 = new Player("Etienne", Color.pink);
-        ArrayList<Player> list = new ArrayList<Player>();
+        Player J1 = new Player("Thomas", "yellow");
+        Player J2 = new Player("Etienne", "pink");
+        ArrayList<Player> list = new ArrayList<>();
         list.add(J1);
         list.add(J2);
         

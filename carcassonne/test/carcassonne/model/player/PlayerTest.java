@@ -5,7 +5,6 @@
  */
 package carcassonne.model.player;
 
-import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
@@ -54,7 +53,7 @@ public class PlayerTest
     public void testCheckMeepleAvailableTrue()
     {
         System.out.println("checkMeepleAvailableTrue");
-        Player p = new Player("test", Color.yellow);
+        Player p = new Player("test", "yellow");
         boolean result = p.checkMeepleAvailable();
         assertEquals(true, result);
     }
@@ -66,7 +65,7 @@ public class PlayerTest
     public void testCheckMeepleAvailableFalse()
     {
         System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", Color.yellow);
+        Player p = new Player("test", "yellow");
         p.getMeeple().forEach(m -> m.setIsUsed(true));
         boolean result = p.checkMeepleAvailable();
         assertEquals(false, result);
@@ -79,7 +78,7 @@ public class PlayerTest
     public void testGetFirstMeepleAvailable()
     {
         System.out.println("getFirstMeepleAvailable");
-        Player player = new Player("Joueur", Color.black);
+        Player player = new Player("Joueur", "black");
         Meeple result = player.getFirstMeepleAvailable();
         ArrayList<Meeple> meeples = player.getMeeple();
         Meeple expResult = null;
@@ -99,7 +98,7 @@ public class PlayerTest
     public void testGetBigMeepleFalse()
     {
         System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", Color.yellow);
+        Player p = new Player("test", "yellow");
         Meeple bigMeeple = p.getBigMeeple();
         bigMeeple.setIsUsed(true);
 

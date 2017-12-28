@@ -15,8 +15,7 @@ import java.util.Observer;
  */
 public class CarcassonneCmdLine implements Observer
 {
-    private AbstractCarcassonneGameController controller;
-    
+    private final AbstractCarcassonneGameController controller;    
     
     public CarcassonneCmdLine(AbstractCarcassonneGameController controller)
     {
@@ -46,7 +45,5 @@ public class CarcassonneCmdLine implements Observer
     {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
     
 }

@@ -22,7 +22,4 @@ public interface CarcassonneGameInterface
      */
     public void putTile(AbstractTile tile, int row, int column) throws Exception;
     
-    /**
-     * 
-     */
 }

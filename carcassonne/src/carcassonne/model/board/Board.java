@@ -224,6 +224,5 @@ public class Board implements BoardInterface
         }
         res = res && surrounded;
         return res;
-    }
-   
+    }   
 }

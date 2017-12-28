@@ -9,7 +9,6 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneCmdLine;
-import java.awt.Color;
 import java.util.ArrayList;
 
 /**

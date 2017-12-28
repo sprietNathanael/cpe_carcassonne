@@ -51,10 +51,7 @@ public class Coord
         if (this.row != other.row) {
             return false;
         }
-        if (this.col != other.col) {
-            return false;
-        }
-        return true;
+        return this.col == other.col;
     }
 
     @Override

@@ -10,13 +10,10 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
-import java.util.AbstractSet;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Class that represents a casual Tile It is cut in 20 parts, in two layers The
@@ -662,6 +659,7 @@ public class CasualTile extends AbstractTile
      *
      * @return true if the rotation is successfull
      */
+    @Override
     public boolean rotateRight()
     {
         super.rotateRight();
@@ -727,6 +725,7 @@ public class CasualTile extends AbstractTile
      *
      * @return boolean
      */
+    @Override
     public boolean isCrossRoad()
     {
         boolean result = false;

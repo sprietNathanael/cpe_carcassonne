@@ -19,10 +19,8 @@ import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbstractType;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -79,6 +77,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * Constructor for CarcassonneGame from an existing list of players
      *
      * @param players existing list of players
+     * @throws java.lang.Exception
      */
     public CarcassonneGame(ArrayList<Player> players) throws Exception
     {
@@ -196,7 +195,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         else {
             /*Player has meeple*/
 
- /*Check if a meeple can be to put on this tile*/
+            /*Check if a meeple can be to put on this tile*/
             if (tile.isMeepable() == false) {
                 throw new Exception("no meepable");
             }
@@ -428,5 +427,4 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         return neighborTileLocations;
     }
-
 }

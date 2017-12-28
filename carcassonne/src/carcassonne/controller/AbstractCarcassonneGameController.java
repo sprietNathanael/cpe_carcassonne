@@ -133,6 +133,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     /**
      * Begin a game
+     * @throws java.lang.Exception
      */
     public void beginGame() throws Exception
     {
