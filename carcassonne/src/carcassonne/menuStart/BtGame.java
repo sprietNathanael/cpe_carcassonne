@@ -7,11 +7,11 @@ package carcassonne.menuStart;
 
 /**
  *
- * @author thomas
+ * @author thomas, bertrand
  */
+import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
@@ -20,7 +20,7 @@ import javax.swing.JButton;
 public class BtGame extends JButton
 {
 
-    private Image img;
+    private BufferedImage img;
 
     public BtGame(String image)
     {
@@ -33,7 +33,12 @@ public class BtGame extends JButton
     @Override
     public void paintComponent(Graphics g)
     {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.drawImage(img, 0, 0, this.getWidth(), this.getHeight(), this);
+        super.paintComponent(g);
+        g.drawImage(img, 0, 0, null);
+    }
+    
+    @Override
+    public Dimension getPreferredSize() {
+        return new Dimension(img.getWidth(), img.getHeight());
     }
 }

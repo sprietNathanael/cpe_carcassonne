@@ -21,10 +21,10 @@ import javax.swing.JFrame;
 public class GameMenu extends JFrame
 {
 
-    private final BtGame play = new BtGame("resources/BtPlay.PNG");
-    private final BtGame exit = new BtGame("resources/BtExit.PNG");
-    private final BtGame btsettings = new BtGame("resources/BtSettings.PNG");
-    private final BtGame btinstructions = new BtGame("resources/instructions.PNG");
+    private final BtGame btPlay = new BtGame("resources/Play.PNG");
+    private final BtGame btSettings = new BtGame("resources/Settings.PNG");
+    private final BtGame btInstructions = new BtGame("resources/instructions.PNG");
+    private final BtGame btExit = new BtGame("resources/Exit.PNG");
     private final String path = "resources/musicMenu.mp3";
     private final Sounds music = new Sounds(path);
 
@@ -40,23 +40,26 @@ public class GameMenu extends JFrame
 
         this.setLayout(null);
 
-        this.add(btinstructions);
-        btinstructions.setBounds(840, 730, 160, 85);
-        btinstructions.setBorderPainted(false);
+        /*this.add(btInstructions);
+        btInstructions.setBounds(840, 730, 160, 85);
+        btInstructions.setBorderPainted(false);
 
-        btinstructions.addActionListener(new ActionListener()
+        btInstructions.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
             }
-        });
+        });*/
+        
+        this.add(btPlay);
+        btPlay.setOpaque(false);
+        btPlay.setContentAreaFilled(false);
+        btPlay.setBorderPainted(false);
+        btPlay.setBounds(400, 300, 207, 92);
+        //btPlay.setBorderPainted(false);
 
-        this.add(play);
-        play.setBounds(400, 300, 160, 85);
-        play.setBorderPainted(false);
-
-        play.addActionListener(new ActionListener()
+        btPlay.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -72,10 +75,12 @@ public class GameMenu extends JFrame
             }
         });
 
-        this.add(btsettings);
-        btsettings.setBounds(400, 400, 160, 85);
-        btsettings.setBorderPainted(false);
-        btsettings.addActionListener(new ActionListener()
+        this.add(btSettings);
+        btSettings.setBounds(400, 400, 207, 92);
+        btSettings.setOpaque(false);
+        btSettings.setContentAreaFilled(false);
+        btSettings.setBorderPainted(false);
+        btSettings.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -93,10 +98,12 @@ public class GameMenu extends JFrame
 
         });
 
-        this.add(exit);
-        exit.setBounds(400, 500, 160, 85);
-        exit.setBorderPainted(false);
-        exit.addActionListener(new ActionListener()
+        this.add(btExit);
+        btExit.setBounds(400, 500, 207, 92);
+        btExit.setOpaque(false);
+        btExit.setContentAreaFilled(false);
+        btExit.setBorderPainted(false);
+        btExit.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
@@ -108,6 +115,5 @@ public class GameMenu extends JFrame
         this.setVisible(true);
 
         music.play();
-
     }
 }
