@@ -5,22 +5,11 @@
  */
 package carcassonne.menuStart;
 
-import java.io.IOException;
-
 /**
  *
  * @author thomas
  */
-public class MainTest
+public class ZDialogInfo
 {
-
-    public static void main(String[] args) throws IOException, Exception
-    {
-
-        GameMenu fen = new GameMenu();
-        
-   
-        
-    }
-
+    
 }
