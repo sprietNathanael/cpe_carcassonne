@@ -7,7 +7,7 @@ package carcassonne.menuStart;
 
 /**
  *
- * @author thomas
+ * @author thomas & bertrand
  */
 import carcassonne.view.ui_test.ClientWindow;
 import java.awt.event.ActionEvent;
@@ -42,11 +42,13 @@ public class GameMenu extends JFrame
 
         this.setLayout(null);
 
-        /*this.add(btInstructions);
-        btInstructions.setBounds(840, 730, 160, 85);
+        this.add(btInstructions);
+        btInstructions.setBounds(680, 500, 300, 300);
+        btInstructions.setOpaque(false);
+        btInstructions.setContentAreaFilled(false);
         btInstructions.setBorderPainted(false);
 
-        btInstructions.addActionListener(new ActionListener()
+        /*btInstructions.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
