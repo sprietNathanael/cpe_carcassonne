@@ -43,18 +43,18 @@ public class GameMenu extends JFrame
         this.setLayout(null);
 
         this.add(btInstructions);
-        btInstructions.setBounds(680, 500, 300, 300);
+        btInstructions.setBounds(830, 660, 135, 155);
         btInstructions.setOpaque(false);
         btInstructions.setContentAreaFilled(false);
         btInstructions.setBorderPainted(false);
 
-        /*btInstructions.addActionListener(new ActionListener()
+        btInstructions.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
             }
-        });*/
+        });
         
         this.add(btPlay);
         btPlay.setOpaque(false);
