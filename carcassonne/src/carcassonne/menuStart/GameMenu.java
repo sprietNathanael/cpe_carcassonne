@@ -10,6 +10,8 @@ package carcassonne.menuStart;
  * @author thomas & bertrand
  */
 import carcassonne.view.ui_test.ClientWindow;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedInputStream;
@@ -39,6 +41,8 @@ public class GameMenu extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setContentPane(new Background("resources/Back.png"));
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(),new Point(0,0),"nameCursor"));
 
         this.setLayout(null);
 
