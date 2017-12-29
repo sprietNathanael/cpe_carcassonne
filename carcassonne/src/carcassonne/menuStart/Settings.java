@@ -6,6 +6,8 @@
 package carcassonne.menuStart;
 
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -42,6 +44,8 @@ public class Settings extends JFrame
         this.setResizable(false);
 
         this.setContentPane(new Background(back));
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(),new Point(0,0),"nameCursor"));
 
         this.setLayout(null);
 
