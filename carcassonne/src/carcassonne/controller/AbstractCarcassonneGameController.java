@@ -73,7 +73,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void putCurrentTile(Coord c) throws Exception
     {
         this.putTile(this.currentTile, c);
-        this.endTurn();
+        //this.endTurn();
     }
 
     /**
