@@ -13,6 +13,7 @@ public class Meeple
 
     private boolean isUsed;
     private final boolean isBig;
+    private Player player;
 
     /**
      * Creates a new meeple and precise its size.
@@ -21,19 +22,21 @@ public class Meeple
      *
      * @param isBig
      */
-    public Meeple(boolean isBig)
+    public Meeple(boolean isBig, Player player)
     {
         this.isBig = isBig;
         this.isUsed = false;
+        this.player = player;
     }
 
     /**
      * Creates a default meeple
      */
-    public Meeple()
+    public Meeple(Player player)
     {
         this.isBig = false;
         this.isUsed = false;
+        this.player = player;
     }
 
     /**
@@ -64,6 +67,11 @@ public class Meeple
     public boolean getIsBig()
     {
         return isBig;
+    }
+    
+    public Player getPlayer()
+    {
+        return this.player;
     }
 
 }
