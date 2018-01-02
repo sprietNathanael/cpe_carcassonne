@@ -632,7 +632,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         Coord convertedCoord = convertCoord(x, y);
         int col = convertedCoord.col, row = convertedCoord.row;
-        Set<Set<String>> result = null;
+        Set<Set<String>> result = new HashSet<>();
         Set<String> currentAggregateLocations = null;
 
         for (RoadAggregate road : roadAggregates) {
@@ -641,7 +641,43 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 result.add(currentAggregateLocations);
             }
         }
+        currentAggregateLocations = null;
+        for (CityAggregate city : cityAggregates) {
+            currentAggregateLocations = city.getTileLocations(col, row);
+            if (currentAggregateLocations != null) {
+                result.add(currentAggregateLocations);
+            }
+        }
+        currentAggregateLocations = null;
+        for (FieldAggregate field : fieldAggregates) {
+            currentAggregateLocations = field.getTileLocations(col, row);
+            if (currentAggregateLocations != null) {
+                result.add(currentAggregateLocations);
+            }
+        }
 
         return result;
+    }
+
+    /**
+     * WIP !
+     */
+    private void manageCompletedAggregate()
+    {
+        Map<Player, Set<Meeple>> playersToUpdate;
+
+        for (CityAggregate city : cityAggregates) {
+            if (!city.isCompleted()) {
+                if (city.checkIsCompleted()) {
+                    playersToUpdate = city.getPlayers();
+                    for (Map.Entry<Player, Set<Meeple>> entry : playersToUpdate.entrySet()) {
+                        Player player = entry.getKey();
+                        Set<Meeple> meeples = entry.getValue();
+
+                    }
+
+                }
+            }
+        }
     }
 }
