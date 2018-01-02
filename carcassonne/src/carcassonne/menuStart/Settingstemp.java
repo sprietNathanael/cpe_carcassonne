@@ -113,10 +113,10 @@ public class Settingstemp extends JFrame
         JPanel content = new JPanel();
         content.setBackground(Color.white);
         //content.add(numb);
-        content.add(panNumb);
-        content.add(player1,  BorderLayout.EAST);
-        content.add(player2,  BorderLayout.EAST);
-        content.add(player3,  BorderLayout.EAST);
+        //content.add(panNumb);
+        content.add(player1);
+        content.add(player2);
+        content.add(player3);
         content.add(player4);
         content.add(player5);
         content.add(player6);
@@ -142,21 +142,13 @@ public class Settingstemp extends JFrame
                 setVisible(false);
             }
 
-            public String getJoueurs()
-            {
-                return (nb2.isSelected()) ? nb2.getText()
-                        : (nb3.isSelected()) ? nb3.getText()
-                        : (nb4.isSelected()) ? nb4.getText()
-                        : (nb5.isSelected()) ? nb5.getText()
-                        : (nb6.isSelected()) ? nb6.getText()
-                        : nb2.getText();
-            }
         });
 
         control.add(okBouton);
         control.add(cancelBouton);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
+        this.getContentPane().add(panNumb, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
@@ -166,7 +158,7 @@ public class Settingstemp extends JFrame
 
         JPanel player = new JPanel();
         player.setBackground(Color.white);
-        player.setPreferredSize(new Dimension(300, 60));
+        player.setPreferredSize(new Dimension(600, 60));
         player.setBorder(BorderFactory.createTitledBorder("Player " + x));
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
