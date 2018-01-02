@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
  * Mouse listener for layers
  * @author nathanael
  */
-public interface LayerMouseListener
+public interface TilePlacementMouseListener
 {
     void tileEntered(MouseEvent e, UICoord p);
     void tileExited(MouseEvent e, UICoord p);

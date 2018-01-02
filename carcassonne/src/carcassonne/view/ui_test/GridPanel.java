@@ -73,7 +73,6 @@ public class GridPanel extends JPanel
     public void addLayer(AbstractLayer layer)
     {
         layers.add(layer);
-        layer.onShow();
     }
 
     @Override

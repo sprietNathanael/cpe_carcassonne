@@ -132,7 +132,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public AbstractTile drawFromPile()
     {
         this.currentTile = this.pile.remove(0);
-        this.refreshPlacements();
         return this.currentTile;
 
     }
@@ -158,6 +157,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         System.out.println("Taille de la première ville: " + cityAggregates.get(0).getAggregatedTiles().size() + "\n");
         System.out.println("Aggrégats de champs:\n" + fieldAggregates);
         System.out.println("Taille du premier champs: " + fieldAggregates.get(0).getAggregatedTiles().size() + "\n");
+    }
+    
+    /**
+     * Test if a meeple of the current player can be put on a tile
+     * @return 
+     */
+    public boolean playerMeepleBePutOnCurrentTile()
+    {
+        return this.currentTile.isMeepable();
     }
 
     /**
@@ -206,7 +214,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * Used to complete the actions of the tile that has been drawn
      *
      */
-    private void refreshPlacements()
+    public void refreshPlacements()
     {
         this.placements.clear();
         if (this.currentTile != null) {
@@ -258,6 +266,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyBoardChanged()
     {
         this.notifyMessage = "boardChanged";
+        this.notifyObservers();
+    }
+    
+    public void notifyPlacementsReady()
+    {
+        this.notifyMessage = "placementsReady";
         this.notifyObservers();
     }
 
