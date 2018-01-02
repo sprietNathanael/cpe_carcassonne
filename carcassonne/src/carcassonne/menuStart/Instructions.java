@@ -29,7 +29,7 @@ public class Instructions extends JFrame
 
         this.setTitle("Instructions");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        this.setSize(851, 1000);
+        this.setSize(860, 1030);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -44,6 +44,8 @@ public class Instructions extends JFrame
         this.add(exit);
         exit.setBounds(750, 910, 57, 43);
         exit.setBorderPainted(false);
+        exit.setOpaque(false);
+        exit.setContentAreaFilled(false);
         exit.addActionListener(new ActionListener()
         {
 

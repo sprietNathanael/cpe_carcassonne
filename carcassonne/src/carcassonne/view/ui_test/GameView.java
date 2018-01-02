@@ -20,6 +20,7 @@ import java.util.logging.Logger;
  */
 public class GameView
 {
+
     private AbstractCarcassonneGameController controller;
     private CarcassonneGame game;
     private ArrayList<Player> players;
@@ -43,9 +44,10 @@ public class GameView
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Shows the view
+     *
      * @param pane Container that receives the main panel
      */
     public void show(Container pane)
@@ -53,14 +55,14 @@ public class GameView
         //Construct the main panel and adds it to the main container
         MainPanel mainPanel = new MainPanel(this.controller, this.players);
         this.game.addObserver(mainPanel);
-        
+
         pane.add(mainPanel);
         try {
             this.controller.beginGame();
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
-    
+
 }
