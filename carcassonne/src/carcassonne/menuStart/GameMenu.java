@@ -57,7 +57,6 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               // musicPlayer.close();
                 Instructions instructions = null;
                 try {
                     instructions = new Instructions();
