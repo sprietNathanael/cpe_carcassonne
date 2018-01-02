@@ -104,7 +104,7 @@ public class AbstractCarcassonneGameControllerTest
         list.add(j2);
         CarcassonneGame jeu = new CarcassonneGame(list);
         
-        Meeple m1 = new Meeple();
+        Meeple m1 = new Meeple(j1);
         RoadType rot = new RoadType();
         
         CasualTile t1 = new CasualTile("A",

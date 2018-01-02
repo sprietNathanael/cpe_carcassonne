@@ -115,9 +115,9 @@ public class PlayerTest
     {
         System.out.println("countMeeples");
         Set<Meeple> meeples = new HashSet<>();
-        meeples.add(new Meeple());
-        meeples.add(new Meeple());
-        meeples.add(new Meeple(true));
+        meeples.add(new Meeple(new Player("un","red")));
+        meeples.add(new Meeple(new Player("deux","blue")));
+        meeples.add(new Meeple(true, new Player("trois","yellow")));
 
         int expResult = 4;
         int result = Player.countPoints(meeples);
