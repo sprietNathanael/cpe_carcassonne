@@ -1,0 +1,23 @@
+/*
+ * Carcassonne Project - 2017 - 2018
+ * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
+ * CPE 4th year project
+ */
+package carcassonne.view.ui_test;
+
+import java.awt.event.MouseEvent;
+
+/**
+ *
+ * @author nathanael
+ */
+public interface MeeplePlacementMouseListener
+{
+    void tileSliceEntered(MouseEvent e, UICoord p, String tileSlice);
+    void tileSliceExited(MouseEvent e);
+    
+    void mouseClicked(MouseEvent e, UICoord p, String tileSlice);
+    
+    String getSliceFromCoordinates(double x, double y, UICoord tileCoordinates);
+    
+}

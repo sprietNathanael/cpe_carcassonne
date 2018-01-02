@@ -14,7 +14,7 @@ import java.util.ArrayList;
  */
 public abstract class AbstractLayer
 {
-    GridPanel gridPanel;
+    protected GridPanel gridPanel;
     protected ArrayList<UICoord> positions;
     private LayerMouseAdapter mouseListener;
     private boolean visible;
@@ -51,11 +51,17 @@ public abstract class AbstractLayer
      * Saves and attaches a mouse input listener to the gridPanel
      * @param mouseListener 
      */
-    public void attachMouseInputListener(LayerMouseAdapter mouseListener) {
-        this.mouseListener = mouseListener;
+    public void attachMouseInputListener(LayerMouseAdapter ml) {
+        this.mouseListener = ml;
         this.gridPanel.addMouseListener(this.mouseListener);
         this.gridPanel.addMouseMotionListener(this.mouseListener);
     }
+    
+    public void removeMouseInputListener() {
+        this.gridPanel.removeMouseListener(this.mouseListener);
+        this.gridPanel.removeMouseMotionListener(mouseListener);
+    }
+    
     
     /**
      * Test if the layer is visible

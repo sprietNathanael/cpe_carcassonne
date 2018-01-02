@@ -132,7 +132,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public AbstractTile drawFromPile()
     {
         this.currentTile = this.pile.remove(0);
-        this.refreshPlacements();
         return this.currentTile;
 
     }
@@ -161,6 +160,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     /**
+     * Test if a meeple of the current player can be put on a tile
+     *
+     * @return
+     */
+    public boolean playerMeepleBePutOnCurrentTile()
+    {
+        return this.currentTile.isMeepable();
+    }
+
+    /**
      * Alloxs to put a meeple on a type
      *
      * @param meeple
@@ -186,7 +195,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 meeple.setIsUsed(true);
             }
         }
-
+        /* Update the aggregates, if one just has been completed, we add the points and free the meeple */
+        //this.manageCompletedAggregate();
     }
 
     public Board getBoard()
@@ -206,7 +216,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * Used to complete the actions of the tile that has been drawn
      *
      */
-    private void refreshPlacements()
+    public void refreshPlacements()
     {
         this.placements.clear();
         if (this.currentTile != null) {
@@ -258,6 +268,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyBoardChanged()
     {
         this.notifyMessage = "boardChanged";
+        this.notifyObservers();
+    }
+
+    public void notifyPlacementsReady()
+    {
+        this.notifyMessage = "placementsReady";
         this.notifyObservers();
     }
 
@@ -612,9 +628,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return newFieldAggregatesEmplacements;
     }
 
-    public Set<Set<String>> getFreeAggregatesInTile(int col, int row)
+    public Set<Set<String>> getFreeAggregatesInTile(int x, int y)
     {
-        Set<Set<String>> result = null;
+        Coord convertedCoord = convertCoord(x, y);
+        int col = convertedCoord.col, row = convertedCoord.row;
+        Set<Set<String>> result = new HashSet<>();
         Set<String> currentAggregateLocations = null;
 
         for (RoadAggregate road : roadAggregates) {
@@ -623,7 +641,43 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 result.add(currentAggregateLocations);
             }
         }
+        currentAggregateLocations = null;
+        for (CityAggregate city : cityAggregates) {
+            currentAggregateLocations = city.getTileLocations(col, row);
+            if (currentAggregateLocations != null) {
+                result.add(currentAggregateLocations);
+            }
+        }
+        currentAggregateLocations = null;
+        for (FieldAggregate field : fieldAggregates) {
+            currentAggregateLocations = field.getTileLocations(col, row);
+            if (currentAggregateLocations != null) {
+                result.add(currentAggregateLocations);
+            }
+        }
 
         return result;
+    }
+
+    /**
+     * WIP !
+     */
+    private void manageCompletedAggregate()
+    {
+        Map<Player, Set<Meeple>> playersToUpdate;
+
+        for (CityAggregate city : cityAggregates) {
+            if (!city.isCompleted()) {
+                if (city.checkIsCompleted()) {
+                    playersToUpdate = city.getPlayers();
+                    for (Map.Entry<Player, Set<Meeple>> entry : playersToUpdate.entrySet()) {
+                        Player player = entry.getKey();
+                        Set<Meeple> meeples = entry.getValue();
+
+                    }
+
+                }
+            }
+        }
     }
 }

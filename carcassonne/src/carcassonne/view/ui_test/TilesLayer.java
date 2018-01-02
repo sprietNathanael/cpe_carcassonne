@@ -30,21 +30,24 @@ public class TilesLayer extends AbstractLayer
     @Override
     public void paint(Graphics2D g2)
     {
-        // Get the grid panel properties
-        int tileSize = this.gridPanel.getTileSize();
-        UICoord center = this.gridPanel.getGraphicalCenter();
-        
-        // Browse the placed tiles
-        this.positions.forEach((coord) -> {
-            // Computes the pixel component of the tile
-            int x = center.getX()+(tileSize*coord.getX());
-            int y = center.getY()+(tileSize*coord.getY());
-            
-            // Cast the coordinates into a Tile Image
-            TileImage tileImage = (TileImage)coord;
-            
-            // Draw the tile at the computed coordinates
-            g2.drawImage(tileImage.getImage(), x, y, tileSize, tileSize, null);
-        });
+        if(this.isVisible())
+        {
+            // Get the grid panel properties
+            int tileSize = this.gridPanel.getTileSize();
+            UICoord center = this.gridPanel.getGraphicalCenter();
+
+            // Browse the placed tiles
+            this.positions.forEach((coord) -> {
+                // Computes the pixel component of the tile
+                int x = center.getX()+(tileSize*coord.getX());
+                int y = center.getY()+(tileSize*coord.getY());
+
+                // Cast the coordinates into a Tile Image
+                TileImage tileImage = (TileImage)coord;
+
+                // Draw the tile at the computed coordinates
+                g2.drawImage(tileImage.getImage(), x, y, tileSize, tileSize, null);
+            });
+        }
     }
 }

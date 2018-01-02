@@ -73,7 +73,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void putCurrentTile(Coord c) throws Exception
     {
         this.putTile(this.currentTile, c);
-        this.endTurn();
+        //this.endTurn();
     }
 
     /**
@@ -152,6 +152,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         System.out.println("La pièce piochée est : "+this.currentTile.getName());
         System.out.println(this.currentTile);
         this.carcassonneGame.notifyBoardChanged();
+        this.carcassonneGame.refreshPlacements();
+        this.carcassonneGame.notifyPlacementsReady();
     }
 
     /**

@@ -37,10 +37,10 @@ public class Player
         this.name = name;
         this.color = color;
         this.points = 0;
-        this.bigMeeple = new Meeple(true);
+        this.bigMeeple = new Meeple(true, this);
         this.meeples = new ArrayList<>();
         for (int i = 1; i < NBMEEPLE; i++) {
-            this.meeples.add(new Meeple());
+            this.meeples.add(new Meeple(this));
         }
     }
 

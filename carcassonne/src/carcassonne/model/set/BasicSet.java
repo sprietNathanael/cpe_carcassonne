@@ -55,7 +55,7 @@ public class BasicSet implements SetInterface
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("S"));
             aggregates.add(retTreeSet("SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
-                    "NNE", "NE", "NEE", "E", "SSE", "SE", "SSE"));
+                    "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE", "CNW", "CNE", "CSW", "CSE"));
 
             tileList.add(new CasualTile("A", "A" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
@@ -70,7 +70,7 @@ public class BasicSet implements SetInterface
         for (int i = 1; i <= 4; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
-                    "NNE", "NE", "NEE", "E", "SSE", "SE", "SSE"));
+                    "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "CNW", "CNE", "CSW", "CSE"));
 
             tileList.add(new CasualTile("B", "B" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section

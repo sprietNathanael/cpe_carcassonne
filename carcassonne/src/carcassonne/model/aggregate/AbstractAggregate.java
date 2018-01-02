@@ -38,6 +38,11 @@ public abstract class AbstractAggregate
      */
     protected boolean isCompleted;
 
+    public boolean isCompleted()
+    {
+        return isCompleted;
+    }
+
     /**
      * Construct a new aggregate
      *

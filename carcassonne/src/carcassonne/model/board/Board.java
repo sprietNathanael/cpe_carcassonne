@@ -156,13 +156,24 @@ public class Board implements BoardInterface
                 Coord tempCoord = new Coord(horizontalIterate, verticalIterate);
                 if(!this.grid.containsKey(tempCoord))
                 {
-                    for(int i = 0; i < 4; i++)
+                    int  i = 0;
+                    boolean tileCanBePlaced = false;
+                    while(i < 4 && !tileCanBePlaced)
                     {
                         if(this.canTileBePlacedHere(tempCoord, tile))
                         {
                             res.add(tempCoord);
+                            tileCanBePlaced = true;
+                            for(; i< 4; i++)
+                            {
+                                tile.rotateRight();
+                            }
                         }
-                        tile.rotateRight();
+                        else
+                        {
+                            tile.rotateRight();                            
+                        }
+                        i++;
                     }
                 }
             }
