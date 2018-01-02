@@ -380,7 +380,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         else if (neighboredTilesEmplacement.equals(new Coord(0, 1))) {
             authorizedString = BasicSet.retTreeSet("SSW", "S", "SSE");
         }
-        System.out.println("type autoreioreziorz === " + authorizedString);
         //Filter the locations using the authorized locations
         neighborTileLocations = filterSetString(neighborTileLocations, authorizedString);
         //Get the corresponding neighbor edges of the result
@@ -594,8 +593,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
                     if (neighborTileLocations != null) {
                         neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
-                        System.out.println("Types requis: " + neededLocations);
-                        System.out.println("Types de la tuile: " + fieldAggregatesEmplacements);
 
                         for (Set<String> locationInNewTile : fieldAggregatesEmplacements) {
                             for (String neededLocation : neededLocations) {
@@ -605,15 +602,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                                         field.enlargeAggregate(col, row, tile, locationInNewTile, tileCities);
                                         fieldAlreadyAffected.put(locationInNewTile, field);
                                         newFieldAggregatesEmplacements.remove(locationInNewTile);
-
-                                        System.out.println("Placement d'un champs aux coordonnées: " + col + ":" + row);
                                     }
                                     else {
                                         FieldAggregate fieldToBeCompleted = fieldAlreadyAffected.get(locationInNewTile);
                                         if (field != fieldToBeCompleted) {
                                             fieldToBeCompleted.merge(field);
                                             updatedFieldAggregates.remove(field);
-                                            System.out.println("MERGE");
                                         }
                                     }
                                 }
