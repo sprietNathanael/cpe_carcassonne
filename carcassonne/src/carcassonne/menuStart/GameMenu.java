@@ -57,6 +57,10 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                musicPlayer.close();
+                Instructions instructions = new Instructions();
+                instructions.setVisible(true);
+                instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
             }
         });
         

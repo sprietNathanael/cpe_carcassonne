@@ -5,7 +5,9 @@
  */
 package carcassonne.menuStart;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,8 +15,11 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
 /**
@@ -26,12 +31,12 @@ public class Settings extends JFrame
 {
 
     private final String back = "resources/settingsMenuconfig.png";
-    private final BtGame bt1 = new BtGame("resources/bt_I.PNG");
     private final BtGame bt2 = new BtGame("resources/bt_II.PNG");
     private final BtGame bt3 = new BtGame("resources/bt_III.PNG");
     private final BtGame bt4 = new BtGame("resources/bt_IV.PNG");
     private final BtGame bt5 = new BtGame("resources/bt_V.PNG");
     private final BtGame bt6 = new BtGame("resources/bt_VI.PNG");
+    private final JComboBox combo = new JComboBox();
     private int nbPlayers = 0;
 
     public Settings() throws IOException
@@ -42,34 +47,17 @@ public class Settings extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-
-        this.setContentPane(new Background(back));
+        
+        this.add(new JLabel(new ImageIcon(back)));
+        this.pack();
+        //this.setContentPane(new Background(back));
         Toolkit tk = Toolkit.getDefaultToolkit();
-        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(),new Point(0,0),"nameCursor"));
+        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
         this.setLayout(null);
 
-        this.add(bt1);
-        bt1.setBounds(510, 250, 24, 50);
-        bt1.setBorderPainted(false);
-
-        bt1.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                bt2.setEnabled(false);
-                bt3.setEnabled(false);
-                bt4.setEnabled(false);
-                bt5.setEnabled(false);
-                bt6.setEnabled(false);
-                nbPlayers = 1;
-                bt1.setBorderPainted(true);
-                bt1.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
-
-            }
-        });
-
+        
+        //Numbers of Players
         this.add(bt2);
         bt2.setBounds(550, 252, 41, 49);
         bt2.setBorderPainted(false);
@@ -79,7 +67,6 @@ public class Settings extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                bt1.setEnabled(false);
                 bt3.setEnabled(false);
                 bt4.setEnabled(false);
                 bt5.setEnabled(false);
@@ -100,7 +87,6 @@ public class Settings extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                bt1.setEnabled(false);
                 bt2.setEnabled(false);
                 bt4.setEnabled(false);
                 bt5.setEnabled(false);
@@ -120,7 +106,6 @@ public class Settings extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                bt1.setEnabled(false);
                 bt2.setEnabled(false);
                 bt3.setEnabled(false);
                 bt5.setEnabled(false);
@@ -141,7 +126,6 @@ public class Settings extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                bt1.setEnabled(false);
                 bt2.setEnabled(false);
                 bt3.setEnabled(false);
                 bt4.setEnabled(false);
@@ -164,7 +148,7 @@ public class Settings extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                bt1.setEnabled(false);
+
                 bt2.setEnabled(false);
                 bt3.setEnabled(false);
                 bt4.setEnabled(false);
@@ -175,6 +159,19 @@ public class Settings extends JFrame
 
             }
         });
+        
+        
+        //Colors of player
+        combo.setPreferredSize(new Dimension(100,20));
+        combo.addItem("Rouge");
+        combo.addItem("Vert");
+        combo.addItem("Bleu");
+        JPanel top = new JPanel();
+        top.add(combo,BorderLayout.SOUTH);
+        
+        //this.setContentPane(top);
+        //this.add(topgetContentPane,BorderLayout.SOUTH);
+        
 
         this.setVisible(true);
 
