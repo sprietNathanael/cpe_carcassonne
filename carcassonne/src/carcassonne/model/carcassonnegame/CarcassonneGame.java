@@ -611,4 +611,18 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         return newFieldAggregatesEmplacements;
     }
+    
+    public Set<Set<String>> getFreeAggregatesInTile(int col , int row){
+        Set<Set<String>> result = null;
+        Set<String> currentAggregateLocations = null;
+        
+        for (RoadAggregate road : roadAggregates){
+            currentAggregateLocations = road.getTileLocations(col, row);
+            if (currentAggregateLocations != null){
+                result.add(currentAggregateLocations);
+            }
+        }
+        
+        return result;
+    }
 }

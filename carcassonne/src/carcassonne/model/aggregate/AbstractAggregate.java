@@ -166,7 +166,7 @@ public abstract class AbstractAggregate
     public Set<String> getAggregatedTypesByCoord(int col, int row)
     {
         AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
-        
+
         return aggregatedPositionTypes.get(tile);
     }
 
@@ -308,4 +308,29 @@ public abstract class AbstractAggregate
      * @return points
      */
     public abstract int countPoints();
+
+    public boolean isPresentOnTile(int col, int row)
+    {
+        return aggregatedTiles.containsKey(new Coord(col, row));
+    }
+
+    /**
+     * Get the locations of the aggregates for given coordinates. Null if there
+     * is no locations in those coordinates
+     *
+     * @param col
+     * @param row
+     * @return
+     */
+    public Set<String> getTileLocations(int col, int row)
+    {
+        Set<String> result = null;
+
+        if (this.isPresentOnTile(col, row)) {
+            AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
+            result = aggregatedPositionTypes.get(tile);
+        }
+
+        return result;
+    }
 }
