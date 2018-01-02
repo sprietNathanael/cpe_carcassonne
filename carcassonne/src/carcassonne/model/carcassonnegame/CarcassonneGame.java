@@ -148,7 +148,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         board.addTile(tile, row, column);
-        this.notifyBoardChanged();
         this.manageNewTileAggregates(tile, row, column);
         System.out.println("Aggrégats de route:\n" + roadAggregates);
         System.out.println("Taille de la première route: " + roadAggregates.get(0).countPoints() + "\n");
@@ -157,6 +156,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         System.out.println("Taille de la première ville: " + cityAggregates.get(0).getAggregatedTiles().size() + "\n");
         System.out.println("Aggrégats de champs:\n" + fieldAggregates);
         System.out.println("Taille du premier champs: " + fieldAggregates.get(0).getAggregatedTiles().size() + "\n");
+        this.notifyBoardChanged();
     }
 
     /**
