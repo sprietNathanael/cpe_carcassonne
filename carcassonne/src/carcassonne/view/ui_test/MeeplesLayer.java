@@ -98,7 +98,7 @@ public class MeeplesLayer extends AbstractLayer
     
     public void addMeeple(Coord coord, String location, Meeple meeple)
     {
-        this.meepleLocations.put(coord, new Pair(location, meeple));
+        this.meepleLocations.put(coord, new Pair<>(location, meeple));
     }
     
 }
