@@ -58,7 +58,7 @@ public class FieldAggregateTest
     @Test
     public void testCheckIsCompleted()
     {
-        Set<CityAggregate> set = new HashSet();
+        Set<CityAggregate> set = new HashSet<>();
         set.add(new CityAggregate(0, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes()));
         FieldAggregate instance = new FieldAggregate(0, 0,
                 AbstractAggregateTest.initiateAbstractTile(),
@@ -113,7 +113,7 @@ public class FieldAggregateTest
         CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
         CityAggregate aggr2 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NWW", "W", "SWW"));
 
-        Set<CityAggregate> citiesAggr = new HashSet();
+        Set<CityAggregate> citiesAggr = new HashSet<>();
         citiesAggr.add(aggr1);
         citiesAggr.add(aggr2);
 
@@ -137,7 +137,7 @@ public class FieldAggregateTest
         aggr1.enlargeAggregate(0, 1, tile, BasicSet.retTreeSet("S", "SSW", "SSE"));
         System.out.println(aggr1.checkIsCompleted());
 
-        Set<CityAggregate> citiesAggr = new HashSet();
+        Set<CityAggregate> citiesAggr = new HashSet<>();
         citiesAggr.add(aggr1);
         citiesAggr.add(aggr2);
 
@@ -145,7 +145,7 @@ public class FieldAggregateTest
         Set<CityAggregate> result = instance.getBoundedCities();
 
         //there is only the first aggr that is bounded to the field
-        Set<CityAggregate> expRes = new HashSet();
+        Set<CityAggregate> expRes = new HashSet<>();
         expRes.add(aggr1);
 
         assertEquals(expRes, result);
@@ -161,7 +161,7 @@ public class FieldAggregateTest
 
         CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
 
-        Set<CityAggregate> citiesAggr = new HashSet();
+        Set<CityAggregate> citiesAggr = new HashSet<>();
         citiesAggr.add(aggr1);
 
         FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
@@ -169,7 +169,7 @@ public class FieldAggregateTest
         AbstractTile tile2 = getITile();
         tile2.rotateRight();
         CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
-        citiesAggr = new HashSet();
+        citiesAggr = new HashSet<>();
         citiesAggr.add(aggr2);
         citiesAggr.add(aggr1);
 
@@ -177,7 +177,7 @@ public class FieldAggregateTest
 
         instance.merge(instance2);
 
-        Set<CityAggregate> expRes = new HashSet();
+        Set<CityAggregate> expRes = new HashSet<>();
         expRes.add(aggr1);
         expRes.add(aggr2);
 
@@ -196,7 +196,7 @@ public class FieldAggregateTest
 
         CityAggregate aggr1 = new CityAggregate(0, 0, tile, BasicSet.retTreeSet("NNW", "N", "NNE"));
 
-        Set<CityAggregate> citiesAggr = new HashSet();
+        Set<CityAggregate> citiesAggr = new HashSet<>();
         citiesAggr.add(aggr1);
 
         FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
@@ -204,7 +204,7 @@ public class FieldAggregateTest
         AbstractTile tile2 = getITile();
         tile2.rotateRight();
         CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
-        citiesAggr = new HashSet();
+        citiesAggr = new HashSet<>();
         citiesAggr.add(aggr2);
         citiesAggr.add(aggr1);
 
@@ -212,7 +212,7 @@ public class FieldAggregateTest
 
         instance.merge(instance2);
 
-        Set<CityAggregate> expRes = new HashSet();
+        Set<CityAggregate> expRes = new HashSet<>();
         expRes.add(aggr1);
         expRes.add(aggr2);
 
@@ -235,7 +235,7 @@ public class FieldAggregateTest
         tileBis.rotateLeft();
         aggr1.enlargeAggregate(0, 1, tile, BasicSet.retTreeSet("SSW", "S", "SSE"));
 
-        Set<CityAggregate> citiesAggr = new HashSet();
+        Set<CityAggregate> citiesAggr = new HashSet<>();
         citiesAggr.add(aggr1);
 
         FieldAggregate instance = new FieldAggregate(0, 0, tile, BasicSet.retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE"), citiesAggr);
@@ -243,7 +243,7 @@ public class FieldAggregateTest
         AbstractTile tile2 = getITile();
         tile2.rotateRight();
         CityAggregate aggr2 = new CityAggregate(-1, 0, tile2, BasicSet.retTreeSet("NEE", "E", "SEE"));
-        citiesAggr = new HashSet();
+        citiesAggr = new HashSet<>();
         citiesAggr.add(aggr2);
         citiesAggr.add(aggr1);
 

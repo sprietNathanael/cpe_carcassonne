@@ -37,7 +37,7 @@ public class Settingstemp extends JFrame
 
     private JLabel nomLabel, colorsLabel, icon;
     private JComboBox colors;
-    private JTextField nom;
+    private JTextField nom,numbers;
     private JRadioButton nb2, nb3, nb4, nb5, nb6;
 
     public Settingstemp() throws IOException
@@ -72,7 +72,7 @@ public class Settingstemp extends JFrame
         panIcon.add(icon);
 
         //Numbers 
-        JPanel numb = new JPanel();
+        /*JPanel numb = new JPanel();
         numb.setBackground(Color.white);
         numb.setBorder(BorderFactory.createTitledBorder("Numbers of players"));
         numb.setPreferredSize(new Dimension(440, 60));
@@ -91,7 +91,16 @@ public class Settingstemp extends JFrame
         numb.add(nb3);
         numb.add(nb4);
         numb.add(nb5);
-        numb.add(nb6);
+        numb.add(nb6);*/
+        JPanel panNumb = new JPanel();
+        panNumb.setBackground(Color.white);
+        panNumb.setPreferredSize(new Dimension(400, 60));
+        numbers = new JTextField();
+        numbers.setPreferredSize(new Dimension(100, 25));
+        panNumb.setBorder(BorderFactory.createTitledBorder("Numbers of players"));
+        nomLabel = new JLabel("Numbers (between 2 and 6) :");
+        panNumb.add(nomLabel, BorderLayout.WEST);
+        panNumb.add(numbers, BorderLayout.EAST);
 
         //Players
         JPanel player1 = CreatePlayer(1);
@@ -103,15 +112,16 @@ public class Settingstemp extends JFrame
 
         JPanel content = new JPanel();
         content.setBackground(Color.white);
-        content.add(numb);
-        content.add(player1);
-        content.add(player2);
-        content.add(player3);
+        //content.add(numb);
+        content.add(panNumb);
+        content.add(player1,  BorderLayout.EAST);
+        content.add(player2,  BorderLayout.EAST);
+        content.add(player3,  BorderLayout.EAST);
         content.add(player4);
         content.add(player5);
         content.add(player6);
-
         
+
         //Save Data
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
@@ -130,6 +140,16 @@ public class Settingstemp extends JFrame
             public void actionPerformed(ActionEvent arg0)
             {
                 setVisible(false);
+            }
+
+            public String getJoueurs()
+            {
+                return (nb2.isSelected()) ? nb2.getText()
+                        : (nb3.isSelected()) ? nb3.getText()
+                        : (nb4.isSelected()) ? nb4.getText()
+                        : (nb5.isSelected()) ? nb5.getText()
+                        : (nb6.isSelected()) ? nb6.getText()
+                        : nb2.getText();
             }
         });
 

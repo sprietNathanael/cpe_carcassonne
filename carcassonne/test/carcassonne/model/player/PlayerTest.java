@@ -114,7 +114,7 @@ public class PlayerTest
     public void testCountPoints()
     {
         System.out.println("countMeeples");
-        Set<Meeple> meeples = new HashSet();
+        Set<Meeple> meeples = new HashSet<>();
         meeples.add(new Meeple());
         meeples.add(new Meeple());
         meeples.add(new Meeple(true));

@@ -27,7 +27,7 @@ public class CasualTile extends AbstractTile
     public static boolean locationsAreBounded(Set<String> cityLocations, Set<String> locationTypes)
     {
         boolean result = false;
-        Set<String> neighborLocations = new HashSet();
+        Set<String> neighborLocations = new HashSet<>();
         //Get all the bonded locations corrsponding to the city locations
         if (cityLocations != null) {
             cityLocations.forEach((cityLocation) -> {
@@ -314,7 +314,7 @@ public class CasualTile extends AbstractTile
         this.types.put("CNE", CNE);
         this.types.put("CSE", CSE);
         this.types.put("CSW", CSW);
-        aggregateEmplacements = new HashSet();
+        aggregateEmplacements = new HashSet<>();
     }
 
     /**
@@ -833,7 +833,7 @@ public class CasualTile extends AbstractTile
     @Override
     public Set<Set<String>> getCityAggregateEmplacements()
     {
-        Set<Set<String>> cityAggregatesEmplacements = new HashSet();
+        Set<Set<String>> cityAggregatesEmplacements = new HashSet<>();
 
         for (Set<String> aggregateEmplacement : aggregateEmplacements) {
             if (this.getAggregateClass(aggregateEmplacement) instanceof CityType) {
@@ -847,7 +847,7 @@ public class CasualTile extends AbstractTile
     @Override
     public Set<Set<String>> getRoadAggregateEmplacements()
     {
-        Set<Set<String>> roadAggregatesEmplacements = new HashSet();
+        Set<Set<String>> roadAggregatesEmplacements = new HashSet<>();
 
         for (Set<String> aggregateEmplacement : aggregateEmplacements) {
             if (this.getAggregateClass(aggregateEmplacement) instanceof RoadType) {
@@ -861,7 +861,7 @@ public class CasualTile extends AbstractTile
     @Override
     public Set<Set<String>> getFieldAggregateEmplacements()
     {
-        Set<Set<String>> fieldAggregatesEmplacements = new HashSet();
+        Set<Set<String>> fieldAggregatesEmplacements = new HashSet<>();
 
         for (Set<String> aggregateEmplacement : aggregateEmplacements) {
             if (this.getAggregateClass(aggregateEmplacement) instanceof FieldType) {

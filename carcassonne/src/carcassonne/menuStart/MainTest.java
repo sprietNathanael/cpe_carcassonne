@@ -13,7 +13,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class MainTest extends JFrame {
-  private JButton bouton = new JButton("Appel à la ZDialog");
 
   /*public MainTest(){      
     this.setTitle("Ma JFrame");

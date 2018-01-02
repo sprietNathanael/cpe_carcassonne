@@ -28,7 +28,7 @@ public class Board implements BoardInterface
     public Board()
     {
         //grid = new AbstractTile[ROWS][COLUMNS];
-        grid = new HashMap();
+        grid = new HashMap<>();
     }
     
     /**
@@ -125,7 +125,7 @@ public class Board implements BoardInterface
                 }
             }
         }
-        HashMap map = new HashMap<String,Coord>() {};
+        HashMap<String,Coord> map = new HashMap<String,Coord>() {};
         map.put("nw", nw);
         map.put("se", se);
         return map;        

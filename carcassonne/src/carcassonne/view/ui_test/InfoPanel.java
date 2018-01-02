@@ -58,7 +58,7 @@ public class InfoPanel extends JPanel
         
         // Get the back tile image
         try {
-            this.backTile = ImageIO.read(new File("resources/back.jpg"));
+            this.backTile = ImageIO.read(new File("resources/tiles/back.jpg"));
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -83,7 +83,7 @@ public class InfoPanel extends JPanel
             
             // Get the current tile image
             try {
-                this.currentTile = ImageIO.read(new File("resources/"+game.getCurrentTile().getName()+".jpg"));
+                this.currentTile = ImageIO.read(new File("resources/tiles/"+game.getCurrentTile().getName()+".jpg"));
             } catch (IOException ex) {
                 Logger.getLogger(InfoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

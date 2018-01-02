@@ -265,10 +265,10 @@ public class AbstractAggregateTest
 
         instance.merge(neighborAggregate);
         Map<Player, Set<Meeple>> expResult = new HashMap<>();
-        Set<Meeple> meeps = new HashSet();
+        Set<Meeple> meeps = new HashSet<>();
         meeps.add(player.getMeeple().get(0));
         expResult.put(player, meeps);
-        meeps = new HashSet();
+        meeps = new HashSet<>();
         meeps.add(player2.getMeeple().get(0));
         expResult.put(player2, meeps);
 
@@ -431,18 +431,18 @@ public class AbstractAggregateTest
     {
         Player p1 = new Player("No", "blue");
         Player p2 = new Player("Bo", "blue");
-        Map<Player, Set<Meeple>> m1 = new HashMap();
-        Map<Player, Set<Meeple>> m2 = new HashMap();
-        Map<Player, Set<Meeple>> expResult = new HashMap();
+        Map<Player, Set<Meeple>> m1 = new HashMap<>();
+        Map<Player, Set<Meeple>> m2 = new HashMap<>();
+        Map<Player, Set<Meeple>> expResult = new HashMap<>();
 
-        Set<Meeple> meeps = new HashSet();
+        Set<Meeple> meeps = new HashSet<>();
         meeps.add(p1.getBigMeeple());
         m1.put(p1, meeps);
 
-        meeps = new HashSet();
+        meeps = new HashSet<>();
         meeps.add(p1.getMeeple().get(0));
 
-        Set<Meeple> meeps2 = new HashSet();
+        Set<Meeple> meeps2 = new HashSet<>();
         meeps2.add(p2.getMeeple().get(0));
         m2.put(p2, meeps2);
 

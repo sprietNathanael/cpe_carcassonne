@@ -61,6 +61,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     }
     
     @Override
+    @SuppressWarnings("unchecked")
     public void update(Observable o, Object arg)
     {
         String messageType = (String)arg;

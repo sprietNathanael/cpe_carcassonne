@@ -33,31 +33,6 @@ import java.util.Set;
 public class CarcassonneGame extends Observable implements CarcassonneGameInterface
 {
 
-    /**
-     * private Map<RoadAggregate, Set<Coord>> getNeighborRoads(int col, int row)
-     * { Map<RoadAggregate, Set<Coord>> result = new HashMap<>();
-     *
-     * for (RoadAggregate currentRoad : roadAggregates) { if
-     * (currentRoad.isNeighborOf(col, row)) { result.add(currentRoad); } }
-     *
-     * return result; }
-     *
-     * private List<CityAggregate> getNeighborCities(int col, int row) {
-     * List<CityAggregate> result = new ArrayList<>();
-     *
-     * for (CityAggregate currentCity : cityAggregates) { if
-     * (currentCity.isNeighborOf(col, row)) { result.add(currentCity); } }
-     *
-     * return result; }
-     *
-     * private List<FieldAggregate> getNeighborFields(int col, int row) {
-     * List<FieldAggregate> result = new ArrayList<>();
-     *
-     * for (FieldAggregate currentField : fieldAggregates) { if
-     * (currentField.isNeighborOf(col, row)) { result.add(currentField); } }
-     *
-     * return result; }
-     */
     private ArrayList<Player> players;
     private Board board;
     private int currentPlayerIndex;
@@ -176,8 +151,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         board.addTile(tile, row, column);
         this.notifyBoardChanged();
         this.manageNewTileAggregates(tile, row, column);
-        System.out.println(roadAggregates);
-        System.out.println(roadAggregates.get(0).getAggregatedTiles().size());
+        System.out.println("Aggrégats de route:\n" + roadAggregates);
+        System.out.println("Taille de la première route: " + roadAggregates.get(0).countPoints() + "\n");
+        System.out.println("Première route terminée: " + roadAggregates.get(0).checkIsCompleted() + "\n");
+        System.out.println("Aggrégats de ville:\n" + cityAggregates);
+        System.out.println("Taille de la première ville: " + cityAggregates.get(0).getAggregatedTiles().size() + "\n");
+        System.out.println("Aggrégats de champs:\n" + fieldAggregates);
+        System.out.println("Taille du premier champs: " + fieldAggregates.get(0).getAggregatedTiles().size() + "\n");
     }
 
     /**
@@ -311,101 +291,29 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
         Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
 
-        /**
-         * Map qui est modifiée lors des parcours des aggrégats existants.
-         * Renseigne lorsqu'un nouvel aggrégat de la tuile a été affecté. Si
-         * c'est le cas, les autres matchs deviendront des merge du road
-         * aggregate de la map, au lieu d'un enlarge aggregate
-         */
-        Map<Set<String>, RoadAggregate> roadAlreadyAffected = new HashMap();
-
-        /**
-         * Met à jour la liste des aggrégats de route, si une route est mergée
-         * sur une autre, on l'a supprime
-         *
-         */
-        List<RoadAggregate> updatedRoadAggregates = new ArrayList();
-        updatedRoadAggregates.addAll(roadAggregates);
-
-        /**
-         * Set qui informe les aggrégats qui n'ont pas été enregistré dans un
-         * aggrégats déjà existant. Un nouvel aggrégat sera alors créé
-         */
-        Set<Set<String>> newRoadAggregatesEmplacements = new HashSet();
-        newRoadAggregatesEmplacements.addAll(roadAggregatesEmplacements);
-
-        //D'abord, on parcours les aggrégate existant
-        for (RoadAggregate road : roadAggregates) {
-            //Récupère tous les différences de coordonnées entre la road courante et le nouvel index, si ce sont des voisins directs
-            Set<Coord> neighboredTilesEmplacements = road.getNeighboredCoordinates(col, row);
-
-            //Test si la road est voisine au nouvel index
-            if (!neighboredTilesEmplacements.isEmpty()) {
-                Set<String> neighborTileLocations;
-                Set<String> neededLocations;
-                //Parcours de ces différences de coordonnées
-                for (Coord neighboredTilesEmplacement : neighboredTilesEmplacements) {
-                    //Récupère les types de la road, de la tuile voisine à l'index
-                    neighborTileLocations = road.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
-
-                    //Test s'il y a bien des types pour cette tuile
-                    if (neighborTileLocations != null) {
-                        //Donne la localisation des types de la nouvelle tuile qui sont potentiellement compatibles avec cet aggrégat
-                        neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
-                        System.out.println("Types requis: " + neededLocations);
-                        System.out.println("Types de la tuile: " + roadAggregatesEmplacements);
-
-                        //Parcours tous les morceaux d'aggrégats de la nouvelle tuile
-                        for (Set<String> locationInNewTile : roadAggregatesEmplacements) {
-                            //Parcours des localisation autorisées
-                            for (String neededLocation : neededLocations) {
-
-                                //Teste si les emplacments nécessaires matchent avec le morceau d'aggrégat courant
-                                if (locationInNewTile.contains(neededLocation)) {
-                                    //Si le morceau n'a pas déjà été affecté à un aggrégat, on l'ajoute
-                                    if (!roadAlreadyAffected.containsKey(locationInNewTile)) {
-                                        //Ajout de la tuile à cet emplacement dans la route courante
-                                        road.enlargeAggregate(col, row, tile, locationInNewTile);
-                                        //Informe sur quel aggrégat le morceau vient d'être affecté
-                                        roadAlreadyAffected.put(locationInNewTile, road);
-                                        //Suppression du morceau d'aggrégat pour ne pas qu'il soit créé dans un nouvel aggrégat
-                                        newRoadAggregatesEmplacements.remove(locationInNewTile);
-
-                                        System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
-                                    }
-                                    //S'il a déjà été affecté, on merge les deux aggrégats car ils sont maintenant communs
-                                    else {
-                                        RoadAggregate roadToBeCompleted = roadAlreadyAffected.get(locationInNewTile);
-                                        //Merge des deux route
-                                        roadToBeCompleted.merge(road);
-                                        //Suppression de la route mergée
-                                        updatedRoadAggregates.remove(road);
-                                    }
-                                }
-                            }
-                        }
-                        //Les restes des aggrégats de la nouvelle tuile qui n'ont pas été complété, sont gardé dans la liste pour être créé en tant que nouvel aggrégat
-                    }
-                }
-            }
-        }
-
-        roadAggregatesEmplacements = newRoadAggregatesEmplacements;
-        roadAggregates = updatedRoadAggregates;
-
-        /**
-         * A la fin : *
-         */
+        //--- Routes ---//
+        roadAggregatesEmplacements = updateRoads(tile, col, row, roadAggregatesEmplacements);
+        //Création des nouvelles routes
         for (Set<String> currentRoadEmplacement : roadAggregatesEmplacements) {
             roadAggregates.add(new RoadAggregate(col, row, tile, currentRoadEmplacement));
         }
 
-        Set<CityAggregate> tileCities = new HashSet<>();
+        //--- Villes ---//
+        //Il y a deux valeurs renvoyé par l'update de villes, on utilise une classe spécifique pour cela
+        CitiesUpdateResult citiesResult = updateCities(tile, col, row, cityAggregatesEmplacements);
+        //Villes pas encore créées
+        cityAggregatesEmplacements = citiesResult.citiesNotCreated;
+        //Ville qui sont présentes sur la tuile courante, nécessaires pour les champs
+        Set<CityAggregate> tileCities = citiesResult.citiesOnTile;
+
         for (Set<String> currentCityEmplacement : cityAggregatesEmplacements) {
             CityAggregate newCity = new CityAggregate(col, row, tile, currentCityEmplacement);
             cityAggregates.add(newCity);
             tileCities.add(newCity);
         }
+
+        //--- Champs ---//
+        fieldAggregatesEmplacements = updateFields(tile, col, row, fieldAggregatesEmplacements, tileCities);
 
         for (Set<String> currentFieldEmplacement : fieldAggregatesEmplacements) {
             FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
@@ -415,7 +323,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     private static Set<String> filterSetString(Set<String> neighborTileLocations, Set<String> authorizedString)
     {
-        Set<String> result = new HashSet();
+        Set<String> result = new HashSet<>();
 
         for (String currentString : neighborTileLocations) {
             if (authorizedString.contains(currentString)) {
@@ -442,7 +350,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private static Set<String> getLocationsAuthorized(Coord neighboredTilesEmplacement, Set<String> neighborTileLocations)
     {
         //neighborTileLocations = CasualTile.getNeighborEdgesLocations(neighborTileLocations);
-        Set<String> authorizedString = new HashSet();
+        Set<String> authorizedString = new HashSet<>();
 
         if (neighboredTilesEmplacement.equals(new Coord(-1, 0))) {
             authorizedString = BasicSet.retTreeSet("NEE", "E", "SEE");
@@ -463,5 +371,244 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         neighborTileLocations = CasualTile.getNeighborEdgesLocations(neighborTileLocations);
 
         return neighborTileLocations;
+    }
+
+    /**
+     * Update the road aggregate of the game that are already created
+     *
+     * @param tile
+     * @param col
+     * @param row
+     * @param roadAggregatesEmplacements
+     * @return
+     */
+    private Set<Set<String>> updateRoads(AbstractTile tile, int col, int row, Set<Set<String>> roadAggregatesEmplacements)
+    {
+        /**
+         * Map qui est modifiée lors des parcours des aggrégats existants.
+         * Renseigne lorsqu'un nouvel aggrégat de la tuile a été affecté. Si
+         * c'est le cas, les autres matchs deviendront des merge du road
+         * aggregate de la map, au lieu d'un enlarge aggregate
+         */
+        Map<Set<String>, RoadAggregate> roadAlreadyAffected = new HashMap<>();
+
+        /**
+         * Met à jour la liste des aggrégats de route, si une route est mergée
+         * sur une autre, on l'a supprime
+         *
+         */
+        List<RoadAggregate> updatedRoadAggregates = new ArrayList<>();
+        updatedRoadAggregates.addAll(roadAggregates);
+
+        /**
+         * Set qui informe les aggrégats qui n'ont pas été enregistré dans un
+         * aggrégats déjà existant. Un nouvel aggrégat sera alors créé
+         */
+        Set<Set<String>> newRoadAggregatesEmplacements = new HashSet<>();
+        newRoadAggregatesEmplacements.addAll(roadAggregatesEmplacements);
+
+        //D'abord, on parcours les aggrégate existant
+        for (RoadAggregate road : roadAggregates) {
+            //Récupère tous les différences de coordonnées entre la road courante et le nouvel index, si ce sont des voisins directs
+            Set<Coord> neighboredTilesEmplacements = road.getNeighboredCoordinates(col, row);
+
+            //Test si la road est voisine au nouvel index
+            if (!neighboredTilesEmplacements.isEmpty()) {
+                Set<String> neighborTileLocations;
+                Set<String> neededLocations;
+                //Parcours de ces différences de coordonnées
+                for (Coord neighboredTilesEmplacement : neighboredTilesEmplacements) {
+                    //Récupère les types de la road, de la tuile voisine à l'index
+                    neighborTileLocations = road.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
+
+                    //Test s'il y a bien des types pour cette tuile
+                    if (neighborTileLocations != null) {
+                        //Donne la localisation des types de la nouvelle tuile qui sont potentiellement compatibles avec cet aggrégat
+                        neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
+                        //System.out.println("Types requis: " + neededLocations);
+                        //System.out.println("Types de la tuile: " + roadAggregatesEmplacements);
+
+                        //Parcours tous les morceaux d'aggrégats de la nouvelle tuile
+                        for (Set<String> locationInNewTile : roadAggregatesEmplacements) {
+                            //Parcours des localisation autorisées
+                            for (String neededLocation : neededLocations) {
+
+                                //Teste si les emplacments nécessaires matchent avec le morceau d'aggrégat courant
+                                if (locationInNewTile.contains(neededLocation)) {
+                                    //Si le morceau n'a pas déjà été affecté à un aggrégat, on l'ajoute
+                                    if (!roadAlreadyAffected.containsKey(locationInNewTile)) {
+                                        //Ajout de la tuile à cet emplacement dans la route courante
+                                        road.enlargeAggregate(col, row, tile, locationInNewTile);
+                                        //Informe sur quel aggrégat le morceau vient d'être affecté
+                                        roadAlreadyAffected.put(locationInNewTile, road);
+                                        //Suppression du morceau d'aggrégat pour ne pas qu'il soit créé dans un nouvel aggrégat
+                                        newRoadAggregatesEmplacements.remove(locationInNewTile);
+
+                                        //System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
+                                    }
+                                    //S'il a déjà été affecté, on merge les deux aggrégats car ils sont maintenant communs
+                                    else {
+                                        RoadAggregate roadToBeCompleted = roadAlreadyAffected.get(locationInNewTile);
+                                        //Si les deux routes pointent vers le même objet, il n'y a pas besoin de faire de merge
+                                        if (road != roadToBeCompleted) {
+                                            //Merge des deux route
+                                            roadToBeCompleted.merge(road);
+                                            //Suppression de la route mergée
+                                            updatedRoadAggregates.remove(road);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        roadAggregates = updatedRoadAggregates;
+
+        return newRoadAggregatesEmplacements;
+    }
+
+    /**
+     * Update the city aggregates of the game that are already created
+     *
+     * @param tile
+     * @param col
+     * @param row
+     * @param roadAggregatesEmplacements
+     * @return
+     */
+    private CitiesUpdateResult updateCities(AbstractTile tile, int col, int row, Set<Set<String>> cityAggregatesEmplacements)
+    {
+        Set<CityAggregate> citiesOnTile = new HashSet<>();
+
+        Map<Set<String>, CityAggregate> cityAlreadyAffected = new HashMap<>();
+        List<CityAggregate> updatedCityAggregates = new ArrayList<>();
+        updatedCityAggregates.addAll(cityAggregates);
+
+        Set<Set<String>> newCityAggregatesEmplacements = new HashSet<>();
+        newCityAggregatesEmplacements.addAll(cityAggregatesEmplacements);
+
+        for (CityAggregate city : cityAggregates) {
+            Set<Coord> neighboredTilesEmplacements = city.getNeighboredCoordinates(col, row);
+
+            if (!neighboredTilesEmplacements.isEmpty()) {
+                Set<String> neighborTileLocations;
+                Set<String> neededLocations;
+
+                for (Coord neighboredTilesEmplacement : neighboredTilesEmplacements) {
+                    neighborTileLocations = city.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
+
+                    if (neighborTileLocations != null) {
+                        neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
+
+                        for (Set<String> locationInNewTile : cityAggregatesEmplacements) {
+                            for (String neededLocation : neededLocations) {
+
+                                if (locationInNewTile.contains(neededLocation)) {
+                                    if (!cityAlreadyAffected.containsKey(locationInNewTile)) {
+                                        //We add the city because it is present on this tile
+                                        if (!citiesOnTile.contains(city)) {
+                                            citiesOnTile.add(city);
+                                        }
+                                        city.enlargeAggregate(col, row, tile, locationInNewTile);
+                                        cityAlreadyAffected.put(locationInNewTile, city);
+                                        newCityAggregatesEmplacements.remove(locationInNewTile);
+                                    }
+                                    else {
+                                        CityAggregate cityToBeCompleted = cityAlreadyAffected.get(locationInNewTile);
+                                        if (city != cityToBeCompleted) {
+                                            //We add the city because it is present on this tile
+                                            if (citiesOnTile.contains(city)) {
+                                                citiesOnTile.remove(city);
+                                            }
+                                            cityToBeCompleted.merge(city);
+                                            updatedCityAggregates.remove(city);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        cityAggregates = updatedCityAggregates;
+        //Boucles qui permet de supprimer les références vers les villes qui ont été mergées
+        for (FieldAggregate field : fieldAggregates) {
+            Set<CityAggregate> citiesToBeDeleted = new HashSet<>();
+            for (CityAggregate city : field.getBoundedCities()) {
+                if (!cityAggregates.contains(city)) {
+                    citiesToBeDeleted.add(city);
+                }
+            }
+            field.deleteBoundedCities(citiesToBeDeleted);
+        }
+
+        return new CitiesUpdateResult(newCityAggregatesEmplacements, citiesOnTile);
+    }
+
+    /**
+     * Update the field aggregates of the game that are already created
+     *
+     * @param tile
+     * @param col
+     * @param row
+     * @param roadAggregatesEmplacements
+     * @return
+     */
+    private Set<Set<String>> updateFields(AbstractTile tile, int col, int row, Set<Set<String>> fieldAggregatesEmplacements, Set<CityAggregate> tileCities)
+    {
+        Map<Set<String>, FieldAggregate> fieldAlreadyAffected = new HashMap<>();
+        List<FieldAggregate> updatedFieldAggregates = new ArrayList<>();
+        updatedFieldAggregates.addAll(fieldAggregates);
+
+        Set<Set<String>> newFieldAggregatesEmplacements = new HashSet<>();
+        newFieldAggregatesEmplacements.addAll(fieldAggregatesEmplacements);
+
+        for (FieldAggregate field : fieldAggregates) {
+            Set<Coord> neighboredTilesEmplacements = field.getNeighboredCoordinates(col, row);
+
+            if (!neighboredTilesEmplacements.isEmpty()) {
+                Set<String> neighborTileLocations;
+                Set<String> neededLocations;
+
+                for (Coord neighboredTilesEmplacement : neighboredTilesEmplacements) {
+                    neighborTileLocations = field.getAggregatedTypesByCoord(col + neighboredTilesEmplacement.col, row + neighboredTilesEmplacement.row);
+
+                    if (neighborTileLocations != null) {
+                        neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
+                        System.out.println("Types requis: " + neededLocations);
+                        System.out.println("Types de la tuile: " + fieldAggregatesEmplacements);
+
+                        for (Set<String> locationInNewTile : fieldAggregatesEmplacements) {
+                            for (String neededLocation : neededLocations) {
+
+                                if (locationInNewTile.contains(neededLocation)) {
+                                    if (!fieldAlreadyAffected.containsKey(locationInNewTile)) {
+                                        field.enlargeAggregate(col, row, tile, locationInNewTile, tileCities);
+                                        fieldAlreadyAffected.put(locationInNewTile, field);
+                                        newFieldAggregatesEmplacements.remove(locationInNewTile);
+
+                                        System.out.println("Placement d'un champs aux coordonnées: " + col + ":" + row);
+                                    }
+                                    else {
+                                        FieldAggregate fieldToBeCompleted = fieldAlreadyAffected.get(locationInNewTile);
+                                        if (field != fieldToBeCompleted) {
+                                            fieldToBeCompleted.merge(field);
+                                            updatedFieldAggregates.remove(field);
+                                            System.out.println("MERGE");
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        fieldAggregates = updatedFieldAggregates;
+
+        return newFieldAggregatesEmplacements;
     }
 }

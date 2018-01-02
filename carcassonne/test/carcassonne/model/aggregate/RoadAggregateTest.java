@@ -13,7 +13,6 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
-import java.awt.Color;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.After;
@@ -90,7 +89,7 @@ public class RoadAggregateTest
         RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
 
         int expResult = 1;
-        int result = instance.getRoadExtremities();
+        int result = instance.getCityEdges().size();
         assertEquals(expResult, result);
     }
 
@@ -117,29 +116,7 @@ public class RoadAggregateTest
         instance.enlargeAggregate(0, 1, secondTile, locationTypes);
 
         int expResult = 1;
-        int result = instance.getRoadExtremities();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getRoadExtremities method, using a tile extremity in the first
-     * and second tile (Those tiles are not correctly placed)
-     */
-    @Test
-    public void testGetRoadExtremitiesByEnlargementBis()
-    {
-        AbstractTile firstTile = getExtremityTile();
-        Set<String> locationTypes = new HashSet<>();
-        locationTypes.add("S");
-
-        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
-        locationTypes = new HashSet<>();
-        locationTypes.add("N");
-        AbstractTile secondTile = getExtremityTile();
-        instance.enlargeAggregate(0, 1, secondTile, locationTypes);
-
-        int expResult = 2;
-        int result = instance.getRoadExtremities();
+        int result = instance.getCityEdges().size();
         assertEquals(expResult, result);
     }
 
@@ -164,128 +141,10 @@ public class RoadAggregateTest
         AbstractTile secondTile = getStraightRoadTile();
         instance.enlargeAggregate(0, -1, secondTile, locationTypes);
 
-        int expResult = 1;
-        int result = instance.getRoadExtremities();
+        int expResult = 0;
+        int result = instance.getCityEdges().size();
         assertEquals(expResult, result);
     }
-
-    /**
-     * Test of merge method, (Those tiles are not correctly placed)
-     */
-    @Test
-    public void testMerge()
-    {
-        Set<String> locationTypes = new HashSet<>();
-        locationTypes.add("S");
-
-        RoadAggregate instance = new RoadAggregate(0, 0, getExtremityTile(), locationTypes);
-        RoadAggregate neighborAggregate = new RoadAggregate(0, 1, getExtremityTile(), locationTypes);
-        instance.merge(neighborAggregate);
-
-        int expResult = 2;
-        int result = instance.getRoadExtremities();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of merge method, (Those tiles are not correctly placed)
-     */
-    @Test
-    public void testMergeBis()
-    {
-        Set<String> locationTypes = new HashSet<>();
-        locationTypes.add("S");
-
-        RoadAggregate instance = new RoadAggregate(0, 0, getExtremityTile(), locationTypes);
-        RoadAggregate neighborAggregate = new RoadAggregate(0, 1, getStraightRoadTile(), locationTypes);
-        instance.merge(neighborAggregate);
-
-        int expResult = 1;
-        int result = instance.getRoadExtremities();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of merge method, (Those tiles are not correctly placed)
-     */
-    @Test
-    public void testMergeBisLoop()
-    {
-        AbstractTile firstTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
-        Set<String> locationTypes = new HashSet<>();
-        locationTypes.add("S");
-        locationTypes.add("CSE");
-        locationTypes.add("E");
-        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
-
-        AbstractTile secondTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("N");
-        instance.enlargeAggregate(0, -1, secondTile, locationTypes);
-
-        locationTypes = new HashSet<>();
-        locationTypes.add("E");
-        RoadAggregate neighbor = new RoadAggregate(0, -1, secondTile, locationTypes);
-
-        AbstractTile thirdTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("N");
-        locationTypes.add("CNW");
-        locationTypes.add("W");
-        neighbor.enlargeAggregate(1, -1, thirdTile, locationTypes);
-
-        AbstractTile fourthTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("S");
-        locationTypes.add("CSW");
-        locationTypes.add("W");
-        instance.enlargeAggregate(1, 0, fourthTile, locationTypes);
-
-        instance.merge(neighbor);
-
-        assertEquals(4, instance.getAggregatedTiles().size());
-    }
-
-    /**
-     * Test of merge method, (Those tiles are not correctly placed)
-     */
-    @Test
-    public void testMergeBisLoopBis()
-    {
-        AbstractTile firstTile = new CasualTile("O", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType());
-        Set<String> locationTypes = new HashSet<>();
-        locationTypes.add("S");
-        locationTypes.add("CSE");
-        locationTypes.add("E");
-        RoadAggregate instance = new RoadAggregate(0, 0, firstTile, locationTypes);
-
-        AbstractTile secondTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("N");
-        instance.enlargeAggregate(0, -1, secondTile, locationTypes);
-
-        locationTypes = new HashSet<>();
-        locationTypes.add("E");
-        RoadAggregate neighbor = new RoadAggregate(0, -1, secondTile, locationTypes);
-
-        AbstractTile thirdTile = new CasualTile("V", new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), new RoadType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("S");
-        locationTypes.add("CSW");
-        locationTypes.add("W");
-        instance.enlargeAggregate(1, 0, thirdTile, locationTypes);
-
-        AbstractTile fourthTile = new CasualTile("K", new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), new CityType(), new CityType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new FieldType(), new RoadType(), new RoadType(), new FieldType(), new FieldType(), new FieldType());
-        locationTypes = new HashSet<>();
-        locationTypes.add("N");
-        locationTypes.add("CNW");
-        locationTypes.add("W");
-        instance.enlargeAggregate(1, -1, fourthTile, locationTypes);
-
-        instance.merge(neighbor);
-        assertEquals(true, instance.checkIsCompleted());
-    }
-
     /**
      * Test of manageLoopRoad method, if we make a loop with the last tile
      * placed
@@ -323,8 +182,8 @@ public class RoadAggregateTest
         locationTypes.add("E");
         instance.enlargeAggregate(-1, -1, fourthTile, locationTypes);
 
-        int result = instance.getRoadExtremities();
-        assertEquals(2, result);
+        int result = instance.getCityEdges().size();
+        assertEquals(0, result);
     }
 
     /**

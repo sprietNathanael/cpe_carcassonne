@@ -26,11 +26,11 @@ import javazoom.jl.player.Player;
 public class GameMenu extends JFrame
 {
 
-    private final BtGame btPlay = new BtGame("resources/Play.PNG");
-    private final BtGame btSettings = new BtGame("resources/Settings.PNG");
-    private final BtGame btInstructions = new BtGame("resources/instructions.PNG");
-    private final BtGame btExit = new BtGame("resources/Exit.PNG");
-    private final Player musicPlayer = new Player(new BufferedInputStream(new FileInputStream("resources/musicMenu.mp3")));
+    private final BtGame btPlay = new BtGame("resources/btPlay.png");
+    private final BtGame btSettings = new BtGame("resources/btSettings.png");
+    private final BtGame btInstructions = new BtGame("resources/btInstructions.png");
+    private final BtGame btExit = new BtGame("resources/btExit.png");
+    private final Player musicPlayer = new Player(new BufferedInputStream(new FileInputStream("resources/music/musicMenu.mp3")));
 
     public GameMenu() throws IOException, Exception
     {

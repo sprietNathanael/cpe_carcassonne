@@ -49,13 +49,13 @@ public abstract class AbstractAggregate
      */
     protected AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
-        this.aggregatedTiles = new HashMap();
+        this.aggregatedTiles = new HashMap<>();
         this.aggregatedTiles.put(new Coord(col, row), firstTile);
 
-        this.aggregatedPositionTypes = new HashMap();
+        this.aggregatedPositionTypes = new HashMap<>();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
-        this.players = new HashMap();
+        this.players = new HashMap<>();
 
         this.isCompleted = false;
     }
@@ -74,15 +74,15 @@ public abstract class AbstractAggregate
      */
     protected AbstractAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple)
     {
-        this.aggregatedTiles = new HashMap();
+        this.aggregatedTiles = new HashMap<>();
         this.aggregatedTiles.put(new Coord(col, row), firstTile);
 
-        this.aggregatedPositionTypes = new HashMap();
+        this.aggregatedPositionTypes = new HashMap<>();
         this.aggregatedPositionTypes.put(firstTile, locationTypes);
 
-        Set<Meeple> meeples = new HashSet();
+        Set<Meeple> meeples = new HashSet<>();
         meeples.add(meeple);
-        this.players = new HashMap();
+        this.players = new HashMap<>();
         this.players.put(player, meeples);
 
         this.isCompleted = false;
@@ -101,7 +101,7 @@ public abstract class AbstractAggregate
         boolean result = false;
 
         if (players.isEmpty()) {
-            Set<Meeple> meeples = new HashSet();
+            Set<Meeple> meeples = new HashSet<>();
             meeples.add(meeple);
             players.put(player, meeples);
             result = true;
@@ -121,7 +121,7 @@ public abstract class AbstractAggregate
      */
     public Set<Coord> getNeighboredCoordinates(int col, int row)
     {
-        Set<Coord> result = new HashSet();
+        Set<Coord> result = new HashSet<>();
 
         if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
             result.add(new Coord(-1, 0));
@@ -266,6 +266,7 @@ public abstract class AbstractAggregate
      *
      * @return int
      */
+    @SuppressWarnings("unchecked")
     public int getBiggestPoints()
     {
         int max = 0, current;
@@ -284,9 +285,10 @@ public abstract class AbstractAggregate
      *
      * @return
      */
+    @SuppressWarnings("unchecked")
     public Set<Player> getWinningPlayers()
     {
-        Set<Player> winningPlayers = new HashSet();
+        Set<Player> winningPlayers = new HashSet<>();
         int maxNumber = this.getBiggestPoints(), currentNumber;
 
         for (Map.Entry player : players.entrySet()) {

@@ -40,7 +40,7 @@ public class AbstractCarcassonneGameControllerTest
     {
         Player j1 = new Player("bertrand", "pink");
         Player j2 = new Player("thomas", "orange");
-        ArrayList list = new ArrayList();
+        ArrayList list = new ArrayList<>();
         list.add(0, j1);
         list.add(1, j2);
 
@@ -65,7 +65,7 @@ public class AbstractCarcassonneGameControllerTest
         
         Player j1 = new Player("bertrand", "pink");
         Player j2 = new Player("thomas", "orange");
-        ArrayList<Player> list = new ArrayList();
+        ArrayList<Player> list = new ArrayList<>();
         list.add(j1);
         list.add(j2);
         
@@ -99,7 +99,7 @@ public class AbstractCarcassonneGameControllerTest
     {
         Player j1 = new Player("bertrand", "pink");
         Player j2 = new Player("thomas", "orange");
-        ArrayList<Player> list = new ArrayList();
+        ArrayList<Player> list = new ArrayList<>();
         list.add(j1);
         list.add(j2);
         CarcassonneGame jeu = new CarcassonneGame(list);

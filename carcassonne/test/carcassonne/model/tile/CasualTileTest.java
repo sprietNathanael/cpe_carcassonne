@@ -584,10 +584,10 @@ public class CasualTileTest
     @Test
     public void testLocationsAreBounded()
     {
-        Set<String> cityLocations = new HashSet();
+        Set<String> cityLocations = new HashSet<>();
         cityLocations.add("NNW");
 
-        Set<String> locationTypes = new HashSet();
+        Set<String> locationTypes = new HashSet<>();
         locationTypes.add("NW");
 
         boolean expResult = true;
@@ -602,11 +602,11 @@ public class CasualTileTest
     @Test
     public void testLocationsAreBounded2()
     {
-        Set<String> cityLocations = new HashSet();
+        Set<String> cityLocations = new HashSet<>();
         cityLocations.add("NNW");
         cityLocations.add("SSW");
 
-        Set<String> locationTypes = new HashSet();
+        Set<String> locationTypes = new HashSet<>();
         locationTypes.add("E");
 
         boolean expResult = false;

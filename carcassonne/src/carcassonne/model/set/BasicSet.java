@@ -13,6 +13,7 @@ import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -530,10 +531,10 @@ public class BasicSet implements SetInterface
 
     public static Set<String> retTreeSet(String... poss)
     {
-        Set tsPos = new HashSet<>();
-        for (String pos : poss) {
+        Set<String> tsPos = new HashSet<>();
+        for (String pos : poss) 
             tsPos.add(pos);
-        }
+        
         return tsPos;
     }
 

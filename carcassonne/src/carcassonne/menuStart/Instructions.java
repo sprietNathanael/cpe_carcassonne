@@ -5,11 +5,15 @@
  */
 package carcassonne.menuStart;
 
+import java.awt.Color;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -17,6 +21,8 @@ import javax.swing.JFrame;
  */
 public class Instructions extends JFrame
 {
+
+    private final BtGame exit = new BtGame("resources/Exit.png");
 
     public Instructions() throws IOException
     {
@@ -32,6 +38,22 @@ public class Instructions extends JFrame
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
         this.setVisible(true);
+        this.setLayout(null);
+
+
+        this.add(exit);
+        exit.setBounds(750, 910, 57, 43);
+        exit.setBorderPainted(false);
+        exit.addActionListener(new ActionListener()
+        {
+
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+                setVisible(false);
+            }
+        });
 
     }
 }

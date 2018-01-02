@@ -29,6 +29,11 @@ public class FieldAggregate extends AbstractAggregate
         return boundedCities;
     }
 
+    public void deleteBoundedCities(Set<CityAggregate> cities)
+    {
+        boundedCities.removeAll(cities);
+    }
+
     /**
      * Construct a field aggregation, we have to put all the cityAggregates of
      * this tile
@@ -42,6 +47,7 @@ public class FieldAggregate extends AbstractAggregate
     public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
     {
         super(col, row, firstTile, locationTypes);
+        boundedCities = new HashSet<>();
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
     }
 
@@ -59,6 +65,7 @@ public class FieldAggregate extends AbstractAggregate
     public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Player player, Meeple meeple, Set<CityAggregate> currentTileCities)
     {
         super(col, row, firstTile, locationTypes, player, meeple);
+        boundedCities = new HashSet<>();
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
     }
 
@@ -71,13 +78,13 @@ public class FieldAggregate extends AbstractAggregate
         return isCompleted;
     }
 
-    protected void merge(FieldAggregate neighborAggregate)
+    public void merge(FieldAggregate neighborAggregate)
     {
         super.merge(neighborAggregate);
         boundedCities.addAll(neighborAggregate.getBoundedCities());
     }
 
-    protected void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
+    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
         this.addBoundedCities(currentTileCities, newTile, locationTypes);
@@ -93,7 +100,6 @@ public class FieldAggregate extends AbstractAggregate
     private void addBoundedCities(Set<CityAggregate> currentTileCities, AbstractTile tile, Set<String> locationTypes)
     {
         Set<String> cityLocations;
-        boundedCities = new HashSet();
 
         //Browse the city aggregates
         for (CityAggregate city : currentTileCities) {
@@ -126,6 +132,6 @@ public class FieldAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "FieldAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
+        return "Field{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "Villes: " + boundedCities + "}\n";
     }
 }

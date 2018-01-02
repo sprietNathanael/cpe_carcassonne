@@ -9,7 +9,6 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import java.util.ArrayList;
@@ -195,6 +194,7 @@ public class CityAggregate extends AbstractAggregate
      * Manage the cases where a map of cityedges references already completed
      * edges
      */
+    @SuppressWarnings("unchecked")
     public void cleanCityEdgesMap()
     {
         Coord currentCoord, neighborCoord;
@@ -202,7 +202,7 @@ public class CityAggregate extends AbstractAggregate
         CityEdgeEnum neighborEdge;
 
         Map<Coord, Set<CityEdgeEnum>> updatedCityEdges;
-        updatedCityEdges = new HashMap();
+        updatedCityEdges = new HashMap<>();
         Set<CityEdgeEnum> updatedCurrentEdges;
 
         for (Map.Entry currentLocalisation : cityEdges.entrySet()) {
@@ -211,7 +211,7 @@ public class CityAggregate extends AbstractAggregate
             currentEdges = (Set<CityEdgeEnum>) currentLocalisation.getValue();
             //By default the neighbor are similar to the current coord, the enum will change it
             neighborCoord = new Coord(currentCoord.col, currentCoord.row);
-            updatedCurrentEdges = new HashSet();
+            updatedCurrentEdges = new HashSet<>();
             //For each edge, test if the corresponding edge exists
             for (CityEdgeEnum edge : currentEdges) {
                 neighborEdge = CityEdgeEnum.getOpposite(edge);
@@ -282,6 +282,6 @@ public class CityAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "CityAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + '}';
+        return "City{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "}\n";
     }
 }
