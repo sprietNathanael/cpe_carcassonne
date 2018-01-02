@@ -8,6 +8,7 @@ package carcassonne.model.aggregate;
 import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
+import static carcassonne.model.set.BasicSet.retTreeSet;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
@@ -33,12 +34,16 @@ public class AbstractAggregateTest
 
     public static AbstractTile initiateAbstractTile()
     {
-        return new CasualTile("A", //Id
+        Set<Set<String>> aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("S"));
+        aggregates.add(retTreeSet("SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
+                "NNE", "NE", "NEE", "E", "SSE", "SE", "SSE"));
+        return new CasualTile("A", "A",//Id
                 new FieldType(), new FieldType(), new FieldType(), //North section
                 new RoadType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
                 new FieldType(), //West section
-                new RoadType(), new RoadType(), new RoadType(), new RoadType() //Center section
+                new RoadType(), new RoadType(), new RoadType(), new RoadType(), aggregates //Center section
         );
     }
 
@@ -173,6 +178,33 @@ public class AbstractAggregateTest
         Set<Coord> expResult = new HashSet<>();
 
         Set<Coord> result = instance.getNeighboredCoordinates(2, 2);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetTileLocations()
+    {
+
+        Player player = new Player("Omg", "blue");
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
+        Set<String> expResult = null;
+
+        Set<String> result = instance.getAggregatedTypesByCoord(1, 1);
+        assertEquals(expResult, result);
+    }
+
+    @Test
+    public void testGetTileLocationsBis()
+    {
+        Player player = new Player("Omg", "blue");
+        AbstractAggregate instance = new AbstractAggregateImpl(player, player.getFirstMeepleAvailable());
+        //instance.enlargeAggregate(1, 0, AbstractAggregateTest.initiateAbstractTile(), AbstractAggregateTest.initiateTypes());
+
+        Set<String> expResult = new HashSet<>();
+        expResult.add("S");
+        expResult.add("E");
+        expResult.add("CNE");
+        Set<String> result = instance.getAggregatedTypesByCoord(0, 1);
         assertEquals(expResult, result);
     }
 
