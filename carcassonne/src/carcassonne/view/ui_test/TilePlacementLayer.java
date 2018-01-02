@@ -180,8 +180,8 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
                 {
                     try {
                         Coord newCoord = new Coord(p.getX(), p.getY());
-                        this.controller.putCurrentTile(newCoord);
                         this.mainPanel.putTile(new UICoord(newCoord.col, newCoord.row));
+                        this.controller.putCurrentTile(newCoord);
                     } catch (Exception ex) {
                         Logger.getLogger(TilePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
                     }

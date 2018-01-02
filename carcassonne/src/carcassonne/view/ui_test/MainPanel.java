@@ -34,6 +34,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private MeeplePlacementLayer meeplePlacementLayer;
     private InfoPanel infoPanel;
     private ArrayList<Player> players;
+    private UICoord lastCoord;
 
     /**
      * Main panel constructor
@@ -84,7 +85,6 @@ public class MainPanel extends JPanel implements java.util.Observer
         System.out.println(messageType);
         // If the update is from a game change
         if (messageType.equals("boardChanged")) {
-            this.meeplePlacementLayer.onHide();
             // Get the game's informations
             CarcassonneGame game = (CarcassonneGame) o;
             HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
@@ -94,7 +94,16 @@ public class MainPanel extends JPanel implements java.util.Observer
             // Set the preview image of the placement layer
             if (preview != null) {
                 this.tilesPlacementLayer.setPreview(preview);
-                this.meeplePlacementLayer.setAggreates(preview);
+            }
+            // If a tile has just been put
+            if(this.lastCoord != null)
+            {
+                this.meeplePlacementLayer.setAggregates(game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY()));
+            }
+            else
+            {
+                this.meeplePlacementLayer.onHide();
+                
             }
 
             // Clean positions of placement layer
@@ -141,6 +150,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     
     public void putTile(UICoord newCoord)
     {
+        this.lastCoord = newCoord;
         this.tilesPlacementLayer.onHide();
         this.meeplePlacementLayer.setCurrentPosition(newCoord);
         this.meeplePlacementLayer.onShow();

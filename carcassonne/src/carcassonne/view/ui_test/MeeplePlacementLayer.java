@@ -71,9 +71,15 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         this.currentTileAggregate = null;
     }
     
-    public void setAggreates(AbstractTile currentTile)
+    public void setAggregates(AbstractTile currentTile)
     {
         this.tileAggregates = currentTile.getAggregateEmplacements();        
+    }
+    
+    public void setAggregates(Set<Set<String>> aggregates)
+    {
+        System.out.println("+++++++++++++++++++++++++ aggregates are : "+aggregates);
+        this.tileAggregates = aggregates;
     }
     
     public void setCurrentPosition(UICoord c)
