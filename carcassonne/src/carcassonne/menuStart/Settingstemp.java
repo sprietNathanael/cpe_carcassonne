@@ -5,7 +5,6 @@
  */
 package carcassonne.menuStart;
 
-import carcassonne.model.player.Player;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,7 +14,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -36,7 +34,7 @@ public class Settingstemp extends JFrame
     private int nbPlayers = 0;
 
     private JLabel nomLabel, colorsLabel, icon;
-    private JComboBox colors;
+    private JComboBox<String> colors;
     private JTextField nom,numbers;
     private JRadioButton nb2, nb3, nb4, nb5, nb6;
 
@@ -166,7 +164,7 @@ public class Settingstemp extends JFrame
         nom = new JTextField();
         nom.setPreferredSize(new Dimension(100, 25));
 
-        colors = new JComboBox();
+        colors = new JComboBox <>();
         colors.addItem("Red");
         colors.addItem("Blue");
         colors.addItem("Green");
