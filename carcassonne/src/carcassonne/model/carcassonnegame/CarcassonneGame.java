@@ -631,21 +631,21 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         for (RoadAggregate road : roadAggregates) {
             currentAggregateLocations = road.getTileLocations(col, row);
-            if (currentAggregateLocations != null) {
+            if (currentAggregateLocations != null && road.getPlayers().isEmpty()) {
                 result.add(currentAggregateLocations);
             }
         }
         currentAggregateLocations = null;
         for (CityAggregate city : cityAggregates) {
             currentAggregateLocations = city.getTileLocations(col, row);
-            if (currentAggregateLocations != null) {
+            if (currentAggregateLocations != null && city.getPlayers().isEmpty()) {
                 result.add(currentAggregateLocations);
             }
         }
         currentAggregateLocations = null;
         for (FieldAggregate field : fieldAggregates) {
             currentAggregateLocations = field.getTileLocations(col, row);
-            if (currentAggregateLocations != null) {
+            if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
                 result.add(currentAggregateLocations);
             }
         }
