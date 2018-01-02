@@ -42,7 +42,7 @@ public class Instructions extends JFrame
 
 
         this.add(exit);
-        exit.setBounds(750, 910, 57, 43);
+        exit.setBounds(750, 935, 57, 43);
         exit.setBorderPainted(false);
         exit.setOpaque(false);
         exit.setContentAreaFilled(false);
