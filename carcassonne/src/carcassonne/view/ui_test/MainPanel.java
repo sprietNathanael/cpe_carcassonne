@@ -99,6 +99,7 @@ public class MainPanel extends JPanel implements java.util.Observer
             if(this.lastCoord != null)
             {
                 this.meeplePlacementLayer.setAggregates(game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY()));
+                this.lastCoord = null;
             }
             else
             {
