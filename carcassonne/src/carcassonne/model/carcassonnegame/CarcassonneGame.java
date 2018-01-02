@@ -158,10 +158,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         System.out.println("Aggrégats de champs:\n" + fieldAggregates);
         System.out.println("Taille du premier champs: " + fieldAggregates.get(0).getAggregatedTiles().size() + "\n");
     }
-    
+
     /**
      * Test if a meeple of the current player can be put on a tile
-     * @return 
+     *
+     * @return
      */
     public boolean playerMeepleBePutOnCurrentTile()
     {
@@ -194,7 +195,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 meeple.setIsUsed(true);
             }
         }
-
+        /* Update the aggregates, if one just has been completed, we add the points and free the meeple */
+        //this.manageCompletedAggregate();
     }
 
     public Board getBoard()
@@ -268,7 +270,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.notifyMessage = "boardChanged";
         this.notifyObservers();
     }
-    
+
     public void notifyPlacementsReady()
     {
         this.notifyMessage = "placementsReady";
@@ -626,8 +628,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return newFieldAggregatesEmplacements;
     }
 
-    public Set<Set<String>> getFreeAggregatesInTile(int col, int row)
+    public Set<Set<String>> getFreeAggregatesInTile(int x, int y)
     {
+        Coord convertedCoord = convertCoord(x, y);
+        int col = convertedCoord.col, row = convertedCoord.row;
         Set<Set<String>> result = null;
         Set<String> currentAggregateLocations = null;
 
