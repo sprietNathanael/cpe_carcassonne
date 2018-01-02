@@ -57,8 +57,13 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                musicPlayer.close();
-                Instructions instructions = new Instructions();
+               // musicPlayer.close();
+                Instructions instructions = null;
+                try {
+                    instructions = new Instructions();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 instructions.setVisible(true);
                 instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); 
             }
@@ -93,9 +98,9 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Settings settings = null;
+                Settingstemp settings = null;
                 try {
-                    settings = new Settings();
+                    settings = new Settingstemp();
                 } catch (IOException ex) {
                     Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }

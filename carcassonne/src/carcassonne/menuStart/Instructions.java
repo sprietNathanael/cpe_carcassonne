@@ -31,9 +31,7 @@ public class Instructions extends JFrame
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
-        
         this.setVisible(true);
-
 
     }
 }

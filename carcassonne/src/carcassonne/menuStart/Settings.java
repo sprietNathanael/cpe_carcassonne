@@ -47,16 +47,15 @@ public class Settings extends JFrame
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
-        this.add(new JLabel(new ImageIcon(back)));
-        this.pack();
-        //this.setContentPane(new Background(back));
+
+        /*this.add(new JLabel(new ImageIcon(back)));
+        this.pack();*/
+        this.setContentPane(new Background(back));
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
         this.setLayout(null);
 
-        
         //Numbers of Players
         this.add(bt2);
         bt2.setBounds(550, 252, 41, 49);
@@ -159,19 +158,17 @@ public class Settings extends JFrame
 
             }
         });
-        
-        
+
         //Colors of player
-        combo.setPreferredSize(new Dimension(100,20));
+        /*combo.setPreferredSize(new Dimension(100, 20));
         combo.addItem("Rouge");
         combo.addItem("Vert");
         combo.addItem("Bleu");
         JPanel top = new JPanel();
-        top.add(combo,BorderLayout.SOUTH);
-        
-        //this.setContentPane(top);
-        //this.add(topgetContentPane,BorderLayout.SOUTH);
-        
+        top.add(combo, BorderLayout.SOUTH);
+
+        this.setContentPane(top);
+        this.add(top, BorderLayout.SOUTH);*/
 
         this.setVisible(true);
 
