@@ -764,6 +764,12 @@ public class CasualTile extends AbstractTile
     {
         return this.types.get(coordinates);
     }
+    
+    @Override
+    public HashMap<String, AbstractType> getTypes()
+    {
+        return this.types;
+    }
 
     /**
      * Compare north side of the tile to south side of another tile

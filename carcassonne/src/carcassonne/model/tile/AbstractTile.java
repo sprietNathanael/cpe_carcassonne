@@ -7,6 +7,7 @@ package carcassonne.model.tile;
 
 import carcassonne.model.player.Meeple;
 import carcassonne.model.type.AbstractType;
+import java.util.HashMap;
 import java.util.Set;
 
 /**
@@ -101,6 +102,8 @@ public abstract class AbstractTile
      * @return
      */
     public abstract AbstractType getType(String coordinates);
+    
+    public abstract HashMap<String, AbstractType> getTypes();
 
     /**
      * Quickly check if the tile is composed of a cross road
