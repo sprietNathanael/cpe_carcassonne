@@ -153,7 +153,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.manageNewTileAggregates(tile, row, column);
         System.out.println("Aggrégats de route:\n" + roadAggregates);
         System.out.println("Taille de la première route: " + roadAggregates.get(0).countPoints() + "\n");
-        System.out.println("Première route terminée: " + roadAggregates.get(0).checkIsCompleted() + "\n");
         System.out.println("Aggrégats de ville:\n" + cityAggregates);
         System.out.println("Taille de la première ville: " + cityAggregates.get(0).getAggregatedTiles().size() + "\n");
         System.out.println("Aggrégats de champs:\n" + fieldAggregates);
@@ -666,22 +665,40 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     /**
-     * WIP !
+     * Update the points and the meeples of the players, using the aggregates
+     * that just has been completed
      */
-    private void manageCompletedAggregate()
+    public void manageCompletedAggregates()
     {
         Map<Player, Set<Meeple>> playersToUpdate;
+        Set<Player> winningPlayers;
 
-        for (CityAggregate city : cityAggregates) {
-            if (!city.isCompleted()) {
-                if (city.checkIsCompleted()) {
-                    playersToUpdate = city.getPlayers();
-                    for (Map.Entry<Player, Set<Meeple>> entry : playersToUpdate.entrySet()) {
-                        Player player = entry.getKey();
-                        Set<Meeple> meeples = entry.getValue();
+        //We create a list of aggregates, by combining cities and roads, the aggregate types that can be completed during a game
+        List<AbstractAggregate> aggregates = new ArrayList<>();
+        aggregates.addAll(cityAggregates);
+        aggregates.addAll(roadAggregates);
 
+        for (AbstractAggregate aggregate : aggregates) {
+            //get cities that are currently not completed
+            if (!aggregate.isCompleted()) {
+                //Get the cities that just has been completed during this round
+                if (aggregate.checkIsCompleted()) {
+                    playersToUpdate = aggregate.getPlayers();
+                    winningPlayers = aggregate.getWinningPlayers();
+                    System.out.println("Joueurs gagnants: " + winningPlayers);
+                    int score = aggregate.countPoints();
+                    //Update the score of the winning playesr of this aggregate
+                    for (Player player : winningPlayers) {
+                        player.addToScore(score);
                     }
-
+                    //Browse all of the players and their meeples
+                    for (Map.Entry<Player, Set<Meeple>> entry : playersToUpdate.entrySet()) {
+                        Set<Meeple> meeples = entry.getValue();
+                        for (Meeple meeple : meeples) {
+                            //Set all the meeples to "not used"
+                            meeple.setIsUsed(false);
+                        }
+                    }
                 }
             }
         }

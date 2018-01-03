@@ -23,8 +23,13 @@ public class Player
     private final Meeple bigMeeple;
     private final ArrayList<Meeple> meeples;
     private final String name;
-    private final int points;
+    private int points;
     private final String color;
+
+    public void addToScore(int nb)
+    {
+        points += nb;
+    }
 
     /**
      * Creates a new Player
@@ -170,22 +175,22 @@ public class Player
     @Override
     public String toString()
     {
-        return "Player{name=" + name + ", points=" + points + ", color=" + color + '}';
+        return "\nPlayer{name=" + name + ", points=" + points + ", color=" + color + '}';
     }
 
     public static int countPoints(Set<Meeple> meeples)
     {
         int total = 0;
-        
-        for (Meeple meeple : meeples){
-            if (meeple.getIsBig()){
-                total+=2;
-            } else {
+
+        for (Meeple meeple : meeples) {
+            if (meeple.getIsBig()) {
+                total += 2;
+            }
+            else {
                 total++;
             }
         }
-        
+
         return total;
     }
 }
-

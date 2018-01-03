@@ -165,7 +165,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public Player endTurn()
     {
-        // TODO : compter les points
+        carcassonneGame.manageCompletedAggregates();
+        System.out.println("===========\nPoints des joueurs :" + this.carcassonneGame.getPlayers());
         Player player = this.carcassonneGame.nextPlayer();
         this.beginTurn();
         return player;
