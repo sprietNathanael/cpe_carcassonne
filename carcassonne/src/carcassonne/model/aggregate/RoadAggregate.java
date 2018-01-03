@@ -294,6 +294,6 @@ public class RoadAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "}\n";
+        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + "}\n";
     }
 }

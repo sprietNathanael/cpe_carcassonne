@@ -282,6 +282,6 @@ public class CityAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "City{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "}\n";
+        return "City{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + "}\n";
     }
 }

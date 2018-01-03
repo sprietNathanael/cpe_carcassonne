@@ -183,7 +183,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
         List<AbstractAggregate> aggregates = new ArrayList<>();
-        
+
         if (tile.getType(coordinates) instanceof RoadType) {
             aggregates.addAll(roadAggregates);
         }
