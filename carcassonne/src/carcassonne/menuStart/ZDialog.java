@@ -26,10 +26,8 @@ public class ZDialog extends JDialog
     private boolean sendData;
     private JLabel nomLabel, cheveuxLabel, icon, colorsLabel;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
-    private JComboBox cheveux;
-    private JTextField nom, numbers;
-    private JComboBox<String> colors;
-    private JRadioButton nb2, nb3, nb4, nb5, nb6;
+    private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
+    private JComboBox<String> colorsJ1, colorsJ2, colorsJ3, colorsJ4, colorsJ5, colorsJ6;
 
     public ZDialog(JFrame parent, String title, boolean modal)
     {
@@ -85,56 +83,129 @@ public class ZDialog extends JDialog
         numPlayers.add(tranche5);
 
         //------------- PART PLAYERS ------------------------------------------
-        //Le nom
-        /*JPanel panNom = new JPanel();
-        panNom.setBackground(Color.white);
-        panNom.setPreferredSize(new Dimension(220, 60));
-        nom = new JTextField();
-        nom.setPreferredSize(new Dimension(100, 25));
-        panNom.setBorder(BorderFactory.createTitledBorder("Nom du personnage"));
-        nomLabel = new JLabel("Saisir un nom :");
-        panNom.add(nomLabel);
-        panNom.add(nom);*/
-        //La couleur des cheveux
-        /*JPanel panCheveux = new JPanel();
-        panCheveux.setBackground(Color.white);
-        panCheveux.setPreferredSize(new Dimension(220, 60));
-        panCheveux.setBorder(BorderFactory.createTitledBorder("Couleur de cheveux du personnage"));
-        cheveux = new JComboBox();
-        cheveux.addItem("Blond");
-        cheveux.addItem("Brun");
-        cheveux.addItem("Roux");
-        cheveux.addItem("Blanc");
-        cheveuxLabel = new JLabel("Cheveux");
-        panCheveux.add(cheveuxLabel);
-        panCheveux.add(cheveux);
+        JPanel player1 = new JPanel();
+        player1.setBackground(Color.white);
+        player1.setPreferredSize(new Dimension(600, 55));
+        player1.setBorder(BorderFactory.createTitledBorder("Player1"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ1 = new JTextField();
+        nomJ1.setPreferredSize(new Dimension(100, 25));
+        colorsJ1 = new JComboBox<>();
+        colorsJ1.addItem("Red");
+        colorsJ1.addItem("Blue");
+        colorsJ1.addItem("Green");
+        colorsJ1.addItem("Black");
+        colorsJ1.addItem("Yellow");
+        colorsJ1.addItem("Violet");
+        player1.add(nomLabel, BorderLayout.WEST);
+        player1.add(nomJ1, BorderLayout.WEST);
+        player1.add(colorsLabel, BorderLayout.EAST);
+        player1.add(colorsJ1, BorderLayout.EAST);
+
+        JPanel player2 = new JPanel();
+        player2.setBackground(Color.white);
+        player2.setPreferredSize(new Dimension(600, 55));
+        player2.setBorder(BorderFactory.createTitledBorder("Player2"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ2 = new JTextField();
+        nomJ2.setPreferredSize(new Dimension(100, 25));
+        colorsJ2 = new JComboBox<>();
+        colorsJ2.addItem("Red");
+        colorsJ2.addItem("Blue");
+        colorsJ2.addItem("Green");
+        colorsJ2.addItem("Black");
+        colorsJ2.addItem("Yellow");
+        colorsJ2.addItem("Violet");
+        player2.add(nomLabel, BorderLayout.WEST);
+        player2.add(nomJ2, BorderLayout.WEST);
+        player2.add(colorsLabel, BorderLayout.EAST);
+        player2.add(colorsJ2, BorderLayout.EAST);
+
+        JPanel player3 = new JPanel();
+        player3.setBackground(Color.white);
+        player3.setPreferredSize(new Dimension(600, 55));
+        player3.setBorder(BorderFactory.createTitledBorder("Player3"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ3 = new JTextField();
+        nomJ3.setPreferredSize(new Dimension(100, 25));
+        colorsJ3 = new JComboBox<>();
+        colorsJ3.addItem("Red");
+        colorsJ3.addItem("Blue");
+        colorsJ3.addItem("Green");
+        colorsJ3.addItem("Black");
+        colorsJ3.addItem("Yellow");
+        colorsJ3.addItem("Violet");
+        player3.add(nomLabel, BorderLayout.WEST);
+        player3.add(nomJ3, BorderLayout.WEST);
+        player3.add(colorsLabel, BorderLayout.EAST);
+        player3.add(colorsJ3, BorderLayout.EAST);
+
+        JPanel player4 = new JPanel();
+        player4.setBackground(Color.white);
+        player4.setPreferredSize(new Dimension(600, 55));
+        player4.setBorder(BorderFactory.createTitledBorder("Player4"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ4 = new JTextField();
+        nomJ4.setPreferredSize(new Dimension(100, 25));
+        colorsJ4 = new JComboBox<>();
+        colorsJ4.addItem("Red");
+        colorsJ4.addItem("Blue");
+        colorsJ4.addItem("Green");
+        colorsJ4.addItem("Black");
+        colorsJ4.addItem("Yellow");
+        colorsJ4.addItem("Violet");
+        player4.add(nomLabel, BorderLayout.WEST);
+        player4.add(nomJ4, BorderLayout.WEST);
+        player4.add(colorsLabel, BorderLayout.EAST);
+        player4.add(colorsJ4, BorderLayout.EAST);
+
+        JPanel player5 = new JPanel();
+        player5.setBackground(Color.white);
+        player5.setPreferredSize(new Dimension(600, 55));
+        player5.setBorder(BorderFactory.createTitledBorder("Player5"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ5 = new JTextField();
+        nomJ5.setPreferredSize(new Dimension(100, 25));
+        colorsJ5 = new JComboBox<>();
+        colorsJ5.addItem("Red");
+        colorsJ5.addItem("Blue");
+        colorsJ5.addItem("Green");
+        colorsJ5.addItem("Black");
+        colorsJ5.addItem("Yellow");
+        colorsJ5.addItem("Violet");
+        player5.add(nomLabel, BorderLayout.WEST);
+        player5.add(nomJ5, BorderLayout.WEST);
+        player5.add(colorsLabel, BorderLayout.EAST);
+        player5.add(colorsJ5, BorderLayout.EAST);
+
+        JPanel player6 = new JPanel();
+        player6.setBackground(Color.white);
+        player6.setPreferredSize(new Dimension(600, 55));
+        player6.setBorder(BorderFactory.createTitledBorder("Player6"));
+        nomLabel = new JLabel("Name :");
+        colorsLabel = new JLabel("Color :");
+        nomJ6 = new JTextField();
+        nomJ6.setPreferredSize(new Dimension(100, 25));
+        colorsJ6 = new JComboBox<>();
+        colorsJ6.addItem("Red");
+        colorsJ6.addItem("Blue");
+        colorsJ6.addItem("Green");
+        colorsJ6.addItem("Black");
+        colorsJ6.addItem("Yellow");
+        colorsJ6.addItem("Violet");
+        player6.add(nomLabel, BorderLayout.WEST);
+        player6.add(nomJ6, BorderLayout.WEST);
+        player6.add(colorsLabel, BorderLayout.EAST);
+        player6.add(colorsJ6, BorderLayout.EAST);
 
         JPanel content = new JPanel();
         content.setBackground(Color.white);
-        content.add(panNom);
-        content.add(numPlayers);
-        content.add(panCheveux);*/
-        JPanel panNumb = new JPanel();
-        panNumb.setBackground(Color.white);
-        panNumb.setPreferredSize(new Dimension(400, 60));
-        numbers = new JTextField();
-        numbers.setPreferredSize(new Dimension(100, 25));
-        panNumb.setBorder(BorderFactory.createTitledBorder("Numbers of players"));
-        nomLabel = new JLabel("Numbers (between 2 and 6) :");
-        panNumb.add(nomLabel, BorderLayout.WEST);
-        panNumb.add(numbers, BorderLayout.EAST);
 
-        JPanel player1 = CreatePlayer(1);
-        JPanel player2 = CreatePlayer(2);
-        JPanel player3 = CreatePlayer(3);
-        JPanel player4 = CreatePlayer(4);
-        JPanel player5 = CreatePlayer(5);
-        JPanel player6 = CreatePlayer(6);
-
-        JPanel content = new JPanel();
-        content.setBackground(Color.white);
-        //content.add(numb);
-        //content.add(panNumb);
         content.add(player1);
         content.add(player2);
         content.add(player3);
@@ -149,11 +220,17 @@ public class ZDialog extends JDialog
         {
             public void actionPerformed(ActionEvent arg0)
             {
-                zInfo = new ZDialogInfo(nom.getText(), getAge(), (String) cheveux.getSelectedItem());
+                zInfo = new ZDialogInfo(nomJ1.getText(), getNumbersPlayers(), (String) colorsJ1.getSelectedItem(),
+                        nomJ2.getText(), (String) colorsJ2.getSelectedItem(),
+                        nomJ3.getText(), (String) colorsJ3.getSelectedItem(),
+                        nomJ4.getText(), (String) colorsJ4.getSelectedItem(),
+                        nomJ5.getText(), (String) colorsJ5.getSelectedItem(),
+                        nomJ6.getText(), (String) colorsJ6.getSelectedItem()
+                );
                 setVisible(false);
             }
 
-            public String getAge()
+            public String getNumbersPlayers()
             {
                 return (tranche1.isSelected()) ? tranche1.getText()
                         : (tranche2.isSelected()) ? tranche2.getText()
@@ -175,39 +252,11 @@ public class ZDialog extends JDialog
 
         control.add(okBouton);
         control.add(cancelBouton);
-        
+
         this.getContentPane().add(panIcon, BorderLayout.WEST);
-        this.getContentPane().add(panNumb, BorderLayout.NORTH);
+        this.getContentPane().add(numPlayers, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 
-    private JPanel CreatePlayer(int x)
-    {
-
-        JPanel player = new JPanel();
-        player.setBackground(Color.white);
-        player.setPreferredSize(new Dimension(600, 60));
-        player.setBorder(BorderFactory.createTitledBorder("Player " + x));
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-
-        nom = new JTextField();
-        nom.setPreferredSize(new Dimension(100, 25));
-
-        colors = new JComboBox<>();
-        colors.addItem("Red");
-        colors.addItem("Blue");
-        colors.addItem("Green");
-        colors.addItem("Black");
-        colors.addItem("Yellow");
-        colors.addItem("Violet");
-
-        player.add(nomLabel, BorderLayout.WEST);
-        player.add(nom, BorderLayout.WEST);
-        player.add(colorsLabel, BorderLayout.EAST);
-        player.add(colors, BorderLayout.EAST);
-
-        return player;
-    }
 }

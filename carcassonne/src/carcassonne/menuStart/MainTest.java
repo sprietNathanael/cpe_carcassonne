@@ -35,7 +35,7 @@ public class MainTest extends JFrame {
   public static void main(String[] main) throws Exception{
     //FenetreTest fen = new MainTest();
     GameMenu Ga = new GameMenu();
-    Settingstemp set = new Settingstemp();
+    Settings set = new Settings();
 
   }   
 }
