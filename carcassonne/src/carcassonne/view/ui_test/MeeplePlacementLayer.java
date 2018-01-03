@@ -192,6 +192,7 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
                         Logger.getLogger(MeeplePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     this.controller.endTurn();
+                    this.currentTileAggregate = null;
                 }
             /*}*/
         }
