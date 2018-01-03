@@ -124,6 +124,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         Meeple m = getCurrentPlayerMeepleAvailable();
         currentTile.putMeeple(coordinates, m);
+        carcassonneGame.putMeeple(m, currentTile, m.getPlayer(), coordinates);
     }
 
     public Board getBoard()

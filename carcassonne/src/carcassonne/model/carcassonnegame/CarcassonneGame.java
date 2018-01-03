@@ -6,6 +6,7 @@
 package carcassonne.model.carcassonnegame;
 
 import carcassonne.coord.Coord;
+import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.aggregate.CityAggregate;
 import carcassonne.model.aggregate.FieldAggregate;
 import carcassonne.model.aggregate.RoadAggregate;
@@ -16,7 +17,8 @@ import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
-import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.CityType;
+import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -174,25 +176,35 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      *
      * @param meeple
      * @param tile
+     * @param coordinates
+     *
      * @param player
-     * @param type
-     * @throws Exception
      */
-    public void putMeeple(Meeple meeple, AbstractTile tile, Player player, AbstractType type) throws Exception
+    public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
-        if (player.checkMeepleAvailable() == false) {
-            throw new Exception("no meeple");
+        List<AbstractAggregate> aggregates = new ArrayList<>();
+        
+        if (tile.getType(coordinates) instanceof RoadType) {
+            aggregates.addAll(roadAggregates);
+        }
+        else if (tile.getType(coordinates) instanceof CityType) {
+            aggregates.addAll(cityAggregates);
         }
         else {
-            /*Player has meeple*/
+            aggregates.addAll(fieldAggregates);
+        }
 
- /*Check if a meeple can be to put on this tile*/
-            if (tile.isMeepable() == false) {
-                throw new Exception("no meepable");
-            }
-            else {
-                type.setMeeple(meeple);
-                meeple.setIsUsed(true);
+        Set<String> currentTileLocations;
+
+        //parcours des aggregats
+        for (AbstractAggregate aggregate : aggregates) {
+            //test si on est sur la bonne tuile
+            if (aggregate.getAggregatedTypes().containsKey(tile)) {
+                currentTileLocations = aggregate.getAggregatedTypes().get(tile);
+                //Si la locations correspond à cet aggrégat, c'est le bon et on ajoute le meeple + player
+                if (currentTileLocations.contains(coordinates)) {
+                    aggregate.addMeeple(player, meeple);
+                }
             }
         }
         /* Update the aggregates, if one just has been completed, we add the points and free the meeple */

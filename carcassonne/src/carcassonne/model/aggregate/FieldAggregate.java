@@ -132,6 +132,6 @@ public class FieldAggregate extends AbstractAggregate
     @Override
     public String toString()
     {
-        return "Field{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "Villes: " + boundedCities + "}\n";
+        return "Field{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "Villes: " + boundedCities + " Player: " + players + "}\n";
     }
 }
