@@ -633,31 +633,42 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return newFieldAggregatesEmplacements;
     }
 
+    /**
+     * Get free aggregates of the tile, if the current player has at least on
+     * meeple to add
+     *
+     * @param x
+     * @param y
+     * @return null if there is no possibilities
+     */
     public Set<Set<String>> getFreeAggregatesInTile(int x, int y)
     {
-        Coord convertedCoord = convertCoord(x, y);
-        int col = convertedCoord.col, row = convertedCoord.row;
         Set<Set<String>> result = new HashSet<>();
-        Set<String> currentAggregateLocations = null;
 
-        for (RoadAggregate road : roadAggregates) {
-            currentAggregateLocations = road.getTileLocations(col, row);
-            if (currentAggregateLocations != null && road.getPlayers().isEmpty()) {
-                result.add(currentAggregateLocations);
+        if (this.getCurrentPlayer().checkMeepleAvailable()) {
+            Coord convertedCoord = convertCoord(x, y);
+            int col = convertedCoord.col, row = convertedCoord.row;
+            Set<String> currentAggregateLocations = null;
+
+            for (RoadAggregate road : roadAggregates) {
+                currentAggregateLocations = road.getTileLocations(col, row);
+                if (currentAggregateLocations != null && road.getPlayers().isEmpty()) {
+                    result.add(currentAggregateLocations);
+                }
             }
-        }
-        currentAggregateLocations = null;
-        for (CityAggregate city : cityAggregates) {
-            currentAggregateLocations = city.getTileLocations(col, row);
-            if (currentAggregateLocations != null && city.getPlayers().isEmpty()) {
-                result.add(currentAggregateLocations);
+            currentAggregateLocations = null;
+            for (CityAggregate city : cityAggregates) {
+                currentAggregateLocations = city.getTileLocations(col, row);
+                if (currentAggregateLocations != null && city.getPlayers().isEmpty()) {
+                    result.add(currentAggregateLocations);
+                }
             }
-        }
-        currentAggregateLocations = null;
-        for (FieldAggregate field : fieldAggregates) {
-            currentAggregateLocations = field.getTileLocations(col, row);
-            if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
-                result.add(currentAggregateLocations);
+            currentAggregateLocations = null;
+            for (FieldAggregate field : fieldAggregates) {
+                currentAggregateLocations = field.getTileLocations(col, row);
+                if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
+                    result.add(currentAggregateLocations);
+                }
             }
         }
 

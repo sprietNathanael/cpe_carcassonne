@@ -124,11 +124,11 @@ public class Player
      */
     public boolean checkMeepleAvailable()
     {
-        boolean ret = true;
+        boolean ret = false;
 
         for (Meeple m : meeples) {
-            if (m.getIsUsed()) {
-                ret = false;
+            if (!m.getIsUsed()) {
+                ret = true;
                 break;
             }
         }
