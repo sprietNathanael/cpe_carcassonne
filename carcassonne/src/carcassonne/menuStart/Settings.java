@@ -8,6 +8,7 @@ package carcassonne.menuStart;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -15,10 +16,12 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.BevelBorder;
 
@@ -30,153 +33,43 @@ public class Settings extends JFrame
 
 {
 
-    private final String back = "resources/settingsMenuconfig.png";
-    private final BtGame bt2 = new BtGame("resources/bt_II.PNG");
-    private final BtGame bt3 = new BtGame("resources/bt_III.PNG");
-    private final BtGame bt4 = new BtGame("resources/bt_IV.PNG");
-    private final BtGame bt5 = new BtGame("resources/bt_V.PNG");
-    private final BtGame bt6 = new BtGame("resources/bt_VI.PNG");
-    private final JComboBox combo = new JComboBox();
-    private int nbPlayers = 0;
+    private JButton button = new JButton("Mode local");
+    private JButton button2 = new JButton("Mode en ligne");
 
-    public Settings() throws IOException
+    public Settings()
     {
         this.setTitle("Settings");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        this.setSize(1100, 950);
+        this.setSize(300, 100);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.setResizable(false);
-
-        /*this.add(new JLabel(new ImageIcon(back)));
-        this.pack();*/
-        this.setContentPane(new Background(back));
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
-
-        this.setLayout(null);
-
-        //Numbers of Players
-        this.add(bt2);
-        bt2.setBounds(550, 252, 41, 49);
-        bt2.setBorderPainted(false);
-
-        bt2.addActionListener(new ActionListener()
+        this.getContentPane().setLayout(new FlowLayout());
+        this.getContentPane().add(button);
+        this.getContentPane().add(button2);
+        button.addActionListener(new ActionListener()
         {
-            @Override
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(ActionEvent arg0)
             {
-                bt3.setEnabled(false);
-                bt4.setEnabled(false);
-                bt5.setEnabled(false);
-                bt6.setEnabled(false);
-                nbPlayers = 2;
-                bt2.setBorderPainted(true);
-                bt2.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
+                ZDialog zd = new ZDialog(null, "Settings", true);
+                ZDialogInfo zInfo = zd.showZDialog();
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
+                setVisible(false);
             }
         });
 
-        this.add(bt3);
-        bt3.setBounds(600, 252, 57, 49);
-        bt3.setBorderPainted(false);
-
-        bt3.addActionListener(new ActionListener()
+        button2.addActionListener(new ActionListener()
         {
-
-            @Override
-            public void actionPerformed(ActionEvent e)
+            public void actionPerformed(ActionEvent arg0)
             {
-                bt2.setEnabled(false);
-                bt4.setEnabled(false);
-                bt5.setEnabled(false);
-                bt6.setEnabled(false);
-                nbPlayers = 3;
-                bt3.setBorderPainted(true);
-                bt3.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
-            }
-        });
-
-        this.add(bt4);
-        bt4.setBounds(670, 252, 74, 50);
-        bt4.setBorderPainted(false);
-
-        bt4.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                bt2.setEnabled(false);
-                bt3.setEnabled(false);
-                bt5.setEnabled(false);
-                bt6.setEnabled(false);
-                nbPlayers = 4;
-                bt4.setBorderPainted(true);
-                bt4.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
+                JOptionPane jop = new JOptionPane();
+                jop.showMessageDialog(null, "La patience est la clé du bien-être.\n" + "Mahomet - Prophète, Religieux (570 - 632))", "En cours de développement", JOptionPane.ERROR_MESSAGE);
 
             }
         });
-
-        this.add(bt5);
-        bt5.setBounds(753, 252, 52, 49);
-        bt5.setBorderPainted(false);
-
-        bt5.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-                bt2.setEnabled(false);
-                bt3.setEnabled(false);
-                bt4.setEnabled(false);
-                bt6.setEnabled(false);
-                nbPlayers = 5;
-                bt5.setBorderPainted(true);
-                bt5.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
-
-            }
-        });
-
-        this.add(bt6);
-        bt6.setBounds(820, 252, 75, 48);
-        bt6.setOpaque(false);
-        bt6.setContentAreaFilled(false);
-        bt6.setBorderPainted(false);
-
-        bt6.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-
-                bt2.setEnabled(false);
-                bt3.setEnabled(false);
-                bt4.setEnabled(false);
-                bt5.setEnabled(false);
-                nbPlayers = 6;
-                bt6.setBorderPainted(true);
-                bt6.setBorder(new BevelBorder(1, Color.black, Color.black, Color.black, Color.black));
-
-            }
-        });
-
-        //Colors of player
-        /*combo.setPreferredSize(new Dimension(100, 20));
-        combo.addItem("Rouge");
-        combo.addItem("Vert");
-        combo.addItem("Bleu");
-        JPanel top = new JPanel();
-        top.add(combo, BorderLayout.SOUTH);
-
-        this.setContentPane(top);
-        this.add(top, BorderLayout.SOUTH);*/
-
         this.setVisible(true);
-
-    }
-
-    public int getNbPlayers()
-    {
-        return nbPlayers;
     }
 
 }

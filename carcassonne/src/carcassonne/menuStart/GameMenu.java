@@ -97,12 +97,8 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                Settingstemp settings = null;
-                try {
-                    settings = new Settingstemp();
-                } catch (IOException ex) {
-                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                Settings settings = null;
+                settings = new Settings();
                 settings.setVisible(true);
                 settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
