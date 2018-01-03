@@ -20,12 +20,14 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
     
     private UICoord currentCoord;
     private String tileSlice;
+    private String lastSlice;
 
     public MeeplePlacementMouseAdapter(GridPanel gridPanel, MeeplePlacementMouseListener listener, UICoord currentCoord)
     {
         this.gridPanel = gridPanel;
         this.listener = listener;
         this.currentCoord = currentCoord;
+        this.lastSlice = "";
     }
 
     public String getTileSlice()

@@ -184,8 +184,8 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     public void mouseClicked(MouseEvent e, UICoord p, String tileSlice)
     {
         if (this.currentPosition.equals(p)) {
-            for (Set<String> aggregate : tileAggregates) {
-                if (aggregate.contains(tileSlice)) {
+            /*for (Set<String> aggregate : tileAggregates) {*/
+                if (this.currentTileAggregate != null) {
                     try {
                         this.controller.putMeeple(tileSlice);
                     } catch (Exception ex) {
@@ -193,7 +193,7 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
                     }
                     this.controller.endTurn();
                 }
-            }
+            /*}*/
         }
     }
 
