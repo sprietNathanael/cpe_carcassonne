@@ -34,54 +34,55 @@ import javax.imageio.ImageIO;
  */
 public class MeeplePlacementLayer extends AbstractLayer implements TilePlacementMouseListener, MeeplePlacementMouseListener
 {
-    
+
     public static final HashMap<String, Polygon> TILE_SPLITS;
-     static {
+
+    static {
         TILE_SPLITS = new HashMap<>();
-        TILE_SPLITS.put("NWW", new Polygon(new int[] {0,15,0},new int[] {0,33,33},3));
-        TILE_SPLITS.put("NW", new Polygon(new int[] {0,33,33,15},new int[] {0,15,33,33},4));
-        TILE_SPLITS.put("NNW", new Polygon(new int[] {0,33,33},new int[] {0,0,15},3));
-        TILE_SPLITS.put("N", new Polygon(new int[] {33,66,66,33},new int[] {0,0,33,33},4));
-        TILE_SPLITS.put("NNE", new Polygon(new int[] {66,100,66},new int[] {0,0,15},3));
-        TILE_SPLITS.put("NE", new Polygon(new int[] {66,100,85,66},new int[] {15,0,33,33},4));
-        TILE_SPLITS.put("NEE", new Polygon(new int[] {85,100,100},new int[] {33,0,33},3));
-        TILE_SPLITS.put("E", new Polygon(new int[] {66,100,100,66},new int[] {33,33,66,66},4));
-        TILE_SPLITS.put("SEE", new Polygon(new int[] {85,100,100},new int[] {66,66,100},3));
-        TILE_SPLITS.put("SE", new Polygon(new int[] {66,85,100,66},new int[] {66,66,100, 85},4));
-        TILE_SPLITS.put("SSE", new Polygon(new int[] {66,100,66},new int[] {85,100,100},3));
-        TILE_SPLITS.put("S", new Polygon(new int[] {33,66,66,33},new int[] {66,66,100,100},4));
-        TILE_SPLITS.put("SSW", new Polygon(new int[] {0,33,33},new int[] {100,85,100},3));
-        TILE_SPLITS.put("SW", new Polygon(new int[] {0,15,33,33},new int[] {100,66,66,85},4));
-        TILE_SPLITS.put("SWW", new Polygon(new int[] {0,15,0},new int[] {66,66,100},3));
-        TILE_SPLITS.put("W", new Polygon(new int[] {0,33,33,0},new int[] {33,33,66,66},4));
-        TILE_SPLITS.put("CNW", new Polygon(new int[] {33,50,50,33},new int[] {33,33,50,50},4));
-        TILE_SPLITS.put("CNE", new Polygon(new int[] {50,66,66,50},new int[] {33,33,50,50},4));
-        TILE_SPLITS.put("CSE", new Polygon(new int[] {50,66,66,50},new int[] {50,50,66,66},4));
-        TILE_SPLITS.put("CSW", new Polygon(new int[] {33,50,50,33},new int[] {50,50,66,66},4));
+        TILE_SPLITS.put("NWW", new Polygon(new int[]{0, 15, 0}, new int[]{0, 33, 33}, 3));
+        TILE_SPLITS.put("NW", new Polygon(new int[]{0, 33, 33, 15}, new int[]{0, 15, 33, 33}, 4));
+        TILE_SPLITS.put("NNW", new Polygon(new int[]{0, 33, 33}, new int[]{0, 0, 15}, 3));
+        TILE_SPLITS.put("N", new Polygon(new int[]{33, 66, 66, 33}, new int[]{0, 0, 33, 33}, 4));
+        TILE_SPLITS.put("NNE", new Polygon(new int[]{66, 100, 66}, new int[]{0, 0, 15}, 3));
+        TILE_SPLITS.put("NE", new Polygon(new int[]{66, 100, 85, 66}, new int[]{15, 0, 33, 33}, 4));
+        TILE_SPLITS.put("NEE", new Polygon(new int[]{85, 100, 100}, new int[]{33, 0, 33}, 3));
+        TILE_SPLITS.put("E", new Polygon(new int[]{66, 100, 100, 66}, new int[]{33, 33, 66, 66}, 4));
+        TILE_SPLITS.put("SEE", new Polygon(new int[]{85, 100, 100}, new int[]{66, 66, 100}, 3));
+        TILE_SPLITS.put("SE", new Polygon(new int[]{66, 85, 100, 66}, new int[]{66, 66, 100, 85}, 4));
+        TILE_SPLITS.put("SSE", new Polygon(new int[]{66, 100, 66}, new int[]{85, 100, 100}, 3));
+        TILE_SPLITS.put("S", new Polygon(new int[]{33, 66, 66, 33}, new int[]{66, 66, 100, 100}, 4));
+        TILE_SPLITS.put("SSW", new Polygon(new int[]{0, 33, 33}, new int[]{100, 85, 100}, 3));
+        TILE_SPLITS.put("SW", new Polygon(new int[]{0, 15, 33, 33}, new int[]{100, 66, 66, 85}, 4));
+        TILE_SPLITS.put("SWW", new Polygon(new int[]{0, 15, 0}, new int[]{66, 66, 100}, 3));
+        TILE_SPLITS.put("W", new Polygon(new int[]{0, 33, 33, 0}, new int[]{33, 33, 66, 66}, 4));
+        TILE_SPLITS.put("CNW", new Polygon(new int[]{33, 50, 50, 33}, new int[]{33, 33, 50, 50}, 4));
+        TILE_SPLITS.put("CNE", new Polygon(new int[]{50, 66, 66, 50}, new int[]{33, 33, 50, 50}, 4));
+        TILE_SPLITS.put("CSE", new Polygon(new int[]{50, 66, 66, 50}, new int[]{50, 50, 66, 66}, 4));
+        TILE_SPLITS.put("CSW", new Polygon(new int[]{33, 50, 50, 33}, new int[]{50, 50, 66, 66}, 4));
     } //tile splits
-     
+
     private Set<Set<String>> tileAggregates;
     private Set<String> currentTileAggregate;
     private UICoord currentPosition;
-    
+
     public MeeplePlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
         super(gridPanel, controller);
         this.tileAggregates = new HashSet<>();
         this.currentTileAggregate = null;
     }
-    
+
     public void setAggregates(AbstractTile currentTile)
     {
-        this.tileAggregates = currentTile.getAggregateEmplacements();        
+        this.tileAggregates = currentTile.getAggregateEmplacements();
     }
-    
+
     public void setAggregates(Set<Set<String>> aggregates)
     {
-        System.out.println("+++++++++++++++++++++++++ aggregates are : "+aggregates);
+        System.out.println("+++++++++++++++++++++++++ aggregates are : " + aggregates);
         this.tileAggregates = aggregates;
     }
-    
+
     public void setCurrentPosition(UICoord c)
     {
         this.currentPosition = c;
@@ -91,31 +92,29 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void paint(Graphics2D g2)
     {
-        if(this.isVisible() && this.currentTileAggregate != null)
-        {
+        if (this.isVisible() && this.currentTileAggregate != null) {
             int tileSize = this.gridPanel.getTileSize();
             UICoord center = this.gridPanel.getGraphicalCenter();
 
             // Affine transform to resize tiles splits
             AffineTransform resizeMeeplesPlacement = new AffineTransform();
             AffineTransform translateMeeplesPlacement = new AffineTransform();
-            resizeMeeplesPlacement.scale(tileSize/100.0,tileSize/100.0);
-            double delta_x = (this.currentPosition.getX()*tileSize) + center.getX();
-            double delta_y = (this.currentPosition.getY()*tileSize) + center.getY();
+            resizeMeeplesPlacement.scale(tileSize / 100.0, tileSize / 100.0);
+            double delta_x = (this.currentPosition.getX() * tileSize) + center.getX();
+            double delta_y = (this.currentPosition.getY() * tileSize) + center.getY();
             translateMeeplesPlacement.translate(delta_x, delta_y);
-            
+
             Shape intermediate;
-            
+
             g2.setColor(new Color(255, 20, 20, 100));
-            for(String split : this.currentTileAggregate)
-            {
+            for (String split : this.currentTileAggregate) {
                 intermediate = translateMeeplesPlacement.createTransformedShape(resizeMeeplesPlacement.createTransformedShape(TILE_SPLITS.get(split)));
-                g2.fill(intermediate);                
+                g2.fill(intermediate);
             }
             g2.setColor(Color.BLACK);
         }
-    }   
-    
+    }
+
     /**
      * On layer show triggered
      */
@@ -133,11 +132,11 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         super.onHide();
         this.removeMouseInputListener();
     }
-    
+
     @Override
     public void tileEntered(MouseEvent e, UICoord p)
     {
-        System.out.println("********************************** Entered");        
+        System.out.println("********************************** Entered");
     }
 
     @Override
@@ -155,26 +154,21 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void tileSliceEntered(MouseEvent e, UICoord p, String tileSlice)
     {
-        if(this.currentPosition.equals(p))
-        {
+        if (this.currentPosition.equals(p)) {
             aggregatesLoop:
-            for(Set<String> aggregate : this.tileAggregates)
-            {
-                for(String split : aggregate)
-                {
-                    if(split.equals(tileSlice))
-                    {
+            for (Set<String> aggregate : this.tileAggregates) {
+                for (String split : aggregate) {
+                    if (split.equals(tileSlice)) {
                         this.currentTileAggregate = aggregate;
                         // TODO beautify this ugly piece of code !
                         break aggregatesLoop;
                     }
-                    
+
                 }
             }
         }
-        else
-        {
-            this.currentTileAggregate = null;            
+        else {
+            this.currentTileAggregate = null;
         }
         this.gridPanel.repaint();
     }
@@ -189,14 +183,17 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void mouseClicked(MouseEvent e, UICoord p, String tileSlice)
     {
-        if(this.currentPosition.equals(p))
-        {
-            try {
-                this.controller.putMeeple(tileSlice);
-            } catch (Exception ex) {
-                Logger.getLogger(MeeplePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
+        if (this.currentPosition.equals(p)) {
+            for (Set<String> aggregate : tileAggregates) {
+                if (aggregate.contains(tileSlice)) {
+                    try {
+                        this.controller.putMeeple(tileSlice);
+                    } catch (Exception ex) {
+                        Logger.getLogger(MeeplePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    this.controller.endTurn();
+                }
             }
-            this.controller.endTurn();
         }
     }
 
@@ -206,17 +203,15 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         double x_filtered, y_filtered;
         int tileSize = this.gridPanel.getTileSize();
         UICoord center = this.gridPanel.getGraphicalCenter();
-        x_filtered = ((x - (tileSize*tileCoordinates.getX())) - center.getX()) / (tileSize/100.0);
-        y_filtered = ((y - (tileSize*tileCoordinates.getY())) - center.getY()) / (tileSize / 100.0);
-        for(Map.Entry<String,Polygon> entry : TILE_SPLITS.entrySet())
-        {
-            if(entry.getValue().contains(x_filtered, y_filtered))
-            {
+        x_filtered = ((x - (tileSize * tileCoordinates.getX())) - center.getX()) / (tileSize / 100.0);
+        y_filtered = ((y - (tileSize * tileCoordinates.getY())) - center.getY()) / (tileSize / 100.0);
+        for (Map.Entry<String, Polygon> entry : TILE_SPLITS.entrySet()) {
+            if (entry.getValue().contains(x_filtered, y_filtered)) {
                 return entry.getKey();
             }
-                    
+
         }
         return null;
     }
-  
+
 }
