@@ -37,6 +37,7 @@ public class Settings extends JFrame
 
     private JButton button = new JButton("Mode local");
     private JButton button2 = new JButton("Mode en ligne");
+    private Parameters parameters;
 
     public Settings() throws IOException
     {
@@ -56,16 +57,17 @@ public class Settings extends JFrame
         button.setBounds(320, 250, 250, 50);
         button2.setBounds(320, 350, 250, 50);
 
+        Settings self = this;
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
             {
-                Parameters par = new Parameters(null, "Settings", true);
+                self.parameters = new Parameters(null, "Settings", true);
                 //ZDialogInfo zInfo = par.showZDialog();
                 //JOptionPane jop = new JOptionPane();
                 //jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
-                par.setVisible(true);
-                par.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
+                self.parameters.setVisible(true);
+                self.parameters.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
                 setVisible(false);
 
             }
@@ -81,6 +83,11 @@ public class Settings extends JFrame
             }
         });
         this.setVisible(true);
+    }
+    
+    public List<ParamPlayers> getPlayers()
+    {
+        return(this.parameters.getDataPlayers());
     }
 
 }

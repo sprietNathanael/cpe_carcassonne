@@ -292,32 +292,32 @@ public class Parameters extends JDialog
     {
         List<ParamPlayers> li = new LinkedList<ParamPlayers>();
 
-        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), colorsJ1.toString());
-        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), colorsJ2.toString());
-        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), colorsJ3.toString());
-        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), colorsJ4.toString());
-        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), colorsJ5.toString());
-        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), colorsJ6.toString());
+        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String)colorsJ1.getSelectedItem());
+        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String)colorsJ2.getSelectedItem());
+        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), (String)colorsJ3.getSelectedItem());
+        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), (String)colorsJ4.getSelectedItem());
+        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), (String)colorsJ5.getSelectedItem());
+        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), (String)colorsJ6.getSelectedItem());
         //int nbPlayers = 0;
 
         // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
-        if (p1.getNom() != null) {
+        if (!p1.getNom().isEmpty()) {
             li.add(p1);
         }
 
-        if (p2.getNom() != null) {
+        if (!p2.getNom().isEmpty()) {
             li.add(p2);
         }
-        if (p3.getNom() != null) {
+        if (!p3.getNom().isEmpty()) {
             li.add(p3);
         }
-        if (p4.getNom() != null) {
+        if (!p4.getNom().isEmpty()) {
             li.add(p4);
         }
-        if (p5.getNom() != null) {
+        if (!p5.getNom().isEmpty()) {
             li.add(p5);
         }
-        if (p6.getNom() != null) {
+        if (!p6.getNom().isEmpty()) {
             li.add(p6);
         }
 

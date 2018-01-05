@@ -27,7 +27,7 @@ public class ClientWindow extends JFrame
     {
         super("Carcassonne");
         cleanContentPane();
-        //createGameView(playerList);        
+        createGameView(playerList);        
     }
 
     public ClientWindow()
@@ -44,6 +44,19 @@ public class ClientWindow extends JFrame
         Container pane = getContentPane();
         pane.setVisible(false);
         pane.removeAll();        
+    }
+    
+    /**
+     * Create the game view
+     */    
+    private void createGameView(List<ParamPlayers> playerList) {
+        GameView gameView = new GameView(playerList);
+        gameView.show(getContentPane());
+        
+        // Maximize the window
+        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        getContentPane().setVisible(true);
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
     }
     
     /**
