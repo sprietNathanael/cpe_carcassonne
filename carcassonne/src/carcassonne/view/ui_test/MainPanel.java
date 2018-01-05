@@ -70,7 +70,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.meeplePlacementLayer.onHide();
         this.tilesLayer.onShow();
         this.meeplesLayer.onShow();
-        this.infoPanel = new InfoPanel(this.players);
+        this.infoPanel = new InfoPanel(this.players, this.controller);
 
         // Add the grid panel to the main panel
         this.infoPanel.setPreferredSize(new Dimension(300, 10));

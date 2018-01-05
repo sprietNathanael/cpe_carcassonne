@@ -5,13 +5,20 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.menuStart.Settings;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +28,8 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -29,11 +38,12 @@ import net.miginfocom.swing.MigLayout;
  *
  * @author nathanael
  */
-public class InfoPanel extends JPanel
+public class InfoPanel extends JPanel implements InfoPanelMouseListener
 {
 
     private HashMap<String, PlayerInfo> playerInfoLines;
     private String currentPlayer;
+    private AbstractCarcassonneGameController controller;
     public static int SEPARATION_LINE_WIDTH = 5;
     public static int MEEPLE_BUTTON_WIDTH = 100;
     public static int MEEPLE_BUTTON_HEIGHT = 70;
@@ -45,20 +55,26 @@ public class InfoPanel extends JPanel
     private int pileSize;
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
+    private InfoPanelMouseAdapter mouseListener;
 
     /**
      * Constructs the information panel
      *
      * @param players
      */
-    public InfoPanel(ArrayList<Player> players)
+    public InfoPanel(ArrayList<Player> players, AbstractCarcassonneGameController controller)
     {
         // Configure component
         setDoubleBuffered(true);
         setOpaque(false);
         setLayout(new MigLayout());
         
+        this.controller = controller;
+        
         this.displayPassMeepleTurnButton = false;
+        
+        this.mouseListener = new InfoPanelMouseAdapter(this);
+        this.addMouseListener(this.mouseListener);
 
         // Creates information lines from players
         this.playerInfoLines = new HashMap<String, PlayerInfo>();
@@ -73,6 +89,7 @@ public class InfoPanel extends JPanel
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
 
     /**
      * Refresh the informations from the game
@@ -101,7 +118,7 @@ public class InfoPanel extends JPanel
         // Get the pile size
         this.pileSize = game.getPileSize();
     }
-
+    
     @Override
     protected void paintChildren(Graphics g)
     {
@@ -136,6 +153,7 @@ public class InfoPanel extends JPanel
         
         if(this.displayPassMeepleTurnButton)
         {
+            g2.setStroke(new BasicStroke(5));
             meepleButton = new Polygon();
             int x = (int)((this.getWidth()/2.0)-(MEEPLE_BUTTON_WIDTH/2.0));
             int y = currentHeight+25;
@@ -159,12 +177,23 @@ public class InfoPanel extends JPanel
     
     public void displayPassMeepleTurnButton()
     {
-        this.displayPassMeepleTurnButton = true;
+        this.displayPassMeepleTurnButton = true;        
     }
     
     public void hidePassMeepleTurnButton()
     {
         this.displayPassMeepleTurnButton = false;
+        this.meepleButton = null;
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e, Point2D p)
+    {
+        if(this.meepleButton != null && this.meepleButton.contains(p))
+        {
+            this.hidePassMeepleTurnButton();
+            this.controller.endTurn();
+        }
     }
 
 }
