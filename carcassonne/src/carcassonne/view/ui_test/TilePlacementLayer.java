@@ -108,10 +108,10 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
         {
             int placeHolderSize = this.gridPanel.getTileSize();
             int shift = placeHolderSize / 30;
-            int thickness = placeHolderSize / 14;
+            int thickness = 1;
             int tileSize = placeHolderSize - (2 * shift);
             UICoord center = this.gridPanel.getGraphicalCenter();
-            g2.setColor(Color.LIGHT_GRAY);
+            g2.setColor(Color.BLACK);
             this.positions.forEach((p) -> {
                 int x = center.getX() + (placeHolderSize * p.getX());
                 int y = center.getY() + (placeHolderSize * p.getY());
@@ -129,9 +129,11 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
                     x += shift;
                     y += shift;
                     g2.fillRect(x, y, tileSize, thickness);
-                    g2.fillRect(x, y + tileSize - thickness, tileSize, thickness);
+                    g2.fillRect(x, y + tileSize, tileSize, thickness);
                     g2.fillRect(x, y, thickness, tileSize);
-                    g2.fillRect(x + tileSize - thickness, y, thickness, tileSize);
+                    g2.fillRect(x + tileSize, y, thickness, tileSize);
+                    g2.drawLine(x, y, x+tileSize, y+tileSize);
+                    g2.drawLine(x, y+tileSize, x+tileSize, y);
                 }
             });
         }
