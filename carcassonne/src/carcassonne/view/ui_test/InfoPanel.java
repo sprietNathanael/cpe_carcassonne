@@ -77,7 +77,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         this.addMouseListener(this.mouseListener);
 
         // Creates information lines from players
-        this.playerInfoLines = new HashMap<String, PlayerInfo>();
+        this.playerInfoLines = new HashMap<>();
         for (Player player : players) {
             this.playerInfoLines.put(player.getName(), new PlayerInfo(player.getName(), player.getColor()));
         }
@@ -102,7 +102,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
         // Updates the information lines
         for (Player player : game.getPlayers()) {
-            this.playerInfoLines.get(player.getName()).updatePlayer(player.getMeeple().size(), player.getPoints());
+            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
         }
 
         if (game.getCurrentTile() != null) {
