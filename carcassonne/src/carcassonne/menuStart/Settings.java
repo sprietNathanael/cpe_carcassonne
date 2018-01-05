@@ -38,18 +38,21 @@ public class Settings extends JFrame
     private JButton button = new JButton("Mode local");
     private JButton button2 = new JButton("Mode en ligne");
 
-    public Settings()
+    public Settings() throws IOException
     {
         this.setTitle("Settings");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        this.setSize(300, 100);
+        this.setSize(851, 851);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setContentPane(new Background("resources/Choixlocalmulti.png"));
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
         this.getContentPane().setLayout(new FlowLayout());
         this.getContentPane().add(button);
         this.getContentPane().add(button2);
+
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)

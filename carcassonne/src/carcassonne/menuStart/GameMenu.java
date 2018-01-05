@@ -98,7 +98,11 @@ public class GameMenu extends JFrame
             public void actionPerformed(ActionEvent e)
             {
                 Settings settings = null;
-                settings = new Settings();
+                try {
+                    settings = new Settings();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 settings.setVisible(true);
                 settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
