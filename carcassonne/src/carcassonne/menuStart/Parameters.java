@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -19,17 +21,17 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 
-public class ZDialog extends JDialog
+public class Parameters extends JDialog
 {
 
     private ZDialogInfo zInfo = new ZDialogInfo();
     private boolean sendData;
-    private JLabel nomLabel, cheveuxLabel, icon, colorsLabel;
+    private JLabel nomLabel, icon, colorsLabel;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
     private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
     private JComboBox<String> colorsJ1, colorsJ2, colorsJ3, colorsJ4, colorsJ5, colorsJ6;
 
-    public ZDialog(JFrame parent, String title, boolean modal)
+    public Parameters(JFrame parent, String title, boolean modal)
     {
         super(parent, title, modal);
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
@@ -43,13 +45,9 @@ public class ZDialog extends JDialog
         this.initComponent();
     }
 
-    public ZDialogInfo showZDialog()
-    {
-        this.sendData = false;
-        this.setVisible(true);
-        return this.zInfo;
-    }
-
+    /**
+     * Allows to init the differents components for the game
+     */
     private void initComponent()
     {
         //Icône
@@ -65,11 +63,13 @@ public class ZDialog extends JDialog
         numPlayers.setBorder(BorderFactory.createTitledBorder("Numbers of players"));
         numPlayers.setPreferredSize(new Dimension(440, 60));
         tranche1 = new JRadioButton("2");
-        tranche1.setSelected(true);
         tranche2 = new JRadioButton("3");
         tranche3 = new JRadioButton("4");
         tranche4 = new JRadioButton("5");
         tranche5 = new JRadioButton("6");
+
+        tranche1.setSelected(true);
+
         ButtonGroup bg = new ButtonGroup();
         bg.add(tranche1);
         bg.add(tranche2);
@@ -218,6 +218,7 @@ public class ZDialog extends JDialog
 
         okBouton.addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent arg0)
             {
                 zInfo = new ZDialogInfo(nomJ1.getText(), getNumbersPlayers(), (String) colorsJ1.getSelectedItem(),
@@ -244,6 +245,7 @@ public class ZDialog extends JDialog
         JButton cancelBouton = new JButton("CANCEL");
         cancelBouton.addActionListener(new ActionListener()
         {
+            @Override
             public void actionPerformed(ActionEvent arg0)
             {
                 setVisible(false);
@@ -257,6 +259,69 @@ public class ZDialog extends JDialog
         this.getContentPane().add(numPlayers, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
+    }
+
+    /**
+     * Allows to have the numbers of players selected
+     *
+     * @return
+     */
+    public String getNumbersPlayers()
+    {
+        return (tranche1.isSelected()) ? tranche1.getText()
+                : (tranche2.isSelected()) ? tranche2.getText()
+                : (tranche3.isSelected()) ? tranche3.getText()
+                : (tranche4.isSelected()) ? tranche4.getText()
+                : (tranche5.isSelected()) ? tranche5.getText()
+                : tranche1.getText();
+    }
+
+    public ZDialogInfo showZDialog()
+    {
+        this.sendData = false;
+        this.setVisible(true);
+        return this.zInfo;
+    }
+
+    /**
+     * List of players with their characteristics
+     *
+     * @return
+     */
+    public List<Players> getDataPlayers()
+    {
+        List<Players> li = new LinkedList<Players>();
+
+        Players p1 = new Players(nomJ1.getText(), colorsJ1.toString());
+        Players p2 = new Players(nomJ2.getText(), colorsJ2.toString());
+        Players p3 = new Players(nomJ3.getText(), colorsJ3.toString());
+        Players p4 = new Players(nomJ4.getText(), colorsJ4.toString());
+        Players p5 = new Players(nomJ5.getText(), colorsJ5.toString());
+        Players p6 = new Players(nomJ6.getText(), colorsJ6.toString());
+        //int nbPlayers = 0;
+
+        // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
+        if (p1.getNom() != null) {
+            li.add(p1);
+        }
+
+        if (p2.getNom() != null) {
+            li.add(p2);
+        }
+        if (p3.getNom() != null) {
+            li.add(p3);
+        }
+        if (p4.getNom() != null) {
+            li.add(p4);
+        }
+        if (p5.getNom() != null) {
+            li.add(p5);
+        }
+        if (p6.getNom() != null) {
+            li.add(p6);
+        }
+
+        return li;
     }
 
 }

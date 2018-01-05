@@ -5,7 +5,9 @@
  */
 package carcassonne.view.ui_test;
 
+import carcassonne.menuStart.Players;
 import java.awt.Container;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -17,11 +19,18 @@ public class ClientWindow extends JFrame
     /**
      * Window constructor
      */
-    public ClientWindow()
+    public ClientWindow(List<Players> li)
     {
         super("Carcassonne");
         cleanContentPane();
         createGameView();        
+    }
+
+    public ClientWindow()
+    {
+        super("Carcassonne");
+        cleanContentPane();
+        createGameView();
     }
     
     /**

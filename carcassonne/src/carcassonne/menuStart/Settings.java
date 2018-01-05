@@ -14,6 +14,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -52,11 +54,14 @@ public class Settings extends JFrame
         {
             public void actionPerformed(ActionEvent arg0)
             {
-                ZDialog zd = new ZDialog(null, "Settings", true);
-                ZDialogInfo zInfo = zd.showZDialog();
-                JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
+                Parameters par = new Parameters(null, "Settings", true);
+                //ZDialogInfo zInfo = par.showZDialog();
+                //JOptionPane jop = new JOptionPane();
+                //jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
+                par.setVisible(true);
+                par.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
                 setVisible(false);
+
             }
         });
 

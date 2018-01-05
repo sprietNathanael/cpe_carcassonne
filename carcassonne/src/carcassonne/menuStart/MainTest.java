@@ -12,9 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-public class MainTest extends JFrame {
+public class MainTest extends JFrame
+{
 
-  /*public MainTest(){      
+    /*public MainTest(){      
     this.setTitle("Ma JFrame");
     this.setSize(300, 100);
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -31,11 +32,13 @@ public class MainTest extends JFrame {
     });      
     this.setVisible(true);      
   }*/
-   
-  public static void main(String[] main) throws Exception{
-    //FenetreTest fen = new MainTest();
-    GameMenu Ga = new GameMenu();
-    Settings set = new Settings();
+    public static void main(String[] main) throws Exception
+    {
+        //FenetreTest fen = new MainTest();
+        //GameMenu Ga = new GameMenu();
+        //Settings set = new Settings();
+        //Parameters p = new Parameters(null, "yolo", true);
 
-  }   
+
+    }
 }
