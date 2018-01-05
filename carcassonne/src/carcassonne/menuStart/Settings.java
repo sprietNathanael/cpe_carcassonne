@@ -52,6 +52,9 @@ public class Settings extends JFrame
         this.getContentPane().setLayout(new FlowLayout());
         this.getContentPane().add(button);
         this.getContentPane().add(button2);
+        this.setLayout(null);
+        button.setBounds(320, 250, 250, 50);
+        button2.setBounds(320, 350, 250, 50);
 
         button.addActionListener(new ActionListener()
         {

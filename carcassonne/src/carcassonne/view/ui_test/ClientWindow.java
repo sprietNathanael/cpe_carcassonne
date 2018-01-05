@@ -6,7 +6,9 @@
 package carcassonne.view.ui_test;
 
 import carcassonne.menuStart.ParamPlayers;
+import carcassonne.menuStart.Parameters;
 import java.awt.Container;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,6 +18,7 @@ import javax.swing.JFrame;
  */
 public class ClientWindow extends JFrame
 {
+
     /**
      * Window constructor
      * @param playerList
