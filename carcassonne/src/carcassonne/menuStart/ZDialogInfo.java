@@ -19,16 +19,16 @@ public class ZDialogInfo
         this.nombreJoueurs = nombreJoueurs;
         this.nom = nom;
         this.colors = colors;
-        this.nom2 = nom;
-        this.colors2 = colors;
-        this.nom3 = nom;
-        this.colors3 = colors;
-        this.nom4 = nom;
-        this.colors4 = colors;
-        this.nom5 = nom;
-        this.colors5 = colors;
-        this.nom6 = nom;
-        this.colors6 = colors;
+        this.nom2 = nom2;
+        this.colors2 = colors2;
+        this.nom3 = nom3;
+        this.colors3 = colors3;
+        this.nom4 = nom4;
+        this.colors4 = colors4;
+        this.nom5 = nom5;
+        this.colors5 = colors5;
+        this.nom6 = nom6;
+        this.colors6 = colors6;
     }
 
     public String toString()
@@ -40,20 +40,14 @@ public class ZDialogInfo
                 && this.nom4 != null && this.colors4 != null
                 && this.nom5 != null && this.colors5 != null
                 && this.nom6 != null && this.colors6 != null) {
-            str = "Description de l'objet InfoZDialog";
-            str += "Nombres de joueurs : " + this.nombreJoueurs + "\n";
-            str += "Nom Player 1: " + this.nom + "\n";
-            str += "Couleur Player 1: " + this.colors + "\n";
-            str += "Nom Player 2 : " + this.nom2 + "\n";
-            str += "Couleur Player 2 : " + this.colors2 + "\n";
-            str += "Nom Player 3: " + this.nom3 + "\n";
-            str += "Couleur Player 3: " + this.colors3 + "\n";
-            str += "Nom Player 4 : " + this.nom4 + "\n";
-            str += "Couleur Player 4 : " + this.colors4 + "\n";
-            str += "Nom Player 5: " + this.nom5 + "\n";
-            str += "Couleur Player 5 : " + this.colors5 + "\n";
-            str += "Nom Player 6 : " + this.nom6 + "\n";
-            str += "Couleur Player 6 : " + this.colors6 + "\n";
+  
+            str = "Nombres de joueurs : " + this.nombreJoueurs + "\n";
+            str += "Player1 [ Nom : " + this.nom + " / Couleur : " + this.colors + " ] " + "\n";
+            str += "Player2 [ Nom : " + this.nom2 + " / Couleur : " + this.colors2 + " ] " + "\n";
+            str += "Player3 [ Nom : " + this.nom3 + " / Couleur : " + this.colors3 + " ] " + "\n";
+            str += "Player4 [ Nom : " + this.nom4 + " / Couleur : " + this.colors4 + " ] " + "\n";
+            str += "Player5 [ Nom : " + this.nom5 + " / Couleur : " + this.colors5 + " ] " + "\n";
+            str += "Player6 [ Nom : " + this.nom6 + " / Couleur : " + this.colors6 + " ] " + "\n";
         }
         else {
             str = "Aucune information !";
