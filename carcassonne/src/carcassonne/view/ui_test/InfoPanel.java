@@ -11,6 +11,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -34,11 +35,16 @@ public class InfoPanel extends JPanel
     private HashMap<String, PlayerInfo> playerInfoLines;
     private String currentPlayer;
     public static int SEPARATION_LINE_WIDTH = 5;
+    public static int MEEPLE_BUTTON_WIDTH = 100;
+    public static int MEEPLE_BUTTON_HEIGHT = 70;
+    
     public static int PREVIEW_BORDER = 10;
     public static int PREVIEWES_GAP = 30;
     private BufferedImage backTile;
     private BufferedImage currentTile;
     private int pileSize;
+    private boolean displayPassMeepleTurnButton;
+    private Polygon meepleButton;
 
     /**
      * Constructs the information panel
@@ -51,6 +57,8 @@ public class InfoPanel extends JPanel
         setDoubleBuffered(true);
         setOpaque(false);
         setLayout(new MigLayout());
+        
+        this.displayPassMeepleTurnButton = false;
 
         // Creates information lines from players
         this.playerInfoLines = new HashMap<String, PlayerInfo>();
@@ -97,7 +105,7 @@ public class InfoPanel extends JPanel
     @Override
     protected void paintChildren(Graphics g)
     {
-        int infoLinesHeight = this.getHeight() / 6;
+        int infoLinesHeight = this.getHeight() / 8;
         Graphics2D g2 = (Graphics2D) g;
 
         // Draw the back tile
@@ -125,12 +133,38 @@ public class InfoPanel extends JPanel
             value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - this.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
             currentHeight += infoLinesHeight;
         }
+        
+        if(this.displayPassMeepleTurnButton)
+        {
+            meepleButton = new Polygon();
+            int x = (int)((this.getWidth()/2.0)-(MEEPLE_BUTTON_WIDTH/2.0));
+            int y = currentHeight+25;
+            meepleButton.addPoint(x,y);
+            meepleButton.addPoint(x+MEEPLE_BUTTON_WIDTH,y);
+            meepleButton.addPoint(x+MEEPLE_BUTTON_WIDTH,y+MEEPLE_BUTTON_HEIGHT);
+            meepleButton.addPoint(x,y+MEEPLE_BUTTON_HEIGHT);
+            g2.draw(meepleButton);
+            int y_text = y + (int)(MEEPLE_BUTTON_HEIGHT/2.0);
+            int x_text = x + 10;
+            g2.drawString("Ne pas poser", x_text, y_text-8);
+            g2.drawString("de Meeple", x_text, y_text+8);
+        }
 
         // Draw the separation line
         g2.setColor(Color.GRAY);
         g2.fillRect(this.getWidth() - this.SEPARATION_LINE_WIDTH, 0, this.SEPARATION_LINE_WIDTH, this.getHeight() - this.SEPARATION_LINE_WIDTH);
         g2.setColor(Color.BLACK);
         super.paintChildren(g);
+    }
+    
+    public void displayPassMeepleTurnButton()
+    {
+        this.displayPassMeepleTurnButton = true;
+    }
+    
+    public void hidePassMeepleTurnButton()
+    {
+        this.displayPassMeepleTurnButton = false;
     }
 
 }
