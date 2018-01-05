@@ -12,12 +12,12 @@ import javax.swing.JTextField;
  *
  * @author thomas
  */
-public class Players
+public class ParamPlayers
 {
 
     private String nom, color;
 
-    public Players(String nom, String color)
+    public ParamPlayers(String nom, String color)
     {
         this.nom = nom;
         this.color = color;

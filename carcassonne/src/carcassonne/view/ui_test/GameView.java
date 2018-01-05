@@ -7,7 +7,7 @@ package carcassonne.view.ui_test;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
-import carcassonne.menuStart.Players;
+import carcassonne.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import java.awt.Color;
@@ -30,7 +30,7 @@ public class GameView
     /**
      * Game view constructor
      */
-    public GameView(List<Players> li)
+    public GameView(List<ParamPlayers> li)
     {
         try {
             this.players = new ArrayList<>();
@@ -47,7 +47,7 @@ public class GameView
         }
     }
 
-    GameView()
+    public GameView()
     {
           try {
             this.players = new ArrayList<>();

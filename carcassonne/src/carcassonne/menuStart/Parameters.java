@@ -288,16 +288,16 @@ public class Parameters extends JDialog
      *
      * @return
      */
-    public List<Players> getDataPlayers()
+    public List<ParamPlayers> getDataPlayers()
     {
-        List<Players> li = new LinkedList<Players>();
+        List<ParamPlayers> li = new LinkedList<ParamPlayers>();
 
-        Players p1 = new Players(nomJ1.getText(), colorsJ1.toString());
-        Players p2 = new Players(nomJ2.getText(), colorsJ2.toString());
-        Players p3 = new Players(nomJ3.getText(), colorsJ3.toString());
-        Players p4 = new Players(nomJ4.getText(), colorsJ4.toString());
-        Players p5 = new Players(nomJ5.getText(), colorsJ5.toString());
-        Players p6 = new Players(nomJ6.getText(), colorsJ6.toString());
+        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), colorsJ1.toString());
+        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), colorsJ2.toString());
+        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), colorsJ3.toString());
+        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), colorsJ4.toString());
+        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), colorsJ5.toString());
+        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), colorsJ6.toString());
         //int nbPlayers = 0;
 
         // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
