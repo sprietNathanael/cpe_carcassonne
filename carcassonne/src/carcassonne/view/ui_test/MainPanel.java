@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Set;
 import javax.swing.JPanel;
 
 /**
@@ -98,11 +99,23 @@ public class MainPanel extends JPanel implements java.util.Observer
             // If a tile has just been put
             if(this.lastCoord != null)
             {
-                this.meeplePlacementLayer.setAggregates(game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY()));
-                this.lastCoord = null;
+                Set<Set<String>> aggregates = game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY());
+                if(aggregates.size() > 0)
+                {
+                    this.meeplePlacementLayer.setAggregates(aggregates);
+                    this.infoPanel.displayPassMeepleTurnButton();
+                    this.lastCoord = null;
+                }
+                else
+                {
+                    this.lastCoord = null;
+                    this.controller.endTurn();
+                    return;
+                }
             }
             else
             {
+                this.infoPanel.hidePassMeepleTurnButton();
                 this.meeplePlacementLayer.onHide();
                 
             }
@@ -155,6 +168,6 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.tilesPlacementLayer.onHide();
         this.meeplePlacementLayer.setCurrentPosition(newCoord);
         this.meeplePlacementLayer.onShow();
-        this.gridPanel.repaint();
+        //this.gridPanel.repaint();
     }
 }
