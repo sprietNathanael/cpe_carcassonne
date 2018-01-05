@@ -79,10 +79,14 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
 
     public void setAggregates(Set<Set<String>> aggregates)
     {
-        System.out.println("+++++++++++++++++++++++++ aggregates are : " + aggregates);
         this.tileAggregates = aggregates;
     }
-
+    
+    public void cleanAggregates()
+    {
+        this.tileAggregates.clear();
+    }
+    
     public void setCurrentPosition(UICoord c)
     {
         this.currentPosition = c;
@@ -92,7 +96,8 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void paint(Graphics2D g2)
     {
-        if (this.isVisible() && this.currentTileAggregate != null) {
+        if(this.isVisible() && this.currentTileAggregate != null && this.tileAggregates.size() > 0)
+        {
             int tileSize = this.gridPanel.getTileSize();
             UICoord center = this.gridPanel.getGraphicalCenter();
 
@@ -131,6 +136,7 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     {
         super.onHide();
         this.removeMouseInputListener();
+        this.cleanAggregates();
     }
 
     @Override
