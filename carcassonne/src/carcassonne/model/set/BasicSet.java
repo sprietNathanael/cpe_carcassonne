@@ -140,7 +140,7 @@ public class BasicSet implements SetInterface
         for (int i = 1; i <= 5; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "N", "NNE"));
-            aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "S", "SSE", "SE", "SEE", "E", "NEE", "NE"));
+            aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "S", "SSE", "SE", "SEE", "E", "NEE", "NE", "CSW", "CSE", "CNW", "CNE"));
 
             tileList.add(new CasualTile("E", "E" + i, //Id
                     new FieldType(), new FieldType(), new CityType(), //North West section
