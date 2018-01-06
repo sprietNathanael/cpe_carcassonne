@@ -161,6 +161,8 @@ public abstract class AbstractTile
     public abstract Set<Set<String>> getRoadAggregateEmplacements();
     
     public abstract Set<Set<String>> getFieldAggregateEmplacements();
+    
+    public abstract Set<String> getAbbayAggregateEmplacements();
 
     public Set<Set<String>> getAggregateEmplacements()
     {
