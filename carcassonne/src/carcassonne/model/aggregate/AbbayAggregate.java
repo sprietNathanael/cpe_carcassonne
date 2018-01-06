@@ -38,4 +38,10 @@ public class AbbayAggregate extends AbstractAggregate
     {
         return this.aggregatedTiles.size();
     }
+    
+    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
+    {
+        aggregatedTiles.put(new Coord(col, row), newTile);
+        aggregatedPositionTypes.put(newTile, locationTypes);
+    }
 }

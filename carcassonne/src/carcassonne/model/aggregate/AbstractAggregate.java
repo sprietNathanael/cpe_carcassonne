@@ -152,7 +152,7 @@ public abstract class AbstractAggregate
      * @param newTile
      * @param locationTypes
      */
-    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
+    protected void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         aggregatedTiles.put(new Coord(col, row), newTile);
         aggregatedPositionTypes.put(newTile, locationTypes);
