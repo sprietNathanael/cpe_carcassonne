@@ -152,7 +152,7 @@ public abstract class AbstractAggregate
      * @param newTile
      * @param locationTypes
      */
-    protected void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
+    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         aggregatedTiles.put(new Coord(col, row), newTile);
         aggregatedPositionTypes.put(newTile, locationTypes);
@@ -337,5 +337,19 @@ public abstract class AbstractAggregate
         }
 
         return result;
+    }
+    
+    /**
+     * Return true if the aggregate containe the tile
+     * @param tile
+     * @return 
+     */
+    public boolean contain(AbstractTile tile)
+    {
+        for (Map.Entry<Coord, AbstractTile> entry : aggregatedTiles.entrySet()) {
+            if (entry.getValue() == tile)
+                return true;
+        }
+        return false;
     }
 }
