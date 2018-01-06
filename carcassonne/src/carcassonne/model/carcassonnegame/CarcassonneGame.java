@@ -690,9 +690,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         aggregates.addAll(roadAggregates);
 
         for (AbstractAggregate aggregate : aggregates) {
-            //get cities that are currently not completed
+            //get aggregates that are currently not completed
             if (!aggregate.isCompleted()) {
-                //Get the cities that just has been completed during this round
+                //Get the aggregates that just has been completed during this round
                 if (aggregate.checkIsCompleted()) {
                     playersToUpdate = aggregate.getPlayers();
                     winningPlayers = aggregate.getWinningPlayers();
@@ -708,6 +708,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                         for (Meeple meeple : meeples) {
                             //Set all the meeples to "not used"
                             meeple.setIsUsed(false);
+                            meeple.removeMeepleFromType();
                         }
                     }
                 }

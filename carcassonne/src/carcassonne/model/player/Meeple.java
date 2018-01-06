@@ -89,6 +89,11 @@ public class Meeple
         this.currentType = currentType;
     }
     
+    public void removeMeepleFromType(){
+        this.currentType.removeMeeple();
+        this.currentType = null;
+    }
+    
     
 
 }
