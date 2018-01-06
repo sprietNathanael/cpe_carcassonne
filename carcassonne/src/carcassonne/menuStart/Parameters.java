@@ -242,7 +242,7 @@ public class Parameters extends JDialog
             }
         });
 
-        JButton cancelBouton = new JButton("CANCEL");
+        /*JButton cancelBouton = new JButton("CANCEL");
         cancelBouton.addActionListener(new ActionListener()
         {
             @Override
@@ -250,13 +250,13 @@ public class Parameters extends JDialog
             {
                 setVisible(false);
             }
-        });
+        });*/
 
         control.add(okBouton);
-        control.add(cancelBouton);
+        //control.add(cancelBouton);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
-        this.getContentPane().add(numPlayers, BorderLayout.NORTH);
+        //this.getContentPane().add(numPlayers, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
