@@ -5,6 +5,7 @@
  */
 package carcassonne.model.tile;
 
+import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
@@ -764,7 +765,7 @@ public class CasualTile extends AbstractTile
     {
         return this.types.get(coordinates);
     }
-    
+
     @Override
     public HashMap<String, AbstractType> getTypes()
     {
@@ -876,6 +877,20 @@ public class CasualTile extends AbstractTile
         }
 
         return fieldAggregatesEmplacements;
+    }
+
+    @Override
+    public Set<String> getAbbayAggregateEmplacements()
+    {
+        Set<String> abbayAggregatesEmplacements = new HashSet<>();
+
+        for (Set<String> aggregateEmplacement : aggregateEmplacements) {
+            if (this.getAggregateClass(aggregateEmplacement) instanceof AbbayType) {
+                abbayAggregatesEmplacements.addAll(aggregateEmplacement);
+                break;
+            }
+        }
+        return abbayAggregatesEmplacements;
     }
 
     /**
