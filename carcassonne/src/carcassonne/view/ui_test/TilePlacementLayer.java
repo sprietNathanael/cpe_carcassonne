@@ -176,7 +176,7 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
             }
         }
         else if (e.getButton() == MouseEvent.BUTTON1) {
-            if(this.previewImage != null){
+            if(this.previewImage != null && (this.previewImage.getX() == p.getX() && this.previewImage.getY() == p.getY())){
                 e.consume();
                 if(this.allowedPlacement)
                 {
