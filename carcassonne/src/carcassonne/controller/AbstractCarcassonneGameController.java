@@ -151,12 +151,25 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de "+this.carcassonneGame.getCurrentPlayer().getName());
+        this.processNextTile();
+    }
+    
+    private void processNextTile()
+    {
         this.drawTile();
         System.out.println("La pièce piochée est : "+this.currentTile.getName());
         System.out.println(this.currentTile);
         this.carcassonneGame.notifyBoardChanged();
-        this.carcassonneGame.refreshPlacements();
-        this.carcassonneGame.notifyPlacementsReady();
+        if(this.carcassonneGame.refreshPlacements())
+        {
+            this.carcassonneGame.notifyPlacementsReady();
+            
+        }
+        else
+        {
+            this.carcassonneGame.replaceCurrentTile();
+            this.processNextTile();
+        }
     }
 
     /**

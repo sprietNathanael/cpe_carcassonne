@@ -227,12 +227,26 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * Used to complete the actions of the tile that has been drawn
      *
      */
-    public void refreshPlacements()
+    public boolean refreshPlacements()
     {
         this.placements.clear();
         if (this.currentTile != null) {
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
+        if(this.placements.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+    public void replaceCurrentTile()
+    {
+        this.pile.add(this.currentTile);
+        Collections.shuffle(this.pile);
     }
 
     @Override
