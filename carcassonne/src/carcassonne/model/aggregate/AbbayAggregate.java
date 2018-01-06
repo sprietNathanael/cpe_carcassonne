@@ -5,6 +5,7 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import java.util.Set;
 
@@ -26,7 +27,10 @@ public class AbbayAggregate extends AbstractAggregate
     @Override
     public boolean checkIsCompleted()
     {
-        return this.aggregatedTiles.size() == 9;
+        if (this.aggregatedTiles.size() == 9)
+            this.isCompleted = true;
+
+        return this.isCompleted;
     }
 
     @Override
