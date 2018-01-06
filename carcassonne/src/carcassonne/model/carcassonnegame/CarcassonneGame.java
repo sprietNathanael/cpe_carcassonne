@@ -50,6 +50,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<FieldAggregate> fieldAggregates;
     private List<AbbayAggregate> abbayAggregates;
     private String notifyMessage;
+    private Player winningPlayer;
 
     public CarcassonneGame() throws Exception
     {
@@ -98,6 +99,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public Player getCurrentPlayer()
     {
         return (this.players.get(this.currentPlayerIndex));
+    }
+    
+    public Player getWinner()
+    {
+        return this.winningPlayer;
     }
 
     /**
@@ -310,6 +316,21 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyPlacementsReady()
     {
         this.notifyMessage = "placementsReady";
+        this.notifyObservers();
+    }
+    
+    public void notifyGameEnds()
+    {
+        this.notifyMessage = "gameEnds";
+        this.managePointsEndGame();
+        this.winningPlayer = this.players.get(0);
+        for(Player player : this.players)
+        {
+            if(player.getPoints() > this.winningPlayer.getPoints())
+            {
+                this.winningPlayer = player;
+            }
+        }
         this.notifyObservers();
     }
 

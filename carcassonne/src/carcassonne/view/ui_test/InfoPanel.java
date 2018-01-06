@@ -56,6 +56,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
     private InfoPanelMouseAdapter mouseListener;
+    private String message;
 
     /**
      * Constructs the information panel
@@ -88,6 +89,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.message = "";
     }
     
 
@@ -119,6 +121,18 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         this.pileSize = game.getPileSize();
     }
     
+    public void endGame(CarcassonneGame game)
+    {
+        this.currentPlayer = game.getWinner().getName();
+
+        // Updates the information lines
+        for (Player player : game.getPlayers()) {
+            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
+        }
+        this.message = "Le joueur gagnant est : "+game.getWinner().getName();
+        this.currentTile = null;
+    }
+    
     @Override
     protected void paintChildren(Graphics g)
     {
@@ -131,15 +145,18 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         int previewX = this.PREVIEW_BORDER;
         int previewY = currentHeight + (infoLinesHeight / 2) - (previewSize / 2);
         g2.drawImage(this.backTile, previewX, previewY, previewSize, previewSize, null);
+        
+        if(this.currentTile != null)
+        {
+            // Draw the pile counter
+            g2.setFont(new Font("Calibri", Font.BOLD, (int) (previewSize * 0.3)));
+            g2.drawString("" + this.pileSize, previewX, previewY - 5);
+            g2.setFont(new Font("Calibri", Font.PLAIN, 12));
 
-        // Draw the pile counter
-        g2.setFont(new Font("Calibri", Font.BOLD, (int) (previewSize * 0.3)));
-        g2.drawString("" + this.pileSize, previewX, previewY - 5);
-        g2.setFont(new Font("Calibri", Font.PLAIN, 12));
-
-        // Draw preview tile
-        previewX = this.PREVIEW_BORDER + previewSize + this.PREVIEWES_GAP;
-        g2.drawImage(this.currentTile, previewX, previewY, previewSize, previewSize, null);
+            // Draw preview tile
+            previewX = this.PREVIEW_BORDER + previewSize + this.PREVIEWES_GAP;
+            g2.drawImage(this.currentTile, previewX, previewY, previewSize, previewSize, null);
+        }
 
         currentHeight += infoLinesHeight;
 
@@ -150,6 +167,15 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - this.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
             currentHeight += infoLinesHeight;
         }
+        
+        if(!this.message.isEmpty())
+        {
+            currentHeight+=20;
+            g2.drawString(this.message, 20, currentHeight);
+            currentHeight+=20;
+            
+        }
+        
         
         if(this.displayPassMeepleTurnButton)
         {
