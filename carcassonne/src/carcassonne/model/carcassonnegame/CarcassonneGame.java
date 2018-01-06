@@ -6,6 +6,7 @@
 package carcassonne.model.carcassonnegame;
 
 import carcassonne.coord.Coord;
+import carcassonne.model.aggregate.AbbayAggregate;
 import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.aggregate.CityAggregate;
 import carcassonne.model.aggregate.FieldAggregate;
@@ -17,7 +18,9 @@ import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
+import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.CityType;
+import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -28,6 +31,7 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
+import java.util.function.BiConsumer;
 
 /**
  * Represents a carcassonne game, which aggregates all the model entities
@@ -45,6 +49,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<RoadAggregate> roadAggregates;
     private List<CityAggregate> cityAggregates;
     private List<FieldAggregate> fieldAggregates;
+    private List<AbbayAggregate> abbayAggregates;
     private String notifyMessage;
 
     public CarcassonneGame() throws Exception
@@ -73,6 +78,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         roadAggregates = new ArrayList<>();
         cityAggregates = new ArrayList<>();
         fieldAggregates = new ArrayList<>();
+        abbayAggregates = new ArrayList<>();
     }
 
     /**
@@ -189,8 +195,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         else if (tile.getType(coordinates) instanceof CityType) {
             aggregates.addAll(cityAggregates);
         }
-        else {
+        else if (tile.getType(coordinates) instanceof FieldType) {
             aggregates.addAll(fieldAggregates);
+        }
+        else {
+            aggregates.addAll(abbayAggregates);
         }
 
         Set<String> currentTileLocations;
@@ -345,6 +354,41 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         for (Set<String> currentFieldEmplacement : fieldAggregatesEmplacements) {
             FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
             fieldAggregates.add(newField);
+
+        }
+        // Manage abbay
+        manageNewTileAggregatesAbbay(convertedCoord, tile);
+    }
+
+    private void manageNewTileAggregatesAbbay(Coord coord, AbstractTile tile)
+    {
+        HashMap<Coord, AbstractTile> nearTiles = board.getNearTilesAbbayRange(coord, tile);
+        AbbayAggregate abbayAggregate = null;
+
+        for (Map.Entry<Coord, AbstractTile> entry : nearTiles.entrySet()) {
+            Coord key = entry.getKey();
+            AbstractTile value = entry.getValue();
+
+            if (value != null) {
+                if (tile.getType("CNW").getClass() == AbbayType.class) // carte posée = abbay
+                {
+                    if (abbayAggregate == null) {
+                        abbayAggregate = new AbbayAggregate(coord.col, coord.row, tile, null);
+                    }
+                    abbayAggregate.enlargeAggregate(key.col, key.row, value, null);
+                }
+                if (value.getType("CNW").getClass() == AbbayType.class) { //carte autour = abbay
+
+                    for (AbbayAggregate abAgg : abbayAggregates) {
+                        if (abAgg.contain(value) == true) {
+                            abAgg.enlargeAggregate(coord.row, coord.col, tile, null);
+                        }
+                    }
+                }
+            }
+        }
+        if (abbayAggregate != null) {
+            abbayAggregates.add(abbayAggregate);
         }
     }
 
@@ -688,6 +732,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         List<AbstractAggregate> aggregates = new ArrayList<>();
         aggregates.addAll(cityAggregates);
         aggregates.addAll(roadAggregates);
+        aggregates.addAll(abbayAggregates);
 
         for (AbstractAggregate aggregate : aggregates) {
             //get cities that are currently not completed
