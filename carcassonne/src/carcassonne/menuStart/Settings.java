@@ -34,7 +34,6 @@ import javax.swing.border.BevelBorder;
 public class Settings extends JFrame
 
 {
-
     private JButton button = new JButton("Mode local");
     private JButton button2 = new JButton("Mode en ligne");
     private Parameters parameters;
