@@ -55,6 +55,10 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
                 listener.tileSliceEntered(e, this.currentCoord, slice);               
             }
         }
+        else
+        {
+            listener.tileSliceExited(e);
+        }
     }
 
     @Override
