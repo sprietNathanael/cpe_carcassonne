@@ -9,7 +9,7 @@ package carcassonne.menuStart;
  *
  * @author thomas & bertrand
  */
-import carcassonne.view.ui_test.ClientWindow;
+import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
