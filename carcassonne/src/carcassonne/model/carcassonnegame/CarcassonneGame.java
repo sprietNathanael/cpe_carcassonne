@@ -31,7 +31,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
-import java.util.function.BiConsumer;
 
 /**
  * Represents a carcassonne game, which aggregates all the model entities
@@ -141,7 +140,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         try {
             this.currentTile = this.pile.remove(0);
-            
+
         } catch (IndexOutOfBoundsException e) {
             this.currentTile = null;
         }
@@ -247,16 +246,14 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         if (this.currentTile != null) {
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
-        if(this.placements.isEmpty())
-        {
+        if (this.placements.isEmpty()) {
             return false;
         }
-        else
-        {
+        else {
             return true;
         }
     }
-    
+
     public void replaceCurrentTile()
     {
         this.pile.add(this.currentTile);
@@ -760,7 +757,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 if (aggregate.checkIsCompleted()) {
                     playersToUpdate = aggregate.getPlayers();
                     winningPlayers = aggregate.getWinningPlayers();
-                    System.out.println("Joueurs gagnants: " + winningPlayers);
                     int score = aggregate.countPoints();
                     //Update the score of the winning playesr of this aggregate
                     for (Player player : winningPlayers) {
@@ -776,6 +772,29 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                         }
                     }
                 }
+            }
+        }
+    }
+
+    public void managePointsEndGame()
+    {
+        Map<Player, Set<Meeple>> playersToUpdate;
+        Set<Player> winningPlayers;
+
+        //We create a list of aggregates, by combining cities and roads, the aggregate types that can be completed during a game
+        List<AbstractAggregate> aggregates = new ArrayList<>();
+        aggregates.addAll(cityAggregates);
+        aggregates.addAll(roadAggregates);
+        aggregates.addAll(abbayAggregates);
+        aggregates.addAll(fieldAggregates);
+
+        for (AbstractAggregate aggregate : aggregates) {
+            playersToUpdate = aggregate.getPlayers();
+            winningPlayers = aggregate.getWinningPlayers();
+            int score = aggregate.countPoints();
+            //Update the score of the winning playesr of this aggregate
+            for (Player player : winningPlayers) {
+                player.addToScore(score);
             }
         }
     }
