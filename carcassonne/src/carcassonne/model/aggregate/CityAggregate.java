@@ -266,14 +266,17 @@ public class CityAggregate extends AbstractAggregate
     public int countPoints()
     {
         int result = 0;
-
-        for (AbstractTile tile : aggregatedTiles.values()) {
-            if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
-                result += 4;
+        if (this.checkIsCompleted()) {
+            for (AbstractTile tile : aggregatedTiles.values()) {
+                if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
+                    result += 4;
+                }
+                else {
+                    result += 2;
+                }
             }
-            else {
-                result += 2;
-            }
+        } else {
+            result = aggregatedTiles.size();
         }
 
         return result;
