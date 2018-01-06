@@ -134,7 +134,7 @@ public class MainPanel extends JPanel implements java.util.Observer
                     Meeple meeple = type.getValue().getMeeple();
                     if(meeple != null)
                     {
-                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple());
+                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
                     }
                 }
             }
