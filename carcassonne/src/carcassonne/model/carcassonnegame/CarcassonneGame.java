@@ -133,7 +133,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public AbstractTile drawFromPile()
     {
-        this.currentTile = this.pile.remove(0);
+        try {
+            this.currentTile = this.pile.remove(0);
+            
+        } catch (IndexOutOfBoundsException e) {
+            this.currentTile = null;
+        }
         return this.currentTile;
 
     }
