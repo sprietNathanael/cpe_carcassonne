@@ -6,7 +6,7 @@
 package carcassonne.view.CarcassonneIHM;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
-import carcassonne.menuStart.Settings;
+import carcassonne.view.CarcassonneIHM.menuStart.Settings;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import java.awt.BasicStroke;

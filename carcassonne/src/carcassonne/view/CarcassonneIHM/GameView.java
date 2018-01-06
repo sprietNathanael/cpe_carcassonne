@@ -7,7 +7,7 @@ package carcassonne.view.CarcassonneIHM;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
-import carcassonne.menuStart.ParamPlayers;
+import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import java.awt.Color;

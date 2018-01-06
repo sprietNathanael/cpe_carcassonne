@@ -5,8 +5,8 @@
  */
 package carcassonne.view.CarcassonneIHM;
 
-import carcassonne.menuStart.ParamPlayers;
-import carcassonne.menuStart.Parameters;
+import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
+import carcassonne.view.CarcassonneIHM.menuStart.Parameters;
 import java.awt.Container;
 import java.util.LinkedList;
 import java.util.List;

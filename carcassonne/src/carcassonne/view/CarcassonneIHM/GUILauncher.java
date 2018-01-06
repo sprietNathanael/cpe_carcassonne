@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM;
 
-import carcassonne.menuStart.GameMenu;
+import carcassonne.view.CarcassonneIHM.menuStart.GameMenu;
 import java.io.IOException;
 import javax.swing.JFrame;
 
