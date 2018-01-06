@@ -38,7 +38,10 @@ public abstract class AbstractLayer
      */
     public void addPosition(UICoord pos)
     {
-        this.positions.add(pos);
+        if(!this.positions.contains(pos))
+        {
+            this.positions.add(pos);            
+        }
     }
     
     /**
