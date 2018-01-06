@@ -97,7 +97,7 @@ public class Parameters extends JDialog
         colorsJ1.addItem("Green");
         colorsJ1.addItem("Black");
         colorsJ1.addItem("Yellow");
-        colorsJ1.addItem("Violet");
+        colorsJ1.addItem("Magenta");
         player1.add(nomLabel, BorderLayout.WEST);
         player1.add(nomJ1, BorderLayout.WEST);
         player1.add(colorsLabel, BorderLayout.EAST);
@@ -117,7 +117,7 @@ public class Parameters extends JDialog
         colorsJ2.addItem("Green");
         colorsJ2.addItem("Black");
         colorsJ2.addItem("Yellow");
-        colorsJ2.addItem("Violet");
+        colorsJ2.addItem("Magenta");
         player2.add(nomLabel, BorderLayout.WEST);
         player2.add(nomJ2, BorderLayout.WEST);
         player2.add(colorsLabel, BorderLayout.EAST);
@@ -137,7 +137,7 @@ public class Parameters extends JDialog
         colorsJ3.addItem("Green");
         colorsJ3.addItem("Black");
         colorsJ3.addItem("Yellow");
-        colorsJ3.addItem("Violet");
+        colorsJ3.addItem("Magenta");
         player3.add(nomLabel, BorderLayout.WEST);
         player3.add(nomJ3, BorderLayout.WEST);
         player3.add(colorsLabel, BorderLayout.EAST);
@@ -157,7 +157,7 @@ public class Parameters extends JDialog
         colorsJ4.addItem("Green");
         colorsJ4.addItem("Black");
         colorsJ4.addItem("Yellow");
-        colorsJ4.addItem("Violet");
+        colorsJ4.addItem("Magenta");
         player4.add(nomLabel, BorderLayout.WEST);
         player4.add(nomJ4, BorderLayout.WEST);
         player4.add(colorsLabel, BorderLayout.EAST);
@@ -177,7 +177,7 @@ public class Parameters extends JDialog
         colorsJ5.addItem("Green");
         colorsJ5.addItem("Black");
         colorsJ5.addItem("Yellow");
-        colorsJ5.addItem("Violet");
+        colorsJ5.addItem("Magenta");
         player5.add(nomLabel, BorderLayout.WEST);
         player5.add(nomJ5, BorderLayout.WEST);
         player5.add(colorsLabel, BorderLayout.EAST);
@@ -197,7 +197,7 @@ public class Parameters extends JDialog
         colorsJ6.addItem("Green");
         colorsJ6.addItem("Black");
         colorsJ6.addItem("Yellow");
-        colorsJ6.addItem("Violet");
+        colorsJ6.addItem("Magenta");
         player6.add(nomLabel, BorderLayout.WEST);
         player6.add(nomJ6, BorderLayout.WEST);
         player6.add(colorsLabel, BorderLayout.EAST);
@@ -288,36 +288,36 @@ public class Parameters extends JDialog
      *
      * @return
      */
-    public List<Players> getDataPlayers()
+    public List<ParamPlayers> getDataPlayers()
     {
-        List<Players> li = new LinkedList<Players>();
+        List<ParamPlayers> li = new LinkedList<ParamPlayers>();
 
-        Players p1 = new Players(nomJ1.getText(), colorsJ1.toString());
-        Players p2 = new Players(nomJ2.getText(), colorsJ2.toString());
-        Players p3 = new Players(nomJ3.getText(), colorsJ3.toString());
-        Players p4 = new Players(nomJ4.getText(), colorsJ4.toString());
-        Players p5 = new Players(nomJ5.getText(), colorsJ5.toString());
-        Players p6 = new Players(nomJ6.getText(), colorsJ6.toString());
+        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String)colorsJ1.getSelectedItem());
+        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String)colorsJ2.getSelectedItem());
+        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), (String)colorsJ3.getSelectedItem());
+        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), (String)colorsJ4.getSelectedItem());
+        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), (String)colorsJ5.getSelectedItem());
+        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), (String)colorsJ6.getSelectedItem());
         //int nbPlayers = 0;
 
         // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
-        if (p1.getNom() != null) {
+        if (!p1.getNom().isEmpty()) {
             li.add(p1);
         }
 
-        if (p2.getNom() != null) {
+        if (!p2.getNom().isEmpty()) {
             li.add(p2);
         }
-        if (p3.getNom() != null) {
+        if (!p3.getNom().isEmpty()) {
             li.add(p3);
         }
-        if (p4.getNom() != null) {
+        if (!p4.getNom().isEmpty()) {
             li.add(p4);
         }
-        if (p5.getNom() != null) {
+        if (!p5.getNom().isEmpty()) {
             li.add(p5);
         }
-        if (p6.getNom() != null) {
+        if (!p6.getNom().isEmpty()) {
             li.add(p6);
         }
 

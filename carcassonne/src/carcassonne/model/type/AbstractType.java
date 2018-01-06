@@ -65,4 +65,9 @@ public abstract class AbstractType
         this.meeple = m;
     }
 
+    public void removeMeeple()
+    {
+        this.meeple = null;
+    }
+
 }

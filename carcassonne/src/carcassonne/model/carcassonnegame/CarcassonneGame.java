@@ -139,7 +139,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public AbstractTile drawFromPile()
     {
-        this.currentTile = this.pile.remove(0);
+        try {
+            this.currentTile = this.pile.remove(0);
+            
+        } catch (IndexOutOfBoundsException e) {
+            this.currentTile = null;
+        }
         return this.currentTile;
 
     }
@@ -236,12 +241,26 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * Used to complete the actions of the tile that has been drawn
      *
      */
-    public void refreshPlacements()
+    public boolean refreshPlacements()
     {
         this.placements.clear();
         if (this.currentTile != null) {
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
+        if(this.placements.isEmpty())
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+    
+    public void replaceCurrentTile()
+    {
+        this.pile.add(this.currentTile);
+        Collections.shuffle(this.pile);
     }
 
     @Override
@@ -735,9 +754,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         aggregates.addAll(abbayAggregates);
 
         for (AbstractAggregate aggregate : aggregates) {
-            //get cities that are currently not completed
+            //get aggregates that are currently not completed
             if (!aggregate.isCompleted()) {
-                //Get the cities that just has been completed during this round
+                //Get the aggregates that just has been completed during this round
                 if (aggregate.checkIsCompleted()) {
                     playersToUpdate = aggregate.getPlayers();
                     winningPlayers = aggregate.getWinningPlayers();
@@ -753,6 +772,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                         for (Meeple meeple : meeples) {
                             //Set all the meeples to "not used"
                             meeple.setIsUsed(false);
+                            meeple.removeMeepleFromType();
                         }
                     }
                 }

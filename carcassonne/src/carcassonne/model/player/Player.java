@@ -58,6 +58,16 @@ public class Player
     {
         return this.meeples;
     }
+    
+    public int getUnusedMeepleNumber()
+    {
+        int meepleCounter=0;
+        for (int i = 0; i < meeples.size(); i++) {
+            if (!meeples.get(i).getIsUsed())
+                meepleCounter++;
+        }
+        return meepleCounter;
+    }
 
     @Override
     public int hashCode()

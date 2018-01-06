@@ -37,29 +37,37 @@ public class Settings extends JFrame
 
     private JButton button = new JButton("Mode local");
     private JButton button2 = new JButton("Mode en ligne");
+    private Parameters parameters;
 
-    public Settings()
+    public Settings() throws IOException
     {
         this.setTitle("Settings");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        this.setSize(300, 100);
+        this.setSize(851, 851);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        this.setContentPane(new Background("resources/Choixlocalmulti.png"));
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
         this.getContentPane().setLayout(new FlowLayout());
         this.getContentPane().add(button);
         this.getContentPane().add(button2);
+        this.setLayout(null);
+        button.setBounds(320, 250, 250, 50);
+        button2.setBounds(320, 350, 250, 50);
+
+        Settings self = this;
         button.addActionListener(new ActionListener()
         {
             public void actionPerformed(ActionEvent arg0)
             {
-                Parameters par = new Parameters(null, "Settings", true);
+                self.parameters = new Parameters(null, "Settings", true);
                 //ZDialogInfo zInfo = par.showZDialog();
                 //JOptionPane jop = new JOptionPane();
                 //jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
-                par.setVisible(true);
-                par.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
+                self.parameters.setVisible(true);
+                self.parameters.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
                 setVisible(false);
 
             }
@@ -75,6 +83,11 @@ public class Settings extends JFrame
             }
         });
         this.setVisible(true);
+    }
+    
+    public List<ParamPlayers> getPlayers()
+    {
+        return(this.parameters.getDataPlayers());
     }
 
 }

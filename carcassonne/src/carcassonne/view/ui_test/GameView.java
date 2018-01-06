@@ -7,7 +7,7 @@ package carcassonne.view.ui_test;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
-import carcassonne.menuStart.Players;
+import carcassonne.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import java.awt.Color;
@@ -30,14 +30,29 @@ public class GameView
     /**
      * Game view constructor
      */
-    public GameView(List<Players> li)
+    public GameView(List<ParamPlayers> playerList)
     {
         try {
             this.players = new ArrayList<>();
-            players.add(new Player("player1", "blue"));
-            players.add(new Player("player2", "green"));
-            players.add(new Player("player3", "red"));
-            players.add(new Player("player4", "black"));
+            ArrayList<String> colors = new ArrayList<String>();
+            for(ParamPlayers p : playerList)
+            {
+                if(!p.getNom().isEmpty())
+                {
+                    if(colors.contains(p.getColor()))
+                    {
+                        this.constructDefaultPlayersList();
+                        break;
+                    }
+                    colors.add(p.getColor());
+                    players.add(new Player(p.getNom(), p.getColor().toLowerCase()));
+                }
+            }
+            
+            if(players.size() < 2)
+            {
+                this.constructDefaultPlayersList();
+            }
             this.game = new CarcassonneGame(players);
             // TODO
             // Populate sets and initialize game
@@ -47,14 +62,10 @@ public class GameView
         }
     }
 
-    GameView()
+    public GameView()
     {
           try {
-            this.players = new ArrayList<>();
-            players.add(new Player("player1", "blue"));
-            players.add(new Player("player2", "green"));
-            players.add(new Player("player3", "red"));
-            players.add(new Player("player4", "black"));
+            this.constructDefaultPlayersList();
             this.game = new CarcassonneGame(players);
             // TODO
             // Populate sets and initialize game
@@ -62,6 +73,15 @@ public class GameView
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    private void constructDefaultPlayersList()
+    {
+        this.players = new ArrayList<>();
+        players.add(new Player("player1", "blue"));
+        players.add(new Player("player2", "green"));
+        players.add(new Player("player3", "red"));
+        players.add(new Player("player4", "black"));
     }
 
     /**

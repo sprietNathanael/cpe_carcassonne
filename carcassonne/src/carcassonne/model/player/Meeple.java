@@ -5,6 +5,8 @@
  */
 package carcassonne.model.player;
 
+import carcassonne.model.type.AbstractType;
+
 /**
  * Represents a "Meeple", the follower or pawn of a player
  */
@@ -14,6 +16,7 @@ public class Meeple
     private boolean isUsed;
     private final boolean isBig;
     private Player player;
+    private AbstractType currentType;
 
     /**
      * Creates a new meeple and precise its size.
@@ -27,6 +30,7 @@ public class Meeple
         this.isBig = isBig;
         this.isUsed = false;
         this.player = player;
+        this.currentType = null;
     }
 
     /**
@@ -37,6 +41,7 @@ public class Meeple
         this.isBig = false;
         this.isUsed = false;
         this.player = player;
+        this.currentType = null;
     }
 
     /**
@@ -73,5 +78,22 @@ public class Meeple
     {
         return this.player;
     }
+
+    public AbstractType getCurrentType()
+    {
+        return currentType;
+    }
+
+    public void setCurrentType(AbstractType currentType)
+    {
+        this.currentType = currentType;
+    }
+    
+    public void removeMeepleFromType(){
+        this.currentType.removeMeeple();
+        this.currentType = null;
+    }
+    
+    
 
 }

@@ -5,8 +5,10 @@
  */
 package carcassonne.view.ui_test;
 
-import carcassonne.menuStart.Players;
+import carcassonne.menuStart.ParamPlayers;
+import carcassonne.menuStart.Parameters;
 import java.awt.Container;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -16,14 +18,16 @@ import javax.swing.JFrame;
  */
 public class ClientWindow extends JFrame
 {
+
     /**
      * Window constructor
+     * @param playerList
      */
-    public ClientWindow(List<Players> li)
+    public ClientWindow(List<ParamPlayers> playerList)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView();        
+        createGameView(playerList);        
     }
 
     public ClientWindow()
@@ -40,6 +44,19 @@ public class ClientWindow extends JFrame
         Container pane = getContentPane();
         pane.setVisible(false);
         pane.removeAll();        
+    }
+    
+    /**
+     * Create the game view
+     */    
+    private void createGameView(List<ParamPlayers> playerList) {
+        GameView gameView = new GameView(playerList);
+        gameView.show(getContentPane());
+        
+        // Maximize the window
+        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+        getContentPane().setVisible(true);
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
     }
     
     /**

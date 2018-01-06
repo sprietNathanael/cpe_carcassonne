@@ -18,6 +18,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
+import java.util.Set;
 import javax.swing.JPanel;
 
 /**
@@ -69,7 +70,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.meeplePlacementLayer.onHide();
         this.tilesLayer.onShow();
         this.meeplesLayer.onShow();
-        this.infoPanel = new InfoPanel(this.players);
+        this.infoPanel = new InfoPanel(this.players, this.controller);
 
         // Add the grid panel to the main panel
         this.infoPanel.setPreferredSize(new Dimension(300, 10));
@@ -98,18 +99,30 @@ public class MainPanel extends JPanel implements java.util.Observer
             // If a tile has just been put
             if(this.lastCoord != null)
             {
-                this.meeplePlacementLayer.setAggregates(game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY()));
-                this.lastCoord = null;
+                Set<Set<String>> aggregates = game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY());
+                if(aggregates.size() > 0)
+                {
+                    this.meeplePlacementLayer.setAggregates(aggregates);
+                    this.infoPanel.displayPassMeepleTurnButton();
+                    this.lastCoord = null;
+                }
+                else
+                {
+                    this.lastCoord = null;
+                    this.controller.endTurn();
+                    return;
+                }
             }
             else
             {
+                this.infoPanel.hidePassMeepleTurnButton();
                 this.meeplePlacementLayer.onHide();
                 
             }
 
             // Clean positions of placement layer
             this.tilesPlacementLayer.cleanPositions();
-            this.gridPanel.repaint();
+            this.meeplesLayer.cleanMeeple();
 
             // Add positions of tiles layer
             for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
@@ -121,7 +134,7 @@ public class MainPanel extends JPanel implements java.util.Observer
                     Meeple meeple = type.getValue().getMeeple();
                     if(meeple != null)
                     {
-                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple());
+                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
                     }
                 }
             }
@@ -155,6 +168,6 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.tilesPlacementLayer.onHide();
         this.meeplePlacementLayer.setCurrentPosition(newCoord);
         this.meeplePlacementLayer.onShow();
-        this.gridPanel.repaint();
+        //this.gridPanel.repaint();
     }
 }

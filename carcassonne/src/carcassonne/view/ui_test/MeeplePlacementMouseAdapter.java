@@ -47,7 +47,13 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
         // If the tile entered is the current tile
         if (c != null && c.equals(this.currentCoord)) {
             //Triggers the tile entered
-            listener.tileSliceEntered(e, this.currentCoord, listener.getSliceFromCoordinates(point.getX(), point.getY(), this.currentCoord));            
+            String slice = listener.getSliceFromCoordinates(point.getX(), point.getY(), this.currentCoord);
+            if(slice != this.lastSlice)
+            {
+                this.lastSlice = slice;
+                listener.tileSliceExited(e);
+                listener.tileSliceEntered(e, this.currentCoord, slice);               
+            }
         }
         else
         {
