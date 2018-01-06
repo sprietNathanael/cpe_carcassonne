@@ -122,7 +122,7 @@ public class FieldAggregate extends AbstractAggregate
 
         for (CityAggregate city : boundedCities) {
             if (city.checkIsCompleted()) {
-                result += 2;
+                result += 3;
             }
         }
 
