@@ -156,7 +156,7 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
     public void tileExited(MouseEvent e, UICoord p)
     {
         if (this.previewImage != null) {
-            this.previewImage.setCoord(new UICoord(-1, -1));
+            this.previewImage.setCoord(new UICoord(0, 0));
             this.gridPanel.repaint();
             this.allowedPlacement = false;
 
