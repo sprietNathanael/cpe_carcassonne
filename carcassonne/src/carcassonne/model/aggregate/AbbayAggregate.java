@@ -42,6 +42,6 @@ public class AbbayAggregate extends AbstractAggregate
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
-        super(col, row, newTile, locationTypes);
+        super.enlargeAggregate(col, row, newTile, locationTypes);
     }
 }
