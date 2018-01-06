@@ -122,7 +122,7 @@ public class MainPanel extends JPanel implements java.util.Observer
 
             // Clean positions of placement layer
             this.tilesPlacementLayer.cleanPositions();
-            this.gridPanel.repaint();
+            this.meeplesLayer.cleanMeeple();
 
             // Add positions of tiles layer
             for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
