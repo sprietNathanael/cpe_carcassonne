@@ -159,6 +159,38 @@ public class MainPanel extends JPanel implements java.util.Observer
             this.gridPanel.repaint();
             this.infoPanel.repaint();
         }
+        else if(messageType.equals("gameEnds"))
+        {
+            // Get the game's informations
+            CarcassonneGame game = (CarcassonneGame) o;
+            HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
+            AbstractTile preview = game.getCurrentTile();
+            ArrayList<Coord> placements = game.getPlacements();
+
+            this.infoPanel.hidePassMeepleTurnButton();
+            this.meeplePlacementLayer.onHide();
+            this.meeplesLayer.cleanMeeple();
+
+            // Add positions of tiles layer
+            for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+                Coord coord = entry.getKey();
+                AbstractTile tile = entry.getValue();
+                this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
+                for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
+                {
+                    Meeple meeple = type.getValue().getMeeple();
+                    if(meeple != null)
+                    {
+                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
+                    }
+                }
+            }
+            // Refresh info panel informations
+            this.infoPanel.endGame(game);
+            this.gridPanel.repaint();
+            this.infoPanel.repaint();
+        }
+        
     
     }
     

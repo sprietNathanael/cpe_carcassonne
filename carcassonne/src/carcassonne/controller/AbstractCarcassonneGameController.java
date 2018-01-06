@@ -176,6 +176,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         else
         {
             System.out.println("Fin de partie");
+            this.carcassonneGame.notifyGameEnds();
         }
     }
 
