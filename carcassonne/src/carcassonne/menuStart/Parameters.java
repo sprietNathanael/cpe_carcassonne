@@ -35,10 +35,11 @@ public class Parameters extends JDialog
     {
         super(parent, title, modal);
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        this.setSize(1100, 950);
+        //this.setSize(1100, 950);
+        this.setSize(950, 700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+        //this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 

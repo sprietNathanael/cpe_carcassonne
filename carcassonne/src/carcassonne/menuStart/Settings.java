@@ -66,7 +66,7 @@ public class Settings extends JFrame
                 //JOptionPane jop = new JOptionPane();
                 //jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
                 self.parameters.setVisible(true);
-                self.parameters.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
+                //self.parameters.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
                 setVisible(false);
 
             }
@@ -77,7 +77,7 @@ public class Settings extends JFrame
             public void actionPerformed(ActionEvent arg0)
             {
                 JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, "La patience est la clé du bien-être.\n" + "Mahomet - Prophète, Religieux (570 - 632))", "En cours de développement", JOptionPane.ERROR_MESSAGE);
+                jop.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
 
             }
         });
