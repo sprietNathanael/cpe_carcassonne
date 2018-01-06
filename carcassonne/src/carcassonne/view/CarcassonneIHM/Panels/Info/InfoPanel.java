@@ -3,12 +3,13 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels.Info;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.view.CarcassonneIHM.menuStart.Settings;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
+import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;

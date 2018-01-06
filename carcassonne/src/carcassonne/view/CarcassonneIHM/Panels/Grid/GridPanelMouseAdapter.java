@@ -3,8 +3,9 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels.Grid;
 
+import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
@@ -12,7 +13,7 @@ import java.awt.event.MouseWheelEvent;
 /**
  * A mouse adapter for the grid
  */
-public class GridMouseAdapter extends MouseAdapter
+public class GridPanelMouseAdapter extends MouseAdapter
 {
     private MouseEvent dragSource;
     private final GridPanel gridPanel;
@@ -22,7 +23,7 @@ public class GridMouseAdapter extends MouseAdapter
      * Constructs a grid mouse adapter
      * @param gridPanel 
      */
-    GridMouseAdapter(GridPanel gridPanel)
+    GridPanelMouseAdapter(GridPanel gridPanel)
     {
         this.gridPanel = gridPanel;
     }

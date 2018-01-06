@@ -3,8 +3,10 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels.Grid;
 
+import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
@@ -27,7 +29,7 @@ public class GridPanel extends JPanel
     private UICoord graphicalCenter;
     private int tileSize;
     private final List<AbstractLayer> layers = new ArrayList<>();
-    private final GridMouseAdapter mouseListener;
+    private final GridPanelMouseAdapter mouseListener;
     private boolean firstPaint;
     private int upBorder;
     private int leftBorder;
@@ -40,7 +42,7 @@ public class GridPanel extends JPanel
         this.tileSize = INITIAL_TILE_WIDTH;
         
         // Creates 
-        this.mouseListener = new GridMouseAdapter(this);
+        this.mouseListener = new GridPanelMouseAdapter(this);
         
         configureComponent();
         

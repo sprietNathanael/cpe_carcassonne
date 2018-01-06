@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM;
 
+import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;

@@ -3,7 +3,7 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels.Info;
 
 import java.awt.Color;
 import java.awt.Font;

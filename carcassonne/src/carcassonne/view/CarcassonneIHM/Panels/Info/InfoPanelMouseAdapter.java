@@ -3,8 +3,9 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels.Info;
 
+import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 

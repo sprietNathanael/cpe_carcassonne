@@ -3,12 +3,17 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
+import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.aggregate.FieldAggregate;
 import carcassonne.model.player.Meeple;
+import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
+import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Panels.Info.PlayerInfo;
+import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Rectangle;

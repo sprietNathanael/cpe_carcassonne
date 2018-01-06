@@ -3,9 +3,11 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Layers;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
+import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 

@@ -3,8 +3,14 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Panels;
 
+import carcassonne.view.CarcassonneIHM.Panels.Info.InfoPanel;
+import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
+import carcassonne.view.CarcassonneIHM.Layers.Meeple.MeeplesLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Meeple.MeeplePlacementLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Tile.TilesLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Tile.TilePlacementLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
@@ -12,6 +18,8 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.type.AbstractType;
+import carcassonne.view.CarcassonneIHM.Tools.TileImage;
+import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

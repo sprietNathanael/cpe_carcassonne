@@ -3,8 +3,9 @@
  * Created by Bertrand Challet, Thomas Cordier, Étienne Durousset, Thomas Mollaret and Nathanaël Spriet
  * CPE 4th year project
  */
-package carcassonne.view.CarcassonneIHM;
+package carcassonne.view.CarcassonneIHM.Tools;
 
+import carcassonne.view.CarcassonneIHM.Layers.Tile.TilesLayer;
 import carcassonne.model.tile.AbstractTile;
 import java.awt.geom.AffineTransform;
 import java.awt.image.AffineTransformOp;
