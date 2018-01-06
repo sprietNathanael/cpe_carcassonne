@@ -389,15 +389,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 if (tile.getType("CNW").getClass() == AbbayType.class) // carte posée = abbay
                 {
                     if (abbayAggregate == null) {
-                        abbayAggregate = new AbbayAggregate(coord.col, coord.row, tile, null);
+                        abbayAggregate = new AbbayAggregate(coord.col, coord.row, tile, tile.getAbbayAggregateEmplacements());
                     }
-                    abbayAggregate.enlargeAggregate(key.col, key.row, value, null);
+                    abbayAggregate.enlargeAggregate(key.col, key.row, value, value.getAbbayAggregateEmplacements());
                 }
                 if (value.getType("CNW").getClass() == AbbayType.class) { //carte autour = abbay
 
                     for (AbbayAggregate abAgg : abbayAggregates) {
                         if (abAgg.contain(value) == true) {
-                            abAgg.enlargeAggregate(coord.row, coord.col, tile, null);
+                            abAgg.enlargeAggregate(coord.row, coord.col, tile, tile.getAbbayAggregateEmplacements());
                         }
                     }
                 }
@@ -730,13 +730,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     result.add(currentAggregateLocations);
                 }
             }
-            currentAggregateLocations = null;
-            for (AbbayAggregate abbay : abbayAggregates) {
-                currentAggregateLocations = abbay.getTileLocations(col, row);
-                if (currentAggregateLocations != null && abbay.getPlayers().isEmpty()) {
-                    result.add(currentAggregateLocations);
-                }
-            }
+            
+            Set<String> abbayAggEmp = currentTile.getAbbayAggregateEmplacements();
+            if (abbayAggEmp.size() != 0)
+                result.add(abbayAggEmp);
         }
 
         return result;
