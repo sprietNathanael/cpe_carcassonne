@@ -730,6 +730,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     result.add(currentAggregateLocations);
                 }
             }
+            currentAggregateLocations = null;
+            for (AbbayAggregate abbay : abbayAggregates) {
+                currentAggregateLocations = abbay.getTileLocations(col, row);
+                if (currentAggregateLocations != null && abbay.getPlayers().isEmpty()) {
+                    result.add(currentAggregateLocations);
+                }
+            }
         }
 
         return result;
@@ -778,10 +785,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     public void managePointsEndGame()
     {
-        Map<Player, Set<Meeple>> playersToUpdate;
         Set<Player> winningPlayers;
 
-        //We create a list of aggregates, by combining cities and roads, the aggregate types that can be completed during a game
         List<AbstractAggregate> aggregates = new ArrayList<>();
         aggregates.addAll(cityAggregates);
         aggregates.addAll(roadAggregates);
@@ -789,13 +794,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         aggregates.addAll(fieldAggregates);
 
         for (AbstractAggregate aggregate : aggregates) {
-            playersToUpdate = aggregate.getPlayers();
-            winningPlayers = aggregate.getWinningPlayers();
-            int score = aggregate.countPoints();
-            //Update the score of the winning playesr of this aggregate
-            for (Player player : winningPlayers) {
-                player.addToScore(score);
+            //Update only the aggregates that are not yet completed
+            if (!aggregate.isCompleted()) {
+                winningPlayers = aggregate.getWinningPlayers();
+                int score = aggregate.countPoints();
+                //Update the score of the winning playesr of this aggregate
+                for (Player player : winningPlayers) {
+                    player.addToScore(score);
+                }
             }
+
         }
     }
 }
