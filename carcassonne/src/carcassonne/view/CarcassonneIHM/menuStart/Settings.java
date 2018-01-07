@@ -5,27 +5,16 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.LinkedList;
 import java.util.List;
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.border.BevelBorder;
 
 /**
  *
@@ -34,13 +23,18 @@ import javax.swing.border.BevelBorder;
 public class Settings extends JFrame
 
 {
-    private JButton button = new JButton("Mode local");
-    private JButton button2 = new JButton("Mode en ligne");
+    private final JButton button = new JButton("Mode local");
+    private final JButton button2 = new JButton("Mode en ligne");
     private Parameters parameters;
 
     public Settings() throws IOException
     {
-        this.setTitle("Settings");
+       initComponent();
+    }
+    
+    private void initComponent() throws IOException
+    {
+         this.setTitle("Settings");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
         this.setSize(851, 851);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -57,30 +51,15 @@ public class Settings extends JFrame
         button2.setBounds(320, 350, 250, 50);
 
         Settings self = this;
-        button.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                self.parameters = new Parameters(null, "Settings", true);
-                //ZDialogInfo zInfo = par.showZDialog();
-                //JOptionPane jop = new JOptionPane();
-                //jop.showMessageDialog(null, zInfo.toString(), "Informations personnage", JOptionPane.INFORMATION_MESSAGE);
-                self.parameters.setVisible(true);
-                //self.parameters.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE); 
-                setVisible(false);
+        button.addActionListener((ActionEvent arg0) -> {
+            self.parameters = new Parameters(null, "Settings", true);            
+            self.parameters.setVisible(true);
+            setVisible(false);
+         });
 
-            }
-        });
-
-        button2.addActionListener(new ActionListener()
-        {
-            public void actionPerformed(ActionEvent arg0)
-            {
-                JOptionPane jop = new JOptionPane();
-                jop.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
-
-            }
-        });
+        button2.addActionListener((ActionEvent arg0) -> {
+            JOptionPane.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
+         });
         this.setVisible(true);
     }
     
@@ -88,5 +67,4 @@ public class Settings extends JFrame
     {
         return(this.parameters.getDataPlayers());
     }
-
 }

@@ -8,7 +8,6 @@ package carcassonne.view.CarcassonneIHM.menuStart;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -24,7 +23,23 @@ public class Instructions extends JFrame
 
     public Instructions() throws IOException
     {
+        initComponent();
+        
+        exit.setBounds(750, 935, 57, 43);
+        exit.setBorderPainted(false);
+        exit.setOpaque(false);
+        exit.setContentAreaFilled(false);
+        exit.addActionListener((ActionEvent e) -> {
+            setVisible(false);
+        });
 
+    }
+    
+    /**
+     * Allows to init the differents components for the game
+     */
+    private void initComponent() throws IOException
+    {
         this.setTitle("Instructions");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
         this.setSize(860, 1030);
@@ -38,22 +53,6 @@ public class Instructions extends JFrame
         this.setVisible(true);
         this.setLayout(null);
 
-
         this.add(exit);
-        exit.setBounds(750, 935, 57, 43);
-        exit.setBorderPainted(false);
-        exit.setOpaque(false);
-        exit.setContentAreaFilled(false);
-        exit.addActionListener(new ActionListener()
-        {
-
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-
-                setVisible(false);
-            }
-        });
-
     }
 }

@@ -34,15 +34,6 @@ public class Parameters extends JDialog
     public Parameters(JFrame parent, String title, boolean modal)
     {
         super(parent, title, modal);
-        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        //this.setSize(1100, 950);
-        this.setSize(950, 700);
-        this.setLocationRelativeTo(null);
-        this.setResizable(false);
-        //this.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
-        Toolkit tk = Toolkit.getDefaultToolkit();
-        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
-
         this.initComponent();
     }
 
@@ -51,7 +42,19 @@ public class Parameters extends JDialog
      */
     private void initComponent()
     {
-        //Icône
+        //Set Icon
+        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
+        
+        //Dimension Window
+        this.setSize(950, 700);
+        this.setLocationRelativeTo(null);
+        this.setResizable(false);
+        
+        //Add custom cursor
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
+        
+        //Image de gauche
         icon = new JLabel(new ImageIcon("resources/knight.jpg"));
         JPanel panIcon = new JPanel();
         panIcon.setBackground(Color.white);
@@ -242,22 +245,10 @@ public class Parameters extends JDialog
                         : tranche1.getText();
             }
         });
-
-        /*JButton cancelBouton = new JButton("CANCEL");
-        cancelBouton.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent arg0)
-            {
-                setVisible(false);
-            }
-        });*/
-
+       
         control.add(okBouton);
-        //control.add(cancelBouton);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
-        //this.getContentPane().add(numPlayers, BorderLayout.NORTH);
         this.getContentPane().add(content, BorderLayout.CENTER);
         this.getContentPane().add(control, BorderLayout.SOUTH);
     }
@@ -291,7 +282,7 @@ public class Parameters extends JDialog
      */
     public List<ParamPlayers> getDataPlayers()
     {
-        List<ParamPlayers> li = new LinkedList<ParamPlayers>();
+        List<ParamPlayers> li = new LinkedList<>();
 
         ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String)colorsJ1.getSelectedItem());
         ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String)colorsJ2.getSelectedItem());
