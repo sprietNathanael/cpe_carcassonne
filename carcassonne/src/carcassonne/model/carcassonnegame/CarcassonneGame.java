@@ -101,6 +101,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return (this.players.get(this.currentPlayerIndex));
     }
     
+    /**
+     * Get the winner
+     * @return 
+     */
     public Player getWinner()
     {
         return this.winningPlayer;
@@ -229,6 +233,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         //this.manageCompletedAggregate();
     }
 
+    /**
+     * Get the board
+     * @return 
+     */
     public Board getBoard()
     {
         return this.board;
@@ -260,12 +268,18 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
     }
 
+    /**
+     * Put back the current tile and re-shuffle the pile
+     */
     public void putBackCurrentTile()
     {
         this.pile.add(this.currentTile);
         Collections.shuffle(this.pile);
     }
 
+    /**
+     * Notifies the observers with the current notify message
+     */
     @Override
     public void notifyObservers()
     {
@@ -273,6 +287,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         super.notifyObservers(this.notifyMessage);
     }
 
+    /**
+     * Add an observer
+     * @param o 
+     */
     @Override
     public synchronized void addObserver(Observer o)
     {
@@ -313,16 +331,24 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.notifyObservers();
     }
 
+    /**
+     * Notifies the observers that the placements are ready
+     */
     public void notifyPlacementsReady()
     {
         this.notifyMessage = "placementsReady";
         this.notifyObservers();
     }
     
+    /**
+     * Notifies the observers that the game ended
+     */
     public void notifyGameEnds()
     {
         this.notifyMessage = "gameEnds";
+        // Manage the last points
         this.managePointsEndGame();
+        // Get the winner
         this.winningPlayer = this.players.get(0);
         for(Player player : this.players)
         {

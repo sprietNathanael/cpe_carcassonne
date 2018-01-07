@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 /**
- *
+ * A mouse adapter for the meeple placement layer
  * @author nathanael
  */
 public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
@@ -26,6 +26,12 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
     private String tileSlice;
     private String lastSlice;
 
+    /**
+     * Construct the mouse adapter
+     * @param gridPanel
+     * @param listener
+     * @param currentCoord 
+     */
     public MeeplePlacementMouseAdapter(GridPanel gridPanel, MeeplePlacementMouseListener listener, UICoord currentCoord)
     {
         this.gridPanel = gridPanel;
@@ -33,13 +39,20 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
         this.currentCoord = currentCoord;
         this.lastSlice = "";
     }
-
+    
+    /**
+     * Get the tile slice
+     * @return 
+     */
     public String getTileSlice()
     {
         return tileSlice;
     }
 
     @Override
+    /**
+     * When the mouse moves
+     */
     public void mouseMoved(MouseEvent e)
     {
        // Get the coordinates of the mouse
@@ -52,10 +65,13 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
         if (c != null && c.equals(this.currentCoord)) {
             //Triggers the tile entered
             String slice = listener.getSliceFromCoordinates(point.getX(), point.getY(), this.currentCoord);
+            // If the slice entered is not the current slice
             if(slice != this.lastSlice)
             {
                 this.lastSlice = slice;
+                // Exit the old slice
                 listener.tileSliceExited(e);
+                // Enter the new slice
                 listener.tileSliceEntered(e, this.currentCoord, slice);               
             }
         }
@@ -65,6 +81,10 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
         }
     }
 
+    /**
+     * When the mouse is clicked
+     * @param e 
+     */
     @Override
     public void mouseClicked(MouseEvent e)
     {

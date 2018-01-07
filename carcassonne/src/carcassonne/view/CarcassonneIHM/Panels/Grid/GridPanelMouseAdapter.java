@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseWheelEvent;
 
 /**
- * A mouse adapter for the grid
+ * A mouse adapter for the grid panel
  */
 public class GridPanelMouseAdapter extends MouseAdapter
 {

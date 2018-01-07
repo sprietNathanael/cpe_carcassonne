@@ -129,6 +129,10 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         m.setIsUsed(true);
     }
 
+    /**
+     * Get the board
+     * @return 
+     */
     public Board getBoard()
     {
         return carcassonneGame.getBoard();
@@ -154,6 +158,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         this.processNextTile();
     }
     
+    /**
+     * Process the next Tile
+     */
     private void processNextTile()
     {
         this.drawTile();
@@ -162,11 +169,12 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
             System.out.println("La pièce piochée est : "+this.currentTile.getName());
             System.out.println(this.currentTile);
             this.carcassonneGame.notifyBoardChanged();
+            // If the current tile can be placed
             if(this.carcassonneGame.refreshPlacements())
             {
                 this.carcassonneGame.notifyPlacementsReady();
-
             }
+            // Else put back the current tile and draw another one
             else
             {
                 this.carcassonneGame.putBackCurrentTile();

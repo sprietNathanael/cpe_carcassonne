@@ -36,17 +36,21 @@ public class GridPanel extends JPanel
     private int downBorder;
     private int rightBorder;
 
+    /**
+     * Grid panel constructor
+     */
     public GridPanel()
     {
         // Initialise tile size
         this.tileSize = INITIAL_TILE_WIDTH;
         
-        // Creates 
+        // Creates the mouse adapter
         this.mouseListener = new GridPanelMouseAdapter(this);
         
-        configureComponent();
+        // Configure the panel
+        this.configureComponent();
         
-        // Set graphical centenr
+        // Set graphical center
         this.graphicalCenter = new UICoord(0,0);
         this.firstPaint = true;
     }
@@ -96,10 +100,10 @@ public class GridPanel extends JPanel
         super.paintChildren(g);
     }
 
-    @Override
     /**
      * Paint component callback
      */
+    @Override
     protected void paintComponent(Graphics g)
     {
         super.paintComponent(g);

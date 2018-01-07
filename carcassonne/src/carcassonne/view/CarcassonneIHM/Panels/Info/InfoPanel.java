@@ -41,16 +41,16 @@ import net.miginfocom.swing.MigLayout;
  */
 public class InfoPanel extends JPanel implements InfoPanelMouseListener
 {
+    // Constants
+    public static int SEPARATION_LINE_WIDTH = 5;
+    public static int MEEPLE_BUTTON_WIDTH = 100;
+    public static int MEEPLE_BUTTON_HEIGHT = 70;
+    public static int PREVIEW_BORDER = 10;
+    public static int PREVIEWES_GAP = 30;
 
     private HashMap<String, PlayerInfo> playerInfoLines;
     private String currentPlayer;
     private AbstractCarcassonneGameController controller;
-    public static int SEPARATION_LINE_WIDTH = 5;
-    public static int MEEPLE_BUTTON_WIDTH = 100;
-    public static int MEEPLE_BUTTON_HEIGHT = 70;
-    
-    public static int PREVIEW_BORDER = 10;
-    public static int PREVIEWES_GAP = 30;
     private BufferedImage backTile;
     private BufferedImage currentTile;
     private int pileSize;
@@ -75,6 +75,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         
         this.displayPassMeepleTurnButton = false;
         
+        // Adds the mouse listener
         this.mouseListener = new InfoPanelMouseAdapter(this);
         this.addMouseListener(this.mouseListener);
 
@@ -90,6 +91,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // Initialise the message
         this.message = "";
     }
     
@@ -101,6 +104,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
      */
     public void refresh(CarcassonneGame game)
     {
+        // Get the current player
         this.currentPlayer = game.getCurrentPlayer().getName();
 
         // Updates the information lines
@@ -122,18 +126,31 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         this.pileSize = game.getPileSize();
     }
     
+    /**
+     * Ends a game
+     * 
+     * @param game 
+     */
     public void endGame(CarcassonneGame game)
     {
+        // Get the winner
         this.currentPlayer = game.getWinner().getName();
 
         // Updates the information lines
         for (Player player : game.getPlayers()) {
             this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
         }
+        
+        // Updates the message
         this.message = "Le joueur gagnant est : "+game.getWinner().getName();
+        
+        // Reset the current tile
         this.currentTile = null;
     }
     
+    /**
+     * Paint the component
+     */
     @Override
     protected void paintChildren(Graphics g)
     {
@@ -171,15 +188,16 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         
         if(!this.message.isEmpty())
         {
+            // Draw the message
             currentHeight+=20;
             g2.drawString(this.message, 20, currentHeight);
             currentHeight+=20;
             
         }
         
-        
         if(this.displayPassMeepleTurnButton)
         {
+            // Draw the pass meeple turn button
             g2.setStroke(new BasicStroke(5));
             meepleButton = new Polygon();
             int x = (int)((this.getWidth()/2.0)-(MEEPLE_BUTTON_WIDTH/2.0));
@@ -191,6 +209,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             g2.draw(meepleButton);
             int y_text = y + (int)(MEEPLE_BUTTON_HEIGHT/2.0);
             int x_text = x + 10;
+            
+            // Draw the inner message
             g2.drawString("Ne pas poser", x_text, y_text-8);
             g2.drawString("de Meeple", x_text, y_text+8);
         }
@@ -202,23 +222,38 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         super.paintChildren(g);
     }
     
+    /**
+     * Display the pass meeple turn button
+     */
     public void displayPassMeepleTurnButton()
     {
         this.displayPassMeepleTurnButton = true;        
     }
     
+    /**
+     * Hide the pass meeple turn button
+     */
     public void hidePassMeepleTurnButton()
     {
         this.displayPassMeepleTurnButton = false;
         this.meepleButton = null;
     }
 
+    /**
+     * When the mouse is clicked
+     * @param e
+     * @param p
+     */
     @Override
     public void mouseClicked(MouseEvent e, Point2D p)
     {
+        // If the mouse is clicked inside the button
         if(this.meepleButton != null && this.meepleButton.contains(p))
         {
+            // Hides the button
             this.hidePassMeepleTurnButton();
+            
+            // Ends the turn
             this.controller.endTurn();
         }
     }

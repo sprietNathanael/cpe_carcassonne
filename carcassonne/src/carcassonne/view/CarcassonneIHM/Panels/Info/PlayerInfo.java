@@ -22,12 +22,13 @@ import javax.imageio.ImageIO;
  */
 public class PlayerInfo
 {
-
+    // Constants
+    public static final int MEEPLE_BORDER = 10;
+    public static final int CURRENT_PLAYER_BORDER_WIDTH = 5;
+    
     private String color;
     private String name;
     private BufferedImage image;
-    public static final int MEEPLE_BORDER = 10;
-    public static final int CURRENT_PLAYER_BORDER_WIDTH = 5;
     private int meepleNumber;
     private int pointNumber;
 

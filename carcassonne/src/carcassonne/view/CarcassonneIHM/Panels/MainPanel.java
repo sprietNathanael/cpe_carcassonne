@@ -60,14 +60,10 @@ public class MainPanel extends JPanel implements java.util.Observer
         // Construct a grid panel
         this.gridPanel = new GridPanel();
 
-        // Construct tiles layer
+        // Construct layers
         this.tilesLayer = new TilesLayer(gridPanel, this.controller);
-        
         this.meeplesLayer = new MeeplesLayer(gridPanel, this.controller);
-        
         this.meeplePlacementLayer = new MeeplePlacementLayer(gridPanel, this.controller);
-        
-        // Construct placement layer
         this.tilesPlacementLayer = new TilePlacementLayer(gridPanel, this.controller, this);
         
         // Add the layers to the grid panel
@@ -75,17 +71,24 @@ public class MainPanel extends JPanel implements java.util.Observer
         gridPanel.addLayer(tilesLayer);
         gridPanel.addLayer(meeplePlacementLayer);
         gridPanel.addLayer(meeplesLayer);
+        
+        // Hide and show the different layers
         this.meeplePlacementLayer.onHide();
         this.tilesLayer.onShow();
         this.meeplesLayer.onShow();
+        
+        // Construct an info panel
         this.infoPanel = new InfoPanel(this.players, this.controller);
-
-        // Add the grid panel to the main panel
         this.infoPanel.setPreferredSize(new Dimension(300, 10));
+
+        // Add the panels to the main panel
         this.add(this.infoPanel, BorderLayout.WEST);
         this.add(gridPanel, BorderLayout.CENTER);
     }
 
+    /**
+     * When the component is notified by the observable
+     */
     @Override
     @SuppressWarnings("unchecked")
     public void update(Observable o, Object arg)
@@ -107,28 +110,39 @@ public class MainPanel extends JPanel implements java.util.Observer
             // If a tile has just been put
             if(this.lastCoord != null)
             {
+                // Get the available aggregates in the last putted tile
                 Set<Set<String>> aggregates = game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY());
+                // If there are available aggregates
                 if(aggregates.size() > 0)
                 {
+                    // Give the aggregates to the meeple placement layer
                     this.meeplePlacementLayer.setAggregates(aggregates);
+                    // Displays the pass meeple turn button of the info panel
                     this.infoPanel.displayPassMeepleTurnButton();
+                    // Reset the last tile
                     this.lastCoord = null;
                 }
                 else
                 {
+                    // Reset the last tile
                     this.lastCoord = null;
+                    // End the turn
                     this.controller.endTurn();
+                    
+                    // Exit the function
                     return;
                 }
             }
             else
             {
+                // Hide the pass meeple turn button
                 this.infoPanel.hidePassMeepleTurnButton();
+                // Hide the meeple placement layer
                 this.meeplePlacementLayer.onHide();
                 
             }
 
-            // Clean positions of placement layer
+            // Clean positions of placement layer and meeple layer
             this.tilesPlacementLayer.cleanPositions();
             this.meeplesLayer.cleanMeeple();
 
@@ -137,6 +151,8 @@ public class MainPanel extends JPanel implements java.util.Observer
                 Coord coord = entry.getKey();
                 AbstractTile tile = entry.getValue();
                 this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
+                
+                // Add positions of meeples on layer
                 for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
                 {
                     Meeple meeple = type.getValue().getMeeple();
@@ -148,12 +164,16 @@ public class MainPanel extends JPanel implements java.util.Observer
             }
             // Refresh info panel informations
             this.infoPanel.refresh(game);
+            
+            // Repaint the panels
             this.gridPanel.repaint();
             this.infoPanel.repaint();
         
         }
+        // If the update is from a placements ready
         else if(messageType.equals("placementsReady"))
         {
+            // Shows the tile placements layer
             this.tilesPlacementLayer.onShow();
             // Get the game's informations
             CarcassonneGame game = (CarcassonneGame) o;
@@ -164,9 +184,11 @@ public class MainPanel extends JPanel implements java.util.Observer
                 this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
             }
             
+            // Repaint the panels
             this.gridPanel.repaint();
             this.infoPanel.repaint();
         }
+        // If the update is from a game end
         else if(messageType.equals("gameEnds"))
         {
             // Get the game's informations
@@ -184,6 +206,8 @@ public class MainPanel extends JPanel implements java.util.Observer
                 Coord coord = entry.getKey();
                 AbstractTile tile = entry.getValue();
                 this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
+                
+                // Add positions of meeples
                 for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
                 {
                     Meeple meeple = type.getValue().getMeeple();
@@ -195,6 +219,8 @@ public class MainPanel extends JPanel implements java.util.Observer
             }
             // Refresh info panel informations
             this.infoPanel.endGame(game);
+            
+            // Repaint panels
             this.gridPanel.repaint();
             this.infoPanel.repaint();
         }
@@ -202,12 +228,19 @@ public class MainPanel extends JPanel implements java.util.Observer
     
     }
     
+    /**
+     * When a tile is putted
+     * @param newCoord 
+     */
     public void putTile(UICoord newCoord)
     {
+        // Get the tile coordinates
         this.lastCoord = newCoord;
+        // Hides the tiles placement layer
         this.tilesPlacementLayer.onHide();
+        
+        // Show the meeple placement layer
         this.meeplePlacementLayer.setCurrentPosition(newCoord);
         this.meeplePlacementLayer.onShow();
-        //this.gridPanel.repaint();
     }
 }

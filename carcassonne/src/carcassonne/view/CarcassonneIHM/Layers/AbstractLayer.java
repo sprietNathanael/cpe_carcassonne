@@ -54,7 +54,7 @@ public abstract class AbstractLayer
     
     /**
      * Saves and attaches a mouse input listener to the gridPanel
-     * @param mouseListener 
+     * @param ml
      */
     public void attachMouseInputListener(LayerMouseAdapter ml) {
         this.mouseListener = ml;
@@ -62,11 +62,13 @@ public abstract class AbstractLayer
         this.gridPanel.addMouseMotionListener(this.mouseListener);
     }
     
+    /**
+     * Removes the mouse input listener from the gridPanel
+     */
     public void removeMouseInputListener() {
         this.gridPanel.removeMouseListener(this.mouseListener);
         this.gridPanel.removeMouseMotionListener(mouseListener);
     }
-    
     
     /**
      * Test if the layer is visible

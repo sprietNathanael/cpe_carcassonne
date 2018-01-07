@@ -20,7 +20,7 @@ public class GUILauncher
      */
     public static void main(String[] args) throws IOException, Exception {
                 
-        //ClientWindow clientWindow = new ClientWindow();
+        // Displays the game menu
         GameMenu gameMenu = new GameMenu();
         
         gameMenu.setVisible(true);

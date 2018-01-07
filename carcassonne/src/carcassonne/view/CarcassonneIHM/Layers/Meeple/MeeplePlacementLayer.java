@@ -35,12 +35,13 @@ import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
 /**
- *
+ * Layer that contains all the meeple location possibilities
  * @author nathanael
  */
 public class MeeplePlacementLayer extends AbstractLayer implements TilePlacementMouseListener, MeeplePlacementMouseListener
 {
 
+    // Constant hashmap of polygon representations of the tile slicing
     public static final HashMap<String, Polygon> TILE_SPLITS;
 
     static {
@@ -71,6 +72,11 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     private Set<String> currentTileAggregate;
     private UICoord currentPosition;
 
+    /**
+     * Construct the meeple placement layer
+     * @param gridPanel
+     * @param controller 
+     */
     public MeeplePlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
         super(gridPanel, controller);
@@ -78,27 +84,45 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         this.currentTileAggregate = null;
     }
 
+    /**
+     * Set the aggregates from a tile
+     * @param currentTile 
+     */
     public void setAggregates(AbstractTile currentTile)
     {
         this.tileAggregates = currentTile.getAggregateEmplacements();
     }
-
+    
+    /**
+     * Set the aggregates from a Set
+     * @param aggregates 
+     */
     public void setAggregates(Set<Set<String>> aggregates)
     {
         this.tileAggregates = aggregates;
     }
     
+    /**
+     * Clean all aggregates
+     */
     public void cleanAggregates()
     {
         this.tileAggregates.clear();
     }
     
+    /**
+     * Set the current position on the tile
+     * @param c 
+     */
     public void setCurrentPosition(UICoord c)
     {
         this.currentPosition = c;
-        // TODO test if meepable
     }
 
+    /**
+     * Paint the component
+     * @param g2 
+     */
     @Override
     public void paint(Graphics2D g2)
     {
@@ -111,13 +135,17 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
             AffineTransform resizeMeeplesPlacement = new AffineTransform();
             AffineTransform translateMeeplesPlacement = new AffineTransform();
             resizeMeeplesPlacement.scale(tileSize / 100.0, tileSize / 100.0);
+            
+            // Translation to apply the center
             double delta_x = (this.currentPosition.getX() * tileSize) + center.getX();
             double delta_y = (this.currentPosition.getY() * tileSize) + center.getY();
             translateMeeplesPlacement.translate(delta_x, delta_y);
-
+            
             Shape intermediate;
 
             g2.setColor(new Color(255, 20, 20, 100));
+            
+            // Draw all the location from the aggregate
             for (String split : this.currentTileAggregate) {
                 intermediate = translateMeeplesPlacement.createTransformedShape(resizeMeeplesPlacement.createTransformedShape(TILE_SPLITS.get(split)));
                 g2.fill(intermediate);
@@ -137,6 +165,9 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         this.attachMouseInputListener(new MeeplePlacementMouseAdapter(this.gridPanel, this, this.currentPosition));
     }
 
+    /**
+     * On layer hide
+     */
     @Override
     public void onHide()
     {
@@ -148,7 +179,6 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void tileEntered(MouseEvent e, UICoord p)
     {
-        System.out.println("********************************** Entered");
     }
 
     @Override
@@ -160,31 +190,44 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void mouseClicked(MouseEvent e, UICoord p)
     {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
+    /**
+     * On a tile slice entered
+     * @param e
+     * @param p
+     * @param tileSlice 
+     */
     @Override
     public void tileSliceEntered(MouseEvent e, UICoord p, String tileSlice)
     {
         if (this.currentPosition.equals(p)) {
+            // Loop all the aggregates
             aggregatesLoop:
             for (Set<String> aggregate : this.tileAggregates) {
+                // Loop all the locations of the aggregate
                 for (String split : aggregate) {
+                    // If the current tile slice matches the split
                     if (split.equals(tileSlice)) {
+                        // Get the aggregate
                         this.currentTileAggregate = aggregate;
                         // TODO beautify this ugly piece of code !
                         break aggregatesLoop;
                     }
-
                 }
             }
         }
         else {
             this.currentTileAggregate = null;
         }
+        // Refreshes the component
         this.gridPanel.repaint();
     }
 
+    /**
+     * On a tile slice exited
+     * @param e 
+     */
     @Override
     public void tileSliceExited(MouseEvent e)
     {
@@ -192,32 +235,47 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
         this.gridPanel.repaint();
     }
 
+    /**
+     * On a mouse clicked event
+     * @param e
+     * @param p
+     * @param tileSlice 
+     */
     @Override
     public void mouseClicked(MouseEvent e, UICoord p, String tileSlice)
     {
         if (this.currentPosition.equals(p)) {
-            /*for (Set<String> aggregate : tileAggregates) {*/
-                if (this.currentTileAggregate != null) {
-                    try {
-                        this.controller.putMeeple(tileSlice);
-                    } catch (Exception ex) {
-                        Logger.getLogger(MeeplePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                    this.controller.endTurn();
-                    this.currentTileAggregate = null;
+            if (this.currentTileAggregate != null) {
+                try {
+                    // Put the meeple
+                    this.controller.putMeeple(tileSlice);
+                } catch (Exception ex) {
+                    Logger.getLogger(MeeplePlacementLayer.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            /*}*/
+                // End the turn
+                this.controller.endTurn();
+                this.currentTileAggregate = null;
+            }
         }
     }
 
+    /**
+     * Get the slice name from coordinates and a tile coordinates
+     * @param x
+     * @param y
+     * @param tileCoordinates
+     * @return 
+     */
     @Override
     public String getSliceFromCoordinates(double x, double y, UICoord tileCoordinates)
     {
         double x_filtered, y_filtered;
         int tileSize = this.gridPanel.getTileSize();
         UICoord center = this.gridPanel.getGraphicalCenter();
+        // Apply the tile size and the center
         x_filtered = ((x - (tileSize * tileCoordinates.getX())) - center.getX()) / (tileSize / 100.0);
         y_filtered = ((y - (tileSize * tileCoordinates.getY())) - center.getY()) / (tileSize / 100.0);
+        // Browses the splits
         for (Map.Entry<String, Polygon> entry : TILE_SPLITS.entrySet()) {
             if (entry.getValue().contains(x_filtered, y_filtered)) {
                 return entry.getKey();

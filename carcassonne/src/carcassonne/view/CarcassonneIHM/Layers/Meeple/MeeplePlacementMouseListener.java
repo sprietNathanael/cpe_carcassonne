@@ -9,7 +9,7 @@ import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * A mouse listener for the meeple placement layer
  * @author nathanael
  */
 public interface MeeplePlacementMouseListener

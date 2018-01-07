@@ -9,7 +9,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 /**
- *
+ * A mouse adapter for the layer
+ * Used only for abstraction purposes
  * @author nathanael
  */
 public abstract class LayerMouseAdapter extends MouseAdapter

@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
 /**
- *
+ * A mouse adapter for the info panel
  * @author nathanael
  */
 public class InfoPanelMouseAdapter extends LayerMouseAdapter
@@ -18,11 +18,19 @@ public class InfoPanelMouseAdapter extends LayerMouseAdapter
     private final InfoPanelMouseListener listener;
     
 
+    /**
+     * Constructs the mouse adapter
+     * @param listener 
+     */
     public InfoPanelMouseAdapter(InfoPanelMouseListener listener)
     {
         this.listener = listener;
     }
 
+    /**
+     * When the mouse is clicked
+     * @param e
+     */
     @Override
     public void mouseClicked(MouseEvent e)
     {

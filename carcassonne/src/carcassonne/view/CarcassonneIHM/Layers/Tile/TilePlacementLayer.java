@@ -32,7 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * Layer that contains all the possibilities and the preview
+ * Layer that contains all the tiles possibilities and the preview
  */
 public class TilePlacementLayer extends AbstractLayer implements TilePlacementMouseListener
 {
@@ -43,8 +43,6 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
     private static final Composite FORBIDDED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .2f);
     private static final Composite MEEPLE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .7f);
     
-    
-
     private TileImage previewImage;
     private boolean allowedPlacement;
     private MouseListener mouseListener;
@@ -84,6 +82,9 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
         this.attachMouseInputListener(new TilePlacementMouseAdapter(this.gridPanel, this));
     }
 
+    /**
+     * On layer hide triggered
+     */
     @Override
     public void onHide()
     {
@@ -118,20 +119,23 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
             int tileSize = placeHolderSize - (2 * shift);
             UICoord center = this.gridPanel.getGraphicalCenter();
             g2.setColor(Color.BLACK);
+            
+            // Draw all positions
             this.positions.forEach((p) -> {
                 int x = center.getX() + (placeHolderSize * p.getX());
                 int y = center.getY() + (placeHolderSize * p.getY());
+                
+                // If this position is the currently selected position
                 if (this.previewImage != null && (p.getX() == this.previewImage.getX() && p.getY() == this.previewImage.getY())) {
+                    // Draw the preview
                     Composite compositeBackup = g2.getComposite();
                     g2.setComposite(CLEAR);
                     g2.setComposite(this.allowedPlacement ? ALLOWED : FORBIDDED);
                     g2.drawImage(this.previewImage.getImage(), x, y, placeHolderSize, placeHolderSize, null);
                     g2.setComposite(compositeBackup);
-
-
-
                 }
                 else {
+                    //Draw a placeholder
                     x += shift;
                     y += shift;
                     g2.fillRect(x, y, tileSize, thickness);
@@ -145,12 +149,21 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
         }
     }
 
+    
+    /**
+     * Triggered when the mouse enters a tile
+     * @param e
+     * @param c
+     */
     @Override
     public void tileEntered(MouseEvent e, UICoord c)
     {
+        // If the coordinates are in the positions array
         if (this.positions.contains(c)) {
+            // Check if the placement is allowed
             this.allowedPlacement = this.controller.checkTilePosition(new Coord(c.getX(), c.getY()));
             if (this.previewImage != null) {
+                // Refreshes the component with the preview
                 this.previewImage.setCoord(c);
                 this.gridPanel.repaint();
 
@@ -158,10 +171,16 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
         }
     }
 
+    /**
+     * Triggered when the mouse exits a tile
+     * @param e
+     * @param p 
+     */
     @Override
     public void tileExited(MouseEvent e, UICoord p)
     {
         if (this.previewImage != null) {
+            // Refreshes the component without the preview
             this.previewImage.setCoord(new UICoord(0, 0));
             this.gridPanel.repaint();
             this.allowedPlacement = false;
@@ -169,24 +188,35 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
         }
     }
 
+    /**
+     * Triggered when the mouse is clicked
+     * @param e
+     * @param p 
+     */
     @Override
     public void mouseClicked(MouseEvent e, UICoord p)
     {
+        // If the right button is clicked
         if (e.getButton() == MouseEvent.BUTTON3) {
             if (this.previewImage != null) {
                 e.consume();
+                // Turns the preview
                 this.controller.turnRight();
+                // Check if the placement is allowed
                 this.allowedPlacement = this.controller.checkTilePosition(new Coord(this.previewImage.getX(), this.previewImage.getY()));
+                // Refreshes the component
                 this.previewImage.turnRight();
                 this.gridPanel.repaint();
             }
         }
+        // If the left button is clicked
         else if (e.getButton() == MouseEvent.BUTTON1) {
             if(this.previewImage != null && (this.previewImage.getX() == p.getX() && this.previewImage.getY() == p.getY())){
                 e.consume();
                 if(this.allowedPlacement)
                 {
                     try {
+                        // Put the tile
                         Coord newCoord = new Coord(p.getX(), p.getY());
                         this.mainPanel.putTile(new UICoord(newCoord.col, newCoord.row));
                         this.controller.putCurrentTile(newCoord);
