@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -139,6 +140,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         
         // Updates the message
         this.message = "Le joueur gagnant est : "+game.getWinner().getName();
+        JOptionPane gg = new JOptionPane();
+        gg.showMessageDialog(null,"Le joueur gagnant est : "+game.getWinner().getName(), "WINNER",JOptionPane.INFORMATION_MESSAGE , null);
         
         // Reset the current tile
         this.currentTile = null;

@@ -71,6 +71,7 @@ public class GameView
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }
 
     /**
