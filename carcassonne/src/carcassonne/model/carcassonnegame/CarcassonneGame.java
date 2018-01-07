@@ -260,7 +260,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
     }
 
-    public void replaceCurrentTile()
+    public void putBackCurrentTile()
     {
         this.pile.add(this.currentTile);
         Collections.shuffle(this.pile);

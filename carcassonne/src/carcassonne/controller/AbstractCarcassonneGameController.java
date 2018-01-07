@@ -169,7 +169,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
             }
             else
             {
-                this.carcassonneGame.replaceCurrentTile();
+                this.carcassonneGame.putBackCurrentTile();
                 this.processNextTile();
             }
         }
