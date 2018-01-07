@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
@@ -37,6 +38,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class InfoPanel extends JPanel implements InfoPanelMouseListener
 {
+
     // Constants
     public static int SEPARATION_LINE_WIDTH = 5;
     public static int MEEPLE_BUTTON_WIDTH = 100;
@@ -67,11 +69,11 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         setDoubleBuffered(true);
         setOpaque(false);
         setLayout(new MigLayout());
-        
+
         this.controller = controller;
-        
+
         this.displayPassMeepleTurnButton = false;
-        
+
         // Adds the mouse listener
         this.mouseListener = new InfoPanelMouseAdapter(this);
         this.addMouseListener(this.mouseListener);
@@ -88,11 +90,10 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         // Initialise the message
         this.message = "";
     }
-    
 
     /**
      * Refresh the informations from the game
@@ -122,11 +123,11 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Get the pile size
         this.pileSize = game.getPileSize();
     }
-    
+
     /**
      * Ends a game
-     * 
-     * @param game 
+     *
+     * @param game
      */
     public void endGame(CarcassonneGame game)
     {
@@ -137,16 +138,17 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         for (Player player : game.getPlayers()) {
             this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
         }
-        
+
         // Updates the message
-        this.message = "Le joueur gagnant est : "+game.getWinner().getName();
+        this.message = "Le joueur gagnant est : " + game.getWinner().getName();
         JOptionPane gg = new JOptionPane();
-        gg.showMessageDialog(null,"Le joueur gagnant est : "+game.getWinner().getName(), "WINNER",JOptionPane.INFORMATION_MESSAGE , null);
-        
+        ImageIcon img = new ImageIcon("resources/king.png");
+        gg.showMessageDialog(null, "Le joueur gagnant est : " + game.getWinner().getName(), "WINNER", JOptionPane.INFORMATION_MESSAGE, img);
+
         // Reset the current tile
         this.currentTile = null;
     }
-    
+
     /**
      * Paint the component
      */
@@ -162,9 +164,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         int previewX = InfoPanel.PREVIEW_BORDER;
         int previewY = currentHeight + (infoLinesHeight / 2) - (previewSize / 2);
         g2.drawImage(this.backTile, previewX, previewY, previewSize, previewSize, null);
-        
-        if(this.currentTile != null)
-        {
+
+        if (this.currentTile != null) {
             // Draw the pile counter
             g2.setFont(new Font("Calibri", Font.BOLD, (int) (previewSize * 0.3)));
             g2.drawString("" + this.pileSize, previewX, previewY - 5);
@@ -184,34 +185,32 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - InfoPanel.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
             currentHeight += infoLinesHeight;
         }
-        
-        if(!this.message.isEmpty())
-        {
+
+        if (!this.message.isEmpty()) {
             // Draw the message
-            currentHeight+=20;
+            currentHeight += 20;
             g2.drawString(this.message, 20, currentHeight);
-            currentHeight+=20;
-            
+            currentHeight += 20;
+
         }
-        
-        if(this.displayPassMeepleTurnButton)
-        {
+
+        if (this.displayPassMeepleTurnButton) {
             // Draw the pass meeple turn button
             g2.setStroke(new BasicStroke(5));
             meepleButton = new Polygon();
-            int x = (int)((this.getWidth()/2.0)-(MEEPLE_BUTTON_WIDTH/2.0));
-            int y = currentHeight+25;
-            meepleButton.addPoint(x,y);
-            meepleButton.addPoint(x+MEEPLE_BUTTON_WIDTH,y);
-            meepleButton.addPoint(x+MEEPLE_BUTTON_WIDTH,y+MEEPLE_BUTTON_HEIGHT);
-            meepleButton.addPoint(x,y+MEEPLE_BUTTON_HEIGHT);
+            int x = (int) ((this.getWidth() / 2.0) - (MEEPLE_BUTTON_WIDTH / 2.0));
+            int y = currentHeight + 25;
+            meepleButton.addPoint(x, y);
+            meepleButton.addPoint(x + MEEPLE_BUTTON_WIDTH, y);
+            meepleButton.addPoint(x + MEEPLE_BUTTON_WIDTH, y + MEEPLE_BUTTON_HEIGHT);
+            meepleButton.addPoint(x, y + MEEPLE_BUTTON_HEIGHT);
             g2.draw(meepleButton);
-            int y_text = y + (int)(MEEPLE_BUTTON_HEIGHT/2.0);
+            int y_text = y + (int) (MEEPLE_BUTTON_HEIGHT / 2.0);
             int x_text = x + 10;
-            
+
             // Draw the inner message
-            g2.drawString("Ne pas poser", x_text, y_text-8);
-            g2.drawString("de Meeple", x_text, y_text+8);
+            g2.drawString("Ne pas poser", x_text, y_text - 8);
+            g2.drawString("de Meeple", x_text, y_text + 8);
         }
 
         // Draw the separation line
@@ -220,15 +219,15 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         g2.setColor(Color.BLACK);
         super.paintChildren(g);
     }
-    
+
     /**
      * Display the pass meeple turn button
      */
     public void displayPassMeepleTurnButton()
     {
-        this.displayPassMeepleTurnButton = true;        
+        this.displayPassMeepleTurnButton = true;
     }
-    
+
     /**
      * Hide the pass meeple turn button
      */
@@ -240,6 +239,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
     /**
      * When the mouse is clicked
+     *
      * @param e
      * @param p
      */
@@ -247,11 +247,10 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     public void mouseClicked(MouseEvent e, Point2D p)
     {
         // If the mouse is clicked inside the button
-        if(this.meepleButton != null && this.meepleButton.contains(p))
-        {
+        if (this.meepleButton != null && this.meepleButton.contains(p)) {
             // Hides the button
             this.hidePassMeepleTurnButton();
-            
+
             // Ends the turn
             this.controller.endTurn();
         }
