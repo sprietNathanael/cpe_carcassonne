@@ -5,23 +5,19 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
-import javax.swing.JComboBox;
-import javax.swing.JTextField;
-
 /**
  *
  * @author thomas
  */
 public class ParamPlayers
 {
-
-    private String nom, color;
+    private final String nom;
+    private final String color;
 
     public ParamPlayers(String nom, String color)
     {
         this.nom = nom;
         this.color = color;
-
     }
 
     /**
