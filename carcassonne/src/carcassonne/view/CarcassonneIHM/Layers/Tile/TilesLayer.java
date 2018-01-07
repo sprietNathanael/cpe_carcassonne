@@ -5,7 +5,6 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
-import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;

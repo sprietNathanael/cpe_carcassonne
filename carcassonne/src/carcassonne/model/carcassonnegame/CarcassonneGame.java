@@ -253,6 +253,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     /**
      * Used to complete the actions of the tile that has been drawn
      *
+     * @return false if no placements has been found, true otherwise
      */
     public boolean refreshPlacements()
     {
@@ -260,12 +261,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         if (this.currentTile != null) {
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
-        if (this.placements.isEmpty()) {
-            return false;
-        }
-        else {
-            return true;
-        }
+        return !this.placements.isEmpty();
     }
 
     /**

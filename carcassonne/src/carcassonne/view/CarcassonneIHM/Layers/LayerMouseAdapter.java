@@ -6,7 +6,6 @@
 package carcassonne.view.CarcassonneIHM.Layers;
 
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 /**
  * A mouse adapter for the layer

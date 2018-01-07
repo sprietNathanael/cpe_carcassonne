@@ -336,6 +336,7 @@ public class CasualTile extends AbstractTile
      * @param CNE Same as usual
      * @param CSE Same as usual
      * @param CSW Same as usual
+     * @param aggregates
      */
     public CasualTile(String name, String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
@@ -616,6 +617,7 @@ public class CasualTile extends AbstractTile
      *
      * @return true if the rotation is successfull
      */
+    @Override
     public boolean rotateLeft()
     {
         super.rotateLeft();

@@ -5,34 +5,24 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
-import carcassonne.view.CarcassonneIHM.Layers.Tile.TilePlacementMouseListener;
-import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
-import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Tile.TilePlacementMouseListener;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
-import java.awt.AlphaComposite;
 import java.awt.Color;
-import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.geom.AffineTransform;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
 
 /**
  * Layer that contains all the meeple location possibilities

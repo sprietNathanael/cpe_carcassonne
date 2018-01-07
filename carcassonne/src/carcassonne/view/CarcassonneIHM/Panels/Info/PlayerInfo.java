@@ -84,7 +84,7 @@ public class PlayerInfo
     {
         // Draw the meeple at the center
         int meepleSize = (int) (height / 2);
-        int meepleX = this.MEEPLE_BORDER;
+        int meepleX = PlayerInfo.MEEPLE_BORDER;
         int meepleY = currentHeight + (height / 2) - (meepleSize / 2);
         g2.drawImage(this.image, meepleX, meepleY, meepleSize, meepleSize, null);
 
@@ -102,7 +102,7 @@ public class PlayerInfo
         g2.drawString("" + this.meepleNumber, squareX, stringY);
 
         // Draw the informations
-        int nameX = meepleX + meepleSize + this.MEEPLE_BORDER;
+        int nameX = meepleX + meepleSize + PlayerInfo.MEEPLE_BORDER;
         g2.setFont(new Font("Calibri", Font.PLAIN, 18));
         g2.drawString(this.name, nameX, meepleY + meepleSize / 4);
         g2.setFont(new Font("Calibri", Font.PLAIN, 13));
@@ -111,10 +111,10 @@ public class PlayerInfo
         // If this is the current player, draw a red border
         if (currentPlayer) {
             g2.setColor(Color.red);
-            g2.fillRect(0, currentHeight, width, this.CURRENT_PLAYER_BORDER_WIDTH);
-            g2.fillRect(width - this.CURRENT_PLAYER_BORDER_WIDTH, currentHeight, this.CURRENT_PLAYER_BORDER_WIDTH, height);
-            g2.fillRect(0, currentHeight + height - this.CURRENT_PLAYER_BORDER_WIDTH, width, this.CURRENT_PLAYER_BORDER_WIDTH);
-            g2.fillRect(0, currentHeight, this.CURRENT_PLAYER_BORDER_WIDTH, height);
+            g2.fillRect(0, currentHeight, width, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH);
+            g2.fillRect(width - PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, currentHeight, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, height);
+            g2.fillRect(0, currentHeight + height - PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, width, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH);
+            g2.fillRect(0, currentHeight, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, height);
             g2.setColor(Color.black);
         }
     }

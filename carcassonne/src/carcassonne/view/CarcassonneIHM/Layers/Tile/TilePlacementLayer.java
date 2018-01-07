@@ -5,7 +5,6 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
-import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
@@ -18,16 +17,9 @@ import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Composite;
 import java.awt.Graphics2D;
-import java.awt.Polygon;
-import java.awt.Shape;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Path2D;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -54,6 +46,7 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
      *
      * @param gridPanel
      * @param controller
+     * @param mainPanel
      */
     public TilePlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller, MainPanel mainPanel)
     {

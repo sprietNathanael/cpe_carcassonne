@@ -21,7 +21,6 @@ import carcassonne.model.type.AbstractType;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -96,133 +95,130 @@ public class MainPanel extends JPanel implements java.util.Observer
         String messageType = (String) arg;
         System.out.println(messageType);
         // If the update is from a game change
-        if (messageType.equals("boardChanged")) {
-            // Get the game's informations
-            CarcassonneGame game = (CarcassonneGame) o;
-            HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
-            AbstractTile preview = game.getCurrentTile();
-            ArrayList<Coord> placements = game.getPlacements();
-
-            // Set the preview image of the placement layer
-            if (preview != null) {
-                this.tilesPlacementLayer.setPreview(preview);
-            }
-            // If a tile has just been put
-            if(this.lastCoord != null)
-            {
-                // Get the available aggregates in the last putted tile
-                Set<Set<String>> aggregates = game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY());
-                // If there are available aggregates
-                if(aggregates.size() > 0)
+        switch (messageType) {
+            case "boardChanged":
                 {
-                    // Give the aggregates to the meeple placement layer
-                    this.meeplePlacementLayer.setAggregates(aggregates);
-                    // Displays the pass meeple turn button of the info panel
-                    this.infoPanel.displayPassMeepleTurnButton();
-                    // Reset the last tile
-                    this.lastCoord = null;
-                }
-                else
-                {
-                    // Reset the last tile
-                    this.lastCoord = null;
-                    // End the turn
-                    this.controller.endTurn();
-                    
-                    // Exit the function
-                    return;
-                }
-            }
-            else
-            {
-                // Hide the pass meeple turn button
-                this.infoPanel.hidePassMeepleTurnButton();
-                // Hide the meeple placement layer
-                this.meeplePlacementLayer.onHide();
-                
-            }
-
-            // Clean positions of placement layer and meeple layer
-            this.tilesPlacementLayer.cleanPositions();
-            this.meeplesLayer.cleanMeeple();
-
-            // Add positions of tiles layer
-            for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
-                Coord coord = entry.getKey();
-                AbstractTile tile = entry.getValue();
-                this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
-                
-                // Add positions of meeples on layer
-                for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
-                {
-                    Meeple meeple = type.getValue().getMeeple();
-                    if(meeple != null)
-                    {
-                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
+                    // Get the game's informations
+                    CarcassonneGame game = (CarcassonneGame) o;
+                    HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
+                    AbstractTile preview = game.getCurrentTile();
+                    ArrayList<Coord> placements = game.getPlacements();
+                    // Set the preview image of the placement layer
+                    if (preview != null) {
+                        this.tilesPlacementLayer.setPreview(preview);
                     }
-                }
-            }
-            // Refresh info panel informations
-            this.infoPanel.refresh(game);
-            
-            // Repaint the panels
-            this.gridPanel.repaint();
-            this.infoPanel.repaint();
-        
-        }
-        // If the update is from a placements ready
-        else if(messageType.equals("placementsReady"))
-        {
-            // Shows the tile placements layer
-            this.tilesPlacementLayer.onShow();
-            // Get the game's informations
-            CarcassonneGame game = (CarcassonneGame) o;
-            ArrayList<Coord> placements = game.getPlacements();
-            // Add positions of placement layer
-            for(int i = 0; i < placements.size(); i++)
-            {
-                this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
-            }
-            
-            // Repaint the panels
-            this.gridPanel.repaint();
-            this.infoPanel.repaint();
-        }
-        // If the update is from a game end
-        else if(messageType.equals("gameEnds"))
-        {
-            // Get the game's informations
-            CarcassonneGame game = (CarcassonneGame) o;
-            HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
-            AbstractTile preview = game.getCurrentTile();
-            ArrayList<Coord> placements = game.getPlacements();
-
-            this.infoPanel.hidePassMeepleTurnButton();
-            this.meeplePlacementLayer.onHide();
-            this.meeplesLayer.cleanMeeple();
-
-            // Add positions of tiles layer
-            for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
-                Coord coord = entry.getKey();
-                AbstractTile tile = entry.getValue();
-                this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
-                
-                // Add positions of meeples
-                for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
-                {
-                    Meeple meeple = type.getValue().getMeeple();
-                    if(meeple != null)
+                    // If a tile has just been put
+                    if(this.lastCoord != null)
                     {
-                        this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
+                        // Get the available aggregates in the last putted tile
+                        Set<Set<String>> aggregates = game.getFreeAggregatesInTile(this.lastCoord.getX(), this.lastCoord.getY());
+                        // If there are available aggregates
+                        if(aggregates.size() > 0)
+                        {
+                            // Give the aggregates to the meeple placement layer
+                            this.meeplePlacementLayer.setAggregates(aggregates);
+                            // Displays the pass meeple turn button of the info panel
+                            this.infoPanel.displayPassMeepleTurnButton();
+                            // Reset the last tile
+                            this.lastCoord = null;
+                        }
+                        else
+                        {
+                            // Reset the last tile
+                            this.lastCoord = null;
+                            // End the turn
+                            this.controller.endTurn();
+                            
+                            // Exit the function
+                            return;
+                        }
                     }
+                    else
+                    {
+                        // Hide the pass meeple turn button
+                        this.infoPanel.hidePassMeepleTurnButton();
+                        // Hide the meeple placement layer
+                        this.meeplePlacementLayer.onHide();
+                        
+                    }       // Clean positions of placement layer and meeple layer
+                    this.tilesPlacementLayer.cleanPositions();
+                    this.meeplesLayer.cleanMeeple();
+                    // Add positions of tiles layer
+                    for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+                        Coord coord = entry.getKey();
+                        AbstractTile tile = entry.getValue();
+                        this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
+                        
+                        // Add positions of meeples on layer
+                        for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
+                        {
+                            Meeple meeple = type.getValue().getMeeple();
+                            if(meeple != null)
+                            {
+                                this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
+                            }
+                        }
+                    }
+                    // Refresh info panel informations
+                    this.infoPanel.refresh(game);
+                    // Repaint the panels
+                    this.gridPanel.repaint();
+                    this.infoPanel.repaint();
+                    break;
                 }
-            }
-            // Refresh info panel informations
-            this.infoPanel.endGame(game);
-            
-            // Repaint panels
-            this.gridPanel.repaint();
-            this.infoPanel.repaint();
+            // If the update is from a placements ready
+            case "placementsReady":
+                {
+                    // Shows the tile placements layer
+                    this.tilesPlacementLayer.onShow();
+                    // Get the game's informations
+                    CarcassonneGame game = (CarcassonneGame) o;
+                    ArrayList<Coord> placements = game.getPlacements();
+                    // Add positions of placement layer
+                    for(int i = 0; i < placements.size(); i++)
+                    {
+                        this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
+                    }       // Repaint the panels
+                    this.gridPanel.repaint();
+                    this.infoPanel.repaint();
+                    break;
+                }
+            // If the update is from a game end
+            case "gameEnds":
+                {
+                    // Get the game's informations
+                    CarcassonneGame game = (CarcassonneGame) o;
+                    HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
+                    AbstractTile preview = game.getCurrentTile();
+                    ArrayList<Coord> placements = game.getPlacements();
+                    this.infoPanel.hidePassMeepleTurnButton();
+                    this.meeplePlacementLayer.onHide();
+                    this.meeplesLayer.cleanMeeple();
+                    // Add positions of tiles layer
+                    for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
+                        Coord coord = entry.getKey();
+                        AbstractTile tile = entry.getValue();
+                        this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
+                        
+                        // Add positions of meeples
+                        for(HashMap.Entry<String, AbstractType> type : tile.getTypes().entrySet())
+                        {
+                            Meeple meeple = type.getValue().getMeeple();
+                            if(meeple != null)
+                            {
+                                this.meeplesLayer.addMeeple(coord, type.getKey(), type.getValue().getMeeple(), type.getValue().toString());
+                            }
+                        }
+                    }
+                    // Refresh info panel informations
+                    this.infoPanel.endGame(game);
+                    // Repaint panels
+                    this.gridPanel.repaint();
+                    this.infoPanel.repaint();
+                    break;
+                }
+            default:
+                break;
         }
         
     

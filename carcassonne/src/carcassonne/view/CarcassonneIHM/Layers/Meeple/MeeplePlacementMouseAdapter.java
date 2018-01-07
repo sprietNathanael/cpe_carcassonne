@@ -7,9 +7,7 @@ package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
-import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
@@ -66,7 +64,7 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
             //Triggers the tile entered
             String slice = listener.getSliceFromCoordinates(point.getX(), point.getY(), this.currentCoord);
             // If the slice entered is not the current slice
-            if(slice != this.lastSlice)
+            if(!slice.equals(this.lastSlice))
             {
                 this.lastSlice = slice;
                 // Exit the old slice

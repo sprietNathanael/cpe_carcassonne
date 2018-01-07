@@ -6,9 +6,7 @@
 package carcassonne.view.CarcassonneIHM;
 
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
-import carcassonne.view.CarcassonneIHM.menuStart.Parameters;
 import java.awt.Container;
-import java.util.LinkedList;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;

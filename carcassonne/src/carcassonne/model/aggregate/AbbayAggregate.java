@@ -5,7 +5,6 @@
  */
 package carcassonne.model.aggregate;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import java.util.Set;
 

@@ -17,6 +17,7 @@ public class GUILauncher
     /**
      * Main methode
      * @param args Strings[]
+     * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException, Exception {
                 

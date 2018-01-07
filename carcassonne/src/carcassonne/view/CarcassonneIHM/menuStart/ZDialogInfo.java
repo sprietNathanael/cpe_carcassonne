@@ -31,6 +31,7 @@ public class ZDialogInfo
         this.colors6 = colors6;
     }
 
+    @Override
     public String toString()
     {
         String str;

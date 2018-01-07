@@ -5,10 +5,8 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
-import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.coord.Coord;
-import carcassonne.model.aggregate.FieldAggregate;
 import carcassonne.model.player.Meeple;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
@@ -21,7 +19,6 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -58,9 +55,9 @@ public class MeeplesLayer extends AbstractLayer
     public MeeplesLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
         super(gridPanel, controller);
-        this.meepleImages = new HashMap<String,BufferedImage>();
-        this.meepleImages_field = new HashMap<String,BufferedImage>();
-        this.meepleLocations = new HashMap<Coord, Pair<String, Pair<Meeple, String>>>();
+        this.meepleImages = new HashMap<>();
+        this.meepleImages_field = new HashMap<>();
+        this.meepleLocations = new HashMap<>();
         // Build all the possible meeple images
         this.buildMeepleImages();
     }

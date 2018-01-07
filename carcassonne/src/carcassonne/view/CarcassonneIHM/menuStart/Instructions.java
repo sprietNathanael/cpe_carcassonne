@@ -5,7 +5,6 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
-import java.awt.Color;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -13,7 +12,6 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.border.BevelBorder;
 
 /**
  *

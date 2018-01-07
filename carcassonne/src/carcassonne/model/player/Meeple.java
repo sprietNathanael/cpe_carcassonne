@@ -24,6 +24,7 @@ public class Meeple
      * so isUsed is set to false by default
      *
      * @param isBig
+     * @param player
      */
     public Meeple(boolean isBig, Player player)
     {
@@ -35,6 +36,7 @@ public class Meeple
 
     /**
      * Creates a default meeple
+     * @param player
      */
     public Meeple(Player player)
     {

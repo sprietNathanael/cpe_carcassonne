@@ -11,7 +11,6 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
-import java.awt.Color;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class GameView
     {
         try {
             this.players = new ArrayList<>();
-            ArrayList<String> colors = new ArrayList<String>();
+            ArrayList<String> colors = new ArrayList<>();
             
             // Iterate through the players to add them to the main list
             for(ParamPlayers p : playerList)

@@ -209,8 +209,6 @@ public abstract class AbstractAggregate
     {
         Iterable<Player> iterator1 = playersSet1;
         Set<Player> winningPlayers = new HashSet<>();
-
-        winningPlayers = new HashSet<>();
         for (Player player1 : iterator1) {
             //Test if we can add the player 1 in the other collection, if not that means it is already present in it
             if (!playersSet2.add(player1)) {

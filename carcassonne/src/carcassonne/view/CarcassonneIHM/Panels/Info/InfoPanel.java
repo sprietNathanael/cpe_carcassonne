@@ -6,7 +6,6 @@
 package carcassonne.view.CarcassonneIHM.Panels.Info;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
-import carcassonne.view.CarcassonneIHM.menuStart.Settings;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
@@ -16,8 +15,6 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
@@ -29,8 +26,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.imageio.ImageIO;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -63,6 +58,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
      * Constructs the information panel
      *
      * @param players
+     * @param controller
      */
     public InfoPanel(ArrayList<Player> players, AbstractCarcassonneGameController controller)
     {
@@ -160,7 +156,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Draw the back tile
         int currentHeight = 0;
         int previewSize = (int) (infoLinesHeight / 2);
-        int previewX = this.PREVIEW_BORDER;
+        int previewX = InfoPanel.PREVIEW_BORDER;
         int previewY = currentHeight + (infoLinesHeight / 2) - (previewSize / 2);
         g2.drawImage(this.backTile, previewX, previewY, previewSize, previewSize, null);
         
@@ -172,7 +168,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             g2.setFont(new Font("Calibri", Font.PLAIN, 12));
 
             // Draw preview tile
-            previewX = this.PREVIEW_BORDER + previewSize + this.PREVIEWES_GAP;
+            previewX = InfoPanel.PREVIEW_BORDER + previewSize + InfoPanel.PREVIEWES_GAP;
             g2.drawImage(this.currentTile, previewX, previewY, previewSize, previewSize, null);
         }
 
@@ -182,7 +178,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         for (Map.Entry<String, PlayerInfo> entry : this.playerInfoLines.entrySet()) {
             String key = entry.getKey();
             PlayerInfo value = entry.getValue();
-            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - this.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
+            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - InfoPanel.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
             currentHeight += infoLinesHeight;
         }
         
@@ -217,7 +213,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
         // Draw the separation line
         g2.setColor(Color.GRAY);
-        g2.fillRect(this.getWidth() - this.SEPARATION_LINE_WIDTH, 0, this.SEPARATION_LINE_WIDTH, this.getHeight() - this.SEPARATION_LINE_WIDTH);
+        g2.fillRect(this.getWidth() - InfoPanel.SEPARATION_LINE_WIDTH, 0, InfoPanel.SEPARATION_LINE_WIDTH, this.getHeight() - InfoPanel.SEPARATION_LINE_WIDTH);
         g2.setColor(Color.BLACK);
         super.paintChildren(g);
     }

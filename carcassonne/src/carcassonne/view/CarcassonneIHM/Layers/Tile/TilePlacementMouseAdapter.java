@@ -7,9 +7,7 @@ package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
-import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
-import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
 
