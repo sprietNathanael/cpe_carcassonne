@@ -23,18 +23,19 @@ import javax.swing.JOptionPane;
 public class Settings extends JFrame
 
 {
-    private final JButton button = new JButton("Mode local");
-    private final JButton button2 = new JButton("Mode en ligne");
+    private final BtGame btModeLocal = new BtGame("resources/btModeLocal.png");
+    private final BtGame btOnline = new BtGame("resources/online.png");
+
     private Parameters parameters;
 
     public Settings() throws IOException
     {
-       initComponent();
+        initComponent();
     }
-    
+
     private void initComponent() throws IOException
     {
-         this.setTitle("Settings");
+        this.setTitle("Settings");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
         this.setSize(851, 851);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -44,27 +45,33 @@ public class Settings extends JFrame
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
         this.getContentPane().setLayout(new FlowLayout());
-        this.getContentPane().add(button);
-        this.getContentPane().add(button2);
+        this.getContentPane().add(btModeLocal);
+        this.getContentPane().add(btOnline);
         this.setLayout(null);
-        button.setBounds(320, 250, 250, 50);
-        button2.setBounds(320, 350, 250, 50);
+        btModeLocal.setBounds(360, 250, 270, 110);
+        btModeLocal.setOpaque(false);
+        btModeLocal.setContentAreaFilled(false);
+        btModeLocal.setBorderPainted(false);
+        btOnline.setBounds(360, 350, 270, 110);
+        btOnline.setOpaque(false);
+        btOnline.setContentAreaFilled(false);
+        btOnline.setBorderPainted(false);
 
         Settings self = this;
-        button.addActionListener((ActionEvent arg0) -> {
-            self.parameters = new Parameters(null, "Settings", true);            
+        btModeLocal.addActionListener((ActionEvent arg0) -> {
+            self.parameters = new Parameters(null, "Settings", true);
             self.parameters.setVisible(true);
             setVisible(false);
-         });
+        });
 
-        button2.addActionListener((ActionEvent arg0) -> {
+        btOnline.addActionListener((ActionEvent arg0) -> {
             JOptionPane.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
-         });
+        });
         this.setVisible(true);
     }
-    
+
     public List<ParamPlayers> getPlayers()
     {
-        return(this.parameters.getDataPlayers());
+        return (this.parameters.getDataPlayers());
     }
 }
