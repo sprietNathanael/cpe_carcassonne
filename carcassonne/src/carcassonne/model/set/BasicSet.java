@@ -49,39 +49,6 @@ public class BasicSet implements SetInterface
     private void initiliazeSet()
     {
         Set<Set<String>> aggregates;
-        //Tiles A (x2)
-        for (int i = 1; i <= 2; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("S"));
-            aggregates.add(retTreeSet("SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
-                    "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE"));
-            aggregates.add(retTreeSet("CNW", "CNE", "CSW", "CSE"));
-
-            tileList.add(new CasualTile("A", "A" + i, //Id
-                    new FieldType(), new FieldType(), new FieldType(), //North section
-                    new FieldType(), //East section
-                    new FieldType(), new RoadType(), new FieldType(), //South section
-                    new FieldType(), //West section
-                    new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType(), //Center section
-                    aggregates
-            ));
-        }
-        //Tiles B (x4)
-        for (int i = 1; i <= 4; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
-                    "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE"));
-            aggregates.add(retTreeSet("CNW", "CNE", "CSW", "CSE"));
-
-            tileList.add(new CasualTile("B", "B" + i, //Id
-                    new FieldType(), new FieldType(), new FieldType(), //North section
-                    new FieldType(), //East section
-                    new FieldType(), new FieldType(), new FieldType(), //South section
-                    new FieldType(), //West section
-                    new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType(), //Center section
-                    aggregates
-            ));
-        }
         //Tile C (x1)
         aggregates = new HashSet<>();
         aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE", "S",
@@ -96,7 +63,7 @@ public class BasicSet implements SetInterface
                 aggregates
         ));
         //Tiles D (x3)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NEE", "E", "SEE"));
             aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
@@ -136,7 +103,7 @@ public class BasicSet implements SetInterface
                 aggregates
         );
         //Tiles E (x5)
-        for (int i = 1; i <= 5; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "N", "NNE"));
             aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "S", "SSE", "SE", "SEE", "E", "NEE", "NE", "CSW", "CSE", "CNW", "CNE"));
@@ -155,7 +122,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tiles F (x2)
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE"));
             aggregates.add(retTreeSet("NW", "NNW", "N", "NNE", "NE"));
@@ -192,28 +159,8 @@ public class BasicSet implements SetInterface
                 new CityType(), new CityType(), new CityType(), new CityType(), //Center section
                 aggregates
         ));
-        //Tiles H (x3)
-        for (int i = 1; i <= 3; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE", "SSE", "S", "SSW", "SW")); //F
-            aggregates.add(retTreeSet("NWW", "W", "SWW")); //C
-            aggregates.add(retTreeSet("SEE", "E", "NEE")); //C
-
-            tileList.add(new CasualTile("H", "H" + i, //Id
-                    new CityType(), new FieldType(), new FieldType(), //North West section
-                    new FieldType(), //North
-                    new FieldType(), new FieldType(), new CityType(), //North East section
-                    new CityType(), //East
-                    new CityType(), new FieldType(), new FieldType(), //South East section
-                    new FieldType(), //South
-                    new FieldType(), new FieldType(), new CityType(), //South West section
-                    new CityType(), //West
-                    new FieldType(), new FieldType(), new FieldType(), new FieldType(), //Center section
-                    aggregates
-            ));
-        }
         //Tiles I (x2)
-        for (int i = 1; i <= 2; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SWW", "W", "NWW", "NW", "NNW", "N", "NNE", "NE", "CSW", "CSE", "CNW", "CNE", "SE")); //F
             aggregates.add(retTreeSet("NEE", "E", "SEE")); //C
@@ -233,7 +180,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tiles J (x3)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NW", "NWW", "W", "SWW", "SW", "SSW", "CSW", "CNW", "CNE", "NE", "NEE")); //F
             aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
@@ -253,29 +200,8 @@ public class BasicSet implements SetInterface
                     aggregates
             ));
         }
-        //Tiles K (x3)
-        for (int i = 1; i <= 3; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NNE", "NE", "CSE", "CSW", "CNE", "SE", "SSE", "S", "SSW", "SW", "SWW")); //F
-            aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
-            aggregates.add(retTreeSet("W", "CNW", "N")); //R
-            aggregates.add(retTreeSet("NEE", "E", "SEE")); //C
-
-            tileList.add(new CasualTile("K", "K" + i, //Id
-                    new FieldType(), new FieldType(), new FieldType(), //North West section
-                    new RoadType(), //North
-                    new FieldType(), new FieldType(), new CityType(), //North East section
-                    new CityType(), //East
-                    new CityType(), new FieldType(), new FieldType(), //South East section
-                    new FieldType(), //South
-                    new FieldType(), new FieldType(), new FieldType(), //South West section
-                    new RoadType(), //West
-                    new RoadType(), new FieldType(), new FieldType(), new FieldType(), //Center section
-                    aggregates
-            ));
-        }
         //Tiles L (x3)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE")); //F
             aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
@@ -298,67 +224,8 @@ public class BasicSet implements SetInterface
                     aggregates
             ));
         }
-        //Tiles M (x2)
-        for (int i = 1; i <= 2; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NE", "NEE", "E", "SEE", "SE", "SSE", "S", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
-            aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
-
-            tileList.add(new CasualTile("M", "M" + i, //Id
-                    new CityType(true), new CityType(true), new CityType(true), //North West section
-                    new CityType(true), //North
-                    new CityType(true), new FieldType(), new FieldType(), //North East section
-                    new FieldType(), //East
-                    new FieldType(), new FieldType(), new FieldType(), //South East section
-                    new FieldType(), //South
-                    new FieldType(), new FieldType(), new CityType(true), //South West section
-                    new CityType(true), //West
-                    new FieldType(), new FieldType(), new FieldType(), new FieldType(), //Center section
-                    aggregates
-            ));
-        }
-        //Tiles N (x3)
-        for (int i = 1; i <= 3; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NE", "NEE", "E", "SEE", "SE", "SSE", "S", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
-            aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
-
-            tileList.add(new CasualTile("N", "N" + i, //Id
-                    new CityType(), new CityType(), new CityType(), //North West section
-                    new CityType(), //North
-                    new CityType(), new FieldType(), new FieldType(), //North East section
-                    new FieldType(), //East
-                    new FieldType(), new FieldType(), new FieldType(), //South East section
-                    new FieldType(), //South
-                    new FieldType(), new FieldType(), new CityType(), //South West section
-                    new CityType(), //West
-                    new FieldType(), new FieldType(), new FieldType(), new FieldType(), //Center section
-                    aggregates
-            ));
-        }
-        //Tiles O (x2)
-        for (int i = 1; i <= 2; i++) {
-            aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NE", "NEE", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
-            aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
-            aggregates.add(retTreeSet("S", "CSE", "E")); //R
-            aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
-
-            tileList.add(new CasualTile("O", "O" + i, //Id
-                    new CityType(true), new CityType(true), new CityType(true), //North West section
-                    new CityType(true), //North
-                    new CityType(true), new FieldType(), new FieldType(), //North East section
-                    new RoadType(), //East
-                    new FieldType(), new FieldType(), new FieldType(), //South East section
-                    new RoadType(), //South
-                    new FieldType(), new FieldType(), new CityType(true), //South West section
-                    new CityType(true), //West
-                    new FieldType(), new FieldType(), new RoadType(), new FieldType(), //Center section
-                    aggregates
-            ));
-        }
         //Tiles P (x3)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NE", "NEE", "SSW", "SW", "CSW", "CSE", "CNW", "CNE")); //F
             aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
@@ -378,26 +245,8 @@ public class BasicSet implements SetInterface
                     aggregates
             ));
         }
-        //Tile Q (x1)
-        aggregates = new HashSet<>();
-        aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE")); //F
-        aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SEE",
-                "SWW", "W", "NWW", "NW", "NNW", "CNW", "CNE", "CSW", "CSE")); //C
-
-        tileList.add(new CasualTile("Q", "Q", //Id
-                new CityType(true), new CityType(true), new CityType(true), //North West section
-                new CityType(true), //North
-                new CityType(true), new CityType(true), new CityType(true), //North East section
-                new CityType(true), //East
-                new CityType(true), new FieldType(), new FieldType(), //South East section
-                new FieldType(), //South
-                new FieldType(), new FieldType(), new CityType(true), //South West section
-                new CityType(true), //West
-                new CityType(true), new CityType(true), new CityType(true), new CityType(true), //Center section
-                aggregates
-        ));
         //Tiles R (x3)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW", "S", "SSE", "SE")); //F
             aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SEE",
@@ -416,7 +265,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tiles S (x2)
-        for (int i = 1; i <= 3; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("SW", "SSW")); //F
             aggregates.add(retTreeSet("SSE", "SE")); //F
@@ -437,28 +286,8 @@ public class BasicSet implements SetInterface
                     aggregates
             ));
         }
-        //Tile T (x1)
-        aggregates = new HashSet<>();
-        aggregates.add(retTreeSet("SW", "SSW")); //F
-        aggregates.add(retTreeSet("SSE", "SE")); //F
-        aggregates.add(retTreeSet("S")); //R
-        aggregates.add(retTreeSet("N", "NNE", "NE", "NEE", "E", "SEE",
-                "SWW", "W", "NWW", "NW", "NNW", "CNW", "CNE", "CSW", "CSE")); //C
-
-        tileList.add(new CasualTile("T", "T1", //Id
-                new CityType(), new CityType(), new CityType(), //North West section
-                new CityType(), //North
-                new CityType(), new CityType(), new CityType(), //North East section
-                new CityType(), //East
-                new CityType(), new FieldType(), new FieldType(), //South East section
-                new RoadType(), //South
-                new FieldType(), new FieldType(), new CityType(), //South West section
-                new CityType(), //West
-                new CityType(), new CityType(), new CityType(), new CityType(), //Center section
-                aggregates
-        ));
         //Tiles U (x8)
-        for (int i = 1; i <= 8; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW")); //F
             aggregates.add(retTreeSet("NNE", "NE", "NEE", "E", "SEE", "SE", "SSE")); //F
@@ -474,7 +303,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tiles V (x9)
-        for (int i = 1; i <= 9; i++) {
+        for (int i = 1; i <= 2; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "CNW", "CNE", "CSE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
@@ -490,7 +319,7 @@ public class BasicSet implements SetInterface
             ));
         }
         //Tiles W (x4)
-        for (int i = 1; i <= 4; i++) {
+        for (int i = 1; i <= 1; i++) {
             aggregates = new HashSet<>();
             aggregates.add(retTreeSet("NWW", "NW", "NNW", "N", "NNE", "NE", "NEE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
