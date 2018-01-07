@@ -7,6 +7,8 @@ package carcassonne.view.CarcassonneIHM;
 
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.awt.Container;
+import java.awt.Point;
+import java.awt.Toolkit;
 import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -71,6 +73,8 @@ public class ClientWindow extends JFrame
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
+        Toolkit tk = Toolkit.getDefaultToolkit();
+        this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
     }
 
 }
