@@ -5,7 +5,6 @@
  */
 package carcassonne.model.tile;
 
-import static carcassonne.model.set.BasicSet.retTreeSet;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
@@ -49,42 +48,6 @@ public class CasualTileTest
     @After
     public void tearDown()
     {
-    }
-
-    /**
-     * Test of constructor method, of class CasualTile.
-     */
-    @Test
-    public void testConstruction()
-    {
-        CasualTile instance = new CasualTile("A",
-                new CityType(), new RoadType(), new RiverType(), new RoadType(), new RiverType(), new CityType(), new RoadType(), // Northen line
-                new CityType(), // East
-                new RoadType(), new FieldType(), new RiverType(), new FieldType(), new CityType(), new RiverType(), new FieldType(), // Southern line
-                new RiverType(), // West
-                new RoadType(), new CityType(), new FieldType(), new RiverType() // Center
-        );
-        String expResult = "CiRoRi  Ro  RiCiRo\n  Ri  RoRiCiFi Ci\nFiRiCi  Fi  RiFiRo";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of reduced constructor method, of class CasualTile.
-     */
-    @Test
-    public void testReducedConstruction()
-    {
-        CasualTile instance = new CasualTile("A",
-                new RoadType(), new CityType(), new RiverType(), // Northen line
-                new FieldType(), // East
-                new RoadType(), new CityType(), new RiverType(), // Sourthern line
-                new FieldType(), // West
-                new RoadType(), new CityType(), new RiverType(), new FieldType() // Center
-        );
-        String expResult = "RoRoRo  Ci  RiRiRi\n  Fi  RoFiCiRi Fi\nRiRiRi  Ci  RoRoRo";
-        String result = instance.toString();
-        assertEquals(expResult, result);
     }
 
     /**
@@ -487,44 +450,6 @@ public class CasualTileTest
     }
 
     /**
-     * Test of toString method, of class CasualTile.
-     */
-    @Test
-    public void testToString()
-    {
-        CasualTile instance = new CasualTile("D", //Id
-                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
-                new CityType(), //East section
-                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
-                new FieldType(), //West section
-                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
-        );
-        String expResult = "FiFiFi  Ro  FiFiCi\n  Fi  RoRoFiFi Ci\nFiFiFi  Ro  FiFiCi";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-
-    }
-
-    /**
-     * Test of rotateLeft method, of class CasualTile.
-     */
-    @Test
-    public void testRotateLeft()
-    {
-        CasualTile instance = new CasualTile("D", //Id
-                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
-                new CityType(), //East section
-                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
-                new FieldType(), //West section
-                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
-        );
-        instance.rotateLeft();
-        String expResult = "FiFiCi  Ci  CiFiFi\n  Ro  FiRoFiRo Ro\nFiFiFi  Fi  FiFiFi";
-        String result = instance.toString();
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of rotateLeft method, of class CasualTile.
      */
     @Test
@@ -561,23 +486,6 @@ public class CasualTileTest
         assertEquals(expResult, ctD.getAggregateEmplacements());
     }
 
-    /**
-     * Test of rotateRight method, of class CasualTile.
-     */
-    /*@Test
-    public void testRotateRightAggregate()
-    {
-        CasualTile instance = new CasualTile("D", //Id
-                new FieldType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new CityType(), //North section
-                new CityType(), //East section
-                new CityType(), new FieldType(), new FieldType(), new RoadType(), new FieldType(), new FieldType(), new FieldType(), //South section
-                new FieldType(), //West section
-                new RoadType(), new FieldType(), new FieldType(), new RoadType()//Center section
-        );
-        instance.rotateRight();
-       
-        assertEquals(expResult, result);
-    }*/
     /**
      * Test of locationsAreBounded method, of class CasualTile.
      */
@@ -617,7 +525,7 @@ public class CasualTileTest
 
     private Set<String> retTreeSet(String... poss)
     {
-        Set tsPos = new HashSet<String>();
+        Set<String> tsPos = new HashSet<String>();
         for (String pos : poss) {
             tsPos.add(pos);
         }

@@ -253,6 +253,6 @@ public class FieldAggregateTest
 
         int result = instance.countPoints();
 
-        assertEquals(2, result);
+        assertEquals(3, result);
     }
 }
