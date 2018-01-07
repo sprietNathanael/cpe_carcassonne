@@ -24,7 +24,7 @@ public class Instructions extends JFrame
     public Instructions() throws IOException
     {
         initComponent();
-        
+
         exit.setBounds(750, 935, 57, 43);
         exit.setBorderPainted(false);
         exit.setOpaque(false);
@@ -34,7 +34,7 @@ public class Instructions extends JFrame
         });
 
     }
-    
+
     /**
      * Allows to init the differents components for the game
      */

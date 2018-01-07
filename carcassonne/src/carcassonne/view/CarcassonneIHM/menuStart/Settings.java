@@ -23,6 +23,7 @@ import javax.swing.JOptionPane;
 public class Settings extends JFrame
 
 {
+
     private final BtGame btModeLocal = new BtGame("resources/btModeLocal.png");
     private final BtGame btOnline = new BtGame("resources/online.png");
 
