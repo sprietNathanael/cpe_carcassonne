@@ -55,11 +55,8 @@ public class ClientWindow extends JFrame
     private void createGameView(List<ParamPlayers> playerList) {
         GameView gameView = new GameView(playerList);
         gameView.show(getContentPane());
-
-        // Maximize the window
-        this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
-        getContentPane().setVisible(true);
-        this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
+        
+        maximizeWindow();
     }
 
     /**
@@ -68,8 +65,15 @@ public class ClientWindow extends JFrame
     private void createGameView() {
         GameView gameView = new GameView();
         gameView.show(getContentPane());
-
-        // Maximize the window
+        
+        maximizeWindow();
+    }
+    
+    /**
+     * Maximize the Window and add a cursor
+     */
+    private void maximizeWindow()
+    {
         this.setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
         getContentPane().setVisible(true);
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
