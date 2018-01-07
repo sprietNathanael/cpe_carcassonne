@@ -100,10 +100,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return (this.players.get(this.currentPlayerIndex));
     }
-    
+
     /**
      * Get the winner
-     * @return 
+     *
+     * @return
      */
     public Player getWinner()
     {
@@ -235,7 +236,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     /**
      * Get the board
-     * @return 
+     *
+     * @return
      */
     public Board getBoard()
     {
@@ -285,7 +287,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     /**
      * Add an observer
-     * @param o 
+     *
+     * @param o
      */
     @Override
     public synchronized void addObserver(Observer o)
@@ -335,7 +338,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.notifyMessage = "placementsReady";
         this.notifyObservers();
     }
-    
+
     /**
      * Notifies the observers that the game ended
      */
@@ -346,10 +349,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.managePointsEndGame();
         // Get the winner
         this.winningPlayer = this.players.get(0);
-        for(Player player : this.players)
-        {
-            if(player.getPoints() > this.winningPlayer.getPoints())
-            {
+        for (Player player : this.players) {
+            if (player.getPoints() > this.winningPlayer.getPoints()) {
                 this.winningPlayer = player;
             }
         }
@@ -371,11 +372,22 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return this.players;
     }
 
+    /**
+     *
+     * @return the pile size
+     */
     public int getPileSize()
     {
         return this.pile.size();
     }
 
+    /**
+     * Manages the aggregates including enlarge and merge
+     *
+     * @param tile
+     * @param y
+     * @param x
+     */
     private void manageNewTileAggregates(AbstractTile tile, int y, int x)
     {
         Coord convertedCoord = convertCoord(x, y);
@@ -419,6 +431,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         manageNewTileAggregatesAbbay(convertedCoord, tile);
     }
 
+    /**
+     * Manages abbays aggregates only
+     *
+     * @param coord
+     * @param tile
+     */
     private void manageNewTileAggregatesAbbay(Coord coord, AbstractTile tile)
     {
         HashMap<Coord, AbstractTile> nearTiles = board.getNearTilesAbbayRange(coord, tile);
@@ -451,6 +469,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
     }
 
+    /**
+     * Compare and return similar string
+     *
+     * @param neighborTileLocations
+     * @param authorizedString
+     * @return
+     */
     private static Set<String> filterSetString(Set<String> neighborTileLocations, Set<String> authorizedString)
     {
         Set<String> result = new HashSet<>();
@@ -464,6 +489,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         return result;
     }
 
+    /**
+     * Converts coord from IHM to Model
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     private Coord convertCoord(int x, int y)
     {
         return new Coord(x, y * -1);
@@ -773,10 +805,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     result.add(currentAggregateLocations);
                 }
             }
-            
+
             Set<String> abbayAggEmp = currentTile.getAbbayAggregateEmplacements();
-            if (abbayAggEmp.size() != 0)
+            if (abbayAggEmp.size() != 0) {
                 result.add(abbayAggEmp);
+            }
         }
 
         return result;
@@ -823,6 +856,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
     }
 
+    /**
+     * Manages the end games. Counts points from uncompleted aggregates
+     */
     public void managePointsEndGame()
     {
         Set<Player> winningPlayers;

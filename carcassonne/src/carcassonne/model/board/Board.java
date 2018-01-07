@@ -102,12 +102,12 @@ public class Board implements BoardInterface
                 if (coord.col < nw.col) {
                     nw.col = coord.col;
                 }
-                
+
                 if (coord.row < nw.row) {
                     nw.row = coord.row;
                 }
             }
-            
+
             if (se == null) {
                 se = new Coord(coord);
             }
@@ -115,7 +115,7 @@ public class Board implements BoardInterface
                 if (coord.col > se.col) {
                     se.col = coord.col;
                 }
-                
+
                 if (coord.row > se.row) {
                     se.row = coord.row;
                 }
@@ -239,7 +239,7 @@ public class Board implements BoardInterface
         int col = coordinates.col;
         int row = coordinates.row;
         Coord temp;
-        
+
         for (int c = col - 1; c <= col + 1; c++) {
             for (int r = row - 1; r <= row + 1; r++) {
                 if (c != col || r != row) {
@@ -250,7 +250,14 @@ public class Board implements BoardInterface
         }
         return nearTiles;
     }
-    
+
+    /**
+     * Converts coord from IHM to Model
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     private Coord convertCoord(int x, int y)
     {
         return new Coord(x, y * -1);

@@ -168,6 +168,13 @@ public abstract class AbstractAggregate
         return aggregatedPositionTypes;
     }
 
+    /**
+     * Gets the types of the tile placed on col, row passed in parameters
+     *
+     * @param col
+     * @param row
+     * @return
+     */
     public Set<String> getAggregatedTypesByCoord(int col, int row)
     {
         AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
@@ -336,17 +343,19 @@ public abstract class AbstractAggregate
 
         return result;
     }
-    
+
     /**
-     * Return true if the aggregate containe the tile
+     * Return true if the aggregate contains the tile
+     *
      * @param tile
-     * @return 
+     * @return
      */
     public boolean contain(AbstractTile tile)
     {
         for (Map.Entry<Coord, AbstractTile> entry : aggregatedTiles.entrySet()) {
-            if (entry.getValue() == tile)
+            if (entry.getValue() == tile) {
                 return true;
+            }
         }
         return false;
     }
