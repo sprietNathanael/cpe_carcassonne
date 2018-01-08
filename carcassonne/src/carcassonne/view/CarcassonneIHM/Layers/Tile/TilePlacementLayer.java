@@ -19,9 +19,13 @@ import java.awt.Composite;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 /**
  * Layer that contains all the tiles possibilities and the preview
@@ -32,13 +36,14 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
     // Color constants applied to the allowed or forbidded preview
     private static final Composite ALLOWED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
     private static final Composite CLEAR = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0);
-    private static final Composite FORBIDDED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .2f);
+    private static final Composite FORBIDDED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .6f);
     private static final Composite MEEPLE = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .7f);
     
     private TileImage previewImage;
     private boolean allowedPlacement;
     private MouseListener mouseListener;
     private MainPanel mainPanel;
+    private BufferedImage backTile;
        
 
     /**
@@ -59,6 +64,12 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
 
         // Initialise the preview as forbidded
         this.allowedPlacement = false;
+        // Get the back tile image
+        try {
+            this.backTile = ImageIO.read(new File("resources/tiles/back.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         
         
@@ -129,14 +140,17 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
                 }
                 else {
                     //Draw a placeholder
-                    x += shift;
+                    g2.setComposite(FORBIDDED);
+                    g2.drawImage(this.backTile, x, y, placeHolderSize, placeHolderSize, null);
+                    g2.setComposite(ALLOWED);
+                    /*x += shift;
                     y += shift;
                     g2.fillRect(x, y, tileSize, thickness);
                     g2.fillRect(x, y + tileSize, tileSize, thickness);
                     g2.fillRect(x, y, thickness, tileSize);
                     g2.fillRect(x + tileSize, y, thickness, tileSize);
                     g2.drawLine(x, y, x+tileSize, y+tileSize);
-                    g2.drawLine(x, y+tileSize, x+tileSize, y);
+                    g2.drawLine(x, y+tileSize, x+tileSize, y);*/
                 }
             });
         }
