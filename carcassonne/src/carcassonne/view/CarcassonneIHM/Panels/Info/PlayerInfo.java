@@ -65,7 +65,7 @@ public class PlayerInfo
     {
         this.image = null;
         try {
-            this.image = ImageIO.read(new File("resources/meeples/" + this.color + ".png"));
+            this.image = ImageIO.read(new File("resources/meeples_bordered/" + this.color + ".png"));
         } catch (IOException ex) {
             Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
