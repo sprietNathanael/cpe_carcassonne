@@ -52,6 +52,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private BufferedImage backTile;
     private BufferedImage currentTile;
     private BufferedImage noMeepleButtonImage;
+    private BufferedImage forestTexture;
+    private BufferedImage stoneTexture;
     private int pileSize;
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
@@ -96,6 +98,20 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Get the back tile image
         try {
             this.backTile = ImageIO.read(new File("resources/tiles/back.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the forest texture image
+        try {
+            this.forestTexture = ImageIO.read(new File("resources/textures/forest.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the forest texture image
+        try {
+            this.stoneTexture = ImageIO.read(new File("resources/textures/stone.jpg"));
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -166,6 +182,9 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     {
         int infoLinesHeight = this.getHeight() / 8;
         Graphics2D g2 = (Graphics2D) g;
+        
+        g2.drawImage(this.forestTexture, 0, 0, this.getWidth(), infoLinesHeight, null);
+        g2.drawImage(this.stoneTexture, 0, infoLinesHeight, this.stoneTexture.getWidth(), this.stoneTexture.getHeight(), null);
 
         // Draw the back tile
         int currentHeight = 0;
