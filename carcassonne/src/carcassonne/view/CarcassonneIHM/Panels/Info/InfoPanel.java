@@ -51,6 +51,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private AbstractCarcassonneGameController controller;
     private BufferedImage backTile;
     private BufferedImage currentTile;
+    private BufferedImage noMeepleButtonImage;
     private int pileSize;
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
@@ -83,6 +84,14 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         for (Player player : players) {
             this.playerInfoLines.put(player.getName(), new PlayerInfo(player.getName(), player.getColor()));
         }
+        
+        // Get the meeple button image
+        try {
+            this.noMeepleButtonImage = ImageIO.read(new File("resources/noMeeple.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
 
         // Get the back tile image
         try {
@@ -196,21 +205,24 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
         if (this.displayPassMeepleTurnButton) {
             // Draw the pass meeple turn button
-            g2.setStroke(new BasicStroke(5));
-            meepleButton = new Polygon();
-            int x = (int) ((this.getWidth() / 2.0) - (MEEPLE_BUTTON_WIDTH / 2.0));
-            int y = currentHeight + 25;
-            meepleButton.addPoint(x, y);
-            meepleButton.addPoint(x + MEEPLE_BUTTON_WIDTH, y);
-            meepleButton.addPoint(x + MEEPLE_BUTTON_WIDTH, y + MEEPLE_BUTTON_HEIGHT);
-            meepleButton.addPoint(x, y + MEEPLE_BUTTON_HEIGHT);
-            g2.draw(meepleButton);
-            int y_text = y + (int) (MEEPLE_BUTTON_HEIGHT / 2.0);
+            
+            double ratio = (double)this.noMeepleButtonImage.getHeight() / (double)this.noMeepleButtonImage.getWidth();
+            double width = this.getWidth()/2.0;
+            double height = width*ratio;
+            int x = (int) ((this.getWidth() / 2.0) - (width / 2.0));
+            int y = currentHeight;
+            g2.drawImage(this.noMeepleButtonImage, x, y, (int)width, (int)height, null);
+            int y_text = y + (int)height + 10;
             int x_text = x + 10;
-
+            
+            this.meepleButton = new Polygon();
+            this.meepleButton.addPoint(x, y);
+            this.meepleButton.addPoint(x+(int)width, y);
+            this.meepleButton.addPoint(x+(int)width, y+(int)height);
+            this.meepleButton.addPoint(x, y+(int)height);
             // Draw the inner message
-            g2.drawString("Ne pas poser", x_text, y_text - 8);
-            g2.drawString("de Meeple", x_text, y_text + 8);
+            g2.drawString("Ne pas poser", x_text, y_text);
+            g2.drawString("de Meeple", x_text, y_text + 16);
         }
 
         // Draw the separation line
