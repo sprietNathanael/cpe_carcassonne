@@ -623,6 +623,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     }
                 }
             }
+            road.cleanRoadEdgesMap();
         }
         roadAggregates = updatedRoadAggregates;
 
