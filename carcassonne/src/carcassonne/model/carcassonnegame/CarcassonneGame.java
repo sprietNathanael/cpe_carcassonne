@@ -173,6 +173,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         board.addTile(tile, row, column);
         this.manageNewTileAggregates(tile, row, column);
         this.notifyBoardChanged();
+        System.out.println(this.cityAggregates);
     }
 
     /**
@@ -691,6 +692,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     }
                 }
             }
+            city.cleanCityEdgesMap();
         }
         cityAggregates = updatedCityAggregates;
         //Boucles qui permet de supprimer les références vers les villes qui ont été mergées

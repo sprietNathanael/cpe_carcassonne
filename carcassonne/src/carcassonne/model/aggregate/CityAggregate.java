@@ -231,17 +231,19 @@ public class CityAggregate extends AbstractAggregate
                 }
                 if (!cityEdges.containsKey(neighborCoord)
                         || !cityEdges.get(neighborCoord).contains(neighborEdge)) {
-                    /**
-                     * Pour tous les voisins incomplets des coordonnés
-                     * parcourues, on teste manuellement s'il y a bien un vide
-                     * après le bord, ou si ce vide est complété par un city
-                     * type. Si c'est un CityType, l'edge est bien complété donc
-                     * on ne l'ajoute pas
-                     */
-                    Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCoord.col, neighborCoord.row);
-                    if ((neighborTypes == null) || (!getCityEdges(neighborTypes).contains(neighborEdge))) {
-                        updatedCurrentEdges.add(edge);
-                    }
+                    updatedCurrentEdges.add(edge);
+                }
+                /**
+                 * Pour tous les voisins incomplets des coordonnés parcourues,
+                 * on teste manuellement s'il y a bien un vide après le bord, ou
+                 * si ce vide est complété par un city type. Si c'est un
+                 * CityType, l'edge est bien complété donc on ne l'ajoute pas
+                 */
+                Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCoord.col, neighborCoord.row);
+                if ((neighborTypes != null) 
+                        && (getCityEdges(neighborTypes).contains(neighborEdge))
+                        && updatedCurrentEdges.contains(edge)) {
+                    updatedCurrentEdges.remove(edge);
                 }
             }
             if (!updatedCurrentEdges.isEmpty()) {
