@@ -20,7 +20,7 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
     private final GridPanel gridPanel;
     private final MeeplePlacementMouseListener listener;
     
-    private UICoord currentCoord;
+    private final UICoord currentCoord;
     private String tileSlice;
     private String lastSlice;
 
