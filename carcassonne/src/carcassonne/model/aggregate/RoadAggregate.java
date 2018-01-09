@@ -104,8 +104,6 @@ public class RoadAggregate extends AbstractAggregate
     {
         //We get the road edges of this new tile; using the list of location's tile composing the aggregate
         Set<RoadEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
-        System.out.println("Coord Current tested tile: " + col + ":" + row);
-        System.out.println("edges: " + currentTileEdges);
         List<RoadEdgeEnum> completedEdges = new ArrayList<>();
         //For each edges, we set the coord of its neighbor
         currentTileEdges.forEach((RoadEdgeEnum roadEdge) -> {
@@ -127,7 +125,6 @@ public class RoadAggregate extends AbstractAggregate
             //We then get the current neighbor
             Set<RoadEdgeEnum> neighborTileEdges = roadEdges.get(new Coord(neighborCol, neighborRow));
             RoadEdgeEnum neighborTileEdge = RoadEdgeEnum.getOpposite(roadEdge);
-            System.out.println("Coord neighbor: " + neighborCol + ":" + neighborRow);
             //If the neighbor has an incompleted edge that match the current edge, this edge is now completed
             if (neighborTileEdges != null) {
                 if (neighborTileEdges.contains(neighborTileEdge)) {
@@ -275,14 +272,10 @@ public class RoadAggregate extends AbstractAggregate
         locationTypes.add("CNW");
         locationTypes.add("CSW");
 
-        System.out.println("La nouvelle pièce est voisine de l'aggrégat de test avec cette liste de coordonnées : \n" + aggregate.getNeighboredCoordinates(0, -1));
         aggregate.enlargeAggregate(0, -1, nextTile, locationTypes);
-        System.out.println("L'aggrégat est maintenant composé de deux tuiles :");
-        System.out.println(aggregate.aggregatedTiles);
         if (player2.checkMeepleAvailable()) {
             aggregate.addMeeple(player2, player2.getFirstMeepleAvailable());
         }
-        System.out.println(aggregate.players);
     }
 
     @Override
