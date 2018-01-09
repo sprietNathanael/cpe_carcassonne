@@ -6,11 +6,18 @@
 package carcassonne.view.CarcassonneIHM.Panels.Grid;
 
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -35,6 +42,7 @@ public class GridPanel extends JPanel
     private int leftBorder;
     private int downBorder;
     private int rightBorder;
+    private BufferedImage woodTexture;
 
     /**
      * Grid panel constructor
@@ -53,6 +61,13 @@ public class GridPanel extends JPanel
         // Set graphical center
         this.graphicalCenter = new UICoord(0,0);
         this.firstPaint = true;
+        
+        // Get the wood texture image
+        try {
+            this.woodTexture = ImageIO.read(new File("resources/textures/wood.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     /**
@@ -89,6 +104,7 @@ public class GridPanel extends JPanel
     {
         // Converts graphics to graphics2D
         Graphics2D g2 = (Graphics2D) g;
+        g2.drawImage(this.woodTexture,0, 0, this.getWidth(), this.getHeight(), null);
         
         // Browses layers
         layers.forEach((layer) -> {
