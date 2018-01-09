@@ -172,12 +172,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         board.addTile(tile, row, column);
         this.manageNewTileAggregates(tile, row, column);
-        System.out.println("Aggrégats de route:\n" + roadAggregates);
-        System.out.println("Taille de la première route: " + roadAggregates.get(0).countPoints() + "\n");
-        System.out.println("Aggrégats de ville:\n" + cityAggregates);
-        System.out.println("Taille de la première ville: " + cityAggregates.get(0).getAggregatedTiles().size() + "\n");
-        System.out.println("Aggrégats de champs:\n" + fieldAggregates);
-        System.out.println("Taille du premier champs: " + fieldAggregates.get(0).getAggregatedTiles().size() + "\n");
         this.notifyBoardChanged();
     }
 
@@ -466,6 +460,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
         if (abbayAggregate != null) {
             abbayAggregates.add(abbayAggregate);
+        }
+
+        for (AbbayAggregate abAgg : abbayAggregates) {
+            System.out.println(" -----------------------------" + abAgg.getAggregatedTiles().size());
         }
     }
 
