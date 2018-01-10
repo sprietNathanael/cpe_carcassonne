@@ -82,8 +82,8 @@ public class Online extends JDialog
         panSettings.setBorder(BorderFactory.createTitledBorder("Mode online"));
         panSettings.setPreferredSize(new Dimension(440, 60));
         /* choix client/serveur */
-        client = new JRadioButton("Client");
-        serveur = new JRadioButton("Serveur");
+        client = new JRadioButton("Joueur");
+        serveur = new JRadioButton("Hôte");
         //client.setSelected(true);
         ButtonGroup bg = new ButtonGroup();
         bg.add(client);
