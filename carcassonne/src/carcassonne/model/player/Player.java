@@ -25,6 +25,7 @@ public class Player
     private final String name;
     private int points;
     private final String color;
+    private final String playerType;
 
     public void addToScore(int nb)
     {
@@ -36,8 +37,9 @@ public class Player
      *
      * @param name the player's name
      * @param color the player's color
+     * @param playerType the player's type
      */
-    public Player(String name, String color)
+    public Player(String name, String color, String playerType)
     {
         this.name = name;
         this.color = color;
@@ -47,6 +49,7 @@ public class Player
         for (int i = 1; i < NBMEEPLE; i++) {
             this.meeples.add(new Meeple(this));
         }
+        this.playerType = playerType;
     }
 
     /**
@@ -58,13 +61,14 @@ public class Player
     {
         return this.meeples;
     }
-    
+
     public int getUnusedMeepleNumber()
     {
-        int meepleCounter=0;
+        int meepleCounter = 0;
         for (int i = 0; i < meeples.size(); i++) {
-            if (!meeples.get(i).getIsUsed())
+            if (!meeples.get(i).getIsUsed()) {
                 meepleCounter++;
+            }
         }
         return meepleCounter;
     }
@@ -125,6 +129,11 @@ public class Player
     public String getColor()
     {
         return color;
+    }
+
+    public String getPlayerType()
+    {
+        return playerType;
     }
 
     /**

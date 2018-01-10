@@ -24,21 +24,25 @@ public class TileImage extends UICoord
     private BufferedImage image;
     private String name;
     private double rotation;
+    private String path;
 
     /**
      * Constructs a Tile Image
      * @param x X component of the tile
      * @param y Y component of the tile
      * @param name Name of the tile
+     * @param path
      * @param rotation Rotation of the tile
      */
-    public TileImage(int x, int y, String name, int rotation)
+    public TileImage(int x, int y, String name, String path, int rotation)
     {
         super(x,y);
         this.name = name;
+        this.path = path;
         this.rotation = rotation;
         this.buildImage();
     }
+    
     
     /**
      * Contruct a tile image from an abstract tile
@@ -48,7 +52,7 @@ public class TileImage extends UICoord
      */
     public TileImage(int x, int y, AbstractTile tile)
     {
-        this(x,y,tile.getName(),tile.getRotation());
+        this(x,y,tile.getName(),tile.getPath(),tile.getRotation());
         
     }
     
@@ -65,7 +69,7 @@ public class TileImage extends UICoord
             double rad_rotation = this.rotation * Math.PI / 180.0;
             
             // Get the tile image based on its name
-            this.image = ImageIO.read(new File("resources/tiles/"+this.name + ".jpg"));
+            this.image = ImageIO.read(new File("resources/tiles/"+this.path+"/"+this.name + ".jpg"));
             
             // Applies the rotation on the affine transform
             tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);

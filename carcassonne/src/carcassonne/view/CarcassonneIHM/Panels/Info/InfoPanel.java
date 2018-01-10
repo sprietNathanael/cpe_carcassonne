@@ -144,7 +144,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
             // Get the current tile image
             try {
-                this.currentTile = ImageIO.read(new File("resources/tiles/" + game.getCurrentTile().getName() + ".jpg"));
+                this.currentTile = ImageIO.read(new File("resources/tiles/" + game.getCurrentTile().getPath() + "/"+ game.getCurrentTile().getName() + ".jpg"));
             } catch (IOException ex) {
                 Logger.getLogger(InfoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -194,7 +194,10 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         int forest_y = InfoPanel.GAPS_BETWEEN_LINES;
         int forest_w = this.getWidth() - (2*InfoPanel.GAPS_BETWEEN_LINES);
         int forest_h = infoLinesHeight - (2*InfoPanel.GAPS_BETWEEN_LINES);
-        g2.drawImage(this.forestTexture, forest_x, forest_y, forest_w, forest_h, null);
+        
+        //BufferedImage stoneTexture_cropped = this.stoneTexture.getSubimage(0, 0, this.getWidth(), this.getHeight());
+        BufferedImage forestTexture_cropped = this.forestTexture.getSubimage(0, 0, forest_w, forest_h);
+        g2.drawImage(forestTexture_cropped, forest_x, forest_y, forest_w, forest_h, null);
         
         GradientPaint gradient = new GradientPaint(forest_x, forest_y, new Color(30, 30, 30, 255), forest_x+InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_y,  new Color(0, 0, 0, 0));
         g2.setPaint(gradient);
@@ -240,21 +243,48 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             g2.drawImage(this.currentTile, previewX, previewY, previewSize, previewSize, null);
             
             gradient = new GradientPaint(previewX, previewY, new Color(255, 255, 255, 200), previewX, previewY-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  new Color(0, 0, 0, 0));
-            g2.setPaint(gradient);
-            g2.fillRect(previewX, previewY-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  previewSize, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            g2.setPaint(gradient);            
+            Polygon border = new Polygon();
+            border.addPoint(previewX-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX+previewSize, previewY);
+            border.addPoint(previewX, previewY);
+            g2.fillPolygon(border);
 
             gradient = new GradientPaint(previewX+previewSize, previewY, new Color(255, 255, 255, 200), previewX+previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY,  new Color(0,0,0,0));
             g2.setPaint(gradient);
-            g2.fillRect(previewX + previewSize, previewY, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewSize);
+            
+            border.reset();
+            border.addPoint(previewX+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY +previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX+previewSize, previewY +previewSize);
+            border.addPoint(previewX+previewSize, previewY );
+            g2.fillPolygon(border);
             
             gradient = new GradientPaint(previewX, previewY+previewSize, new Color(255,255,255, 200), previewX, previewY+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(0, 0, 0, 0));
             g2.setPaint(gradient);
-            g2.fillRect(previewX, previewY+previewSize, previewSize, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            
+            border.reset();
+            border.addPoint(previewX+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY + previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY +previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX, previewY +previewSize);
+            border.addPoint(previewX+previewSize, previewY + previewSize );
+            g2.fillPolygon(border);
 
             gradient = new GradientPaint(previewX, previewY, new Color(255,255,255, 200), previewX - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY,  new Color(0, 0, 0, 0));
             g2.setPaint(gradient);
-            g2.fillRect(previewX - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewSize);
-
+            
+            border.reset();
+            border.addPoint(previewX-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(previewX, previewY);
+            border.addPoint(previewX, previewY +previewSize);
+            border.addPoint(previewX-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY + previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            g2.fillPolygon(border);
+            
+            /*gradient = new GradientPaint(previewX, previewY, new Color(255,255,255, 150), previewX+previewSize, previewY+previewSize,  new Color(0, 0, 0, 0));
+            g2.setPaint(gradient);
+            g2.fillRect(previewX, previewY, previewSize, previewSize);*/
+            
             g2.setColor(Color.black);
         }
 

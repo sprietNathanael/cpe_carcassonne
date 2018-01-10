@@ -1,5 +1,6 @@
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import enums.PlayerTypes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -36,8 +37,8 @@ public class Parameters extends JDialog
     private JCheckBox chbIaJ1, chbIaJ2, chbIaJ3, chbIaJ4, chbIaJ5, chbIaJ6;*/
 
     private JTextField tfNomPlayer[];
-    private JComboBox cbColors[];
-    private JComboBox cbPlayerType[];
+    private JComboBox<String> cbColors[];
+    private JComboBox<String> cbPlayerType[];
 
     public Parameters(JFrame parent, String title, boolean modal)
     {
@@ -110,10 +111,10 @@ public class Parameters extends JDialog
             paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
  
             lbTypeJoueur = new JLabel("Player type : ");
-            cbPlayerType[i] = new JComboBox();
-            cbPlayerType[i].addItem("Player");
-            cbPlayerType[i].addItem("Basic IA");
-            //cbPlayerType[i].addItem("Avanced IA");            
+            cbPlayerType[i] = new JComboBox<>();
+            cbPlayerType[i].addItem(PlayerTypes.player);
+            cbPlayerType[i].addItem(PlayerTypes.basicIA);
+            //cbPlayerType[i].addItem(PlayerTypes.advancedIA);            
             nomLabel = new JLabel("Name :");
             colorsLabel = new JLabel("Color :");
             tfNomPlayer[i] = new JTextField();
