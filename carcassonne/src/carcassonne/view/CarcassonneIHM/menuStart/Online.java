@@ -7,13 +7,21 @@ package carcassonne.view.CarcassonneIHM.menuStart;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BorderFactory;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+import javax.swing.JTextField;
 
 /**
  *
@@ -21,7 +29,9 @@ import javax.swing.JPanel;
  */
 public class Online extends JDialog
 {
+
     private JLabel icon;
+    private JRadioButton serveur, client;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -49,8 +59,55 @@ public class Online extends JDialog
         panIcon.setBackground(Color.white);
         panIcon.setLayout(new BorderLayout());
         panIcon.add(icon);
-        
-        
+
+        //Button back
+        JPanel control = new JPanel();
+        JButton okBouton = new JButton("BACK");
+
+        okBouton.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                setVisible(false);
+            }
+        });
+
+        control.add(okBouton);
+        control.setBackground(Color.white);
+
+        //Panel settings
+        JPanel panSettings = new JPanel();
+        panSettings.setBackground(Color.white);
+        panSettings.setBorder(BorderFactory.createTitledBorder("Mode online"));
+        panSettings.setPreferredSize(new Dimension(440, 60));
+        /* choix client/serveur */
+        client = new JRadioButton("Client");
+        serveur = new JRadioButton("Serveur");
+        //client.setSelected(true);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(client);
+        bg.add(serveur);
+        panSettings.add(client);
+        panSettings.add(serveur);
+
+        if (client.isSelected() == true) {
+            /*  choix du port */
+            JTextField port = new JTextField("Port to join a game ?");
+            port.setPreferredSize(new Dimension(130, 30));
+            panSettings.add(port);
+
+        }
+        else {
+            /*  choix du port */
+            JTextField port = new JTextField("Port for the game ?");
+            port.setPreferredSize(new Dimension(130, 30));
+            panSettings.add(port);
+
+        }
+
+        this.getContentPane().add(panSettings, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
+        this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 }

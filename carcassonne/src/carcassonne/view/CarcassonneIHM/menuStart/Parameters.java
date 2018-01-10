@@ -319,6 +319,7 @@ public class Parameters extends JDialog
         });
 
         control.add(okBouton);
+        control.setBackground(Color.white);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(content, BorderLayout.CENTER);
