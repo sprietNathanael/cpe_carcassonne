@@ -194,7 +194,10 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         int forest_y = InfoPanel.GAPS_BETWEEN_LINES;
         int forest_w = this.getWidth() - (2*InfoPanel.GAPS_BETWEEN_LINES);
         int forest_h = infoLinesHeight - (2*InfoPanel.GAPS_BETWEEN_LINES);
-        g2.drawImage(this.forestTexture, forest_x, forest_y, forest_w, forest_h, null);
+        
+        //BufferedImage stoneTexture_cropped = this.stoneTexture.getSubimage(0, 0, this.getWidth(), this.getHeight());
+        BufferedImage forestTexture_cropped = this.forestTexture.getSubimage(0, 0, forest_w, forest_h);
+        g2.drawImage(forestTexture_cropped, forest_x, forest_y, forest_w, forest_h, null);
         
         GradientPaint gradient = new GradientPaint(forest_x, forest_y, new Color(30, 30, 30, 255), forest_x+InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_y,  new Color(0, 0, 0, 0));
         g2.setPaint(gradient);
