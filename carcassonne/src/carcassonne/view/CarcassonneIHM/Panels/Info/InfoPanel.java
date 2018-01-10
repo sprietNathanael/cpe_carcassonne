@@ -144,7 +144,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
             // Get the current tile image
             try {
-                this.currentTile = ImageIO.read(new File("resources/tiles/" + game.getCurrentTile().getName() + ".jpg"));
+                this.currentTile = ImageIO.read(new File("resources/tiles/" + game.getCurrentTile().getPath() + "/"+ game.getCurrentTile().getName() + ".jpg"));
             } catch (IOException ex) {
                 Logger.getLogger(InfoPanel.class.getName()).log(Level.SEVERE, null, ex);
             }

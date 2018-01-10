@@ -59,7 +59,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
         aggregates.add(retTreeSet("NNE", "N", "NNW", "NW", "NWW", "W", "SWW")); //C
 
-        tileList.add(new CasualTile("CcII", "CcII", //Id
+        tileList.add(new CasualTile("CcII", "river", "CcII", //Id
                 new CityType(), new CityType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
@@ -79,7 +79,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("SWW", "SW", "CSW", "CSE", "SE", "SEE")); //F
         aggregates.add(retTreeSet("SSW", "S", "SSE")); //C
 
-        tileList.add(new CasualTile("CICI", "CICI", //Id
+        tileList.add(new CasualTile("CICI", "river", "CICI", //Id
                 new FieldType(), new FieldType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
@@ -100,7 +100,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
         aggregates.add(retTreeSet("S", "CSW", "CSE", "CNW", "CNE")); //R
 
-        tileList.add(new CasualTile("CIRI", "CIRI", //Id
+        tileList.add(new CasualTile("CIRI", "river", "CIRI", //Id
                 new FieldType(), new FieldType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
@@ -118,7 +118,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "NWW", "NW", "NNW", "N",
                     "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE")); //F
 
-        tileList.add(new CasualTile("I.e", "I.e", //Id
+        tileList.add(new CasualTile("I.e", "river", "I.e", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North section
                 new FieldType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
@@ -132,7 +132,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
                     "NNE", "NE", "NEE", "SSE", "SE", "SEE")); //F
 
-        tileList.add(new CasualTile("I.s", "I.s", //Id
+        tileList.add(new CasualTile("I.s", "river", "I.s", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North section
                 new RiverType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
@@ -147,7 +147,7 @@ public class RiverSet implements SetInterface
             aggregates.add(retTreeSet("NWW", "NW", "NNW", "N", "NNE", "NE", "NEE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW", "S", "SSE", "SE", "SEE")); //F
 
-            tileList.add(new CasualTile("IFI", "IFI" + i, //Id
+            tileList.add(new CasualTile("IFI", "river", "IFI" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new RiverType(), //East section
                     new FieldType(), new FieldType(), new FieldType(), //South section
@@ -163,7 +163,7 @@ public class RiverSet implements SetInterface
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "CNW", "CNE", "CSE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
 
-            tileList.add(new CasualTile("II", "II" + i, //Id
+            tileList.add(new CasualTile("II", "river", "II" + i, //Id
                     new FieldType(), new FieldType(), new FieldType(), //North section
                     new FieldType(), //East section
                     new FieldType(), new RiverType(), new FieldType(), //South section
@@ -180,7 +180,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
         aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
 
-        tileList.add(new CasualTile("LIRI", "LIRI", //Id
+        tileList.add(new CasualTile("LIRI", "river", "LIRI", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North section
                 new RiverType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
@@ -198,7 +198,7 @@ public class RiverSet implements SetInterface
         aggregates.add(retTreeSet("W")); //R
         aggregates.add(retTreeSet("E")); //R        
 
-        tileList.add(new CasualTile("RIrI", "RIrI", //Id
+        tileList.add(new CasualTile("RIrI", "river", "RIrI", //Id
                 new FieldType(), new RiverType(), new FieldType(), //North section
                 new RoadType(), //East section
                 new FieldType(), new RiverType(), new FieldType(), //South section
@@ -214,7 +214,7 @@ public class RiverSet implements SetInterface
             aggregates.add(retTreeSet("NNW", "NW", "NWW", "SEE", "SE", "SSE", "CNW", "CSE")); //F
             aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
 
-            tileList.add(new CasualTile("RrII", "RrII" , //Id
+            tileList.add(new CasualTile("RrII", "river", "RrII" , //Id
                     new FieldType(), new RoadType(), new FieldType(), //North section
                     new RoadType(), //East section
                     new FieldType(), new RiverType(), new FieldType(), //South section

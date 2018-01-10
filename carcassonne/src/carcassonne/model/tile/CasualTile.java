@@ -214,6 +214,7 @@ public class CasualTile extends AbstractTile
      * Construct a Tile
      *
      * @param name
+     * @param path
      * @param tileId
      * @param NWW North-west-western type
      * @param NW North-western type
@@ -237,9 +238,9 @@ public class CasualTile extends AbstractTile
      * @param CSW Center-south-western type
      * @param aggregates
      */
-    public CasualTile(String name, String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
+    public CasualTile(String name, String path, String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
-        super(name);
+        super(name, path);
         this.id = tileId;
         this.types = new HashMap<>();
         this.types.put("NWW", NWW);
@@ -292,7 +293,7 @@ public class CasualTile extends AbstractTile
      */
     public CasualTile(String tileId, AbstractType NWW, AbstractType NW, AbstractType NNW, AbstractType N, AbstractType NNE, AbstractType NE, AbstractType NEE, AbstractType E, AbstractType SEE, AbstractType SE, AbstractType SSE, AbstractType S, AbstractType SSW, AbstractType SW, AbstractType SWW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
     {
-        super("Null");
+        super("Null", "Null");
         this.id = tileId;
         this.types = new HashMap<>();
         this.types.put("NWW", NWW);
@@ -323,6 +324,7 @@ public class CasualTile extends AbstractTile
      * usual 4 boxes for the center
      *
      * @param name
+     * @param path
      * @param tileId
      * @param NW (NWW, NW, NNW)
      * @param N Same as usual
@@ -338,9 +340,9 @@ public class CasualTile extends AbstractTile
      * @param CSW Same as usual
      * @param aggregates
      */
-    public CasualTile(String name, String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
+    public CasualTile(String name, String path, String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW, Set<Set<String>> aggregates)
     {
-        super(name);
+        super(name, path);
         this.id = tileId;
         this.types = new HashMap<>();
         this.types.put("NWW", NW);
@@ -386,7 +388,7 @@ public class CasualTile extends AbstractTile
      */
     public CasualTile(String tileId, AbstractType NW, AbstractType N, AbstractType NE, AbstractType E, AbstractType SE, AbstractType S, AbstractType SW, AbstractType W, AbstractType CNW, AbstractType CNE, AbstractType CSE, AbstractType CSW)
     {
-        super("Null");
+        super("Null", "Null");
         this.id = tileId;
         this.types = new HashMap<>();
         this.types.put("NWW", NW);

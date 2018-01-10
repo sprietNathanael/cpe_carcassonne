@@ -17,6 +17,7 @@ public abstract class AbstractTile
 {
     protected String id;
     protected String name;
+    protected String path;
     protected Set<Set<String>> aggregateEmplacements;
     private int rotation;
 
@@ -24,12 +25,14 @@ public abstract class AbstractTile
      * Constructor
      *
      * @param name
+     * @param path
      */
-    public AbstractTile(String name)
+    public AbstractTile(String name, String path)
     {
         this.name = name;
         this.rotation = 0;
         this.aggregateEmplacements = null;
+        this.path = path;
     }
 
     /**
@@ -55,6 +58,16 @@ public abstract class AbstractTile
     public String getName()
     {
         return this.name;
+    }
+    
+    /**
+     * Get the name of the Tile
+     *
+     * @return
+     */
+    public String getPath()
+    {
+        return this.path;
     }
 
     /**
