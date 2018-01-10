@@ -13,11 +13,13 @@ public class ParamPlayers
 {
     private final String nom;
     private final String color;
+    private final String playerType;
 
-    public ParamPlayers(String nom, String color)
+    public ParamPlayers(String nom, String color, String playerType)
     {
         this.nom = nom;
         this.color = color;
+        this.playerType = playerType;
     }
 
     /**
