@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -46,7 +47,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     public static int PREVIEW_BORDER = 10;
     public static int PREVIEWES_GAP = 30;
 
-    private HashMap<String, PlayerInfo> playerInfoLines;
+    private LinkedHashMap<String, PlayerInfo> playerInfoLines;
     private String currentPlayer;
     private AbstractCarcassonneGameController controller;
     private BufferedImage backTile;
@@ -82,7 +83,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         this.addMouseListener(this.mouseListener);
 
         // Creates information lines from players
-        this.playerInfoLines = new HashMap<>();
+        this.playerInfoLines = new LinkedHashMap<>();
         for (Player player : players) {
             this.playerInfoLines.put(player.getName(), new PlayerInfo(player.getName(), player.getColor()));
         }
