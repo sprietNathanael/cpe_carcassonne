@@ -10,8 +10,10 @@ import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Tile.TilePlacementMouseListener;
+import carcassonne.view.CarcassonneIHM.Panels.Info.InfoPanel;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
 import java.awt.Shape;
@@ -116,10 +118,12 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
     @Override
     public void paint(Graphics2D g2)
     {
-        if(this.isVisible() && this.currentTileAggregate != null && this.tileAggregates.size() > 0)
+        if(this.isVisible())
         {
             int tileSize = this.gridPanel.getTileSize();
             UICoord center = this.gridPanel.getGraphicalCenter();
+            
+            
 
             // Affine transform to resize tiles splits
             AffineTransform resizeMeeplesPlacement = new AffineTransform();
@@ -131,16 +135,61 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
             double delta_y = (this.currentPosition.getY() * tileSize) + center.getY();
             translateMeeplesPlacement.translate(delta_x, delta_y);
             
-            Shape intermediate;
-
-            g2.setColor(new Color(255, 20, 20, 100));
+            int tile_x = (int)delta_x;
+            int tile_y = (int)delta_y;
             
-            // Draw all the location from the aggregate
-            for (String split : this.currentTileAggregate) {
-                intermediate = translateMeeplesPlacement.createTransformedShape(resizeMeeplesPlacement.createTransformedShape(TILE_SPLITS.get(split)));
-                g2.fill(intermediate);
+            GradientPaint gradient = new GradientPaint(tile_x, tile_y, new Color(255, 255, 255, 200), tile_x, tile_y-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  new Color(255, 255, 255, 0));
+            g2.setPaint(gradient);            
+            Polygon border = new Polygon();
+            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x+tileSize, tile_y);
+            border.addPoint(tile_x, tile_y);
+            g2.fillPolygon(border);
+
+            gradient = new GradientPaint(tile_x+tileSize, tile_y, new Color(255, 255, 255, 200), tile_x+tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
+            g2.setPaint(gradient);
+            
+            border.reset();
+            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y +tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x+tileSize, tile_y +tileSize);
+            border.addPoint(tile_x+tileSize, tile_y );
+            g2.fillPolygon(border);
+            
+            gradient = new GradientPaint(tile_x, tile_y+tileSize, new Color(255,255,255, 200), tile_x, tile_y+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(255, 255, 255, 0));
+            g2.setPaint(gradient);
+            
+            border.reset();
+            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y +tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x, tile_y +tileSize);
+            border.addPoint(tile_x+tileSize, tile_y + tileSize );
+            g2.fillPolygon(border);
+
+            gradient = new GradientPaint(tile_x, tile_y, new Color(255,255,255, 200), tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
+            g2.setPaint(gradient);
+            
+            border.reset();
+            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            border.addPoint(tile_x, tile_y);
+            border.addPoint(tile_x, tile_y +tileSize);
+            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+            g2.fillPolygon(border);
+            
+            if(this.currentTileAggregate != null && this.tileAggregates.size() > 0)
+            {
+                Shape intermediate;
+
+                g2.setColor(new Color(255, 20, 20, 100));
+
+                // Draw all the location from the aggregate
+                for (String split : this.currentTileAggregate) {
+                    intermediate = translateMeeplesPlacement.createTransformedShape(resizeMeeplesPlacement.createTransformedShape(TILE_SPLITS.get(split)));
+                    g2.fill(intermediate);
+                }
+                g2.setColor(Color.BLACK);
             }
-            g2.setColor(Color.BLACK);
         }
     }
 

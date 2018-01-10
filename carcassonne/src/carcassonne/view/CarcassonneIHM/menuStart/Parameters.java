@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 public class Parameters extends JDialog
@@ -49,6 +48,7 @@ public class Parameters extends JDialog
     /**
      * Allows to init the differents components for the game
      */
+    @SuppressWarnings("unchecked")
     private void initComponent()
     {
         //Set Icon
