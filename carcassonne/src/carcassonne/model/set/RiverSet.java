@@ -7,6 +7,7 @@ package carcassonne.model.set;
 
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
+import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
@@ -140,23 +141,87 @@ public class RiverSet implements SetInterface
                 aggregates
             ));
         
-        //Tiles bibo a modifier
+        //Tiles IFI (x2)
         for (int i = 1; i <= 2; i++) {
             aggregates = new HashSet<>();
-            aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW")); //F
-            aggregates.add(retTreeSet("NNE", "NE", "NEE", "E", "SEE", "SE", "SSE")); //F
-            aggregates.add(retTreeSet("W", "CNW", "CNE", "CSE", "CSW", "E")); //R
+            aggregates.add(retTreeSet("NWW", "NW", "NNW", "N", "NNE", "NE", "NEE")); //F
+            aggregates.add(retTreeSet("SWW", "SW", "SSW", "S", "SSE", "SE", "SEE")); //F
 
-            tileList.add(new CasualTile("U", "U" + i, //Id
-                    new FieldType(), new RoadType(), new FieldType(), //North section
-                    new FieldType(), //East section
-                    new FieldType(), new RoadType(), new FieldType(), //South section
-                    new FieldType(), //West section
-                    new RoadType(), new RoadType(), new RoadType(), new RoadType(), //Center section
+            tileList.add(new CasualTile("IFI", "IFI" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North section
+                    new RiverType(), //East section
+                    new FieldType(), new FieldType(), new FieldType(), //South section
+                    new RiverType(), //West section
+                    new RiverType(), new RiverType(), new RiverType(), new RiverType(), //Center section
                     aggregates
             ));
         }
         
+        //Tiles II (x2)
+        for (int i = 1; i <= 2; i++) {
+            aggregates = new HashSet<>();
+            aggregates.add(retTreeSet("NNW", "NW", "NWW", "N", "NNE", "NE", "NEE", "E", "SEE", "SE", "SSE", "CNW", "CNE", "CSE")); //F
+            aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
+
+            tileList.add(new CasualTile("II", "II" + i, //Id
+                    new FieldType(), new FieldType(), new FieldType(), //North section
+                    new FieldType(), //East section
+                    new FieldType(), new RiverType(), new FieldType(), //South section
+                    new RiverType(), //West section
+                    new FieldType(), new FieldType(), new FieldType(), new RiverType(), //Center section
+                    aggregates
+            ));
+        }
+        
+        //Tile LIRI
+        aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("NWW", "NW", "NNW", "N", "NNE", "NE", "NEE")); //F
+        aggregates.add(retTreeSet("CNW", "CNE", "CSW", "CSE")); //A
+        aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
+        aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
+
+        tileList.add(new CasualTile("LIRI", "LIRI", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new RiverType(), //East section
+                new FieldType(), new RoadType(), new FieldType(), //South section
+                new RiverType(), //West section
+                new AbbayType(), new AbbayType(), new AbbayType(), new AbbayType(), //Center section
+                aggregates
+        ));
+        
+        //Tile RirI
+        aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
+        aggregates.add(retTreeSet("NNE", "NE", "NEE")); //F
+        aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
+        aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
+        aggregates.add(retTreeSet("W")); //R
+        aggregates.add(retTreeSet("E")); //R        
+
+        tileList.add(new CasualTile("RIrI", "RIrI", //Id
+                new FieldType(), new RiverType(), new FieldType(), //North section
+                new RoadType(), //East section
+                new FieldType(), new RiverType(), new FieldType(), //South section
+                new RoadType(), //West section
+                new RoadType(), new RoadType(), new RoadType(), new RoadType(), //Center section
+                aggregates
+        ));
+        
+        //Tile RrII
+        aggregates = new HashSet<>();
+            aggregates.add(retTreeSet("NNE", "NE", "NEE")); //F
+            aggregates.add(retTreeSet("N", "CNE", "E"));
+            aggregates.add(retTreeSet("NNW", "NW", "NWW", "SEE", "SE", "SSE", "CNW", "CSE")); //F
+            aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
+
+            tileList.add(new CasualTile("RrII", "RrII" , //Id
+                    new FieldType(), new RoadType(), new FieldType(), //North section
+                    new RoadType(), //East section
+                    new FieldType(), new RiverType(), new FieldType(), //South section
+                    new RiverType(), //West section
+                    new FieldType(), new RoadType(), new FieldType(), new RiverType(), //Center section
+                    aggregates
+            ));        
     }
     
     public static Set<String> retTreeSet(String... poss)
