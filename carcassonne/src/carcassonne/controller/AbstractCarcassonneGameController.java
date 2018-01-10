@@ -11,6 +11,9 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import enums.PlayerTypes;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Abstract class which represents a generic class
@@ -25,6 +28,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     /**
      * Constructor for an AbstractCarcassonneGameController
+     *
      * @throws java.lang.Exception
      */
     public AbstractCarcassonneGameController() throws Exception
@@ -73,7 +77,6 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void putCurrentTile(Coord c) throws Exception
     {
         this.putTile(this.currentTile, c);
-        //this.endTurn();
     }
 
     /**
@@ -123,15 +126,18 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void putMeeple(String coordinates) throws Exception
     {
         Meeple m = getCurrentPlayerMeepleAvailable();
+        //tuile
         currentTile.putMeeple(coordinates, m);
         m.setCurrentType(currentTile.getType(coordinates));
+        //aggregats
         carcassonneGame.putMeeple(m, currentTile, m.getPlayer(), coordinates);
         m.setIsUsed(true);
     }
 
     /**
      * Get the board
-     * @return 
+     *
+     * @return
      */
     public Board getBoard()
     {
@@ -140,6 +146,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     /**
      * Begin a game
+     *
      * @throws java.lang.Exception
      */
     public void beginGame() throws Exception
@@ -154,37 +161,52 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void beginTurn()
     {
         System.out.println("======================================================================================================");
-        System.out.println("C'est au tour de "+this.carcassonneGame.getCurrentPlayer().getName());
+        System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
         this.processNextTile();
+        try {
+            ManageIA();
+        } catch (Exception ex) {
+            Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
-    
+
     /**
      * Process the next Tile
      */
     private void processNextTile()
     {
         this.drawTile();
-        if(this.currentTile != null)
-        {
-            System.out.println("La pièce piochée est : "+this.currentTile.getName());
+        if (this.currentTile != null) {
+            System.out.println("La pièce piochée est : " + this.currentTile.getName());
             System.out.println(this.currentTile);
             this.carcassonneGame.notifyBoardChanged();
             // If the current tile can be placed
-            if(this.carcassonneGame.refreshPlacements())
-            {
+            if (this.carcassonneGame.refreshPlacements()) {
                 this.carcassonneGame.notifyPlacementsReady();
             }
             // Else put back the current tile and draw another one
-            else
-            {
+            else {
                 this.carcassonneGame.putBackCurrentTile();
                 this.processNextTile();
             }
         }
-        else
-        {
+        else {
             System.out.println("Fin de partie");
             this.carcassonneGame.notifyGameEnds();
+        }
+    }
+
+    /**
+     * Manages IA
+     *
+     * @throws Exception
+     */
+    private void ManageIA() throws Exception
+    {
+        // Basic IA
+        if (carcassonneGame.getCurrentPlayer().getPlayerType() == PlayerTypes.basicIA) {
+            carcassonneGame.putTileBasicIA(currentTile);       
+            endTurn();
         }
     }
 
@@ -201,28 +223,30 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         this.beginTurn();
         return player;
     }
-    
+
     /**
      * Check if the tile can be placed here
+     *
      * @param coordinates
      * @param tile
-     * @return 
+     * @return
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
         return this.carcassonneGame.checkTilePosition(coordinates, tile);
     }
-    
+
     /**
      * Check if the current tile can be placed here
+     *
      * @param coordinates
-     * @return 
+     * @return
      */
     public boolean checkTilePosition(Coord coordinates)
     {
         return this.carcassonneGame.checkTilePosition(coordinates);
     }
-    
+
     /**
      * Turn the current tile
      */
@@ -230,5 +254,5 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         this.currentTile.rotateRight();
     }
-    
+
 }

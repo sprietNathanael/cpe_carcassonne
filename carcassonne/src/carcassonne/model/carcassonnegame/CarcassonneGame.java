@@ -217,7 +217,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             //test si on est sur la bonne tuile
             if (aggregate.getAggregatedTypes().containsKey(tile)) {
                 currentTileLocations = aggregate.getAggregatedTypes().get(tile);
-                System.out.println("Aggrégat!!!!!: " + currentTileLocations + "tuile: " + tile );
+                System.out.println("Aggrégat!!!!!: " + currentTileLocations + "tuile: " + tile);
                 //Si la locations correspond à cet aggrégat, c'est le bon et on ajoute le meeple + player
                 if (currentTileLocations.contains(coordinates)) {
                     System.out.println("Ajout meeple correct");
@@ -878,5 +878,71 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
 
         }
+    }
+
+    // IA
+    /**
+     * Puts current tiles on random coord
+     *
+     * @param tile
+     * @throws Exception
+     */
+    public void putTileBasicIA(AbstractTile tile) throws Exception
+    {
+        int index = (int) (Math.random() * this.placements.size());
+        Coord c = new Coord(this.placements.get(index).col, this.placements.get(index).row);
+        while (checkTilePosition(c) == false) {
+            this.currentTile.rotateRight();
+        }
+        this.putTile(tile, this.placements.get(index).row, this.placements.get(index).col);
+        this.putMeepleBasicIA(c);
+    }
+
+    /**
+     * Puts random meeple or no meeple
+     *
+     * @param c
+     */
+    private void putMeepleBasicIA(Coord c)
+    {
+        if (playerMeepleBePutOnCurrentTile()) {
+            int putMeepleOrNot = (int) (Math.random() * 2);
+            if (putMeepleOrNot == 1) {
+                Meeple m = getCurrentPlayer().getFirstMeepleAvailable();
+                Set<Set<String>> freeAgg = getFreeAggregatesInTile(c.col, c.row);
+                String coordinates = getAleaCoordAgg(freeAgg);
+                //tuile
+                currentTile.putMeeple(coordinates, m);
+                m.setCurrentType(currentTile.getType(coordinates));
+                //aggregats
+                putMeeple(m, currentTile, m.getPlayer(), coordinates);
+                m.setIsUsed(true);
+            }
+        }
+    }
+
+    /**
+     * Gets alea coord from availables aggregates
+     *
+     * @param freeAgg
+     * @return
+     */
+    private String getAleaCoordAgg(Set<Set<String>> freeAgg)
+    {
+        int index = (int) (Math.random() * freeAgg.size());
+        int i = 0, j = 0;
+        for (Set<String> agg : freeAgg) {
+            if (i == index) {
+                index = (int) (Math.random() * agg.size());
+                for (String co : agg) {
+                    if (j == index) {
+                        return co;
+                    }
+                    j++;
+                }
+            }
+            i++;
+        }
+        return "";
     }
 }
