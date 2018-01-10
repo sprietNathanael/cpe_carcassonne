@@ -29,8 +29,12 @@ public class PlayerInfo
     private String color;
     private String name;
     private BufferedImage image;
+    private BufferedImage image_bordered;
     private int meepleNumber;
     private int pointNumber;
+    private BufferedImage plankTexture;
+    private BufferedImage coinImage;
+    private BufferedImage hollowMeeple;
 
     /**
      * Construct a Player info
@@ -43,7 +47,7 @@ public class PlayerInfo
         this.color = color.toLowerCase();
         System.out.println(this.color);
         this.name = name;
-        this.buildImage();
+        this.buildImages();
     }
 
     /**
@@ -61,11 +65,39 @@ public class PlayerInfo
     /**
      * Get the meeple image
      */
-    public void buildImage()
+    public void buildImages()
     {
         this.image = null;
         try {
             this.image = ImageIO.read(new File("resources/meeples_bordered/" + this.color + ".png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        this.image_bordered = null;
+        try {
+            this.image_bordered = ImageIO.read(new File("resources/meeples_bordered/" + this.color + "_hollowed.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the plank texture image
+        try {
+            this.plankTexture = ImageIO.read(new File("resources/textures/plank.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the hollow meeple image
+        try {
+            this.hollowMeeple = ImageIO.read(new File("resources/meeples_bordered/hollow.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the hollow meeple image
+        try {
+            this.coinImage = ImageIO.read(new File("resources/textures/coin.png"));
         } catch (IOException ex) {
             Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -82,40 +114,47 @@ public class PlayerInfo
      */
     public void paint(Graphics2D g2, int currentHeight, int height, int width, boolean currentPlayer)
     {
-        // Draw the meeple at the center
+        g2.drawImage(this.plankTexture, 0, currentHeight, width, height, null);
+        
         int meepleSize = (int) (height / 2);
         int meepleX = PlayerInfo.MEEPLE_BORDER;
         int meepleY = currentHeight + (height / 2) - (meepleSize / 2);
-        g2.drawImage(this.image, meepleX, meepleY, meepleSize, meepleSize, null);
-
-        // Draw the Meeple count square
-        g2.setColor(Color.WHITE);
-        int squareSize = meepleSize / 4;
-        int squareX = meepleX + meepleSize / 2 - squareSize / 2;
-        int squareY = meepleY + (meepleSize / 2) - (squareSize / 2);
-        g2.fillRect(squareX, squareY, squareSize, squareSize);
-
-        // Draw the Meeple count
+        // If this is the current player, draw the plain meeple
+        if (currentPlayer) {
+            // Draw the meeple at the center
+            g2.drawImage(this.image, meepleX, meepleY, meepleSize, meepleSize, null);
+        }
+        else
+        {
+            g2.drawImage(this.image_bordered, meepleX, meepleY, meepleSize, meepleSize, null);            
+        }
+        
+        int fontSize = height/6;
+        g2.setFont(new Font("Calibri", Font.PLAIN, fontSize));
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Calibri", Font.BOLD, (int) (squareSize * 1.2)));
-        int stringY = meepleY + meepleSize / 2 + squareSize / 2;
-        g2.drawString("" + this.meepleNumber, squareX, stringY);
+        int iconsSize = (int) (height / 5.0);
+        
+        int coin_x = width - (int)(width/1.75)-iconsSize;
+        int coin_y = currentHeight + height - (int)(height/5.0) - iconsSize;
+        
+        int pointText_x = coin_x + iconsSize + fontSize/2;
+        int pointText_y = coin_y + iconsSize/2 + fontSize/2;
+        g2.drawImage(this.coinImage, coin_x, coin_y, iconsSize, iconsSize, null);
+        g2.drawString("" + this.pointNumber, pointText_x, pointText_y);
+        
+        int hollowMeeple_x = width - (int)(width/3.0)-iconsSize;
+        int hollowMeeple_y = currentHeight + height - (int)(height/5.0) - iconsSize;
+        g2.drawImage(this.hollowMeeple, hollowMeeple_x, hollowMeeple_y, iconsSize, iconsSize, null);
+        
+        int meepleText_x = hollowMeeple_x + iconsSize + fontSize/2;
+        int meepleText_y = hollowMeeple_y + iconsSize/2 + fontSize/2;
+        g2.drawString("" + this.meepleNumber, meepleText_x, meepleText_y);
 
         // Draw the informations
         int nameX = meepleX + meepleSize + PlayerInfo.MEEPLE_BORDER;
         g2.setFont(new Font("Calibri", Font.PLAIN, 18));
         g2.drawString(this.name, nameX, meepleY + meepleSize / 4);
-        g2.setFont(new Font("Calibri", Font.PLAIN, 13));
-        g2.drawString("Nombre de points : " + this.pointNumber, nameX, meepleY + 3 * (meepleSize / 4));
 
-        // If this is the current player, draw a red border
-        if (currentPlayer) {
-            g2.setColor(Color.red);
-            g2.fillRect(0, currentHeight, width, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH);
-            g2.fillRect(width - PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, currentHeight, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, height);
-            g2.fillRect(0, currentHeight + height - PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, width, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH);
-            g2.fillRect(0, currentHeight, PlayerInfo.CURRENT_PLAYER_BORDER_WIDTH, height);
-            g2.setColor(Color.black);
-        }
+        
     }
 }

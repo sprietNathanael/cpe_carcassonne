@@ -12,6 +12,7 @@ import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Polygon;
@@ -41,7 +42,10 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 {
 
     // Constants
-    public static int SEPARATION_LINE_WIDTH = 5;
+    
+    public static int RELIEF_GRADIENT_THICKNESS = 30;
+    public static int HIGHLIGHT_GRADIENT_THICKNESS = 10;
+    public static int GAPS_BETWEEN_LINES = 10;
     public static int MEEPLE_BUTTON_WIDTH = 100;
     public static int MEEPLE_BUTTON_HEIGHT = 70;
     public static int PREVIEW_BORDER = 10;
@@ -132,7 +136,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         this.currentPlayer = game.getCurrentPlayer().getName();
 
         // Updates the information lines
-        for (Player player : game.getPlayers()) {
+        for (Player player : game.getPlayers()) {            
             this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
         }
 
@@ -181,28 +185,77 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     @Override
     protected void paintChildren(Graphics g)
     {
-        int infoLinesHeight = this.getHeight() / 8;
+        int infoLinesHeight = this.getHeight() / 9;
         Graphics2D g2 = (Graphics2D) g;
         
-        g2.drawImage(this.forestTexture, 0, 0, this.getWidth(), infoLinesHeight, null);
-        g2.drawImage(this.stoneTexture, 0, infoLinesHeight, this.stoneTexture.getWidth(), this.stoneTexture.getHeight(), null);
-
+        BufferedImage stoneTexture_cropped = this.stoneTexture.getSubimage(0, 0, this.getWidth(), this.getHeight());
+        g2.drawImage(stoneTexture_cropped, 0, 0, this.getWidth(), this.getHeight(), null);
+        int forest_x = InfoPanel.GAPS_BETWEEN_LINES;
+        int forest_y = InfoPanel.GAPS_BETWEEN_LINES;
+        int forest_w = this.getWidth() - (2*InfoPanel.GAPS_BETWEEN_LINES);
+        int forest_h = infoLinesHeight - (2*InfoPanel.GAPS_BETWEEN_LINES);
+        g2.drawImage(this.forestTexture, forest_x, forest_y, forest_w, forest_h, null);
+        
+        GradientPaint gradient = new GradientPaint(forest_x, forest_y, new Color(30, 30, 30, 255), forest_x+InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_y,  new Color(0, 0, 0, 0));
+        g2.setPaint(gradient);
+        g2.fillRect(forest_x, forest_y,  InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_h);
+        
+        gradient = new GradientPaint(forest_x+forest_w-InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_y, new Color(0, 0, 0, 0), forest_x+forest_w, forest_y,  new Color(30, 30, 30, 255));
+        g2.setPaint(gradient);
+        g2.fillRect(forest_x+forest_w-InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_y, InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_h);
+        
+        gradient = new GradientPaint(forest_x, forest_y, new Color(30, 30, 30, 255), forest_x, forest_y+InfoPanel.RELIEF_GRADIENT_THICKNESS, new Color(0, 0, 0, 0));
+        g2.setPaint(gradient);
+        g2.fillRect(forest_x, forest_y, forest_w, InfoPanel.RELIEF_GRADIENT_THICKNESS);
+        
+        gradient = new GradientPaint(forest_x, forest_y+forest_h - InfoPanel.RELIEF_GRADIENT_THICKNESS, new Color(0, 0, 0, 0), forest_x, forest_y+forest_h,  new Color(30, 30, 30, 255));
+        g2.setPaint(gradient);
+        g2.fillRect(forest_x, forest_y+forest_h - InfoPanel.RELIEF_GRADIENT_THICKNESS, forest_w, InfoPanel.RELIEF_GRADIENT_THICKNESS);
+        
+        g2.setColor(Color.black);
+        
         // Draw the back tile
         int currentHeight = 0;
         int previewSize = (int) (infoLinesHeight / 2);
-        int previewX = InfoPanel.PREVIEW_BORDER;
+        int previewX = forest_x+InfoPanel.PREVIEW_BORDER;
         int previewY = currentHeight + (infoLinesHeight / 2) - (previewSize / 2);
         g2.drawImage(this.backTile, previewX, previewY, previewSize, previewSize, null);
 
         if (this.currentTile != null) {
             // Draw the pile counter
-            g2.setFont(new Font("Calibri", Font.BOLD, (int) (previewSize * 0.3)));
-            g2.drawString("" + this.pileSize, previewX, previewY - 5);
+            g2.setColor(new Color(200,200,200,200));
+            float circleSize = (float)(previewSize/1.5);
+            int circle_x = previewX + (int)(previewSize/2.0) - (int)(circleSize/2.0);
+            int circle_y = previewY + (int)(previewSize/2.0) - (int)(circleSize/2.0);
+            //g2.fillOval(circle_x, circle_y, (int)circleSize, (int)circleSize);
+            
+            
+            g2.setColor(Color.black);
+            g2.setFont(new Font("Calibri", Font.BOLD, (int) (previewSize * 0.4)));
+            g2.drawString("" + this.pileSize, circle_x+(int)(circleSize/2.0)-5, circle_y+(int)(circleSize/2.0)+5);
             g2.setFont(new Font("Calibri", Font.PLAIN, 12));
 
             // Draw preview tile
-            previewX = InfoPanel.PREVIEW_BORDER + previewSize + InfoPanel.PREVIEWES_GAP;
+            previewX += previewSize + InfoPanel.PREVIEWES_GAP;
             g2.drawImage(this.currentTile, previewX, previewY, previewSize, previewSize, null);
+            
+            gradient = new GradientPaint(previewX, previewY, new Color(255, 255, 255, 200), previewX, previewY-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  new Color(0, 0, 0, 0));
+            g2.setPaint(gradient);
+            g2.fillRect(previewX, previewY-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  previewSize, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+
+            gradient = new GradientPaint(previewX+previewSize, previewY, new Color(255, 255, 255, 200), previewX+previewSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY,  new Color(0,0,0,0));
+            g2.setPaint(gradient);
+            g2.fillRect(previewX + previewSize, previewY, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewSize);
+            
+            gradient = new GradientPaint(previewX, previewY+previewSize, new Color(255,255,255, 200), previewX, previewY+previewSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(0, 0, 0, 0));
+            g2.setPaint(gradient);
+            g2.fillRect(previewX, previewY+previewSize, previewSize, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
+
+            gradient = new GradientPaint(previewX, previewY, new Color(255,255,255, 200), previewX - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY,  new Color(0, 0, 0, 0));
+            g2.setPaint(gradient);
+            g2.fillRect(previewX - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewY, InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, previewSize);
+
+            g2.setColor(Color.black);
         }
 
         currentHeight += infoLinesHeight;
@@ -211,8 +264,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         for (Map.Entry<String, PlayerInfo> entry : this.playerInfoLines.entrySet()) {
             String key = entry.getKey();
             PlayerInfo value = entry.getValue();
-            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth() - InfoPanel.SEPARATION_LINE_WIDTH, key.equals(this.currentPlayer));
-            currentHeight += infoLinesHeight;
+            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth(), key.equals(this.currentPlayer));
+            currentHeight += infoLinesHeight+InfoPanel.GAPS_BETWEEN_LINES;
         }
 
         if (!this.message.isEmpty()) {
@@ -241,15 +294,9 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             this.meepleButton.addPoint(x+(int)width, y+(int)height);
             this.meepleButton.addPoint(x, y+(int)height);
             // Draw the inner message
-            g2.drawString("Ne pas poser", x_text, y_text);
-            g2.drawString("de Meeple", x_text, y_text + 16);
+            /*g2.drawString("Ne pas poser", x_text, y_text);
+            g2.drawString("de Meeple", x_text, y_text + 16);*/
         }
-
-        // Draw the separation line
-        g2.setColor(Color.GRAY);
-        g2.fillRect(this.getWidth() - InfoPanel.SEPARATION_LINE_WIDTH, 0, InfoPanel.SEPARATION_LINE_WIDTH, this.getHeight() - InfoPanel.SEPARATION_LINE_WIDTH);
-        g2.setColor(Color.BLACK);
-        super.paintChildren(g);
     }
 
     /**

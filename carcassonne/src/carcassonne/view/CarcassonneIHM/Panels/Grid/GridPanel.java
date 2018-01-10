@@ -6,8 +6,11 @@
 package carcassonne.view.CarcassonneIHM.Panels.Grid;
 
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Panels.Info.InfoPanel;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
+import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -27,6 +30,7 @@ import net.miginfocom.swing.MigLayout;
 public class GridPanel extends JPanel
 {
     // Constants
+    public static int SEPARATION_LINE_WIDTH = 10;
     public static int INITIAL_TILE_WIDTH = 120;
     public static int MIN_TILE_SIZE = 25;
     public static int MAX_TILE_SIZE = 300;
@@ -111,6 +115,15 @@ public class GridPanel extends JPanel
             // Paint the layers
             layer.paint(g2);
         });
+        
+        
+        // Draw the separation line
+        //GradientPaint gradient = new GradientPaint(0, 0, new Color(50, 50, 50, 255), 0, 0,  new Color(255, 255, 255, 100));
+        GradientPaint gradient = new GradientPaint(0, 0, new Color(30, 30, 30, 255), 0 + GridPanel.SEPARATION_LINE_WIDTH+30, 0,  new Color(0, 0, 0, 0));
+        g2.setPaint(gradient);
+        //g2.setColor(Color.RED);
+        g2.fillRect(0, 0, GridPanel.SEPARATION_LINE_WIDTH+30, this.getHeight());
+        g2.setColor(Color.BLACK);
         
         // Call the super methode
         super.paintChildren(g);
