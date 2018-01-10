@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import carcassonne.controller.CarcassonneGameControllerMulti;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -32,6 +33,8 @@ public class Online extends JDialog
 
     private JLabel icon;
     private JRadioButton serveur, client;
+    private JButton btCreateGame, btJoinGame;
+    private CarcassonneGameControllerMulti controller;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -105,9 +108,35 @@ public class Online extends JDialog
             panSettings.add(port);
 
         }
+        
+        btCreateGame = new JButton("Create a game");
+        btCreateGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                
+            }
+        });
+        btJoinGame = new JButton("Join a game");
+        btJoinGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
+        JPanel pnActionButtons = new JPanel();
+        pnActionButtons.add(btCreateGame);
+        pnActionButtons.add(btJoinGame);
+        
 
         this.getContentPane().add(panSettings, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(control, BorderLayout.SOUTH);
+        this.getContentPane().add(pnActionButtons, BorderLayout.EAST);
+
+        
     }
 }
