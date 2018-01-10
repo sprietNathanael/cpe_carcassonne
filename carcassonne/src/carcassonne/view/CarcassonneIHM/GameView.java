@@ -11,6 +11,7 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
+import enums.PlayerTypes;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class GameView
 
     /**
      * Game view constructor with a player list
+     *
      * @param playerList
      */
     public GameView(List<ParamPlayers> playerList)
@@ -36,42 +38,38 @@ public class GameView
         try {
             this.players = new ArrayList<>();
             ArrayList<String> colors = new ArrayList<>();
-            
+
             // Iterate through the players to add them to the main list
-            for(ParamPlayers p : playerList)
-            {
+            for (ParamPlayers p : playerList) {
                 // If the player is not empty
-                if(!p.getNom().isEmpty())
-                {
+                if (!p.getNom().isEmpty()) {
                     // If the color already exists in list
-                    if(colors.contains(p.getColor()))
-                    {
+                    if (colors.contains(p.getColor())) {
                         // Constructs the default players list
                         this.constructDefaultPlayersList();
                         break;
                     }
                     // Add the color and the player to the lists 
                     colors.add(p.getColor());
-                    players.add(new Player(p.getNom(), p.getColor().toLowerCase()));
+                    players.add(new Player(p.getNom(), p.getColor().toLowerCase(), p.getPlayerType()));
                 }
             }
-            
+
             // If there are not enough players
-            if(players.size() < 2)
-            {
+            if (players.size() < 2) {
                 // constructs the default players list
                 this.constructDefaultPlayersList();
             }
-            
+
             // Build the game
             this.game = new CarcassonneGame(players);
-            
+
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     /**
@@ -79,30 +77,30 @@ public class GameView
      */
     public GameView()
     {
-          try {
+        try {
             // constructs the default players list
             this.constructDefaultPlayersList();
-            
+
             // Build the game
             this.game = new CarcassonneGame(players);
-            
+
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     /**
      * Constructs a predefined list of 4 players
      */
     private void constructDefaultPlayersList()
     {
         this.players = new ArrayList<>();
-        players.add(new Player("player1", "blue"));
-        players.add(new Player("player2", "green"));
-        players.add(new Player("player3", "red"));
-        players.add(new Player("player4", "black"));
+        players.add(new Player("player1", "blue", PlayerTypes.player));
+        players.add(new Player("player2", "green", PlayerTypes.player));
+        players.add(new Player("player3", "red", PlayerTypes.player));
+        players.add(new Player("player4", "black", PlayerTypes.player));
     }
 
     /**

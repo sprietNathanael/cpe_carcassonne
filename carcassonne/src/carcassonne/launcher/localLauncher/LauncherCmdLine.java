@@ -9,6 +9,7 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneCmdLine;
+import enums.PlayerTypes;
 import java.util.ArrayList;
 
 /**
@@ -25,10 +26,10 @@ public class LauncherCmdLine
         CarcassonneGameControllerMulti controller;
 
         ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("player1", "blue"));
-        players.add(new Player("player2", "green"));
-        players.add(new Player("player3", "red"));
-        players.add(new Player("player4", "black"));
+        players.add(new Player("player1", "blue", PlayerTypes.player));
+        players.add(new Player("player2", "green", PlayerTypes.player));
+        players.add(new Player("player3", "red", PlayerTypes.player));
+        players.add(new Player("player4", "black", PlayerTypes.player));
         model = new CarcassonneGame(players);
         controller = new CarcassonneGameControllerMulti(model);
         CarcassonneCmdLine view = new CarcassonneCmdLine(controller);

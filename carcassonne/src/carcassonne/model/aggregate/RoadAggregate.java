@@ -10,6 +10,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import enums.PlayerTypes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -276,7 +277,7 @@ public class RoadAggregate extends AbstractAggregate
 
         //Fin du tour
         //Tour suivant, avec la pioche d'une pièce compatible, on pose la pièce à 0,-1
-        Player player2 = new Player("C'est moi", "yellow");
+        Player player2 = new Player("C'est moi", "yellow",PlayerTypes.player);
         AbstractTile nextTile = game.drawFromPileIndex(9);
         locationTypes = new HashSet<>();
         locationTypes.add("S");
