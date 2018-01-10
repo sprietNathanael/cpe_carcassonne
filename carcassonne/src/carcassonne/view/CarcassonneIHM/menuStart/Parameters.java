@@ -19,17 +19,25 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 public class Parameters extends JDialog
 {
 
+    private static final int NBMAXPLAYERS = 6;
+
     private ZDialogInfo zInfo = new ZDialogInfo();
     private boolean sendData;
-    private JLabel nomLabel, icon, colorsLabel;
+    private JLabel nomLabel, icon, colorsLabel,lbTypeJoueur;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
-    private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
+    /*private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
     private JComboBox<String> colorsJ1, colorsJ2, colorsJ3, colorsJ4, colorsJ5, colorsJ6;
+    private JCheckBox chbIaJ1, chbIaJ2, chbIaJ3, chbIaJ4, chbIaJ5, chbIaJ6;*/
+
+    private JTextField tfNomPlayer[];
+    private JComboBox cbColors[];
+    private JComboBox cbPlayerType[];
 
     public Parameters(JFrame parent, String title, boolean modal)
     {
@@ -44,16 +52,16 @@ public class Parameters extends JDialog
     {
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
-        
+
         //Dimension Window
         this.setSize(950, 700);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
-        
+
         //Add custom cursor
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
-        
+
         //Image de gauche
         icon = new JLabel(new ImageIcon("resources/knight.jpg"));
         JPanel panIcon = new JPanel();
@@ -87,10 +95,51 @@ public class Parameters extends JDialog
         numPlayers.add(tranche5);
 
         //------------- PART PLAYERS ------------------------------------------
-        JPanel player1 = new JPanel();
+        JPanel paPlayer;
+        JPanel content = new JPanel();
+        content.setBackground(Color.white);
+
+        tfNomPlayer = new JTextField[NBMAXPLAYERS];
+        cbPlayerType = new JComboBox[NBMAXPLAYERS];
+        cbColors = new JComboBox[NBMAXPLAYERS];
+
+        for (int i = 0 ; i < NBMAXPLAYERS ; i++) {
+            paPlayer = new JPanel();
+            paPlayer.setBackground(Color.white);
+            paPlayer.setPreferredSize(new Dimension(600, 55));
+            paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
+ 
+            lbTypeJoueur = new JLabel("Player type : ");
+            cbPlayerType[i] = new JComboBox();
+            cbPlayerType[i].addItem("Player");
+            cbPlayerType[i].addItem("Basic IA");
+            //cbPlayerType[i].addItem("Avanced IA");            
+            nomLabel = new JLabel("Name :");
+            colorsLabel = new JLabel("Color :");
+            tfNomPlayer[i] = new JTextField();
+            tfNomPlayer[i].setPreferredSize(new Dimension(100, 25));
+            cbColors[i] = new JComboBox<>();
+            cbColors[i].addItem("Red");
+            cbColors[i].addItem("Blue");
+            cbColors[i].addItem("Green");
+            cbColors[i].addItem("Black");
+            cbColors[i].addItem("Yellow");
+            cbColors[i].addItem("Magenta");
+            paPlayer.add(lbTypeJoueur, BorderLayout.WEST);
+            paPlayer.add(cbPlayerType[i], BorderLayout.WEST);
+            paPlayer.add(nomLabel, BorderLayout.CENTER);
+            paPlayer.add(tfNomPlayer[i], BorderLayout.CENTER);
+            paPlayer.add(colorsLabel, BorderLayout.EAST);
+            paPlayer.add(cbColors[i], BorderLayout.EAST);
+            content.add(paPlayer);
+        }
+
+        /*JPanel player1 = new JPanel();
         player1.setBackground(Color.white);
         player1.setPreferredSize(new Dimension(600, 55));
         player1.setBorder(BorderFactory.createTitledBorder("Player1"));
+        chbIaJ1 = new JCheckBox("IA");
+        chbIaJ1.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ1 = new JTextField();
@@ -102,8 +151,9 @@ public class Parameters extends JDialog
         colorsJ1.addItem("Black");
         colorsJ1.addItem("Yellow");
         colorsJ1.addItem("Magenta");
-        player1.add(nomLabel, BorderLayout.WEST);
-        player1.add(nomJ1, BorderLayout.WEST);
+        player1.add(chbIaJ1, BorderLayout.WEST);
+        player1.add(nomLabel, BorderLayout.CENTER);
+        player1.add(nomJ1, BorderLayout.CENTER);
         player1.add(colorsLabel, BorderLayout.EAST);
         player1.add(colorsJ1, BorderLayout.EAST);
 
@@ -111,6 +161,8 @@ public class Parameters extends JDialog
         player2.setBackground(Color.white);
         player2.setPreferredSize(new Dimension(600, 55));
         player2.setBorder(BorderFactory.createTitledBorder("Player2"));
+        chbIaJ2 = new JCheckBox("IA");
+        chbIaJ2.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ2 = new JTextField();
@@ -122,6 +174,7 @@ public class Parameters extends JDialog
         colorsJ2.addItem("Black");
         colorsJ2.addItem("Yellow");
         colorsJ2.addItem("Magenta");
+        player2.add(chbIaJ2, BorderLayout.WEST);
         player2.add(nomLabel, BorderLayout.WEST);
         player2.add(nomJ2, BorderLayout.WEST);
         player2.add(colorsLabel, BorderLayout.EAST);
@@ -131,6 +184,8 @@ public class Parameters extends JDialog
         player3.setBackground(Color.white);
         player3.setPreferredSize(new Dimension(600, 55));
         player3.setBorder(BorderFactory.createTitledBorder("Player3"));
+        chbIaJ3 = new JCheckBox("IA");
+        chbIaJ3.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ3 = new JTextField();
@@ -142,6 +197,7 @@ public class Parameters extends JDialog
         colorsJ3.addItem("Black");
         colorsJ3.addItem("Yellow");
         colorsJ3.addItem("Magenta");
+        player3.add(chbIaJ3, BorderLayout.WEST);
         player3.add(nomLabel, BorderLayout.WEST);
         player3.add(nomJ3, BorderLayout.WEST);
         player3.add(colorsLabel, BorderLayout.EAST);
@@ -151,6 +207,8 @@ public class Parameters extends JDialog
         player4.setBackground(Color.white);
         player4.setPreferredSize(new Dimension(600, 55));
         player4.setBorder(BorderFactory.createTitledBorder("Player4"));
+        chbIaJ4 = new JCheckBox("IA");
+        chbIaJ4.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ4 = new JTextField();
@@ -162,6 +220,7 @@ public class Parameters extends JDialog
         colorsJ4.addItem("Black");
         colorsJ4.addItem("Yellow");
         colorsJ4.addItem("Magenta");
+        player4.add(chbIaJ4, BorderLayout.WEST);
         player4.add(nomLabel, BorderLayout.WEST);
         player4.add(nomJ4, BorderLayout.WEST);
         player4.add(colorsLabel, BorderLayout.EAST);
@@ -171,6 +230,8 @@ public class Parameters extends JDialog
         player5.setBackground(Color.white);
         player5.setPreferredSize(new Dimension(600, 55));
         player5.setBorder(BorderFactory.createTitledBorder("Player5"));
+        chbIaJ5 = new JCheckBox("IA");
+        chbIaJ5.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ5 = new JTextField();
@@ -182,6 +243,7 @@ public class Parameters extends JDialog
         colorsJ5.addItem("Black");
         colorsJ5.addItem("Yellow");
         colorsJ5.addItem("Magenta");
+        player5.add(chbIaJ5, BorderLayout.WEST);
         player5.add(nomLabel, BorderLayout.WEST);
         player5.add(nomJ5, BorderLayout.WEST);
         player5.add(colorsLabel, BorderLayout.EAST);
@@ -191,6 +253,8 @@ public class Parameters extends JDialog
         player6.setBackground(Color.white);
         player6.setPreferredSize(new Dimension(600, 55));
         player6.setBorder(BorderFactory.createTitledBorder("Player6"));
+        chbIaJ6 = new JCheckBox("IA");
+        chbIaJ6.setBackground(Color.white);
         nomLabel = new JLabel("Name :");
         colorsLabel = new JLabel("Color :");
         nomJ6 = new JTextField();
@@ -202,6 +266,7 @@ public class Parameters extends JDialog
         colorsJ6.addItem("Black");
         colorsJ6.addItem("Yellow");
         colorsJ6.addItem("Magenta");
+        player6.add(chbIaJ6, BorderLayout.WEST);
         player6.add(nomLabel, BorderLayout.WEST);
         player6.add(nomJ6, BorderLayout.WEST);
         player6.add(colorsLabel, BorderLayout.EAST);
@@ -215,8 +280,7 @@ public class Parameters extends JDialog
         content.add(player3);
         content.add(player4);
         content.add(player5);
-        content.add(player6);
-
+        content.add(player6);*/
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
 
@@ -225,13 +289,20 @@ public class Parameters extends JDialog
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                zInfo = new ZDialogInfo(nomJ1.getText(), getNumbersPlayers(), (String) colorsJ1.getSelectedItem(),
+                zInfo = new ZDialogInfo(tfNomPlayer[0].getText(), getNumbersPlayers(), (String) cbColors[0].getSelectedItem(),
+                        tfNomPlayer[1].getText(), (String) cbColors[1].getSelectedItem(),
+                        tfNomPlayer[2].getText(), (String) cbColors[2].getSelectedItem(),
+                        tfNomPlayer[3].getText(), (String) cbColors[3].getSelectedItem(),
+                        tfNomPlayer[4].getText(), (String) cbColors[4].getSelectedItem(),
+                        tfNomPlayer[5].getText(), (String) cbColors[5].getSelectedItem()
+                );
+                /*zInfo = new ZDialogInfo(nomJ1.getText(), getNumbersPlayers(), (String) colorsJ1.getSelectedItem(),
                         nomJ2.getText(), (String) colorsJ2.getSelectedItem(),
                         nomJ3.getText(), (String) colorsJ3.getSelectedItem(),
                         nomJ4.getText(), (String) colorsJ4.getSelectedItem(),
                         nomJ5.getText(), (String) colorsJ5.getSelectedItem(),
                         nomJ6.getText(), (String) colorsJ6.getSelectedItem()
-                );
+                );*/
                 setVisible(false);
             }
 
@@ -245,7 +316,7 @@ public class Parameters extends JDialog
                         : tranche1.getText();
             }
         });
-       
+
         control.add(okBouton);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
@@ -284,12 +355,22 @@ public class Parameters extends JDialog
     {
         List<ParamPlayers> li = new LinkedList<>();
 
-        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String)colorsJ1.getSelectedItem());
-        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String)colorsJ2.getSelectedItem());
-        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), (String)colorsJ3.getSelectedItem());
-        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), (String)colorsJ4.getSelectedItem());
-        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), (String)colorsJ5.getSelectedItem());
-        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), (String)colorsJ6.getSelectedItem());
+        ParamPlayers pTemp = null;
+
+        for (int i = 0; i < NBMAXPLAYERS; i++) {
+            pTemp = new ParamPlayers(tfNomPlayer[i].getText(), (String) cbColors[i].getSelectedItem(), (String) cbPlayerType[i].getSelectedItem());
+
+            if (!pTemp.getNom().isEmpty()) {
+                li.add(pTemp);
+            }
+        }
+        /*
+        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String) colorsJ1.getSelectedItem());
+        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String) colorsJ2.getSelectedItem());
+        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), (String) colorsJ3.getSelectedItem());
+        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), (String) colorsJ4.getSelectedItem());
+        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), (String) colorsJ5.getSelectedItem());
+        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), (String) colorsJ6.getSelectedItem());
         //int nbPlayers = 0;
 
         // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
@@ -311,7 +392,7 @@ public class Parameters extends JDialog
         }
         if (!p6.getNom().isEmpty()) {
             li.add(p6);
-        }
+        }*/
 
         return li;
     }

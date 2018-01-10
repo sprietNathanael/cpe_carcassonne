@@ -238,12 +238,10 @@ public class Board implements BoardInterface
         HashMap<Coord, AbstractTile> nearTiles = new HashMap<>();
         int col = coordinates.col;
         int row = coordinates.row;
-        Coord temp;
 
         for (int c = col - 1; c <= col + 1; c++) {
             for (int r = row - 1; r <= row + 1; r++) {
                 if (c != col || r != row) {
-                    //temp = new Coord(c, r);
                     nearTiles.put(new Coord(c, r), grid.get(convertCoord(c, r)));
                 }
             }

@@ -38,4 +38,11 @@ public class ParamPlayers
         return color;
     }
 
+    public String getPlayerType()
+    {
+        return playerType;
+    }
+    
+    
+
 }
