@@ -90,7 +90,7 @@ public class PlayerInfo
         
         // Get the hollow meeple image
         try {
-            this.hollowMeeple = ImageIO.read(new File("resources/meeples_bordered/hollow.png"));
+            this.hollowMeeple = ImageIO.read(new File("resources/meeples_bordered/brown.png"));
         } catch (IOException ex) {
             Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
