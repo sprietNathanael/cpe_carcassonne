@@ -20,7 +20,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
-import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 public class Parameters extends JDialog
@@ -30,7 +29,7 @@ public class Parameters extends JDialog
 
     private ZDialogInfo zInfo = new ZDialogInfo();
     private boolean sendData;
-    private JLabel nomLabel, icon, colorsLabel,lbTypeJoueur;
+    private JLabel nomLabel, icon, colorsLabel, lbTypeJoueur;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
     /*private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
     private JComboBox<String> colorsJ1, colorsJ2, colorsJ3, colorsJ4, colorsJ5, colorsJ6;
@@ -49,6 +48,7 @@ public class Parameters extends JDialog
     /**
      * Allows to init the differents components for the game
      */
+    @SuppressWarnings("unchecked")
     private void initComponent()
     {
         //Set Icon
@@ -104,12 +104,12 @@ public class Parameters extends JDialog
         cbPlayerType = new JComboBox[NBMAXPLAYERS];
         cbColors = new JComboBox[NBMAXPLAYERS];
 
-        for (int i = 0 ; i < NBMAXPLAYERS ; i++) {
+        for (int i = 0; i < NBMAXPLAYERS; i++) {
             paPlayer = new JPanel();
             paPlayer.setBackground(Color.white);
             paPlayer.setPreferredSize(new Dimension(600, 55));
             paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
- 
+
             lbTypeJoueur = new JLabel("Player type : ");
             cbPlayerType[i] = new JComboBox<>();
             cbPlayerType[i].addItem(PlayerTypes.player);

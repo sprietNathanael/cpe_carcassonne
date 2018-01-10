@@ -28,6 +28,7 @@ public class Settings extends JFrame
     private final BtGame btOnline = new BtGame("resources/online.png");
 
     private Parameters parameters;
+    private Online online;
 
     public Settings() throws IOException
     {
@@ -66,7 +67,10 @@ public class Settings extends JFrame
         });
 
         btOnline.addActionListener((ActionEvent arg0) -> {
-            JOptionPane.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
+            //JOptionPane.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
+            self.online = new Online(null,"Online",true);
+            self.online.setVisible(true);
+            setVisible(false);
         });
         this.setVisible(true);
     }
