@@ -5,6 +5,7 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import java.util.Set;
 
@@ -23,11 +24,29 @@ public class AbbayAggregate extends AbstractAggregate
         super(col, row, firstTile, locationTypes);
     }
 
+    public boolean coordsAreCenterOfAgg(Coord coord)
+    {
+        boolean result = false;
+        Set<String> types = this.getAggregatedTypesByCoord(coord.col, coord.row);
+
+        if (types != null) {
+            if (types.contains("CSE")
+                    || types.contains("CSW")
+                    || types.contains("CNE")
+                    || types.contains("CNW")) {
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public boolean checkIsCompleted()
     {
-        if (this.aggregatedTiles.size() == 9)
+        if (this.aggregatedTiles.size() == 9) {
             this.isCompleted = true;
+        }
 
         return this.isCompleted;
     }
@@ -37,10 +56,17 @@ public class AbbayAggregate extends AbstractAggregate
     {
         return this.aggregatedTiles.size();
     }
-    
+
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
     }
+
+    @Override
+    public String toString()
+    {
+        return "AbbayAggregate{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + "\n}";
+    }
+
 }

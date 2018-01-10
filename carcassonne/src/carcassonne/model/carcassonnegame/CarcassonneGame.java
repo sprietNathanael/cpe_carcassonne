@@ -18,7 +18,6 @@ import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
-import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
@@ -173,7 +172,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         board.addTile(tile, row, column);
         this.manageNewTileAggregates(tile, row, column);
         this.notifyBoardChanged();
-        System.out.println(this.cityAggregates);
     }
 
     /**
@@ -219,14 +217,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             //test si on est sur la bonne tuile
             if (aggregate.getAggregatedTypes().containsKey(tile)) {
                 currentTileLocations = aggregate.getAggregatedTypes().get(tile);
+                System.out.println("Aggrégat!!!!!: " + currentTileLocations + "tuile: " + tile );
                 //Si la locations correspond à cet aggrégat, c'est le bon et on ajoute le meeple + player
                 if (currentTileLocations.contains(coordinates)) {
+                    System.out.println("Ajout meeple correct");
+                    System.out.println(aggregate);
                     aggregate.addMeeple(player, meeple);
                 }
             }
         }
-        /* Update the aggregates, if one just has been completed, we add the points and free the meeple */
-        //this.manageCompletedAggregate();
     }
 
     /**
@@ -392,6 +391,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Set<Set<String>> roadAggregatesEmplacements = tile.getRoadAggregateEmplacements();
         Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
         Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
+        Set<String> abbayAggregateEmplacements = tile.getAbbayAggregateEmplacements();
 
         //--- Routes ---//
         roadAggregatesEmplacements = updateRoads(tile, col, row, roadAggregatesEmplacements);
@@ -420,10 +420,23 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         for (Set<String> currentFieldEmplacement : fieldAggregatesEmplacements) {
             FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
             fieldAggregates.add(newField);
+        }
+
+        //--- Abbayes ---//
+        if (!abbayAggregateEmplacements.isEmpty()) {
+            //Création d'une abbay s'il y en a une sur la carte
+            AbbayAggregate newAbbey = new AbbayAggregate(col, row, tile, abbayAggregateEmplacements);
+            //On récupère toutes les tuiles voisines
+            for (Map.Entry<Coord, AbstractTile> entry : board.getNearTilesAbbayRange(convertedCoord, tile).entrySet()) {
+                Coord neighbordCoord = entry.getKey();
+                AbstractTile neighbordTile = entry.getValue();
+                Set<String> emptyLocations = new HashSet<>();
+                newAbbey.enlargeAggregate(neighbordCoord.col, neighbordCoord.row, neighbordTile, emptyLocations);
+            }
+            abbayAggregates.add(newAbbey);
 
         }
-        // Manage abbay
-        manageNewTileAggregatesAbbay(convertedCoord, tile);
+        manageExistingAbbayAggregates(convertedCoord, tile);
     }
 
     /**
@@ -432,35 +445,24 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * @param coord
      * @param tile
      */
-    private void manageNewTileAggregatesAbbay(Coord coord, AbstractTile tile)
+    private void manageExistingAbbayAggregates(Coord convertedCoord, AbstractTile tile)
     {
-        HashMap<Coord, AbstractTile> nearTiles = board.getNearTilesAbbayRange(coord, tile);
-        AbbayAggregate abbayAggregate = null;
+        HashMap<Coord, AbstractTile> nearTiles = board.getNearTilesAbbayRange(convertedCoord, tile);
+        List<AbbayAggregate> abbeys = new ArrayList<>();
+        abbeys.addAll(abbayAggregates);
 
-        for (Map.Entry<Coord, AbstractTile> entry : nearTiles.entrySet()) {
-            Coord key = entry.getKey();
-            AbstractTile value = entry.getValue();
+        //Parcours des abbayes présentes
+        for (AbbayAggregate abbey : abbeys) {
+            //Parcours des coordonnées voisines
+            for (Map.Entry<Coord, AbstractTile> entry : nearTiles.entrySet()) {
+                Coord currentCoord = entry.getKey();
+                Set<String> emptyLocations = new HashSet<>();
 
-            if (value != null) {
-                if (tile.getType("CNW").getClass() == AbbayType.class) // carte posée = abbay
-                {
-                    if (abbayAggregate == null) {
-                        abbayAggregate = new AbbayAggregate(coord.col, coord.row, tile, tile.getAbbayAggregateEmplacements());
-                    }
-                    abbayAggregate.enlargeAggregate(key.col, key.row, value, value.getAbbayAggregateEmplacements());
-                }
-                if (value.getType("CNW").getClass() == AbbayType.class) { //carte autour = abbay
-
-                    for (AbbayAggregate abAgg : abbayAggregates) {
-                        if (abAgg.contain(value) == true) {
-                            abAgg.enlargeAggregate(coord.row, coord.col, tile, tile.getAbbayAggregateEmplacements());
-                        }
-                    }
+                //Si la coordonnée voisine pointe sur la tuile où le batiment de l'abbaye est présent, c'est une tuile voisine donc on l'ajoute
+                if (abbey.coordsAreCenterOfAgg(currentCoord)) {
+                    abbey.enlargeAggregate(convertedCoord.col, convertedCoord.row, tile, emptyLocations);
                 }
             }
-        }
-        if (abbayAggregate != null) {
-            abbayAggregates.add(abbayAggregate);
         }
 
         for (AbbayAggregate abAgg : abbayAggregates) {
@@ -585,8 +587,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     if (neighborTileLocations != null) {
                         //Donne la localisation des types de la nouvelle tuile qui sont potentiellement compatibles avec cet aggrégat
                         neededLocations = getLocationsAuthorized(neighboredTilesEmplacement, neighborTileLocations);
-                        //System.out.println("Types requis: " + neededLocations);
-                        //System.out.println("Types de la tuile: " + roadAggregatesEmplacements);
 
                         //Parcours tous les morceaux d'aggrégats de la nouvelle tuile
                         for (Set<String> locationInNewTile : roadAggregatesEmplacements) {
@@ -603,8 +603,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                                         roadAlreadyAffected.put(locationInNewTile, road);
                                         //Suppression du morceau d'aggrégat pour ne pas qu'il soit créé dans un nouvel aggrégat
                                         newRoadAggregatesEmplacements.remove(locationInNewTile);
-
-                                        //System.out.println("Placement d'une route aux coordonnées: " + col + ":" + row);
                                     }
                                     //S'il a déjà été affecté, on merge les deux aggrégats car ils sont maintenant communs
                                     else {
@@ -792,14 +790,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     result.add(currentAggregateLocations);
                 }
             }
-            currentAggregateLocations = null;
             for (CityAggregate city : cityAggregates) {
                 currentAggregateLocations = city.getTileLocations(col, row);
                 if (currentAggregateLocations != null && city.getPlayers().isEmpty()) {
                     result.add(currentAggregateLocations);
                 }
             }
-            currentAggregateLocations = null;
             for (FieldAggregate field : fieldAggregates) {
                 currentAggregateLocations = field.getTileLocations(col, row);
                 if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
@@ -808,7 +804,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
 
             Set<String> abbayAggEmp = currentTile.getAbbayAggregateEmplacements();
-            if (abbayAggEmp.size() != 0) {
+            if (!abbayAggEmp.isEmpty()) {
                 result.add(abbayAggEmp);
             }
         }

@@ -7,6 +7,7 @@ package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.coord.Coord;
+import carcassonne.model.carcassonnegame.CarcassonneGame;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -242,7 +243,10 @@ public class Board implements BoardInterface
         for (int c = col - 1; c <= col + 1; c++) {
             for (int r = row - 1; r <= row + 1; r++) {
                 if (c != col || r != row) {
-                    nearTiles.put(new Coord(c, r), grid.get(convertCoord(c, r)));
+                    AbstractTile neighborTile = grid.get(convertCoord(c, r));
+                    if (neighborTile != null) {
+                        nearTiles.put(new Coord(c, r), neighborTile);
+                    }
                 }
             }
         }
