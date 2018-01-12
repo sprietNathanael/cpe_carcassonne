@@ -14,6 +14,7 @@ import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -28,6 +29,7 @@ public class RiverSet implements SetInterface
 
     private final List<AbstractTile> tileList;
     private AbstractTile firstTile;
+    private AbstractTile lastTile;
 
     public RiverSet()
     {
@@ -38,7 +40,13 @@ public class RiverSet implements SetInterface
     @Override
     public List<AbstractTile> getSet()
     {
-        return tileList;
+        List<AbstractTile> result = new ArrayList<>();
+
+        result.addAll(tileList);
+        Collections.shuffle(result);
+        result.add(lastTile);
+
+        return result;
     }
 
     @Override
@@ -56,7 +64,7 @@ public class RiverSet implements SetInterface
 
         //Tile RA
         aggregates = new HashSet<>();
-        aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N",
+        aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "W", "NWW", "NW", "NNW", "N", 
                 "NNE", "NE", "NEE", "SSE", "SE", "SEE")); //F
         aggregates.add(retTreeSet("CNE", "CNW", "CSW", "CSE", "E")); //Ri
 
@@ -124,21 +132,6 @@ public class RiverSet implements SetInterface
             ));
         }
 
-        //Tile RE
-        aggregates = new HashSet<>();
-        aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "NWW", "NW", "NNW", "N",
-                "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE")); //F
-        aggregates.add(retTreeSet("W", "CSE", "CNE", "CSW", "CNW")); //Ri
-
-        tileList.add(new CasualTile("RE", "river", "RE", //Id
-                new FieldType(), new FieldType(), new FieldType(), //North section
-                new FieldType(), //East section
-                new FieldType(), new FieldType(), new FieldType(), //South section
-                new RiverType(), //West section
-                new RiverType(), new RiverType(), new RiverType(), new RiverType(), //Center section
-                aggregates
-        ));
-
         //Tile RG
         aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NWW", "NW", "NNW")); //F
@@ -178,7 +171,8 @@ public class RiverSet implements SetInterface
         //Tile RI
         aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NNW", "N", "NNE")); //C
-        aggregates.add(retTreeSet("NWW", "NW", "NE", "NEE")); //F
+        aggregates.add(retTreeSet("NWW", "NW")); //F
+        aggregates.add(retTreeSet("NE", "NEE")); //F
         aggregates.add(retTreeSet("SWW", "SW", "SSW")); //F
         aggregates.add(retTreeSet("SSE", "SE", "SEE")); //F
         aggregates.add(retTreeSet("S", "CSW", "CSE", "CNW", "CNE")); //R
@@ -233,6 +227,21 @@ public class RiverSet implements SetInterface
                 new FieldType(), new FieldType(), new RiverType(), new FieldType(), //Center section
                 aggregates
         ));
+
+        //Tile RE
+        aggregates = new HashSet<>();
+        aggregates.add(retTreeSet("S", "SSW", "SW", "SWW", "NWW", "NW", "NNW", "N",
+                "NNE", "NE", "NEE", "E", "SSE", "SE", "SEE")); //F
+        aggregates.add(retTreeSet("W", "CSE", "CNE", "CSW", "CNW")); //Ri
+
+        lastTile = new CasualTile("RE", "river", "RE", //Id
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new FieldType(), //East section
+                new FieldType(), new FieldType(), new FieldType(), //South section
+                new RiverType(), //West section
+                new RiverType(), new RiverType(), new RiverType(), new RiverType(), //Center section
+                aggregates
+        );
     }
 
     public static Set<String> retTreeSet(String... poss)

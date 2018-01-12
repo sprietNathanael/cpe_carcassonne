@@ -155,6 +155,17 @@ public abstract class AbstractAggregate
     protected void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         aggregatedTiles.put(new Coord(col, row), newTile);
+        Set<String> updatedLocations = new HashSet<>();
+        if (aggregatedPositionTypes.containsKey(newTile)) {
+            Set<String> alreadyLocations = aggregatedPositionTypes.get(newTile);
+
+            for (String location : locationTypes) {
+                if (alreadyLocations.contains(location)) {
+                    updatedLocations.remove(location);
+                }
+            }
+            locationTypes.addAll(alreadyLocations);
+        }
         aggregatedPositionTypes.put(newTile, locationTypes);
     }
 

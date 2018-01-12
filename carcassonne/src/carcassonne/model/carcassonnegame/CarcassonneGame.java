@@ -16,6 +16,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
+import carcassonne.model.set.RiverSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.CityType;
@@ -50,6 +51,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<AbbayAggregate> abbayAggregates;
     private String notifyMessage;
     private Player winningPlayer;
+    private boolean riverExtensionIsUsed;
 
     public CarcassonneGame() throws Exception
     {
@@ -78,6 +80,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         cityAggregates = new ArrayList<>();
         fieldAggregates = new ArrayList<>();
         abbayAggregates = new ArrayList<>();
+        riverExtensionIsUsed = false;
     }
 
     /**
@@ -172,6 +175,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         board.addTile(tile, row, column);
         this.manageNewTileAggregates(tile, row, column);
         this.notifyBoardChanged();
+        System.out.println("Champs: " + fieldAggregates);
     }
 
     /**
@@ -768,7 +772,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     /**
-     * Get free aggregates of the tile, if the current player has at least on
+     * Get free aggregates of the tile, if the current player has at least one
      * meeple to add
      *
      * @param x
@@ -798,6 +802,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
             for (FieldAggregate field : fieldAggregates) {
                 currentAggregateLocations = field.getTileLocations(col, row);
+                System.out.println("Locations courantes: " + currentAggregateLocations);
+                System.out.println("oueurs: " + field.getPlayers());
                 if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
                     result.add(currentAggregateLocations);
                 }
@@ -809,6 +815,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
 
+        System.out.println("ok ?? " + result);
         return result;
     }
 
@@ -944,5 +951,24 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             i++;
         }
         return "";
+    }
+
+    /**
+     * Activate the river extension
+     */
+    public void useRiverExtension()
+    {
+        //Indicate we now use the extension
+        riverExtensionIsUsed = true;
+        RiverSet riverSet = new RiverSet();
+        List<AbstractTile> newPile = new ArrayList<>();
+
+        //The first tile changes
+        firstTile = riverSet.getFirstTile();
+        //We add the river add the beginning of the first tile changes
+        newPile.addAll(riverSet.getSet());
+        newPile.addAll(this.pile);
+
+        this.pile = newPile;
     }
 }
