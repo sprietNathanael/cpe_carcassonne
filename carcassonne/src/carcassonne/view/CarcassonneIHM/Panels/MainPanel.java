@@ -18,6 +18,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.type.AbstractType;
+import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.BorderLayout;
@@ -40,6 +41,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private TilePlacementLayer tilesPlacementLayer;
     private GridPanel gridPanel;
     private MeeplePlacementLayer meeplePlacementLayer;
+    private FieldsLayer fieldsLayer;
     private InfoPanel infoPanel;
     private ArrayList<Player> players;
     private UICoord lastCoord;
@@ -62,12 +64,14 @@ public class MainPanel extends JPanel implements java.util.Observer
         // Construct layers
         this.tilesLayer = new TilesLayer(gridPanel, this.controller);
         this.meeplesLayer = new MeeplesLayer(gridPanel, this.controller);
+        this.fieldsLayer = new FieldsLayer(gridPanel, this.controller);
         this.meeplePlacementLayer = new MeeplePlacementLayer(gridPanel, this.controller);
         this.tilesPlacementLayer = new TilePlacementLayer(gridPanel, this.controller, this);
         
         // Add the layers to the grid panel
         gridPanel.addLayer(tilesPlacementLayer);
         gridPanel.addLayer(tilesLayer);
+        gridPanel.addLayer(fieldsLayer);
         gridPanel.addLayer(meeplePlacementLayer);
         gridPanel.addLayer(meeplesLayer);
         
@@ -103,6 +107,10 @@ public class MainPanel extends JPanel implements java.util.Observer
                     HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();
+                    
+                    this.fieldsLayer.onShow();
+                    this.fieldsLayer.setFields(game.getFieldAggregates());
+                    
                     // Set the preview image of the placement layer
                     if (preview != null) {
                         this.tilesPlacementLayer.setPreview(preview);

@@ -501,7 +501,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * @param y
      * @return
      */
-    private Coord convertCoord(int x, int y)
+    public static Coord convertCoord(int x, int y)
     {
         return new Coord(x, y * -1);
     }
@@ -970,5 +970,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         newPile.addAll(this.pile);
 
         this.pile = newPile;
+    }
+    
+    public List<FieldAggregate> getFieldAggregates()
+    {
+        return fieldAggregates;
     }
 }
