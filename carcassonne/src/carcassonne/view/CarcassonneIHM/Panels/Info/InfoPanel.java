@@ -59,11 +59,16 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private BufferedImage noMeepleButtonImage;
     private BufferedImage forestTexture;
     private BufferedImage stoneTexture;
+    private BufferedImage fields_on;
+    private BufferedImage fields_off;
     private int pileSize;
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
+    private Polygon fieldsButton;
     private InfoPanelMouseAdapter mouseListener;
     private String message;
+    private boolean fieldsOn;
+    private MainPanel mainPanel;
 
     /**
      * Constructs the information panel
@@ -71,7 +76,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
      * @param players
      * @param controller
      */
-    public InfoPanel(ArrayList<Player> players, AbstractCarcassonneGameController controller)
+    public InfoPanel(ArrayList<Player> players, AbstractCarcassonneGameController controller, MainPanel mainPanel)
     {
         // Configure component
         setDoubleBuffered(true);
@@ -79,8 +84,9 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         setLayout(new MigLayout());
 
         this.controller = controller;
-
+        this.mainPanel = mainPanel;
         this.displayPassMeepleTurnButton = false;
+        this.fieldsOn = false;
 
         // Adds the mouse listener
         this.mouseListener = new InfoPanelMouseAdapter(this);
@@ -117,6 +123,20 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Get the forest texture image
         try {
             this.stoneTexture = ImageIO.read(new File("resources/textures/stone.jpg"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the fields on icon
+        try {
+            this.fields_on = ImageIO.read(new File("resources/fields_on.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the fiels off icon
+        try {
+            this.fields_off = ImageIO.read(new File("resources/fields_off.png"));
         } catch (IOException ex) {
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -305,6 +325,26 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             currentHeight += 20;
 
         }
+        
+        double ratio_FieldsIcon = (double)this.fields_on.getHeight() / (double)this.fields_on.getWidth();
+        double width_FieldsIcon = this.getWidth()/3.0;
+        double height_FieldsIcon = width_FieldsIcon*ratio_FieldsIcon;
+        int x_FieldsIcon = (int) ((this.getWidth() / 2.0) - (width_FieldsIcon / 2.0));
+        int y_FieldsIcon = currentHeight;
+        if(this.fieldsOn)
+        {
+            g2.drawImage(this.fields_off, x_FieldsIcon, y_FieldsIcon, (int)width_FieldsIcon, (int)height_FieldsIcon, null);            
+        }
+        else
+        {
+            g2.drawImage(this.fields_on, x_FieldsIcon, y_FieldsIcon, (int)width_FieldsIcon, (int)height_FieldsIcon, null);
+        }
+        currentHeight+=height_FieldsIcon;
+        this.fieldsButton = new Polygon();
+        this.fieldsButton.addPoint(x_FieldsIcon, y_FieldsIcon);
+        this.fieldsButton.addPoint(x_FieldsIcon+(int)width_FieldsIcon, y_FieldsIcon);
+        this.fieldsButton.addPoint(x_FieldsIcon+(int)width_FieldsIcon, y_FieldsIcon+(int)height_FieldsIcon);
+        this.fieldsButton.addPoint(x_FieldsIcon, y_FieldsIcon+(int)height_FieldsIcon);
 
         if (this.displayPassMeepleTurnButton) {
             // Draw the pass meeple turn button
@@ -362,6 +402,11 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
             // Ends the turn
             this.controller.endTurn();
+        }
+        else if (this.fieldsButton != null && this.fieldsButton.contains(p)) {
+            // Hides the button
+            this.mainPanel.switchFields();
+            this.fieldsOn = !this.fieldsOn;
         }
     }
 

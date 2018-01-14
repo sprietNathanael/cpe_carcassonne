@@ -79,9 +79,10 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.meeplePlacementLayer.onHide();
         this.tilesLayer.onShow();
         this.meeplesLayer.onShow();
+        this.fieldsLayer.onShow();
         
         // Construct an info panel
-        this.infoPanel = new InfoPanel(this.players, this.controller);
+        this.infoPanel = new InfoPanel(this.players, this.controller, this);
         this.infoPanel.setPreferredSize(new Dimension(300, 10));
 
         // Add the panels to the main panel
@@ -108,7 +109,6 @@ public class MainPanel extends JPanel implements java.util.Observer
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();
                     
-                    this.fieldsLayer.onShow();
                     this.fieldsLayer.setFields(game.getFieldAggregates());
                     
                     // Set the preview image of the placement layer
@@ -246,5 +246,19 @@ public class MainPanel extends JPanel implements java.util.Observer
         // Show the meeple placement layer
         this.meeplePlacementLayer.setCurrentPosition(newCoord);
         this.meeplePlacementLayer.onShow();
+    }
+    
+    public void switchFields()
+    {
+        if(this.fieldsLayer.isVisible())
+        {
+            this.fieldsLayer.onHide();
+        }
+        else
+        {
+            this.fieldsLayer.onShow();
+        }
+        this.gridPanel.repaint();
+        this.infoPanel.repaint();
     }
 }
