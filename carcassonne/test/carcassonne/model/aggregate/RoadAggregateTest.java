@@ -140,7 +140,7 @@ public class RoadAggregateTest
         locationTypes.add("CSE");
         locationTypes.add("E");
         instance.enlargeAggregate(-1, 0, secondTile, locationTypes);
-        Player player = new Player("heelo !", "blue");
+        Player player = new Player("heelo !", "blue", "Player");
         instance.addMeeple(player, player.getFirstMeepleAvailable());
 
         AbstractTile thirdTile = new CasualTile("X", new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new FieldType(), new RoadType(), new CrossType(), new CrossType(), new CrossType(), new CrossType());

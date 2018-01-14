@@ -462,7 +462,7 @@ public class CasualTileTest
         aggregates.add(retTreeSet("S", "CNW", "CSW", "N"));
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
-        CasualTile ctD = new CasualTile("D", "D0", //Id
+        CasualTile ctD = new CasualTile("D", "casual", "D0", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new RoadType(), //North
                 new FieldType(), new FieldType(), new CityType(), //North East section
@@ -541,7 +541,7 @@ public class CasualTileTest
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
 
-        CasualTile tile = new CasualTile("D", "D", //Id
+        CasualTile tile = new CasualTile("D", "casual", "D", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new RoadType(), //North
                 new FieldType(), new FieldType(), new CityType(), //North East section
@@ -570,7 +570,7 @@ public class CasualTileTest
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
 
-        CasualTile tile = new CasualTile("D", "D", //Id
+        CasualTile tile = new CasualTile("D", "casual", "D", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new RoadType(), //North
                 new FieldType(), new FieldType(), new CityType(), //North East section
@@ -599,7 +599,7 @@ public class CasualTileTest
         aggregates.add(retTreeSet("NNW", "NW", "NWW", "W", "SWW", "SW", "SSW"));
         aggregates.add(retTreeSet("NNE", "NE", "CNE", "CSE", "SE", "SSE"));
 
-        CasualTile tile = new CasualTile("D", "D", //Id
+        CasualTile tile = new CasualTile("D", "casual", "D", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new RoadType(), //North
                 new FieldType(), new FieldType(), new CityType(), //North East section

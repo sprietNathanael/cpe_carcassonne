@@ -87,7 +87,7 @@ public class FieldAggregateTest
         aggregates.add(retTreeSet("NEE", "E", "SEE")); //C
         aggregates.add(retTreeSet("SSW", "S", "SSE")); //C
 
-        return new CasualTile("I", "I", //Id
+        return new CasualTile("I", "casual", "I", //Id
                 new FieldType(), new FieldType(), new FieldType(), //North West section
                 new FieldType(), //North
                 new FieldType(), new FieldType(), new CityType(), //North East section

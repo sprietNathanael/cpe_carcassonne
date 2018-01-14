@@ -30,8 +30,8 @@ public class AbstractCarcassonneGameControllerTest
     @Test
     public void testGetCurrentPlayer() throws Exception
     {
-        Player j1 = new Player("bertrand", "blue");
-        Player j2 = new Player("thomas", "black");
+        Player j1 = new Player("bertrand", "blue", "Player");
+        Player j2 = new Player("thomas", "black", "Player");
         ArrayList<Player> list = new ArrayList<>();
         list.add(0, j1);
         list.add(1, j2);

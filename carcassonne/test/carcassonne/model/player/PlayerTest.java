@@ -53,7 +53,7 @@ public class PlayerTest
     public void testCheckMeepleAvailableTrue()
     {
         System.out.println("checkMeepleAvailableTrue");
-        Player p = new Player("test", "yellow");
+        Player p = new Player("test", "yellow", "Player");
         boolean result = p.checkMeepleAvailable();
         assertEquals(true, result);
     }
@@ -65,7 +65,7 @@ public class PlayerTest
     public void testCheckMeepleAvailableFalse()
     {
         System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", "yellow");
+        Player p = new Player("test", "yellow", "Player");
         p.getMeeple().forEach(m -> m.setIsUsed(true));
         boolean result = p.checkMeepleAvailable();
         assertEquals(false, result);
@@ -78,7 +78,7 @@ public class PlayerTest
     public void testGetFirstMeepleAvailable()
     {
         System.out.println("getFirstMeepleAvailable");
-        Player player = new Player("Joueur", "black");
+        Player player = new Player("Joueur", "black", "Player");
         Meeple result = player.getFirstMeepleAvailable();
         ArrayList<Meeple> meeples = player.getMeeple();
         Meeple expResult = null;
@@ -98,7 +98,7 @@ public class PlayerTest
     public void testGetBigMeepleFalse()
     {
         System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", "yellow");
+        Player p = new Player("test", "yellow", "Player");
         Meeple bigMeeple = p.getBigMeeple();
         bigMeeple.setIsUsed(true);
 
@@ -115,9 +115,9 @@ public class PlayerTest
     {
         System.out.println("countMeeples");
         Set<Meeple> meeples = new HashSet<>();
-        meeples.add(new Meeple(new Player("un","red")));
-        meeples.add(new Meeple(new Player("deux","blue")));
-        meeples.add(new Meeple(true, new Player("trois","yellow")));
+        meeples.add(new Meeple(new Player("un","red", "Player")));
+        meeples.add(new Meeple(new Player("deux","blue", "Player")));
+        meeples.add(new Meeple(true, new Player("trois","yellow", "Player")));
 
         int expResult = 4;
         int result = Player.countPoints(meeples);

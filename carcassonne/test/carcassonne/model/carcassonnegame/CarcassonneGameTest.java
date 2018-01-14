@@ -53,8 +53,8 @@ public class CarcassonneGameTest
     public void testGetCurrentPlayer() throws Exception
     {
         System.out.println("getCurrentPlayer");
-        Player J1 = new Player("Thomas", "yellow");
-        Player J2 = new Player("Etienne", "pink");
+        Player J1 = new Player("Thomas", "yellow", "Player");
+        Player J2 = new Player("Etienne", "pink", "Player");
         ArrayList<Player> list = new ArrayList<>();
         list.add(J1);
         list.add(J2);
@@ -73,8 +73,8 @@ public class CarcassonneGameTest
     public void testNextPlayer() throws Exception
     {
          System.out.println("getCurrentPlayer");
-        Player J1 = new Player("Thomas", "yellow");
-        Player J2 = new Player("Etienne", "pink");
+        Player J1 = new Player("Thomas", "yellow", "Player");
+        Player J2 = new Player("Etienne", "pink", "Player");
         ArrayList<Player> list = new ArrayList<>();
         list.add(J1);
         list.add(J2);
