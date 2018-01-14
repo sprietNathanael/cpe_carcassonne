@@ -64,7 +64,7 @@ public class MeeplePlacementMouseAdapter extends LayerMouseAdapter
             //Triggers the tile entered
             String slice = listener.getSliceFromCoordinates(point.getX(), point.getY(), this.currentCoord);
             // If the slice entered is not the current slice
-            if(!slice.equals(this.lastSlice))
+            if(slice != null && !slice.equals(this.lastSlice))
             {
                 this.lastSlice = slice;
                 // Exit the old slice
