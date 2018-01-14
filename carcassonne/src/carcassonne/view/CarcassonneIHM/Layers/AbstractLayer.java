@@ -57,9 +57,12 @@ public abstract class AbstractLayer
      * @param ml
      */
     public void attachMouseInputListener(LayerMouseAdapter ml) {
-        this.mouseListener = ml;
-        this.gridPanel.addMouseListener(this.mouseListener);
-        this.gridPanel.addMouseMotionListener(this.mouseListener);
+        if(this.mouseListener == null)
+        {
+            this.mouseListener = ml;
+            this.gridPanel.addMouseListener(this.mouseListener);
+            this.gridPanel.addMouseMotionListener(this.mouseListener);
+        }
     }
     
     /**
@@ -67,7 +70,8 @@ public abstract class AbstractLayer
      */
     public void removeMouseInputListener() {
         this.gridPanel.removeMouseListener(this.mouseListener);
-        this.gridPanel.removeMouseMotionListener(mouseListener);
+        this.gridPanel.removeMouseMotionListener(this.mouseListener);
+        this.mouseListener = null;
     }
     
     /**
