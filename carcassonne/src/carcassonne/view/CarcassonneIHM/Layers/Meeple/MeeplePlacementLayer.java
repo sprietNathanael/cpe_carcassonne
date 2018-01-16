@@ -129,53 +129,9 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
             AffineTransform resizeMeeplesPlacement = new AffineTransform();
             AffineTransform translateMeeplesPlacement = new AffineTransform();
             resizeMeeplesPlacement.scale(tileSize / 100.0, tileSize / 100.0);
-            
-            // Translation to apply the center
             double delta_x = (this.currentPosition.getX() * tileSize) + center.getX();
             double delta_y = (this.currentPosition.getY() * tileSize) + center.getY();
             translateMeeplesPlacement.translate(delta_x, delta_y);
-            
-            int tile_x = (int)delta_x;
-            int tile_y = (int)delta_y;
-            
-            GradientPaint gradient = new GradientPaint(tile_x, tile_y, new Color(255, 255, 255, 200), tile_x, tile_y-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS,  new Color(255, 255, 255, 0));
-            g2.setPaint(gradient);            
-            Polygon border = new Polygon();
-            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x+tileSize, tile_y);
-            border.addPoint(tile_x, tile_y);
-            g2.fillPolygon(border);
-
-            gradient = new GradientPaint(tile_x+tileSize, tile_y, new Color(255, 255, 255, 200), tile_x+tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
-            g2.setPaint(gradient);
-            
-            border.reset();
-            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y +tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x+tileSize, tile_y +tileSize);
-            border.addPoint(tile_x+tileSize, tile_y );
-            g2.fillPolygon(border);
-            
-            gradient = new GradientPaint(tile_x, tile_y+tileSize, new Color(255,255,255, 200), tile_x, tile_y+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(255, 255, 255, 0));
-            g2.setPaint(gradient);
-            
-            border.reset();
-            border.addPoint(tile_x+tileSize+InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y +tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x, tile_y +tileSize);
-            border.addPoint(tile_x+tileSize, tile_y + tileSize );
-            g2.fillPolygon(border);
-
-            gradient = new GradientPaint(tile_x, tile_y, new Color(255,255,255, 200), tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
-            g2.setPaint(gradient);
-            
-            border.reset();
-            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            border.addPoint(tile_x, tile_y);
-            border.addPoint(tile_x, tile_y +tileSize);
-            border.addPoint(tile_x-InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
-            g2.fillPolygon(border);
             
             if(this.currentTileAggregate != null && this.tileAggregates.size() > 0)
             {

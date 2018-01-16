@@ -19,6 +19,7 @@ import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.type.AbstractType;
 import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Tile.TileHighlightmentLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import enums.PlayerTypes;
@@ -43,6 +44,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private GridPanel gridPanel;
     private MeeplePlacementLayer meeplePlacementLayer;
     private FieldsLayer fieldsLayer;
+    private TileHighlightmentLayer tileHighlightmentLayer;
     private InfoPanel infoPanel;
     private ArrayList<Player> players;
     private UICoord lastCoord;
@@ -70,6 +72,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.fieldsLayer = new FieldsLayer(gridPanel, this.controller);
         this.meeplePlacementLayer = new MeeplePlacementLayer(gridPanel, this.controller);
         this.tilesPlacementLayer = new TilePlacementLayer(gridPanel, this.controller, this);
+        this.tileHighlightmentLayer = new TileHighlightmentLayer(gridPanel, controller);
         
         // Add the layers to the grid panel
         gridPanel.addLayer(tilesPlacementLayer);
@@ -77,12 +80,14 @@ public class MainPanel extends JPanel implements java.util.Observer
         gridPanel.addLayer(fieldsLayer);
         gridPanel.addLayer(meeplePlacementLayer);
         gridPanel.addLayer(meeplesLayer);
+        gridPanel.addLayer(tileHighlightmentLayer);
         
         // Hide and show the different layers
         this.meeplePlacementLayer.onHide();
         this.tilesLayer.onShow();
         this.meeplesLayer.onShow();
         this.fieldsLayer.onShow();
+        this.tileHighlightmentLayer.onShow();
         
         // Construct an info panel
         this.infoPanel = new InfoPanel(this.players, this.controller, this);
@@ -119,6 +124,11 @@ public class MainPanel extends JPanel implements java.util.Observer
                     else
                     {
                         this.interfaceLocked = false;
+                    }
+                    
+                    if(game.getLastPutTile() != null)
+                    {
+                        this.tileHighlightmentLayer.setTileToHighlight(new UICoord(game.getLastPutTile()));
                     }
                     
                     this.fieldsLayer.setFields(game.getFieldAggregates());

@@ -45,6 +45,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<AbstractTile> pile;
     private AbstractTile firstTile;
     private AbstractTile currentTile;
+    private Coord lastPutTile;
     private ArrayList<Coord> placements;
     private List<RoadAggregate> roadAggregates;
     private List<CityAggregate> cityAggregates;
@@ -82,8 +83,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         fieldAggregates = new ArrayList<>();
         abbayAggregates = new ArrayList<>();
         riverExtensionIsUsed = false;
+        this.lastPutTile = null;
     }
 
+    
     /**
      * Get the first tile of the game
      *
@@ -93,6 +96,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return this.firstTile;
     }
+    
+    public Coord getLastPutTile()
+    {
+        return lastPutTile;
+    }
+
 
     /**
      * Gets the current Player
@@ -174,6 +183,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         board.addTile(tile, row, column);
+        this.lastPutTile = new Coord(column, row);
         this.manageNewTileAggregates(tile, row, column);
         this.notifyBoardChanged();
         System.out.println("Champs: " + fieldAggregates);
