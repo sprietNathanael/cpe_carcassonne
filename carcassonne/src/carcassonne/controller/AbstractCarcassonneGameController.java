@@ -168,10 +168,13 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
         this.processNextTile();
-        try {
-            ManageIA();
-        } catch (Exception ex) {
-            Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
+        if(this.carcassonneGame.getCurrentPlayer().getPlayerType() ==  PlayerTypes.basicIA)
+        {
+            try {
+                this.ManageIA();
+            } catch (Exception ex) {
+                Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 
@@ -209,10 +212,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     private void ManageIA() throws Exception
     {
         // Basic IA
-        if (carcassonneGame.getCurrentPlayer().getPlayerType() == PlayerTypes.basicIA) {
-            carcassonneGame.putTileBasicIA(currentTile);       
-            endTurn();
-        }
+        Coord tileCoordinates = this.carcassonneGame.putTileBasicIA(currentTile);        
+        this.carcassonneGame.putMeepleBasicIA(tileCoordinates);
+        endTurn();
     }
 
     /**

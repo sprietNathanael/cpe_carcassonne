@@ -894,15 +894,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * @param tile
      * @throws Exception
      */
-    public void putTileBasicIA(AbstractTile tile) throws Exception
+    public Coord putTileBasicIA(AbstractTile tile) throws Exception
     {
         int index = (int) (Math.random() * this.placements.size());
         Coord c = new Coord(this.placements.get(index).col, this.placements.get(index).row);
-        while (checkTilePosition(c) == false) {
+        while (this.checkTilePosition(c) == false) {
             this.currentTile.rotateRight();
         }
         this.putTile(tile, this.placements.get(index).row, this.placements.get(index).col);
-        this.putMeepleBasicIA(c);
+        return(c);
     }
 
     /**
@@ -910,16 +910,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      *
      * @param c
      */
-    private void putMeepleBasicIA(Coord c)
+    public void putMeepleBasicIA(Coord c)
     {
         if (playerMeepleBePutOnCurrentTile()) {
             int putMeepleOrNot = (int) (Math.random() * 2);
             if (putMeepleOrNot == 1) {
                 Meeple m = getCurrentPlayer().getFirstMeepleAvailable();
                 Set<Set<String>> freeAgg = getFreeAggregatesInTile(c.col, c.row);
-                String coordinates = getAleaCoordAgg(freeAgg);
+                String coordinates = getRandomAggregateLocation(freeAgg);
                 //tuile
-                currentTile.putMeeple(coordinates, m);
+                this.currentTile.putMeeple(coordinates, m);
                 m.setCurrentType(currentTile.getType(coordinates));
                 //aggregats
                 putMeeple(m, currentTile, m.getPlayer(), coordinates);
@@ -934,15 +934,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * @param freeAgg
      * @return
      */
-    private String getAleaCoordAgg(Set<Set<String>> freeAgg)
+    private String getRandomAggregateLocation(Set<Set<String>> freeAgg)
     {
-        int index = (int) (Math.random() * freeAgg.size());
+        int random = (int) (Math.random() * freeAgg.size());
         int i = 0, j = 0;
+        
         for (Set<String> agg : freeAgg) {
-            if (i == index) {
-                index = (int) (Math.random() * agg.size());
+            if (i == random) {
+                random = (int) (Math.random() * agg.size());
                 for (String co : agg) {
-                    if (j == index) {
+                    if (j == random) {
                         return co;
                     }
                     j++;
