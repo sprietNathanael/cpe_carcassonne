@@ -12,6 +12,8 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import enums.PlayerTypes;
+import java.util.ArrayList;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -212,9 +214,72 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     private void ManageIA() throws Exception
     {
         // Basic IA
-        Coord tileCoordinates = this.carcassonneGame.putTileBasicIA(currentTile);        
-        this.carcassonneGame.putMeepleBasicIA(tileCoordinates);
+        Coord tileCoordinates = this.putTileBasicIA();        
+        this.putMeepleBasicIA(tileCoordinates);
         endTurn();
+    }
+    
+    /**
+     * Puts current tiles on random coord
+     *
+     * @param tile
+     * @throws Exception
+     */
+    private Coord putTileBasicIA() throws Exception
+    {
+        ArrayList<Coord> placements = this.carcassonneGame.getPlacements();
+        int index = (int) (Math.random() * placements.size());
+        Coord c = new Coord(placements.get(index).col, placements.get(index).row);
+        while (this.checkTilePosition(c) == false) {
+            this.currentTile.rotateRight();
+        }
+        this.putCurrentTile(placements.get(index));
+        return(c);
+    }
+    
+    
+    /**
+     * Puts random meeple or no meeple
+     *
+     * @param c
+     */
+    public void putMeepleBasicIA(Coord c) throws Exception
+    {
+        if (this.carcassonneGame.playerMeepleBePutOnCurrentTile()) {
+            int putMeepleOrNot = (int) (Math.random() * 2);
+            if (putMeepleOrNot == 1) {
+                Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
+                String coordinates = this.getRandomAggregateLocation(freeAgg);
+                //tuile
+                this.putMeeple(coordinates);
+            }
+        }
+    }
+
+    /**
+     * Gets alea coord from availables aggregates
+     *
+     * @param freeAgg
+     * @return
+     */
+    private String getRandomAggregateLocation(Set<Set<String>> freeAgg)
+    {
+        int random = (int) (Math.random() * freeAgg.size());
+        int i = 0, j = 0;
+        
+        for (Set<String> agg : freeAgg) {
+            if (i == random) {
+                random = (int) (Math.random() * agg.size());
+                for (String co : agg) {
+                    if (j == random) {
+                        return co;
+                    }
+                    j++;
+                }
+            }
+            i++;
+        }
+        return "";
     }
 
     /**
