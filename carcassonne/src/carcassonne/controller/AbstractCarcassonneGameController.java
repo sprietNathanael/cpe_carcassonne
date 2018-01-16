@@ -170,7 +170,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
         this.processNextTile();
-        if(this.carcassonneGame.getCurrentPlayer().getPlayerType() ==  PlayerTypes.basicIA)
+        if(this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA))
         {
             try {
                 this.ManageIA();

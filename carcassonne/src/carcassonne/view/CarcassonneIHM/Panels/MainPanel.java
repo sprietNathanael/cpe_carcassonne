@@ -21,6 +21,7 @@ import carcassonne.model.type.AbstractType;
 import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
+import enums.PlayerTypes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private InfoPanel infoPanel;
     private ArrayList<Player> players;
     private UICoord lastCoord;
+    private boolean interfaceLocked;
 
     /**
      * Main panel constructor
@@ -57,6 +59,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         this.players = players;
         this.controller = controller;
         setLayout(new BorderLayout());
+        this.interfaceLocked = false;
 
         // Construct a grid panel
         this.gridPanel = new GridPanel();
@@ -108,6 +111,15 @@ public class MainPanel extends JPanel implements java.util.Observer
                     HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();
+                    
+                    if(game.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA))
+                    {
+                        this.interfaceLocked = true;
+                    }
+                    else
+                    {
+                        this.interfaceLocked = false;
+                    }
                     
                     this.fieldsLayer.setFields(game.getFieldAggregates());
                     
@@ -177,18 +189,21 @@ public class MainPanel extends JPanel implements java.util.Observer
             // If the update is from a placements ready
             case "placementsReady":
                 {
-                    // Shows the tile placements layer
-                    this.tilesPlacementLayer.onShow();
-                    // Get the game's informations
-                    CarcassonneGame game = (CarcassonneGame) o;
-                    ArrayList<Coord> placements = game.getPlacements();
-                    // Add positions of placement layer
-                    for(int i = 0; i < placements.size(); i++)
+                    if(!this.interfaceLocked)
                     {
-                        this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
-                    }       // Repaint the panels
-                    this.gridPanel.repaint();
-                    this.infoPanel.repaint();
+                        // Shows the tile placements layer
+                        this.tilesPlacementLayer.onShow();
+                        // Get the game's informations
+                        CarcassonneGame game = (CarcassonneGame) o;
+                        ArrayList<Coord> placements = game.getPlacements();
+                        // Add positions of placement layer
+                        for(int i = 0; i < placements.size(); i++)
+                        {
+                            this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
+                        }       // Repaint the panels
+                        this.gridPanel.repaint();
+                        this.infoPanel.repaint();
+                    }
                     break;
                 }
             // If the update is from a game end
