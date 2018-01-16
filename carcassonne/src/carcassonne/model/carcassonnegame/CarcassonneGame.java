@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -71,7 +72,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         //Call the basic extension to get the basic tiles into the pile
         SetInterface basicSet = new BasicSet();
         this.pile = basicSet.getSet();
-        Collections.shuffle(this.pile);
+        Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));
         this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<>();
