@@ -214,8 +214,13 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     private void ManageIA() throws Exception
     {
         // Basic IA
-        Coord tileCoordinates = this.putTileBasicIA();        
-        this.putMeepleBasicIA(tileCoordinates);
+        Coord tileCoordinates = this.putTileBasicIA();
+        try {
+            this.putMeepleBasicIA(tileCoordinates);            
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        
         endTurn();
     }
     
