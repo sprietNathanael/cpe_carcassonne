@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 /**
- * This is the set for the River extension
+ * This is the set for the expansion "The River"
  *
  * @author Bertrand
  */
@@ -31,6 +31,9 @@ public class RiverSet implements SetInterface
     private AbstractTile firstTile;
     private AbstractTile lastTile;
 
+    /**
+     * Initilializes the river set with all its tiles
+     */
     public RiverSet()
     {
         tileList = new ArrayList<>();
