@@ -134,154 +134,6 @@ public class Parameters extends JDialog
             paPlayer.add(cbColors[i], BorderLayout.EAST);
             content.add(paPlayer);
         }
-
-        /*JPanel player1 = new JPanel();
-        player1.setBackground(Color.white);
-        player1.setPreferredSize(new Dimension(600, 55));
-        player1.setBorder(BorderFactory.createTitledBorder("Player1"));
-        chbIaJ1 = new JCheckBox("IA");
-        chbIaJ1.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ1 = new JTextField();
-        nomJ1.setPreferredSize(new Dimension(100, 25));
-        colorsJ1 = new JComboBox<>();
-        colorsJ1.addItem("Red");
-        colorsJ1.addItem("Blue");
-        colorsJ1.addItem("Green");
-        colorsJ1.addItem("Black");
-        colorsJ1.addItem("Yellow");
-        colorsJ1.addItem("Magenta");
-        player1.add(chbIaJ1, BorderLayout.WEST);
-        player1.add(nomLabel, BorderLayout.CENTER);
-        player1.add(nomJ1, BorderLayout.CENTER);
-        player1.add(colorsLabel, BorderLayout.EAST);
-        player1.add(colorsJ1, BorderLayout.EAST);
-
-        JPanel player2 = new JPanel();
-        player2.setBackground(Color.white);
-        player2.setPreferredSize(new Dimension(600, 55));
-        player2.setBorder(BorderFactory.createTitledBorder("Player2"));
-        chbIaJ2 = new JCheckBox("IA");
-        chbIaJ2.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ2 = new JTextField();
-        nomJ2.setPreferredSize(new Dimension(100, 25));
-        colorsJ2 = new JComboBox<>();
-        colorsJ2.addItem("Red");
-        colorsJ2.addItem("Blue");
-        colorsJ2.addItem("Green");
-        colorsJ2.addItem("Black");
-        colorsJ2.addItem("Yellow");
-        colorsJ2.addItem("Magenta");
-        player2.add(chbIaJ2, BorderLayout.WEST);
-        player2.add(nomLabel, BorderLayout.WEST);
-        player2.add(nomJ2, BorderLayout.WEST);
-        player2.add(colorsLabel, BorderLayout.EAST);
-        player2.add(colorsJ2, BorderLayout.EAST);
-
-        JPanel player3 = new JPanel();
-        player3.setBackground(Color.white);
-        player3.setPreferredSize(new Dimension(600, 55));
-        player3.setBorder(BorderFactory.createTitledBorder("Player3"));
-        chbIaJ3 = new JCheckBox("IA");
-        chbIaJ3.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ3 = new JTextField();
-        nomJ3.setPreferredSize(new Dimension(100, 25));
-        colorsJ3 = new JComboBox<>();
-        colorsJ3.addItem("Red");
-        colorsJ3.addItem("Blue");
-        colorsJ3.addItem("Green");
-        colorsJ3.addItem("Black");
-        colorsJ3.addItem("Yellow");
-        colorsJ3.addItem("Magenta");
-        player3.add(chbIaJ3, BorderLayout.WEST);
-        player3.add(nomLabel, BorderLayout.WEST);
-        player3.add(nomJ3, BorderLayout.WEST);
-        player3.add(colorsLabel, BorderLayout.EAST);
-        player3.add(colorsJ3, BorderLayout.EAST);
-
-        JPanel player4 = new JPanel();
-        player4.setBackground(Color.white);
-        player4.setPreferredSize(new Dimension(600, 55));
-        player4.setBorder(BorderFactory.createTitledBorder("Player4"));
-        chbIaJ4 = new JCheckBox("IA");
-        chbIaJ4.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ4 = new JTextField();
-        nomJ4.setPreferredSize(new Dimension(100, 25));
-        colorsJ4 = new JComboBox<>();
-        colorsJ4.addItem("Red");
-        colorsJ4.addItem("Blue");
-        colorsJ4.addItem("Green");
-        colorsJ4.addItem("Black");
-        colorsJ4.addItem("Yellow");
-        colorsJ4.addItem("Magenta");
-        player4.add(chbIaJ4, BorderLayout.WEST);
-        player4.add(nomLabel, BorderLayout.WEST);
-        player4.add(nomJ4, BorderLayout.WEST);
-        player4.add(colorsLabel, BorderLayout.EAST);
-        player4.add(colorsJ4, BorderLayout.EAST);
-
-        JPanel player5 = new JPanel();
-        player5.setBackground(Color.white);
-        player5.setPreferredSize(new Dimension(600, 55));
-        player5.setBorder(BorderFactory.createTitledBorder("Player5"));
-        chbIaJ5 = new JCheckBox("IA");
-        chbIaJ5.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ5 = new JTextField();
-        nomJ5.setPreferredSize(new Dimension(100, 25));
-        colorsJ5 = new JComboBox<>();
-        colorsJ5.addItem("Red");
-        colorsJ5.addItem("Blue");
-        colorsJ5.addItem("Green");
-        colorsJ5.addItem("Black");
-        colorsJ5.addItem("Yellow");
-        colorsJ5.addItem("Magenta");
-        player5.add(chbIaJ5, BorderLayout.WEST);
-        player5.add(nomLabel, BorderLayout.WEST);
-        player5.add(nomJ5, BorderLayout.WEST);
-        player5.add(colorsLabel, BorderLayout.EAST);
-        player5.add(colorsJ5, BorderLayout.EAST);
-
-        JPanel player6 = new JPanel();
-        player6.setBackground(Color.white);
-        player6.setPreferredSize(new Dimension(600, 55));
-        player6.setBorder(BorderFactory.createTitledBorder("Player6"));
-        chbIaJ6 = new JCheckBox("IA");
-        chbIaJ6.setBackground(Color.white);
-        nomLabel = new JLabel("Name :");
-        colorsLabel = new JLabel("Color :");
-        nomJ6 = new JTextField();
-        nomJ6.setPreferredSize(new Dimension(100, 25));
-        colorsJ6 = new JComboBox<>();
-        colorsJ6.addItem("Red");
-        colorsJ6.addItem("Blue");
-        colorsJ6.addItem("Green");
-        colorsJ6.addItem("Black");
-        colorsJ6.addItem("Yellow");
-        colorsJ6.addItem("Magenta");
-        player6.add(chbIaJ6, BorderLayout.WEST);
-        player6.add(nomLabel, BorderLayout.WEST);
-        player6.add(nomJ6, BorderLayout.WEST);
-        player6.add(colorsLabel, BorderLayout.EAST);
-        player6.add(colorsJ6, BorderLayout.EAST);
-
-        JPanel content = new JPanel();
-        content.setBackground(Color.white);
-
-        content.add(player1);
-        content.add(player2);
-        content.add(player3);
-        content.add(player4);
-        content.add(player5);
-        content.add(player6);*/
         JPanel control = new JPanel();
         JButton okBouton = new JButton("OK");
 
@@ -297,13 +149,6 @@ public class Parameters extends JDialog
                         tfNomPlayer[4].getText(), (String) cbColors[4].getSelectedItem(),
                         tfNomPlayer[5].getText(), (String) cbColors[5].getSelectedItem()
                 );
-                /*zInfo = new ZDialogInfo(nomJ1.getText(), getNumbersPlayers(), (String) colorsJ1.getSelectedItem(),
-                        nomJ2.getText(), (String) colorsJ2.getSelectedItem(),
-                        nomJ3.getText(), (String) colorsJ3.getSelectedItem(),
-                        nomJ4.getText(), (String) colorsJ4.getSelectedItem(),
-                        nomJ5.getText(), (String) colorsJ5.getSelectedItem(),
-                        nomJ6.getText(), (String) colorsJ6.getSelectedItem()
-                );*/
                 setVisible(false);
             }
 
@@ -366,36 +211,6 @@ public class Parameters extends JDialog
                 li.add(pTemp);
             }
         }
-        /*
-        ParamPlayers p1 = new ParamPlayers(nomJ1.getText(), (String) colorsJ1.getSelectedItem());
-        ParamPlayers p2 = new ParamPlayers(nomJ2.getText(), (String) colorsJ2.getSelectedItem());
-        ParamPlayers p3 = new ParamPlayers(nomJ3.getText(), (String) colorsJ3.getSelectedItem());
-        ParamPlayers p4 = new ParamPlayers(nomJ4.getText(), (String) colorsJ4.getSelectedItem());
-        ParamPlayers p5 = new ParamPlayers(nomJ5.getText(), (String) colorsJ5.getSelectedItem());
-        ParamPlayers p6 = new ParamPlayers(nomJ6.getText(), (String) colorsJ6.getSelectedItem());
-        //int nbPlayers = 0;
-
-        // nbPlayers = Integer.parseInt(this.getNumbersPlayers());
-        if (!p1.getNom().isEmpty()) {
-            li.add(p1);
-        }
-
-        if (!p2.getNom().isEmpty()) {
-            li.add(p2);
-        }
-        if (!p3.getNom().isEmpty()) {
-            li.add(p3);
-        }
-        if (!p4.getNom().isEmpty()) {
-            li.add(p4);
-        }
-        if (!p5.getNom().isEmpty()) {
-            li.add(p5);
-        }
-        if (!p6.getNom().isEmpty()) {
-            li.add(p6);
-        }*/
-
         return li;
     }
 
