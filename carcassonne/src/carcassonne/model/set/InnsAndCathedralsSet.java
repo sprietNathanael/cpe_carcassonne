@@ -24,39 +24,23 @@ import java.util.Set;
  * 
  * @author Bertrand
  */
-public class InnsAndCathedralsSet implements SetInterface
+public class InnsAndCathedralsSet extends AbstractSet
 {
-    private final List<AbstractTile> tileList;
-    private AbstractTile firstTile;
-    private Set<Meeple> meeples;
-    
     /**
      * Initilializes the inns and cathedrals set with all its tiles
      */
     public InnsAndCathedralsSet ()
     {
-        tileList = new ArrayList<>();
+        super();
         this.initiliazeSet();
-        this.meeples = new HashSet<>();
         this.meeples.add(new Meeple(true, null));            
-    }
-    
-    @Override
-    public List<AbstractTile> getSet()
-    {
-        return tileList;
-    }
-
-    @Override
-    public AbstractTile getFirstTile()
-    {
-        return this.firstTile;
     }
     
      /**
      * Adds all the tiles of the extension
      */
-    private void initiliazeSet()
+    @Override
+    protected void initiliazeSet()
     {
         Set<Set<String>> aggregates;
         //Tile EA - TO DO : Add Inn
@@ -380,18 +364,5 @@ public class InnsAndCathedralsSet implements SetInterface
                 new CityType(true), new CityType(true), new CityType(true), new CityType(true), //Center section
                 aggregates
         ));
-    }
-    
-    public static Set<String> retTreeSet(String... poss)
-    {
-        Set<String> tsPos = new HashSet<>();
-        tsPos.addAll(Arrays.asList(poss));        
-        return tsPos;
-    }
-
-    @Override
-    public Set<Meeple> getMeeples()
-    {
-        return this.meeples;
     }
 }

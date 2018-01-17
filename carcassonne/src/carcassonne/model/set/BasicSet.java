@@ -23,44 +23,27 @@ import java.util.Set;
  *
  * @author Étienne
  */
-public class BasicSet implements SetInterface
+public class BasicSet extends AbstractSet
 {
-
-    private final List<AbstractTile> tileList;
-    private AbstractTile firstTile;
-    private Set<Meeple> meeples;
 
     /**
      * Initilializes the basic set with all its tiles
      */
     public BasicSet()
     {
-        tileList = new ArrayList<>();
+        super();
         this.initiliazeSet();
-        this.meeples = new HashSet<>();
         for(int i = 0; i < 6; i++)
         {
             this.meeples.add(new Meeple(null));            
         }
     }
 
-    public Set<Meeple> getMeeples()
-    {
-        return meeples;
-    }
-    
-    
-
-    @Override
-    public List<AbstractTile> getSet()
-    {
-        return tileList;
-    }
-
     /**
      * Adds all the tiles of the extension
      */
-    private void initiliazeSet()
+    @Override
+    protected void initiliazeSet()
     {
         Set<Set<String>> aggregates;
         //Tiles A (x2)
@@ -542,20 +525,5 @@ public class BasicSet implements SetInterface
                 new CrossType(), new CrossType(), new CrossType(), new CrossType(), //Center section
                 aggregates
         ));
-    }
-
-    public static Set<String> retTreeSet(String... poss)
-    {
-        Set<String> tsPos = new HashSet<>();
-        for (String pos : poss) 
-            tsPos.add(pos);
-        
-        return tsPos;
-    }
-
-    @Override
-    public AbstractTile getFirstTile()
-    {
-        return this.firstTile;
     }
 }

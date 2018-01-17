@@ -25,20 +25,17 @@ import java.util.Set;
  *
  * @author Bertrand
  */
-public class RiverSet implements SetInterface
+public class RiverSet extends AbstractSet
 {
 
-    private final List<AbstractTile> tileList;
-    private AbstractTile firstTile;
     private AbstractTile lastTile;
-    private Set<Meeple> meeples;
 
     /**
      * Initilializes the river set with all its tiles
      */
     public RiverSet()
     {
-        tileList = new ArrayList<>();
+        super();
         this.meeples = new HashSet<>();
         this.initiliazeSet();
     }
@@ -55,22 +52,11 @@ public class RiverSet implements SetInterface
         return result;
     }
 
-    @Override
-    public AbstractTile getFirstTile()
-    {
-        return this.firstTile;
-    }
-    
-    @Override
-    public Set<Meeple> getMeeples()
-    {
-        return this.meeples;
-    }
-
     /**
      * Adds all the tiles of the extension
      */
-    private void initiliazeSet()
+    @Override
+    protected void initiliazeSet()
     {
         Set<Set<String>> aggregates;
 
@@ -254,13 +240,6 @@ public class RiverSet implements SetInterface
                 new RiverType(), new RiverType(), new RiverType(), new RiverType(), //Center section
                 aggregates
         );
-    }
-
-    public static Set<String> retTreeSet(String... poss)
-    {
-        Set<String> tsPos = new HashSet<>();
-        tsPos.addAll(Arrays.asList(poss));
-        return tsPos;
     }
 
 }
