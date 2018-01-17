@@ -5,6 +5,7 @@
  */
 package carcassonne.model.set;
 
+import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
@@ -27,6 +28,7 @@ public class BasicSet implements SetInterface
 
     private final List<AbstractTile> tileList;
     private AbstractTile firstTile;
+    private Set<Meeple> meeples;
 
     /**
      * Initilializes the basic set with all its tiles
@@ -35,7 +37,19 @@ public class BasicSet implements SetInterface
     {
         tileList = new ArrayList<>();
         this.initiliazeSet();
+        this.meeples = new HashSet<>();
+        for(int i = 0; i < 6; i++)
+        {
+            this.meeples.add(new Meeple(null));            
+        }
     }
+
+    public Set<Meeple> getMeeples()
+    {
+        return meeples;
+    }
+    
+    
 
     @Override
     public List<AbstractTile> getSet()

@@ -45,6 +45,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private int currentPlayerIndex;
     private List<AbstractTile> pile;
     private AbstractTile firstTile;
+    private Set<Meeple> meeplesSet;
     private AbstractTile currentTile;
     private Coord lastPutTile;
     private ArrayList<Coord> placements;
@@ -76,12 +77,23 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         this.board = new Board();
         this.pile = new ArrayList<AbstractTile>();
+        this.meeplesSet = new HashSet<>();
         for(SetInterface set : sets)
         {
             this.pile.addAll(set.getSet());
+            this.meeplesSet.addAll(set.getMeeples());
             if(set.getFirstTile() != null)
             {
                 this.firstTile = set.getFirstTile();
+            }
+        }
+        for(Player player : players)
+        {
+            for(Meeple meeple : this.meeplesSet)
+            {
+                Meeple intermediate = (Meeple)meeple.clone();
+                intermediate.setPlayer(player);
+                player.addMeeple(intermediate);
             }
         }
         Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));

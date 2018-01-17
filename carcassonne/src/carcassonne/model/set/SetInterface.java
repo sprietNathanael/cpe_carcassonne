@@ -5,8 +5,10 @@
  */
 package carcassonne.model.set;
 
+import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Describes the nedded set format
@@ -24,4 +26,6 @@ public interface SetInterface
     public List<AbstractTile> getSet();
 
     public AbstractTile getFirstTile();
+    
+    public Set<Meeple> getMeeples();
 }

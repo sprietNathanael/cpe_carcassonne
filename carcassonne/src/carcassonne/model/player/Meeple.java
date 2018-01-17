@@ -6,11 +6,13 @@
 package carcassonne.model.player;
 
 import carcassonne.model.type.AbstractType;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents a "Meeple", the follower or pawn of a player
  */
-public class Meeple
+public class Meeple implements Cloneable
 {
 
     private boolean isUsed;
@@ -44,6 +46,11 @@ public class Meeple
         this.isUsed = false;
         this.player = player;
         this.currentType = null;
+    }
+    
+    public void setPlayer(Player player)
+    {
+        this.player = player;
     }
 
     /**
@@ -94,6 +101,18 @@ public class Meeple
     public void removeMeepleFromType(){
         this.currentType.removeMeeple();
         this.currentType = null;
+    }
+    
+    @Override
+    public Object clone()
+    {
+        Object o = null;
+        try {
+            o = super.clone();
+        } catch (CloneNotSupportedException ex) {
+            Logger.getLogger(Meeple.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return o;
     }
     
     

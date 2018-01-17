@@ -20,7 +20,6 @@ public class Player
      */
     public static int NBMEEPLE = 8;
 
-    private final Meeple bigMeeple;
     private final ArrayList<Meeple> meeples;
     private final String name;
     private int points;
@@ -44,12 +43,13 @@ public class Player
         this.name = name;
         this.color = color;
         this.points = 0;
-        this.bigMeeple = new Meeple(true, this);
-        this.meeples = new ArrayList<>();
-        for (int i = 1; i < NBMEEPLE; i++) {
-            this.meeples.add(new Meeple(this));
-        }
         this.playerType = playerType;
+        this.meeples = new ArrayList<>();
+    }
+    
+    public void addMeeple(Meeple meeple)
+    {
+        this.meeples.add(meeple);
     }
 
     /**
@@ -163,8 +163,11 @@ public class Player
     {
         Meeple ret = null;
 
-        if (!bigMeeple.getIsUsed()) {
-            ret = bigMeeple;
+        for (Meeple m : meeples) {
+            if (m.getIsBig()) {
+                ret = m;
+                break;
+            }
         }
         return ret;
     }
@@ -184,11 +187,6 @@ public class Player
             }
         }
         return ret;
-    }
-
-    public Meeple getBigMeeple()
-    {
-        return bigMeeple;
     }
 
     @Override

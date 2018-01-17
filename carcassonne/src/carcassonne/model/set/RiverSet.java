@@ -5,6 +5,7 @@
  */
 package carcassonne.model.set;
 
+import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
@@ -30,6 +31,7 @@ public class RiverSet implements SetInterface
     private final List<AbstractTile> tileList;
     private AbstractTile firstTile;
     private AbstractTile lastTile;
+    private Set<Meeple> meeples;
 
     /**
      * Initilializes the river set with all its tiles
@@ -37,6 +39,7 @@ public class RiverSet implements SetInterface
     public RiverSet()
     {
         tileList = new ArrayList<>();
+        this.meeples = new HashSet<>();
         this.initiliazeSet();
     }
 
@@ -56,6 +59,12 @@ public class RiverSet implements SetInterface
     public AbstractTile getFirstTile()
     {
         return this.firstTile;
+    }
+    
+    @Override
+    public Set<Meeple> getMeeples()
+    {
+        return this.meeples;
     }
 
     /**
