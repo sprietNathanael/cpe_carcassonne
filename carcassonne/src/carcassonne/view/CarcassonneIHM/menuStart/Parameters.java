@@ -1,6 +1,6 @@
 package carcassonne.view.CarcassonneIHM.menuStart;
 
-import enums.PlayerTypes;
+import RessourcesGlobalVariables.PlayerTypes;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;

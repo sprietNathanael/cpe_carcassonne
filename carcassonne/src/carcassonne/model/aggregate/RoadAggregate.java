@@ -10,7 +10,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
-import enums.PlayerTypes;
+import RessourcesGlobalVariables.PlayerTypes;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;

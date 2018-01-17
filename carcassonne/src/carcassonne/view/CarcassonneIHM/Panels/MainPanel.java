@@ -22,7 +22,7 @@ import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Tile.TileHighlightmentLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
-import enums.PlayerTypes;
+import RessourcesGlobalVariables.PlayerTypes;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;

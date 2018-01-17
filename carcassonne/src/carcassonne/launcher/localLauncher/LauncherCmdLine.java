@@ -9,7 +9,7 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneCmdLine;
-import enums.PlayerTypes;
+import RessourcesGlobalVariables.PlayerTypes;
 import java.util.ArrayList;
 
 /**

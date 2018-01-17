@@ -11,7 +11,7 @@ import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
-import enums.PlayerTypes;
+import RessourcesGlobalVariables.PlayerTypes;
 import java.awt.Container;
 import java.util.ArrayList;
 import java.util.List;
