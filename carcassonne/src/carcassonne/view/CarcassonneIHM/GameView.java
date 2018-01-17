@@ -80,6 +80,7 @@ public class GameView
         try {
             // constructs the default players list
             this.constructDefaultPlayersList();
+            
 
             // Build the game
             this.game = new CarcassonneGame(players);

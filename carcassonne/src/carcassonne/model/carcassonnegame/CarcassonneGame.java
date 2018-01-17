@@ -23,6 +23,7 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -57,7 +58,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     public CarcassonneGame() throws Exception
     {
-        this(new ArrayList<Player>());
+        this(new ArrayList<Player>(), new HashSet<SetInterface>(Arrays.asList(new BasicSet())));
+    }
+    
+    public CarcassonneGame(ArrayList<Player> players) throws Exception
+    {
+        this(players, new HashSet<SetInterface>(Arrays.asList(new BasicSet())));
     }
 
     /**
@@ -66,15 +72,19 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      * @param players existing list of players
      * @throws java.lang.Exception
      */
-    public CarcassonneGame(ArrayList<Player> players) throws Exception
+    public CarcassonneGame(ArrayList<Player> players, Set<SetInterface> sets) throws Exception
     {
         this.board = new Board();
-
-        //Call the basic extension to get the basic tiles into the pile
-        SetInterface basicSet = new BasicSet();
-        this.pile = basicSet.getSet();
+        this.pile = new ArrayList<AbstractTile>();
+        for(SetInterface set : sets)
+        {
+            this.pile.addAll(set.getSet());
+            if(set.getFirstTile() != null)
+            {
+                this.firstTile = set.getFirstTile();
+            }
+        }
         Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));
-        this.firstTile = basicSet.getFirstTile();
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<>();
         this.players = players;
