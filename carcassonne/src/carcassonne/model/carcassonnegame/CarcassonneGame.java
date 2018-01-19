@@ -61,7 +61,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         this(new ArrayList<Player>(), new HashSet<SetInterface>(Arrays.asList(new BasicSet())));
     }
-    
+
     public CarcassonneGame(ArrayList<Player> players) throws Exception
     {
         this(players, new HashSet<SetInterface>(Arrays.asList(new BasicSet())));
@@ -78,20 +78,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.board = new Board();
         this.pile = new ArrayList<AbstractTile>();
         this.meeplesSet = new HashSet<>();
-        for(SetInterface set : sets)
-        {
+        for (SetInterface set : sets) {
             this.pile.addAll(set.getSet());
             this.meeplesSet.addAll(set.getMeeples());
-            if(set.getFirstTile() != null)
-            {
+            if (set.getFirstTile() != null) {
                 this.firstTile = set.getFirstTile();
             }
         }
-        for(Player player : players)
-        {
-            for(Meeple meeple : this.meeplesSet)
-            {
-                Meeple intermediate = (Meeple)meeple.clone();
+        for (Player player : players) {
+            for (Meeple meeple : this.meeplesSet) {
+                Meeple intermediate = (Meeple) meeple.clone();
                 intermediate.setPlayer(player);
                 player.addMeeple(intermediate);
             }
@@ -108,7 +104,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.lastPutTile = null;
     }
 
-    
     /**
      * Get the first tile of the game
      *
@@ -118,12 +113,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return this.firstTile;
     }
-    
+
     public Coord getLastPutTile()
     {
         return lastPutTile;
     }
-
 
     /**
      * Gets the current Player
@@ -208,7 +202,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.lastPutTile = new Coord(column, row);
         this.manageNewTileAggregates(tile, row, column);
         this.notifyBoardChanged();
-        System.out.println("Champs: " + fieldAggregates);
     }
 
     /**
@@ -254,11 +247,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             //test si on est sur la bonne tuile
             if (aggregate.getAggregatedTypes().containsKey(tile)) {
                 currentTileLocations = aggregate.getAggregatedTypes().get(tile);
-                System.out.println("Aggrégat!!!!!: " + currentTileLocations + "tuile: " + tile);
                 //Si la locations correspond à cet aggrégat, c'est le bon et on ajoute le meeple + player
                 if (currentTileLocations.contains(coordinates)) {
-                    System.out.println("Ajout meeple correct");
-                    System.out.println(aggregate);
                     aggregate.addMeeple(player, meeple);
                 }
             }
@@ -455,8 +445,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         fieldAggregatesEmplacements = updateFields(tile, col, row, fieldAggregatesEmplacements, tileCities);
 
         for (Set<String> currentFieldEmplacement : fieldAggregatesEmplacements) {
-            FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
-            fieldAggregates.add(newField);
+            List<AbstractAggregate> fieldTested = new ArrayList<>();
+            fieldTested.addAll(fieldAggregates);
+
+            if (!isPartOfComplexAggregate(currentFieldEmplacement, fieldTested, col, row)) {
+                FieldAggregate newField = new FieldAggregate(col, row, tile, currentFieldEmplacement, tileCities);
+                fieldAggregates.add(newField);
+            }
         }
 
         //--- Abbayes ---//
@@ -500,10 +495,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     abbey.enlargeAggregate(convertedCoord.col, convertedCoord.row, tile, emptyLocations);
                 }
             }
-        }
-
-        for (AbbayAggregate abAgg : abbayAggregates) {
-            System.out.println(" -----------------------------" + abAgg.getAggregatedTiles().size());
         }
     }
 
@@ -835,8 +826,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
             for (FieldAggregate field : fieldAggregates) {
                 currentAggregateLocations = field.getTileLocations(col, row);
-                System.out.println("Locations courantes: " + currentAggregateLocations);
-                System.out.println("oueurs: " + field.getPlayers());
                 if (currentAggregateLocations != null && field.getPlayers().isEmpty()) {
                     result.add(currentAggregateLocations);
                 }
@@ -848,7 +837,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
 
-        System.out.println("ok ?? " + result);
         return result;
     }
 
@@ -938,9 +926,40 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         this.pile = newPile;
     }
-    
+
     public List<FieldAggregate> getFieldAggregates()
     {
         return fieldAggregates;
+    }
+
+    /**
+     * Method that check if some current locations already compose an existing
+     * aggregate. We need this test to prevent complex aggregate to being
+     * duplicated
+     *
+     * @param currentFieldEmplacement Emplacement of the tile to be tested
+     * @param aggregates List of agggregates to test (this is a list of all the
+     * aggregates from only one specific type (eg: Field)
+     * @param col Coords
+     * @param row Coords
+     * @return True if those locations are already used
+     */
+    private boolean isPartOfComplexAggregate(Set<String> currentFieldEmplacement, List<AbstractAggregate> aggregates, int col, int row)
+    {
+        boolean result = false;
+
+        for (AbstractAggregate aggregate : aggregates) {
+            Set<String> currentFieldLocations = aggregate.getAggregatedTypesByCoord(col, row);
+
+            if (currentFieldLocations != null) {
+                for (String location : currentFieldLocations) {
+                    if (currentFieldEmplacement.contains(location)) {
+                        result = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
     }
 }
