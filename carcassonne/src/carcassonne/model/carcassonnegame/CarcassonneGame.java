@@ -10,6 +10,7 @@ import carcassonne.model.aggregate.AbbayAggregate;
 import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.aggregate.CityAggregate;
 import carcassonne.model.aggregate.FieldAggregate;
+import carcassonne.model.aggregate.RiverAggregate;
 import carcassonne.model.aggregate.RoadAggregate;
 import carcassonne.model.board.Board;
 import carcassonne.model.player.Meeple;
@@ -53,9 +54,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<CityAggregate> cityAggregates;
     private List<FieldAggregate> fieldAggregates;
     private List<AbbayAggregate> abbayAggregates;
+    private RiverAggregate riverAggregate;
     private String notifyMessage;
     private Player winningPlayer;
-    private boolean riverExtensionIsUsed;
 
     public CarcassonneGame() throws Exception
     {
@@ -419,6 +420,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         Set<Set<String>> cityAggregatesEmplacements = tile.getCityAggregateEmplacements();
         Set<Set<String>> fieldAggregatesEmplacements = tile.getFieldAggregateEmplacements();
         Set<String> abbayAggregateEmplacements = tile.getAbbayAggregateEmplacements();
+        Set<String> riverAggregateEmplacements = tile.getRiverAggregateEmplacements();
 
         //--- Routes ---//
         roadAggregatesEmplacements = updateRoads(tile, col, row, roadAggregatesEmplacements);
@@ -469,6 +471,18 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         }
         manageExistingAbbayAggregates(convertedCoord, tile);
+
+        //--- River ---//
+        if (!riverAggregateEmplacements.isEmpty()) {
+            //Si la rivière existe déjà, on la complète avec la nouvelle tuile.
+            if (riverAggregate != null) {
+                riverAggregate.enlargeAggregate(col, row, tile, riverAggregateEmplacements);
+            }
+            else {
+                //Création de la rivière si elle n'existe pas encore
+                riverAggregate = new RiverAggregate(col, row, tile, riverAggregateEmplacements);
+            }
+        }
     }
 
     /**

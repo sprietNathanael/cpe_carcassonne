@@ -155,9 +155,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         boolean extensionRiver = true;
         //-- Here, we will test if the river extension is activated --//
-        /*if (extensionRiver == true){
+        if (extensionRiver == true){
             this.carcassonneGame.useRiverExtension();
-        }*/
+        }
         this.putFirstTile();
         this.beginTurn();
     }

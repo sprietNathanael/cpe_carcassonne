@@ -10,6 +10,7 @@ import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
+import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -895,6 +896,20 @@ public class CasualTile extends AbstractTile
             }
         }
         return abbayAggregatesEmplacements;
+    }
+
+    @Override
+    public Set<String> getRiverAggregateEmplacements()
+    {
+        Set<String> riverAggregatesEmplacements = new HashSet<>();
+
+        for (Set<String> aggregateEmplacement : aggregateEmplacements) {
+            if (this.getAggregateClass(aggregateEmplacement) instanceof RiverType) {
+                riverAggregatesEmplacements.addAll(aggregateEmplacement);
+                break;
+            }
+        }
+        return riverAggregatesEmplacements;
     }
 
     /**

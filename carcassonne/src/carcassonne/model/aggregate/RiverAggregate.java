@@ -26,6 +26,12 @@ public class RiverAggregate extends AbstractAggregate
     }
 
     @Override
+    public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
+    {
+        super.enlargeAggregate(col, row, newTile, locationTypes);
+    }
+    
+    @Override
     public Set<Player> getWinningPlayers()
     {
         return null;
