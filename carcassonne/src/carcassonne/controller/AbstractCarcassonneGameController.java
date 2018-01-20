@@ -154,8 +154,15 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void beginGame() throws Exception
     {
         boolean extensionRiver = true;
+        boolean extensionIC = true;
+
+        //-- Here, we will test if the Inns and Cathedrals extension is activated --//
+        if (extensionIC == true) {
+            this.carcassonneGame.useInnsAndCathedralsExtension();
+        }
+
         //-- Here, we will test if the river extension is activated --//
-        if (extensionRiver == true){
+        if (extensionRiver == true) {
             this.carcassonneGame.useRiverExtension();
         }
         this.putFirstTile();
@@ -170,8 +177,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
         this.processNextTile();
-        if(this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA))
-        {
+        if (this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA)) {
             try {
                 this.ManageIA();
             } catch (Exception ex) {
@@ -216,14 +222,14 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         // Basic IA
         Coord tileCoordinates = this.putTileBasicIA();
         try {
-            this.putMeepleBasicIA(tileCoordinates);            
+            this.putMeepleBasicIA(tileCoordinates);
         } catch (Exception e) {
             System.out.println(e);
         }
-        
+
         endTurn();
     }
-    
+
     /**
      * Puts current tiles on random coord
      *
@@ -239,10 +245,9 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
             this.currentTile.rotateRight();
         }
         this.putCurrentTile(placements.get(index));
-        return(c);
+        return (c);
     }
-    
-    
+
     /**
      * Puts random meeple or no meeple
      *
@@ -271,7 +276,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         int random = (int) (Math.random() * freeAgg.size());
         int i = 0, j = 0;
-        
+
         for (Set<String> agg : freeAgg) {
             if (i == random) {
                 random = (int) (Math.random() * agg.size());

@@ -5,7 +5,6 @@
  */
 package carcassonne.model.set;
 
-import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
@@ -14,10 +13,10 @@ import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 
 /**
@@ -46,7 +45,8 @@ public class RiverSet extends AbstractSet
         List<AbstractTile> result = new ArrayList<>();
 
         result.addAll(tileList);
-        Collections.shuffle(result);
+        
+        Collections.shuffle(result, new Random(System.currentTimeMillis()));
         result.add(lastTile);
 
         return result;

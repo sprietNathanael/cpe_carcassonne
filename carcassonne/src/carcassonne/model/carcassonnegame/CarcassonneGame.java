@@ -17,6 +17,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.player.Player;
 import carcassonne.model.set.BasicSet;
+import carcassonne.model.set.InnsAndCathedralsSet;
 import carcassonne.model.set.RiverSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
@@ -58,6 +59,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private String notifyMessage;
     private Player winningPlayer;
     private boolean riverExtensionIsUsed;
+    private boolean icExtensionIsUsed;
 
     public CarcassonneGame() throws Exception
     {
@@ -103,6 +105,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         fieldAggregates = new ArrayList<>();
         abbayAggregates = new ArrayList<>();
         riverExtensionIsUsed = false;
+        icExtensionIsUsed = false;
         this.lastPutTile = null;
     }
 
@@ -940,6 +943,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         newPile.addAll(this.pile);
 
         this.pile = newPile;
+    }
+
+    public void useInnsAndCathedralsExtension()
+    {
+        //Indicate we now use the extension
+        icExtensionIsUsed = true;
+        InnsAndCathedralsSet icSet = new InnsAndCathedralsSet();
+        this.pile.addAll(icSet.getSet());
+        Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));
     }
 
     public List<FieldAggregate> getFieldAggregates()
