@@ -29,6 +29,16 @@ public class RiverAggregate extends AbstractAggregate
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
+        //If the tile is the "RE" one, that means the player has closed the river
+        if (newTile.getId().equals("RE")){
+            isCompleted = true;
+        }
+    }
+
+    @Override
+    public boolean checkIsCompleted()
+    {
+        return isCompleted;
     }
     
     @Override
@@ -58,14 +68,6 @@ public class RiverAggregate extends AbstractAggregate
     @Override
     public boolean addMeeple(Player player, Meeple meeple)
     {
-        return false;
-    }
-
-    @Override
-    public boolean checkIsCompleted()
-    {
-        // @TODO: à gérer
-
         return false;
     }
 
