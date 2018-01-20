@@ -12,6 +12,7 @@ public class CityType extends AbstractType
 {
 
     private final boolean hasShield;
+    public final boolean hasCathedral;
 
     /**
      * constructor
@@ -21,6 +22,7 @@ public class CityType extends AbstractType
     {
         super();
         this.hasShield = false;
+        this.hasCathedral = false;
     }
 
     /**
@@ -30,7 +32,16 @@ public class CityType extends AbstractType
      */
     public CityType(boolean hasShield)
     {
+        super();
         this.hasShield = hasShield;
+        this.hasCathedral = false;
+    }
+
+    public CityType(Building building)
+    {
+        super();
+        this.hasShield = false;
+        this.hasCathedral = building.equals(Building.cathedral);
     }
 
     /**

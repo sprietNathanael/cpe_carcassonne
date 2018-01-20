@@ -11,12 +11,21 @@ package carcassonne.model.type;
 public class FieldType extends AbstractType
 {
 
+    public final boolean hasInn;
+
     /**
      * Constructor
      */
     public FieldType()
     {
         super();
+        hasInn = false;
+    }
+
+    public FieldType(Building building)
+    {
+        super();
+        hasInn = building.equals(Building.inn);
     }
 
     /**
