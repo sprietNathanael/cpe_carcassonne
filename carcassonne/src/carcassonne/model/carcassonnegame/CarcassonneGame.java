@@ -57,6 +57,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private RiverAggregate riverAggregate;
     private String notifyMessage;
     private Player winningPlayer;
+    private boolean riverExtensionIsUsed;
 
     public CarcassonneGame() throws Exception
     {
