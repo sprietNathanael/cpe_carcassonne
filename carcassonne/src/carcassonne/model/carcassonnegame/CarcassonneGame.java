@@ -325,7 +325,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         //Manages the specific case of the river
         if (this.riverExtensionIsUsed && !this.riverAggregate.checkIsCompleted()) {
             Coord possibleCoord = riverAggregate.getNextPositionTile();
-            System.out.println("Rivier foireuse " + riverAggregate);
             this.placements.add(convertCoord(possibleCoord.col, possibleCoord.row));
         }
         //Other cases
@@ -532,7 +531,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 riverAggregate = new RiverAggregate(col, row, tile, riverAggregateEmplacements);
             }
         }
-        System.out.println("Rivière ! " + riverAggregate);
     }
 
     /**

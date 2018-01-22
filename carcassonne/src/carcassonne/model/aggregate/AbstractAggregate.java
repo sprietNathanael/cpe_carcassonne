@@ -313,7 +313,6 @@ public abstract class AbstractAggregate
         int maxNumber = this.getBiggestPoints(), currentNumber;
 
         for (Map.Entry player : players.entrySet()) {
-            //System.out.println(player.getKey());
             currentNumber = Player.countPoints((Set<Meeple>) player.getValue());
             if (currentNumber == maxNumber) {
                 winningPlayers.add((Player) player.getKey());
