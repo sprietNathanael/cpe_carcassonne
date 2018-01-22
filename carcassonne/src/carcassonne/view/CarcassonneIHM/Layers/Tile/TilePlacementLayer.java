@@ -10,6 +10,7 @@ import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
@@ -140,9 +141,12 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
                 }
                 else {
                     //Draw a placeholder
+                    g2.setColor(FieldsLayer.MASK_COLORS.get(this.controller.getCurrentPlayer().getColor()));
                     g2.setComposite(FORBIDDED);
                     g2.drawImage(this.backTile, x, y, placeHolderSize, placeHolderSize, null);
+                    g2.fillRect(x, y, placeHolderSize, placeHolderSize);
                     g2.setComposite(ALLOWED);
+                    g2.setColor(Color.BLACK);
                     /*x += shift;
                     y += shift;
                     g2.fillRect(x, y, tileSize, thickness);
