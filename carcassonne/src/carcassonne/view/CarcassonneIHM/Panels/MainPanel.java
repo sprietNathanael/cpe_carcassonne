@@ -129,7 +129,16 @@ public class MainPanel extends JPanel implements java.util.Observer
                     
                     if(game.getLastPutTile() != null)
                     {
-                        this.tileHighlightmentLayer.setTileToHighlight(new UICoord(game.getLastPutTile()));
+                        String color;
+                        if(game.getPreviousPlayer() == null)
+                        {
+                            color = "transp";
+                        }
+                        else
+                        {
+                            color = game.getPreviousPlayer().getColor();
+                        }
+                        this.tileHighlightmentLayer.setTileToHighlight(new UICoord(game.getLastPutTile()), color);
                     }
                     
                     this.fieldsLayer.setFields(game.getFieldAggregates());

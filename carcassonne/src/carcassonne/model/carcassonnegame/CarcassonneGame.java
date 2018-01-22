@@ -56,6 +56,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<FieldAggregate> fieldAggregates;
     private List<AbbayAggregate> abbayAggregates;
     private RiverAggregate riverAggregate;
+    private Player previousPlayer;
     private String notifyMessage;
     private Player winningPlayer;
     private boolean riverExtensionIsUsed;
@@ -82,6 +83,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.board = new Board();
         this.pile = new ArrayList<AbstractTile>();
         this.meeplesSet = new HashSet<>();
+        this.previousPlayer = null;
         HashSet<SetInterface> sideSet = new HashSet<>();
         for (SetInterface set : sets) {
             if(set.isNotShuffleable())
@@ -145,6 +147,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public Coord getLastPutTile()
     {
         return lastPutTile;
+    }
+    
+    public Player getPreviousPlayer()
+    {
+        return this.previousPlayer;
+    }
+    
+    public void setPreviousPlayer(Player previousPlayer)
+    {
+        this.previousPlayer = previousPlayer;
     }
 
     /**

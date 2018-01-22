@@ -99,6 +99,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public void putTile(AbstractTile tile, Coord c) throws Exception
     {
+        this.carcassonneGame.setPreviousPlayer(this.getCurrentPlayer());
         this.carcassonneGame.putTile(tile, c.row, c.col);
     }
 
