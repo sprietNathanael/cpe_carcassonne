@@ -5,9 +5,11 @@
  */
 package carcassonne.model.aggregate;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +32,7 @@ public class RiverAggregate extends AbstractAggregate
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
         //If the tile is the "RE" one, that means the player has closed the river
-        if (newTile.getId().equals("RE")){
+        if (newTile.getId().equals("RE")) {
             isCompleted = true;
         }
     }
@@ -40,7 +42,36 @@ public class RiverAggregate extends AbstractAggregate
     {
         return isCompleted;
     }
-    
+
+    public Coord getNextPositionTile()
+    {
+        Coord result = null, currentCoord;
+
+        //Parcours de toutes les tuiles
+        for (Map.Entry<Coord, AbstractTile> entry : this.aggregatedTiles.entrySet()) {
+            Coord neighbordCoord = new Coord(entry.getKey().col, entry.getKey().row);
+            AbstractTile tile = entry.getValue();
+
+            //Récupère les locations des bords de la tuile 
+            Set<String> locations = filterEdgeLocations(this.aggregatedPositionTypes.get(tile));
+
+            //Parcours de ces locations
+            for (String location : locations) {
+                //Coord corespondant à cette location
+                currentCoord = getCoordFromLocation(location, neighbordCoord);
+                if (!this.aggregatedTiles.containsKey(currentCoord)) {
+                    result = currentCoord;
+                    break;
+                }
+            }
+            if (result != null) {
+                break;
+            }
+        }
+
+        return result;
+    }
+
     @Override
     public Set<Player> getWinningPlayers()
     {
@@ -54,7 +85,8 @@ public class RiverAggregate extends AbstractAggregate
     }
 
     @Override
-    protected void merge(AbstractAggregate neighborAggregate)
+    protected void merge(AbstractAggregate neighborAggregate
+    )
     {
 
     }
@@ -81,6 +113,54 @@ public class RiverAggregate extends AbstractAggregate
     public String toString()
     {
         return "River{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + "\n}";
+    }
+
+    /**
+     * Get only the locations of the river that is at an edge of a tile
+     * @param locations
+     * @return 
+     */
+    private static Set<String> filterEdgeLocations(Set<String> locations)
+    {
+        Set<String> result = new HashSet<>();
+
+        for (String location : locations) {
+            if (location.equals("N")
+                    || location.equals("E")
+                    || location.equals("S")
+                    || location.equals("W")) {
+                result.add(location);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Get neighbor coord, using current coord and location
+     * @param location
+     * @param neighborCoord
+     * @return 
+     */
+    private static Coord getCoordFromLocation(String location, Coord neighborCoord)
+    {
+        Coord coord = new Coord(neighborCoord.col, neighborCoord.row);
+        switch (location) {
+            case "N":
+                coord.row++;
+                break;
+            case "S":
+                coord.row--;
+                break;
+            case "E":
+                coord.col++;
+                break;
+            case "W":
+                coord.col--;
+                break;
+        }
+
+        return coord;
     }
 
 }

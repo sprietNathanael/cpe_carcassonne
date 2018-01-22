@@ -321,7 +321,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public boolean refreshPlacements()
     {
         this.placements.clear();
-        if (this.currentTile != null) {
+
+        //Manages the specific case of the river
+        if (this.riverExtensionIsUsed && !this.riverAggregate.checkIsCompleted()) {
+            Coord possibleCoord = riverAggregate.getNextPositionTile();
+            System.out.println("Rivier foireuse " + riverAggregate);
+            this.placements.add(convertCoord(possibleCoord.col, possibleCoord.row));
+        }
+        //Other cases
+        else if (this.currentTile != null) {
+
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
         return !this.placements.isEmpty();
@@ -368,6 +377,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
+
         return this.board.canTileBePlacedHere(coordinates, tile);
     }
 
@@ -522,6 +532,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 riverAggregate = new RiverAggregate(col, row, tile, riverAggregateEmplacements);
             }
         }
+        System.out.println("Rivière ! " + riverAggregate);
     }
 
     /**
@@ -1027,5 +1038,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
         return result;
+    }
+
+    public void setRiverExtensionIsUsed(boolean b)
+    {
+        riverExtensionIsUsed = b;
+    }
+
+    public void setInnsAndCathedralsExtensionIsUsed(boolean b)
+    {
+        icExtensionIsUsed = b;
     }
 }
