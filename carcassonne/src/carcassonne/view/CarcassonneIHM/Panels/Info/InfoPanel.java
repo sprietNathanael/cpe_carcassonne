@@ -484,8 +484,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         }
         else if (this.bigMeepleButton != null && this.bigMeepleButton.contains(p)) {
             // Hides the button
-            //this.mainPanel.switchFields();t
             this.bigMeepleOn = !(this.bigMeepleOn);
+            this.controller.setUseBigMeeple(bigMeepleOn);
             
             this.repaint();
         }
