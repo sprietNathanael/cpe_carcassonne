@@ -153,7 +153,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public void beginGame() throws Exception
     {
-        boolean extensionRiver = true;
+        /*boolean extensionRiver = true;
         boolean extensionIC = true;
 
         //-- Here, we will test if the Inns and Cathedrals extension is activated --//
@@ -164,7 +164,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         //-- Here, we will test if the river extension is activated --//
         if (extensionRiver == true) {
             this.carcassonneGame.useRiverExtension();
-        }
+        }*/
         this.putFirstTile();
         this.beginTurn();
     }

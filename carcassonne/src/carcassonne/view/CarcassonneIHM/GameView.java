@@ -14,6 +14,7 @@ import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.InnsAndCathedralsSet;
+import carcassonne.model.set.RiverSet;
 import carcassonne.model.set.SetInterface;
 import java.awt.Container;
 import java.util.ArrayList;
@@ -60,6 +61,7 @@ public class GameView
             Set<SetInterface> sets = new HashSet<SetInterface>();
             sets.add(new BasicSet());
             sets.add(new InnsAndCathedralsSet());
+            sets.add(new RiverSet());
 
             // Build the game
             this.game = new CarcassonneGame(players, sets);
