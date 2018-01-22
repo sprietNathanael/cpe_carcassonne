@@ -114,7 +114,14 @@ public class Meeple implements Cloneable
         }
         return o;
     }
+
+    @Override
+    public String toString()
+    {
+        return "[Meeple] isBig = "+this.isBig+" isUsed = "+this.isUsed; //To change body of generated methods, choose Tools | Templates.
+    }
     
+        
     
 
 }

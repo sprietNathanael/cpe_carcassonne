@@ -109,6 +109,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.lastPutTile = null;
     }
 
+    public Set<Meeple> getMeeplesSet()
+    {
+        return meeplesSet;
+    }
+    
+    
+
     /**
      * Get the first tile of the game
      *
