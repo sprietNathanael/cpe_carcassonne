@@ -183,6 +183,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
                 this.bigMeepleExists = true;
             }
         }
+        this.bigMeepleOn = false;
         
         // Get the current player
         this.currentPlayer = game.getCurrentPlayer().getName();
