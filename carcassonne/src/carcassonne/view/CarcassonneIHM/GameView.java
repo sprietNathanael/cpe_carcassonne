@@ -12,9 +12,15 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.model.set.BasicSet;
+import carcassonne.model.set.InnsAndCathedralsSet;
+import carcassonne.model.set.SetInterface;
 import java.awt.Container;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -51,10 +57,13 @@ public class GameView
         try {
             // constructs the default players list
             this.constructDefaultPlayersList();
-            
+            Set<SetInterface> sets = new HashSet<SetInterface>();
+            sets.add(new BasicSet());
+            sets.add(new InnsAndCathedralsSet());
 
             // Build the game
-            this.game = new CarcassonneGame(players);
+            this.game = new CarcassonneGame(players, sets);
+            //this.game = new CarcassonneGame(players);
 
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti(game);

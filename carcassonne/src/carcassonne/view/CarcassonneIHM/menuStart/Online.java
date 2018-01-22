@@ -35,6 +35,7 @@ public class Online extends JDialog
     private JRadioButton serveur, client;
     private JButton btCreateGame, btJoinGame;
     private CarcassonneGameControllerMulti controller;
+    private JTextField tfIpAddress;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -80,14 +81,13 @@ public class Online extends JDialog
         control.setBackground(Color.white);
 
         //Panel settings
-        JPanel panSettings = new JPanel();
+        /*JPanel panSettings = new JPanel();
         panSettings.setBackground(Color.white);
         panSettings.setBorder(BorderFactory.createTitledBorder("Mode online"));
         panSettings.setPreferredSize(new Dimension(440, 60));
-        /* choix client/serveur */
         client = new JRadioButton("Joueur");
         serveur = new JRadioButton("Hôte");
-        //client.setSelected(true);
+        client.setSelected(true);
         ButtonGroup bg = new ButtonGroup();
         bg.add(client);
         bg.add(serveur);
@@ -95,19 +95,20 @@ public class Online extends JDialog
         panSettings.add(serveur);
 
         if (client.isSelected() == true) {
-            /*  choix du port */
             JTextField port = new JTextField("Port to join a game ?");
             port.setPreferredSize(new Dimension(130, 30));
             panSettings.add(port);
 
         }
         else {
-            /*  choix du port */
             JTextField port = new JTextField("Port for the game ?");
             port.setPreferredSize(new Dimension(130, 30));
             panSettings.add(port);
 
-        }
+        }*/
+        
+        // Address IP
+        tfIpAddress = new JTextField();
         
         btCreateGame = new JButton("Create a game");
         btCreateGame.addActionListener(new ActionListener()
@@ -130,12 +131,13 @@ public class Online extends JDialog
         JPanel pnActionButtons = new JPanel();
         pnActionButtons.add(btCreateGame);
         pnActionButtons.add(btJoinGame);
+        pnActionButtons.add(tfIpAddress);
         
 
-        this.getContentPane().add(panSettings, BorderLayout.CENTER);
+        //this.getContentPane().add(panSettings, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(control, BorderLayout.SOUTH);
-        this.getContentPane().add(pnActionButtons, BorderLayout.EAST);
+        this.getContentPane().add(pnActionButtons, BorderLayout.CENTER);
 
         
     }
