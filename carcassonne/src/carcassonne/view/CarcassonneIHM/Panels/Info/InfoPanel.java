@@ -7,6 +7,7 @@ package carcassonne.view.CarcassonneIHM.Panels.Info;
 
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import java.awt.AlphaComposite;
@@ -100,9 +101,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Adds the mouse listener
         this.mouseListener = new InfoPanelMouseAdapter(this);
         this.addMouseListener(this.mouseListener);
-        this.bigMeepleAvailable = false;
-        this.bigMeepleOn = true;
-        this.bigMeepleExists = true;
+        this.bigMeepleOn = false;
 
         // Creates information lines from players
         this.playerInfoLines = new LinkedHashMap<>();
@@ -177,8 +176,25 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
      */
     public void refresh(CarcassonneGame game)
     {
+        for(Meeple meeple : game.getMeeplesSet())
+        {
+            if(meeple.getIsBig())
+            {
+                this.bigMeepleExists = true;
+            }
+        }
+        
         // Get the current player
         this.currentPlayer = game.getCurrentPlayer().getName();
+        
+        if(game.getCurrentPlayer().getBigMeepleAvailable() != null)
+        {
+            this.bigMeepleAvailable = true;
+        }
+        else
+        {
+            this.bigMeepleAvailable = false;
+        }
 
         // Updates the information lines
         for (Player player : game.getPlayers()) {            

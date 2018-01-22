@@ -164,13 +164,15 @@ public class Player
         Meeple ret = null;
 
         for (Meeple m : meeples) {
-            if (m.getIsBig()) {
+            if (m.getIsBig() && !m.getIsUsed()) {
                 ret = m;
                 break;
             }
         }
         return ret;
     }
+    
+    
 
     /**
      * Get the first meeple no used
