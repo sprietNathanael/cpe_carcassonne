@@ -35,6 +35,8 @@ public class PlayerInfo
     private BufferedImage plankTexture;
     private BufferedImage coinImage;
     private BufferedImage hollowMeeple;
+    private BufferedImage hollowMeeple_big;
+    private int bigMeepleNumber;
 
     /**
      * Construct a Player info
@@ -56,9 +58,10 @@ public class PlayerInfo
      * @param meeples
      * @param points
      */
-    public void updatePlayer(int meeples, int points)
+    public void updatePlayer(int meeples, int bigMeeple, int points)
     {
-        this.meepleNumber = meeples;
+        this.meepleNumber = bigMeeple == 1 ? meeples-1 : meeples;
+        this.bigMeepleNumber = bigMeeple;
         this.pointNumber = points;
     }
 
@@ -91,6 +94,13 @@ public class PlayerInfo
         // Get the hollow meeple image
         try {
             this.hollowMeeple = ImageIO.read(new File("resources/meeples_bordered/brown.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+         // Get the hollow big meeple image
+        try {
+            this.hollowMeeple_big = ImageIO.read(new File("resources/meeples_bordered/brown_big.png"));
         } catch (IOException ex) {
             Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -134,21 +144,32 @@ public class PlayerInfo
         g2.setColor(Color.BLACK);
         int iconsSize = (int) (height / 5.0);
         
-        int coin_x = width - (int)(width/1.75)-iconsSize;
+        int coin_x = width - (int)(width/1.5)-iconsSize;
         int coin_y = currentHeight + height - (int)(height/5.0) - iconsSize;
+        g2.drawImage(this.coinImage, coin_x, coin_y, iconsSize, iconsSize, null);
         
         int pointText_x = coin_x + iconsSize + fontSize/2;
         int pointText_y = coin_y + iconsSize/2 + fontSize/2;
-        g2.drawImage(this.coinImage, coin_x, coin_y, iconsSize, iconsSize, null);
         g2.drawString("" + this.pointNumber, pointText_x, pointText_y);
         
-        int hollowMeeple_x = width - (int)(width/3.0)-iconsSize;
+        int hollowMeeple_x = width - (int)(width/2.3)-iconsSize;
         int hollowMeeple_y = currentHeight + height - (int)(height/5.0) - iconsSize;
         g2.drawImage(this.hollowMeeple, hollowMeeple_x, hollowMeeple_y, iconsSize, iconsSize, null);
         
         int meepleText_x = hollowMeeple_x + iconsSize + fontSize/2;
         int meepleText_y = hollowMeeple_y + iconsSize/2 + fontSize/2;
         g2.drawString("" + this.meepleNumber, meepleText_x, meepleText_y);
+        
+        if(this.bigMeepleNumber != -1)
+        {
+            int hollowMeeple_big_x = width - (int)(width/3.7)-iconsSize;
+            int hollowMeeple_big_y = currentHeight + height - (int)(height/5.0) - iconsSize;
+            g2.drawImage(this.hollowMeeple_big, hollowMeeple_big_x, hollowMeeple_big_y, iconsSize, iconsSize, null);
+
+            int meepleText_big_x = hollowMeeple_big_x + iconsSize + fontSize/2;
+            int meepleText_big_y = hollowMeeple_big_y + iconsSize/2 + fontSize/2;
+            g2.drawString("" + this.bigMeepleNumber, meepleText_big_x, meepleText_big_y);
+        }
 
         // Draw the informations
         int nameX = meepleX + meepleSize + PlayerInfo.MEEPLE_BORDER;

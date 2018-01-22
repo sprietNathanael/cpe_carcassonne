@@ -197,8 +197,9 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         }
 
         // Updates the information lines
-        for (Player player : game.getPlayers()) {            
-            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
+        for (Player player : game.getPlayers()) {
+            int bigMeeple = this.bigMeepleExists ? (player.getBigMeepleAvailable() != null ? 1 : 0) : -1;
+            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), bigMeeple, player.getPoints());
         }
 
         if (game.getCurrentTile() != null) {
@@ -227,7 +228,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
         // Updates the information lines
         for (Player player : game.getPlayers()) {
-            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), player.getPoints());
+            int bigMeeple = this.bigMeepleExists ? (player.getBigMeepleAvailable() != null ? 1 : 0) : -1;
+            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), bigMeeple, player.getPoints());
         }
 
         // Updates the message
