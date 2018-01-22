@@ -49,6 +49,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     private ArrayList<Player> players;
     private UICoord lastCoord;
     private boolean interfaceLocked;
+    private boolean putBigMeeple;
 
     /**
      * Main panel constructor

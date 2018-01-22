@@ -45,7 +45,9 @@ public class MeeplesLayer extends AbstractLayer
     //      - String that represents the type name (important for the field variant)
     private HashMap<Coord, Pair<String, Pair<Meeple, String>>> meepleLocations;
     private HashMap<String, BufferedImage> meepleImages;
+    private HashMap<String, BufferedImage> meepleImages_big;
     private HashMap<String, BufferedImage> meepleImages_field;
+    private HashMap<String, BufferedImage> meepleImages_field_big;
 
     /**
      * Construct the meeple layer
@@ -56,7 +58,9 @@ public class MeeplesLayer extends AbstractLayer
     {
         super(gridPanel, controller);
         this.meepleImages = new HashMap<>();
+        this.meepleImages_big = new HashMap<>();
         this.meepleImages_field = new HashMap<>();
+        this.meepleImages_field_big = new HashMap<>();
         this.meepleLocations = new HashMap<>();
         // Build all the possible meeple images
         this.buildMeepleImages();
@@ -81,6 +85,15 @@ public class MeeplesLayer extends AbstractLayer
             }
             this.meepleImages.put(color, image);
             
+            // Build the basic meeple big
+            try
+            {
+                image = ImageIO.read(new File("resources/meeples/"+color+"_big.png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.meepleImages_big.put(color, image);
+            
             // Build the field version of the meeple
             try
             {
@@ -89,6 +102,15 @@ public class MeeplesLayer extends AbstractLayer
                 Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
             }
             this.meepleImages_field.put(color, image);
+            
+            // Build the field version of the meeple
+            try
+            {
+                image = ImageIO.read(new File("resources/meeples_field/"+color+"_big.png"));
+            } catch (IOException ex) {
+                Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            this.meepleImages_field_big.put(color, image);
         }
     }
     
@@ -133,11 +155,25 @@ public class MeeplesLayer extends AbstractLayer
                     // If the type is a field, use the variant
                     if(type.equals("Fi"))
                     {
-                        g2.drawImage(this.meepleImages_field.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        if(meeple.getIsBig())
+                        {
+                            g2.drawImage(this.meepleImages_field_big.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        }
+                        else
+                        {
+                            g2.drawImage(this.meepleImages_field.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        }
                     }
                     else
                     {
-                        g2.drawImage(this.meepleImages.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        if(meeple.getIsBig())
+                        {
+                            g2.drawImage(this.meepleImages_big.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        }
+                        else
+                        {
+                            g2.drawImage(this.meepleImages.get(meeple.getPlayer().getColor()), meeple_x, meeple_y, meepleSize, meepleSize , null);
+                        }
                     }
 
                 }
