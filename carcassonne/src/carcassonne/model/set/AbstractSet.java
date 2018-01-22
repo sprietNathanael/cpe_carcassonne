@@ -27,6 +27,7 @@ public abstract class AbstractSet implements SetInterface
     {
         tileList = new ArrayList<>();
         this.meeples = new HashSet<>();
+        this.firstTile = null;
     }
     
     public Set<Meeple> getMeeples()

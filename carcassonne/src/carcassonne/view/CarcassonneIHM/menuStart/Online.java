@@ -35,6 +35,7 @@ public class Online extends JDialog
     private JRadioButton serveur, client;
     private JButton btCreateGame, btJoinGame;
     private CarcassonneGameControllerMulti controller;
+    private JTextField tfIpAddress;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -105,6 +106,13 @@ public class Online extends JDialog
             panSettings.add(port);
 
         }*/
+<<<<<<< HEAD
+=======
+        
+        // Address IP
+        tfIpAddress = new JTextField();
+        
+>>>>>>> develop
         btCreateGame = new JButton("Create a game");
         btCreateGame.addActionListener(new ActionListener()
         {
@@ -126,11 +134,16 @@ public class Online extends JDialog
         JPanel pnActionButtons = new JPanel();
         pnActionButtons.add(btCreateGame);
         pnActionButtons.add(btJoinGame);
+<<<<<<< HEAD
+=======
+        pnActionButtons.add(tfIpAddress);
+        
+>>>>>>> develop
 
         //this.getContentPane().add(panSettings, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(control, BorderLayout.SOUTH);
-        this.getContentPane().add(pnActionButtons, BorderLayout.EAST);
+        this.getContentPane().add(pnActionButtons, BorderLayout.CENTER);
 
     }
 }
