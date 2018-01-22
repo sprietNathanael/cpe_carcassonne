@@ -27,6 +27,8 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
 
     private final CarcassonneGame carcassonneGame;
     private AbstractTile currentTile;
+    private boolean useBigMeeple;
+    
 
     /**
      * Constructor for an AbstractCarcassonneGameController
@@ -36,6 +38,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public AbstractCarcassonneGameController() throws Exception
     {
         this.carcassonneGame = new CarcassonneGame();
+        this.useBigMeeple = false;
     }
 
     /**
@@ -47,6 +50,12 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public AbstractCarcassonneGameController(CarcassonneGame model)
     {
         this.carcassonneGame = model;
+        this.useBigMeeple = false;
+    }
+    
+    public void setUseBigMeeple(boolean useBigMeeple)
+    {
+        this.useBigMeeple = useBigMeeple;
     }
 
     /**
@@ -117,6 +126,21 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         }
         return m;
     }
+    
+    /**
+     * gets the big meeple available of the current player
+     *
+     * @return
+     * @throws Exception
+     */
+    private Meeple getCurrentPlayerBigMeepleAvailable() throws Exception
+    {
+        Meeple m = carcassonneGame.getCurrentPlayer().getBigMeepleAvailable();
+        if (m == null) {
+            throw new Exception("Plus de pion disponible");
+        }
+        return m;
+    }
 
     /**
      * puts the first meeple available, of the current player, on a type of the
@@ -127,7 +151,18 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public void putMeeple(String coordinates) throws Exception
     {
-        Meeple m = getCurrentPlayerMeepleAvailable();
+        Meeple m = null;
+        if(this.useBigMeeple)
+        {
+            m = getCurrentPlayerBigMeepleAvailable();
+            this.useBigMeeple = false;
+            
+        }
+        if(m == null)
+        {
+            m = getCurrentPlayerMeepleAvailable();
+            
+        }
         //tuile
         currentTile.putMeeple(coordinates, m);
         m.setCurrentType(currentTile.getType(coordinates));
@@ -153,7 +188,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
      */
     public void beginGame() throws Exception
     {
-        boolean extensionRiver = true;
+        /*boolean extensionRiver = true;
         boolean extensionIC = true;
 
         //-- Here, we will test if the Inns and Cathedrals extension is activated --//
@@ -164,7 +199,7 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
         //-- Here, we will test if the river extension is activated --//
         if (extensionRiver == true) {
             this.carcassonneGame.useRiverExtension();
-        }
+        }*/
         this.putFirstTile();
         this.beginTurn();
     }
