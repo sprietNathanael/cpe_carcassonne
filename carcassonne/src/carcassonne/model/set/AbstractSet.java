@@ -22,13 +22,22 @@ public abstract class AbstractSet implements SetInterface
     protected final List<AbstractTile> tileList;
     protected AbstractTile firstTile;
     protected Set<Meeple> meeples;
+    protected boolean notShuffleable;
 
     public AbstractSet()
     {
         tileList = new ArrayList<>();
         this.meeples = new HashSet<>();
         this.firstTile = null;
+        this.notShuffleable = false;
     }
+
+    public boolean isNotShuffleable()
+    {
+        return notShuffleable;
+    }
+    
+    
     
     public Set<Meeple> getMeeples()
     {

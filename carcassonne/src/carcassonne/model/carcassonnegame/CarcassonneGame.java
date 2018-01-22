@@ -82,11 +82,19 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.board = new Board();
         this.pile = new ArrayList<AbstractTile>();
         this.meeplesSet = new HashSet<>();
+        HashSet<SetInterface> sideSet = new HashSet<>();
         for (SetInterface set : sets) {
-            this.pile.addAll(set.getSet());
-            this.meeplesSet.addAll(set.getMeeples());
-            if (set.getFirstTile() != null) {
-                this.firstTile = set.getFirstTile();
+            if(set.isNotShuffleable())
+            {
+                sideSet.add(set);
+            }
+            else
+            {
+                this.pile.addAll(set.getSet());
+                this.meeplesSet.addAll(set.getMeeples());
+                if (set.getFirstTile() != null) {
+                    this.firstTile = set.getFirstTile();
+                }
             }
         }
         for (Player player : players) {
@@ -97,6 +105,14 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
         Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));
+        for(SetInterface set : sideSet)
+        {
+            this.pile.addAll(0,set.getSet());
+            this.meeplesSet.addAll(set.getMeeples());
+            if (set.getFirstTile() != null) {
+                this.firstTile = set.getFirstTile();
+            }            
+        }
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<>();
         this.players = players;
@@ -935,6 +951,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     /**
      * Activate the river extension
+     * @deprecated 
      */
     public void useRiverExtension()
     {
@@ -952,6 +969,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.pile = newPile;
     }
 
+    /**
+     * @deprecated 
+     */
     public void useInnsAndCathedralsExtension()
     {
         //Indicate we now use the extension

@@ -37,6 +37,7 @@ public class RiverSet extends AbstractSet
         super();
         this.meeples = new HashSet<>();
         this.initiliazeSet();
+        this.notShuffleable = true;
     }
 
     @Override
