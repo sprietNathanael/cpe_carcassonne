@@ -25,7 +25,7 @@ import javazoom.jl.player.Player;
 
 public class GameMenu extends JFrame
 {
-
+    
     private final BtGame btPlay = new BtGame("resources/btPlay.png");
     private final BtGame btSettings = new BtGame("resources/btSettings.png");
     private final BtGame btInstructions = new BtGame("resources/btInstructions.png");
@@ -33,7 +33,7 @@ public class GameMenu extends JFrame
     private final Player musicPlayer = new Player(new BufferedInputStream(new FileInputStream("resources/music/musicMenu.mp3")));
     private final Player musicPlayer2 = new Player(new BufferedInputStream(new FileInputStream("resources/music/musicGame.mp3")));
     private Settings settings;
-
+    
     public GameMenu() throws IOException, Exception
     {
         this.setTitle("Carcassonne");
@@ -45,17 +45,17 @@ public class GameMenu extends JFrame
         this.setContentPane(new Background("resources/Back.png"));
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
-
+        
         this.setLayout(null);
-
+        
         GameMenu self = this;
-
+        
         this.add(btInstructions);
         btInstructions.setBounds(830, 660, 135, 155);
         btInstructions.setOpaque(false);
         btInstructions.setContentAreaFilled(false);
         btInstructions.setBorderPainted(false);
-
+        
         btInstructions.addActionListener(new ActionListener()
         {
             @Override
@@ -71,20 +71,20 @@ public class GameMenu extends JFrame
                 instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
-
+        
         this.add(btPlay);
         btPlay.setOpaque(false);
         btPlay.setContentAreaFilled(false);
         btPlay.setBorderPainted(false);
-        btPlay.setBounds(400, 300, 207, 92);
+        btPlay.setBounds(400, 330, 207, 92);
         //btPlay.setBorderPainted(false);
         btPlay.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                musicPlayer.close();
-                ClientWindow clientWindow;
+                //musicPlayer.close();
+                /*ClientWindow clientWindow;
                 if (self.settings != null) {
                     clientWindow = new ClientWindow(self.settings.getPlayers());
                 }
@@ -93,12 +93,21 @@ public class GameMenu extends JFrame
                 }
                 clientWindow.setVisible(true);
 
-                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+                
+                try {
+                    self.settings = new Settings();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                self.settings.setVisible(true);
+                self.settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                self.setVisible(false);
             }
+            
         });
 
-        this.add(btSettings);
+        /*this.add(btSettings);
         btSettings.setBounds(400, 400, 207, 92);
         btSettings.setOpaque(false);
         btSettings.setContentAreaFilled(false);
@@ -119,10 +128,9 @@ public class GameMenu extends JFrame
 
             }
 
-        });
-
+        });*/
         this.add(btExit);
-        btExit.setBounds(400, 500, 207, 92);
+        btExit.setBounds(400, 460, 207, 92);
         btExit.setOpaque(false);
         btExit.setContentAreaFilled(false);
         btExit.setBorderPainted(false);
@@ -134,10 +142,10 @@ public class GameMenu extends JFrame
                 System.exit(0);
             }
         });
-
+        
         this.setVisible(true);
-
+        
         musicPlayer.play();
-        musicPlayer2.play();
+       // musicPlayer2.play();
     }
 }

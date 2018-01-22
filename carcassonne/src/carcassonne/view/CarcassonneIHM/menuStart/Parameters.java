@@ -1,6 +1,7 @@
 package carcassonne.view.CarcassonneIHM.menuStart;
 
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -38,6 +39,9 @@ public class Parameters extends JDialog
     private JTextField tfNomPlayer[];
     private JComboBox<String> cbColors[];
     private JComboBox<String> cbPlayerType[];
+    private Settings settings;
+
+    Parameters self = this;
 
     public Parameters(JFrame parent, String title, boolean modal)
     {
@@ -135,7 +139,7 @@ public class Parameters extends JDialog
             content.add(paPlayer);
         }
         JPanel control = new JPanel();
-        JButton okBouton = new JButton("OK");
+        JButton okBouton = new JButton("Play");
 
         okBouton.addActionListener(new ActionListener()
         {
@@ -149,7 +153,24 @@ public class Parameters extends JDialog
                         tfNomPlayer[4].getText(), (String) cbColors[4].getSelectedItem(),
                         tfNomPlayer[5].getText(), (String) cbColors[5].getSelectedItem()
                 );
+                
+                
+                ClientWindow clientWindow;
+
+                if (self != null) {
+                    clientWindow = new ClientWindow(self.getPlayers());
+                }
+                else {
+                    clientWindow = new ClientWindow();
+                }
+                
+                clientWindow.setVisible(true);
+
+                clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                
+                
                 setVisible(false);
+
             }
 
             public String getNumbersPlayers()
@@ -214,4 +235,8 @@ public class Parameters extends JDialog
         return li;
     }
 
+      public List<ParamPlayers> getPlayers()
+    {
+        return (this.getDataPlayers());
+    }
 }

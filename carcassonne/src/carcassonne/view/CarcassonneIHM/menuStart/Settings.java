@@ -11,6 +11,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -61,22 +63,26 @@ public class Settings extends JFrame
 
         Settings self = this;
         btModeLocal.addActionListener((ActionEvent arg0) -> {
-            self.parameters = new Parameters(null, "Settings", true);
+            try {
+                self.parameters = new Parameters(null, "Settings", true);
+            } catch (Exception ex) {
+                Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
+            }
             self.parameters.setVisible(true);
-            setVisible(false);
+            self.setVisible(false);
         });
 
         btOnline.addActionListener((ActionEvent arg0) -> {
             //JOptionPane.showMessageDialog(null, "\"La patience est la clé du bien-être.\"\n" + "Mahomet - Prophète, Religieux (570 - 632)", "En cours de développement", JOptionPane.ERROR_MESSAGE);
-            self.online = new Online(null,"Online",true);
+            self.online = new Online(null, "Online", true);
             self.online.setVisible(true);
-            setVisible(false);
+            self.setVisible(false);
         });
         this.setVisible(true);
     }
 
-    public List<ParamPlayers> getPlayers()
+    /*public List<ParamPlayers> getPlayers()
     {
         return (this.parameters.getDataPlayers());
-    }
+    }*/
 }
