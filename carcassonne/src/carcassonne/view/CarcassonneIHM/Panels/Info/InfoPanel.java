@@ -9,8 +9,10 @@ import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
+import java.awt.AlphaComposite;
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Composite;
 import java.awt.Font;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
@@ -42,7 +44,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 {
 
     // Constants
-    
+    private static final Composite CLEAR = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1);
+    private static final Composite FORBIDDED = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, .6f);
     public static int RELIEF_GRADIENT_THICKNESS = 30;
     public static int HIGHLIGHT_GRADIENT_THICKNESS = 10;
     public static int GAPS_BETWEEN_LINES = 10;
@@ -57,6 +60,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private BufferedImage backTile;
     private BufferedImage currentTile;
     private BufferedImage noMeepleButtonImage;
+    private BufferedImage bigMeepleOnImage;
+    private BufferedImage bigMeepleOffImage;
     private BufferedImage forestTexture;
     private BufferedImage stoneTexture;
     private BufferedImage fields_on;
@@ -64,10 +69,14 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
     private int pileSize;
     private boolean displayPassMeepleTurnButton;
     private Polygon meepleButton;
+    private Polygon bigMeepleButton;
     private Polygon fieldsButton;
     private InfoPanelMouseAdapter mouseListener;
     private String message;
     private boolean fieldsOn;
+    private boolean bigMeepleOn;
+    private boolean bigMeepleAvailable;
+    private boolean bigMeepleExists;
     private MainPanel mainPanel;
 
     /**
@@ -91,6 +100,9 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Adds the mouse listener
         this.mouseListener = new InfoPanelMouseAdapter(this);
         this.addMouseListener(this.mouseListener);
+        this.bigMeepleAvailable = false;
+        this.bigMeepleOn = true;
+        this.bigMeepleExists = true;
 
         // Creates information lines from players
         this.playerInfoLines = new LinkedHashMap<>();
@@ -105,6 +117,19 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+        // Get the big_meeple_on button image
+        try {
+            this.bigMeepleOnImage = ImageIO.read(new File("resources/big_meeple_on.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        // Get the big_meeple_off button image
+        try {
+            this.bigMeepleOffImage = ImageIO.read(new File("resources/big_meeple_off.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(MainPanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         // Get the back tile image
         try {
@@ -326,6 +351,55 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
         }
         
+        this.meepleButton = null;
+        this.bigMeepleButton = null;
+        if (this.displayPassMeepleTurnButton) {
+            // Draw the pass meeple turn button
+            
+            double ratio = (double)this.noMeepleButtonImage.getHeight() / (double)this.noMeepleButtonImage.getWidth();
+            double width = this.getWidth()/3.0;
+            double meeples_button_height = width*ratio;
+            int x = (int) ((this.getWidth() / 4.0) - (width/2.0));
+            int y = currentHeight;
+            g2.drawImage(this.noMeepleButtonImage, x, y, (int)width, (int)meeples_button_height, null);
+            
+            this.meepleButton = new Polygon();
+            this.meepleButton.addPoint(x, y);
+            this.meepleButton.addPoint(x+(int)width, y);
+            this.meepleButton.addPoint(x+(int)width, y+(int)meeples_button_height);
+            this.meepleButton.addPoint(x, y+(int)meeples_button_height);
+            
+            if(this.bigMeepleExists)
+            {
+                x = (int) ((3*(this.getWidth() / 4.0)) - (width/2.0));
+                if(this.bigMeepleAvailable)
+                {
+                    this.bigMeepleButton = new Polygon();
+                    this.bigMeepleButton.addPoint(x, y);
+                    this.bigMeepleButton.addPoint(x+(int)width, y);
+                    this.bigMeepleButton.addPoint(x+(int)width, y+(int)meeples_button_height);
+                    this.bigMeepleButton.addPoint(x, y+(int)meeples_button_height);
+
+                }
+                else
+                {
+                    g2.setComposite(FORBIDDED);
+                }
+
+                if(this.bigMeepleOn)
+                {
+                    g2.drawImage(this.bigMeepleOnImage, x, y, (int)width, (int)meeples_button_height, null);
+                }
+                else{
+                    g2.drawImage(this.bigMeepleOffImage, x, y, (int)width, (int)meeples_button_height, null);                    
+                }
+                g2.setComposite(CLEAR);
+            }
+            
+            
+            currentHeight += meeples_button_height;
+        }
+        
         double ratio_FieldsIcon = (double)this.fields_on.getHeight() / (double)this.fields_on.getWidth();
         double width_FieldsIcon = this.getWidth()/3.0;
         double height_FieldsIcon = width_FieldsIcon*ratio_FieldsIcon;
@@ -339,34 +413,16 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         {
             g2.drawImage(this.fields_on, x_FieldsIcon, y_FieldsIcon, (int)width_FieldsIcon, (int)height_FieldsIcon, null);
         }
-        currentHeight+=height_FieldsIcon;
+        
         this.fieldsButton = new Polygon();
         this.fieldsButton.addPoint(x_FieldsIcon, y_FieldsIcon);
         this.fieldsButton.addPoint(x_FieldsIcon+(int)width_FieldsIcon, y_FieldsIcon);
         this.fieldsButton.addPoint(x_FieldsIcon+(int)width_FieldsIcon, y_FieldsIcon+(int)height_FieldsIcon);
         this.fieldsButton.addPoint(x_FieldsIcon, y_FieldsIcon+(int)height_FieldsIcon);
+        
+        currentHeight+=height_FieldsIcon;
 
-        if (this.displayPassMeepleTurnButton) {
-            // Draw the pass meeple turn button
-            
-            double ratio = (double)this.noMeepleButtonImage.getHeight() / (double)this.noMeepleButtonImage.getWidth();
-            double width = this.getWidth()/2.0;
-            double height = width*ratio;
-            int x = (int) ((this.getWidth() / 2.0) - (width / 2.0));
-            int y = currentHeight;
-            g2.drawImage(this.noMeepleButtonImage, x, y, (int)width, (int)height, null);
-            int y_text = y + (int)height + 10;
-            int x_text = x + 10;
-            
-            this.meepleButton = new Polygon();
-            this.meepleButton.addPoint(x, y);
-            this.meepleButton.addPoint(x+(int)width, y);
-            this.meepleButton.addPoint(x+(int)width, y+(int)height);
-            this.meepleButton.addPoint(x, y+(int)height);
-            // Draw the inner message
-            /*g2.drawString("Ne pas poser", x_text, y_text);
-            g2.drawString("de Meeple", x_text, y_text + 16);*/
-        }
+       
     }
 
     /**
@@ -407,6 +463,13 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
             // Hides the button
             this.mainPanel.switchFields();
             this.fieldsOn = !this.fieldsOn;
+        }
+        else if (this.bigMeepleButton != null && this.bigMeepleButton.contains(p)) {
+            // Hides the button
+            //this.mainPanel.switchFields();t
+            this.bigMeepleOn = !(this.bigMeepleOn);
+            
+            this.repaint();
         }
     }
 
