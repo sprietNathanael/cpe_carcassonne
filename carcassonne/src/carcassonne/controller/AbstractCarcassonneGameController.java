@@ -122,7 +122,11 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     {
         Meeple m = carcassonneGame.getCurrentPlayer().getFirstMeepleAvailable();
         if (m == null) {
-            throw new Exception("Plus de pion disponible");
+            m = carcassonneGame.getCurrentPlayer().getBigMeepleAvailable();
+            if(m == null)
+            {
+                throw new Exception("Plus de pion disponible");                
+            }
         }
         return m;
     }
