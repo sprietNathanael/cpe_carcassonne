@@ -127,9 +127,17 @@ public class GameView
             // constructs the default players list
             this.constructDefaultPlayersList();
         }
+        
+        // constructs the default players list
+        this.constructDefaultPlayersList();
+        Set<SetInterface> sets = new HashSet<SetInterface>();
+        sets.add(new BasicSet());
+        sets.add(new InnsAndCathedralsSet());
+        sets.add(new RiverSet());
 
         // Build the game
-        this.game = new CarcassonneGame(players);
+        this.game = new CarcassonneGame(players, sets);
+
     }
 
     /**
