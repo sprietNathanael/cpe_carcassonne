@@ -27,9 +27,32 @@ public class Player implements Serializable
     private int points;
     private final String color;
     private final String playerType;
+    private int fieldPoints;
+    private int cityPoints;
+    private int abbayePoints;
+    private int roadPoints;
+    private int riverPoints;
 
     public void addToScore(int nb, AggregatesEnum type)
     {
+        switch(type)
+        {
+            case ABBAY:
+                this.abbayePoints+=nb;
+                break;
+            case CITY:
+                this.cityPoints+=nb;
+                break;
+            case FIELD:
+                this.fieldPoints+=nb;
+                break;
+            case ROAD:
+                this.roadPoints+=nb;
+                break;
+            case RIVER:
+                this.riverPoints+=nb;
+                break;
+        }
         points += nb;
     }
 
@@ -47,12 +70,44 @@ public class Player implements Serializable
         this.points = 0;
         this.playerType = playerType;
         this.meeples = new ArrayList<>();
+        this.abbayePoints = 0;
+        this.cityPoints = 0;
+        this.fieldPoints = 0;
+        this.riverPoints = 0;
+        this.roadPoints = 0;
     }
     
     public void addMeeple(Meeple meeple)
     {
         this.meeples.add(meeple);
     }
+
+    public int getFieldPoints()
+    {
+        return fieldPoints;
+    }
+
+    public int getCityPoints()
+    {
+        return cityPoints;
+    }
+
+    public int getAbbayePoints()
+    {
+        return abbayePoints;
+    }
+
+    public int getRoadPoints()
+    {
+        return roadPoints;
+    }
+
+    public int getRiverPoints()
+    {
+        return riverPoints;
+    }
+    
+    
 
     /**
      * Gets the meeples of the player
