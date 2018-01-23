@@ -38,6 +38,13 @@ public abstract class AbstractAggregate implements Serializable
      * State of the aggregate, can be updated using "checkIsCompleted"
      */
     protected boolean isCompleted;
+    
+    protected AggregatesEnum type;
+    
+    public AggregatesEnum getType()
+    {
+        return this.type;
+    }
 
     public boolean isCompleted()
     {

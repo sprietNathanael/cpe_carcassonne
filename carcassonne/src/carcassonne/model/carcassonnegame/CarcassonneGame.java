@@ -933,7 +933,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                     int score = aggregate.countPoints();
                     //Update the score of the winning playesr of this aggregate
                     for (Player player : winningPlayers) {
-                        player.addToScore(score);
+                        player.addToScore(score, aggregate.getType());
                     }
                     //Browse all of the players and their meeples
                     for (Map.Entry<Player, Set<Meeple>> entry : playersToUpdate.entrySet()) {
@@ -969,7 +969,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
                 int score = aggregate.countPoints();
                 //Update the score of the winning playesr of this aggregate
                 for (Player player : winningPlayers) {
-                    player.addToScore(score);
+                    player.addToScore(score, aggregate.getType());
                 }
             }
 

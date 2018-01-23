@@ -11,6 +11,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
+import static carcassonne.model.aggregate.AggregatesEnum.ROAD;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -69,6 +70,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     public RoadAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
+        this.type = ROAD;
         roadEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         roadEdges.put(new Coord(col, row), getRoadEdges(locationTypes));

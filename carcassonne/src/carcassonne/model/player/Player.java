@@ -5,6 +5,7 @@
  */
 package carcassonne.model.player;
 
+import carcassonne.model.aggregate.AggregatesEnum;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -27,7 +28,7 @@ public class Player implements Serializable
     private final String color;
     private final String playerType;
 
-    public void addToScore(int nb)
+    public void addToScore(int nb, AggregatesEnum type)
     {
         points += nb;
     }

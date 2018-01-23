@@ -5,6 +5,7 @@
  */
 package carcassonne.model.aggregate;
 
+import static carcassonne.model.aggregate.AggregatesEnum.FIELD;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
@@ -48,6 +49,7 @@ public class FieldAggregate extends AbstractAggregate implements Serializable
     public FieldAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
     {
         super(col, row, firstTile, locationTypes);
+        this.type = FIELD;
         boundedCities = new HashSet<>();
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
     }

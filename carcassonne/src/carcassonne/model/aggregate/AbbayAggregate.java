@@ -6,6 +6,7 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
+import static carcassonne.model.aggregate.AggregatesEnum.ABBAY;
 import carcassonne.model.tile.AbstractTile;
 import java.io.Serializable;
 import java.util.Set;
@@ -23,6 +24,7 @@ public class AbbayAggregate extends AbstractAggregate implements Serializable
     public AbbayAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
+        this.type = ABBAY;
     }
 
     public boolean coordsAreCenterOfAgg(Coord coord)
@@ -41,6 +43,7 @@ public class AbbayAggregate extends AbstractAggregate implements Serializable
 
         return result;
     }
+    
 
     @Override
     public boolean checkIsCompleted()

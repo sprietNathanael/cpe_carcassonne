@@ -6,6 +6,7 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
+import static carcassonne.model.aggregate.AggregatesEnum.CITY;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
@@ -44,6 +45,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     public CityAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
+        this.type = CITY;
         cityEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         cityEdges.put(new Coord(col, row), getCityEdges(locationTypes));

@@ -6,6 +6,7 @@
 package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
+import static carcassonne.model.aggregate.AggregatesEnum.RIVER;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
@@ -32,6 +33,7 @@ public class RiverAggregate extends AbstractAggregate implements Serializable
     public RiverAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
+        this.type = RIVER;
         lastTile = new Coord(col, row);
         stream = filterEdgeLocation(locationTypes);
     }
