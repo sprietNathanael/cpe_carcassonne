@@ -13,7 +13,6 @@ import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
 import static carcassonne.model.aggregate.AggregatesEnum.ROAD;
 import carcassonne.model.type.AbstractType;
-import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -112,7 +111,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
-        hasInn = aggregateHasInn(newTile, locationTypes);
+        hasInn = hasInn || aggregateHasInn(newTile, locationTypes);
         //We get the road edges of this new tile; using the list of location's tile composing the aggregate
         Set<RoadEdgeEnum> currentTileEdges = getRoadEdges(locationTypes);
         List<RoadEdgeEnum> completedEdges = new ArrayList<>();
@@ -305,13 +304,24 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     @Override
     public int countPoints()
     {
-        return aggregatedTiles.size();
+        int result = 0;
+        
+        //If this is a road with a meeple, we count 2 points per Tiles if the road is completed, 0 if not
+        if (this.hasInn) {
+            if (this.checkIsCompleted()) {
+                result = aggregatedTiles.size() * 2;
+            }
+        } else {
+            result = aggregatedTiles.size();
+        }
+
+        return result;
     }
 
     @Override
     public String toString()
     {
-        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + " IsInn: " + hasInn +"}\n";
+        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + " IsInn: " + hasInn + "}\n";
     }
 
     private boolean aggregateHasInn(AbstractTile tile, Set<String> locations)

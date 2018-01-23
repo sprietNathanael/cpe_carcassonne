@@ -84,7 +84,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
-        hasCathedral = aggregateHasCathedral(newTile, locationTypes);
+        hasCathedral = hasCathedral || aggregateHasCathedral(newTile, locationTypes);
         //We get the city edges of this new tile; using the list of location's tile composing the aggregate
         Set<CityEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
         List<CityEdgeEnum> completedEdges = new ArrayList<>();
@@ -291,7 +291,22 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     public int countPoints()
     {
         int result = 0;
-        if (this.checkIsCompleted()) {
+
+        //Case of a cathedral
+        if (this.hasCathedral) {
+            //Completed with cathedral: 3 points per tile, if not 0
+            if (this.checkIsCompleted()) {
+                for (AbstractTile tile : aggregatedTiles.values()) {
+                    if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
+                        result += 6;
+                    }
+                    else {
+                        result += 3;
+                    }
+                }
+            }
+        }
+        else if (this.checkIsCompleted()) {
             for (AbstractTile tile : aggregatedTiles.values()) {
                 if (tileHasShield(tile, aggregatedPositionTypes.get(tile))) {
                     result += 4;
