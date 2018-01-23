@@ -12,6 +12,7 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.InnsAndCathedralsSet;
 import carcassonne.model.set.RiverSet;
@@ -44,7 +45,7 @@ public class GameView
     {
         try {
             contructPlayersListAndGame(playerList); // Build the controller
-            this.controller = new CarcassonneGameControllerMulti(game);
+            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface)game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -60,17 +61,14 @@ public class GameView
             this.constructDefaultPlayersList();
             Set<SetInterface> sets = new HashSet<SetInterface>();
             sets.add(new BasicSet());
-            sets.add(new InnsAndCathedralsSet());
-            sets.add(new RiverSet());
+            //sets.add(new InnsAndCathedralsSet());
+            //sets.add(new RiverSet());
 
             // Build the game
             this.game = new CarcassonneGame(players, sets);
-            this.game.setRiverExtensionIsUsed(true);
-            this.game.setInnsAndCathedralsExtensionIsUsed(true);
-            //this.game = new CarcassonneGame(players);
 
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti(game);
+            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface)game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -5,6 +5,8 @@
  */
 package carcassonne.model.carcassonnegame;
 
+import carcassonne.model.player.Meeple;
+import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 
 /**
@@ -22,4 +24,17 @@ public interface CarcassonneGameInterface
      */
     public void putTile(AbstractTile tile, int row, int column) throws Exception;
     
+    public void setPreviousPlayer(Player previousPlayer);
+    
+    public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates);
+    
+    public void notifyBoardChanged();
+    
+    public void notifyPlacementsReady();
+    
+    public void notifyGameEnds();
+    
+    public void putBackCurrentTile();
+    
+    public void manageCompletedAggregates();
 }

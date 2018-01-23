@@ -6,6 +6,7 @@
 package carcassonne.controller;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 
 /**
  * Allows to play at several players on a same computer
@@ -18,7 +19,7 @@ public class CarcassonneGameControllerMulti extends AbstractCarcassonneGameContr
     {
     }
 
-    public CarcassonneGameControllerMulti(CarcassonneGame model) throws Exception
+    public CarcassonneGameControllerMulti(CarcassonneGameInterface model) throws Exception
     {
         super(model);
     }

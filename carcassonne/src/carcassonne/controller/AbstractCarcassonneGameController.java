@@ -12,6 +12,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.notifyMessage.ObserverMessage;
 import java.util.ArrayList;
 import java.util.Observable;
@@ -28,7 +29,8 @@ import java.util.logging.Logger;
 public class AbstractCarcassonneGameController extends Observable implements CarcassonneGameControllerInterface, java.util.Observer
 {
 
-    protected final CarcassonneGame carcassonneGame;
+    protected CarcassonneGame carcassonneGame;
+    protected final CarcassonneGameInterface carcassonneGameInterface;
     private AbstractTile currentTile;
     private boolean useBigMeeple;
     private ObserverMessage observerMessage;
@@ -41,7 +43,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      */
     public AbstractCarcassonneGameController() throws Exception
     {
-        this.carcassonneGame = new CarcassonneGame();
+        this.carcassonneGameInterface = new CarcassonneGame();
         this.useBigMeeple = false;
     }
 
@@ -49,11 +51,11 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      * Constructor for an AbstractCarcassonneGameController from an existing
      * model
      *
-     * @param model an existing CarcassonneGame
+     * @param modelInterface
      */
-    public AbstractCarcassonneGameController(CarcassonneGame model)
+    public AbstractCarcassonneGameController(CarcassonneGameInterface modelInterface)
     {
-        this.carcassonneGame = model;
+        this.carcassonneGameInterface = modelInterface;
         this.useBigMeeple = false;
     }
     
@@ -103,8 +105,13 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      */
     public void putTile(AbstractTile tile, Coord c) throws Exception
     {
-        this.carcassonneGame.setPreviousPlayer(this.getCurrentPlayer());
-        this.carcassonneGame.putTile(tile, c.row, c.col);
+        this.putTile(tile, c.col, c.row);
+    }
+    
+    public void putTile(AbstractTile tile,int col,int row) throws Exception
+    {
+        this.carcassonneGameInterface.setPreviousPlayer(this.getCurrentPlayer());
+        this.carcassonneGameInterface.putTile(tile, row, col);
     }
 
     /**
@@ -114,7 +121,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      */
     public void putFirstTile() throws Exception
     {
-        this.carcassonneGame.putTile(this.carcassonneGame.getFirstTile(), 0, 0);
+        this.putTile(this.carcassonneGame.getFirstTile(), 0, 0);
     }
 
     /**
@@ -176,7 +183,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
         currentTile.putMeeple(coordinates, m);
         m.setCurrentType(currentTile.getType(coordinates));
         //aggregats
-        carcassonneGame.putMeeple(m, currentTile, m.getPlayer(), coordinates);
+        carcassonneGameInterface.putMeeple(m, currentTile, m.getPlayer(), coordinates);
         m.setIsUsed(true);
     }
 
@@ -239,20 +246,20 @@ public class AbstractCarcassonneGameController extends Observable implements Car
         if (this.currentTile != null) {
             System.out.println("La pièce piochée est : " + this.currentTile.getName());
             System.out.println(this.currentTile);
-            this.carcassonneGame.notifyBoardChanged();
+            this.carcassonneGameInterface.notifyBoardChanged();
             // If the current tile can be placed
             if (this.carcassonneGame.refreshPlacements()) {
-                this.carcassonneGame.notifyPlacementsReady();
+                this.carcassonneGameInterface.notifyPlacementsReady();
             }
             // Else put back the current tile and draw another one
             else {
-                this.carcassonneGame.putBackCurrentTile();
+                this.carcassonneGameInterface.putBackCurrentTile();
                 this.processNextTile();
             }
         }
         else {
             System.out.println("Fin de partie");
-            this.carcassonneGame.notifyGameEnds();
+            this.carcassonneGameInterface.notifyGameEnds();
         }
     }
 
@@ -343,7 +350,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      */
     public Player endTurn()
     {
-        carcassonneGame.manageCompletedAggregates();
+        carcassonneGameInterface.manageCompletedAggregates();
         System.out.println("===========\nPoints des joueurs :" + this.carcassonneGame.getPlayers());
         Player player = this.carcassonneGame.nextPlayer();
         this.beginTurn();
@@ -405,7 +412,8 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     @Override
     public void update(Observable o, Object arg)
     {
-        this.observerMessage = new ObserverMessage((String)arg, (CarcassonneGame)o);
+        this.carcassonneGame = (CarcassonneGame)o;
+        this.observerMessage = new ObserverMessage((String)arg, this.carcassonneGame);
         this.notifyObservers();
         
     }
