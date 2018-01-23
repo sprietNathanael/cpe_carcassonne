@@ -45,7 +45,7 @@ public class GameView
     {
         try {
             contructPlayersListAndGame(playerList); // Build the controller
-            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface)game);
+            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -61,14 +61,16 @@ public class GameView
             this.constructDefaultPlayersList();
             Set<SetInterface> sets = new HashSet<SetInterface>();
             sets.add(new BasicSet());
-            //sets.add(new InnsAndCathedralsSet());
-            //sets.add(new RiverSet());
+            sets.add(new InnsAndCathedralsSet());
+            sets.add(new RiverSet());
 
             // Build the game
             this.game = new CarcassonneGame(players, sets);
+            this.game.setRiverExtensionIsUsed(true);
+            this.game.setInnsAndCathedralsExtensionIsUsed(true);
 
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface)game);
+            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -95,8 +97,9 @@ public class GameView
 
     /**
      * Creates the players list and the game
+     *
      * @param playerList
-     * @throws Exception 
+     * @throws Exception
      */
     private void contructPlayersListAndGame(List<ParamPlayers> playerList) throws Exception
     {

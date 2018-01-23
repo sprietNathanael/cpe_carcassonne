@@ -27,6 +27,8 @@ import java.util.Set;
 public class CityAggregate extends AbstractAggregate implements Serializable
 {
 
+    private boolean hasCathedral;
+
     private Map<Coord, Set<CityEdgeEnum>> cityEdges;
 
     public Map<Coord, Set<CityEdgeEnum>> getCityEdges()
@@ -49,6 +51,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
         cityEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         cityEdges.put(new Coord(col, row), getCityEdges(locationTypes));
+        hasCathedral = aggregateHasCathedral(firstTile, locationTypes);
     }
 
     /**
@@ -67,6 +70,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
         cityEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         cityEdges.put(new Coord(col, row), getCityEdges(locationTypes));
+        hasCathedral = aggregateHasCathedral(firstTile, locationTypes);
     }
 
     /**
@@ -80,6 +84,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
+        hasCathedral = aggregateHasCathedral(newTile, locationTypes);
         //We get the city edges of this new tile; using the list of location's tile composing the aggregate
         Set<CityEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
         List<CityEdgeEnum> completedEdges = new ArrayList<>();
@@ -113,10 +118,12 @@ public class CityAggregate extends AbstractAggregate implements Serializable
                     neighborTileEdges.remove(neighborTileEdge);
                     if (neighborTileEdges.isEmpty()) {
                         //Remove the set if there is no more edges for this neighbor tile
-                        cityEdges.remove(new Coord(neighborCol, neighborRow));
+//                        System.out.println("Suppression edge: " + neighborCol + ";" + neighborRow + " : " + cityEdges.get(new Coord(neighborCol, neighborCol)));
+                        cityEdges.remove(new Coord(neighborCol, neighborCol));
                     }
                     else {
                         //Update the set if there is still edges for this neighbor tile
+//                        System.out.println("Ajout edge: " + neighborCol + ";" + neighborRow + " : " + neighborTileEdges);
                         cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
                     }
                 }
@@ -128,6 +135,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
         });
         if (!currentTileEdges.isEmpty()) {
             //If there is still incompleted edges on this current tile, we put them
+//            System.out.println("Ajout edge: " + col + ";" + row + " : " + currentTileEdges);
             cityEdges.put(new Coord(col, row), currentTileEdges);
         }
 
@@ -138,7 +146,9 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     {
         super.merge(neighborAggregate);
         this.cityEdges = mergeCityEdgesSet(neighborAggregate.getCityEdges(), this.cityEdges);
+//        System.out.println("Merge city edges: " + cityEdges);
         cleanCityEdgesMap();
+        hasCathedral = (this.hasCathedral || neighborAggregate.hasCathedral);
     }
 
     @Override
@@ -243,7 +253,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
                  * CityType, l'edge est bien complété donc on ne l'ajoute pas
                  */
                 Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCoord.col, neighborCoord.row);
-                if ((neighborTypes != null) 
+                if ((neighborTypes != null)
                         && (getCityEdges(neighborTypes).contains(neighborEdge))
                         && updatedCurrentEdges.contains(edge)) {
                     updatedCurrentEdges.remove(edge);
@@ -301,6 +311,23 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     @Override
     public String toString()
     {
-        return "City{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " \nEdges: " + this.cityEdges + "}\n";
+        return "City{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " \nEdges: " + this.cityEdges + " IsCath: " + hasCathedral + "}\n";
+    }
+
+    public static boolean aggregateHasCathedral(AbstractTile tile, Set<String> locations)
+    {
+        for (Map.Entry<String, AbstractType> item : tile.getTypes().entrySet()) {
+            String key = item.getKey();
+            AbstractType value = item.getValue();
+
+            if (value instanceof CityType && locations.contains(key)) {
+                CityType city = (CityType) value;
+                if (city.hasCathedral) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
