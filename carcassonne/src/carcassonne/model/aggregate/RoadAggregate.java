@@ -37,7 +37,7 @@ public class RoadAggregate extends AbstractAggregate
      * @param locationTypes
      * @return
      */
-    private static Set<RoadEdgeEnum> getCityEdges(Set<String> locationTypes)
+    private static Set<RoadEdgeEnum> getRoadEdges(Set<String> locationTypes)
     {
         Set<RoadEdgeEnum> roadEdges = new HashSet<>();
 
@@ -70,7 +70,7 @@ public class RoadAggregate extends AbstractAggregate
         super(col, row, firstTile, locationTypes);
         roadEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
-        roadEdges.put(new Coord(col, row), getCityEdges(locationTypes));
+        roadEdges.put(new Coord(col, row), getRoadEdges(locationTypes));
     }
 
     /**
@@ -88,7 +88,7 @@ public class RoadAggregate extends AbstractAggregate
         super(col, row, firstTile, locationTypes, player, meeple);
         roadEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
-        roadEdges.put(new Coord(col, row), getCityEdges(locationTypes));
+        roadEdges.put(new Coord(col, row), getRoadEdges(locationTypes));
     }
 
     /**
@@ -104,7 +104,7 @@ public class RoadAggregate extends AbstractAggregate
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
         //We get the road edges of this new tile; using the list of location's tile composing the aggregate
-        Set<RoadEdgeEnum> currentTileEdges = getCityEdges(locationTypes);
+        Set<RoadEdgeEnum> currentTileEdges = getRoadEdges(locationTypes);
         List<RoadEdgeEnum> completedEdges = new ArrayList<>();
         //For each edges, we set the coord of its neighbor
         currentTileEdges.forEach((RoadEdgeEnum roadEdge) -> {
@@ -250,7 +250,7 @@ public class RoadAggregate extends AbstractAggregate
                  */
                 Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCoord.col, neighborCoord.row);
                 if ((neighborTypes != null)
-                        && (getCityEdges(neighborTypes).contains(neighborEdge))
+                        && (getRoadEdges(neighborTypes).contains(neighborEdge))
                         && updatedCurrentEdges.contains(edge)) {
                     updatedCurrentEdges.remove(edge);
                 }

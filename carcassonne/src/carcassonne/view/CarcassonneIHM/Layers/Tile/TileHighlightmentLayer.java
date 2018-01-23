@@ -8,6 +8,7 @@ package carcassonne.view.CarcassonneIHM.Layers.Tile;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
+import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Panels.Info.InfoPanel;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
@@ -24,15 +25,17 @@ public class TileHighlightmentLayer extends AbstractLayer
 {
 
     private UICoord tileToHighlight;
+    private String color;
 
     public TileHighlightmentLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
     {
         super(gridPanel, controller);
     }
 
-    public void setTileToHighlight(UICoord tile)
+    public void setTileToHighlight(UICoord tile, String color)
     {
         this.tileToHighlight = tile;
+        this.color = color;
     }
 
     @Override
@@ -48,8 +51,11 @@ public class TileHighlightmentLayer extends AbstractLayer
 
             int tile_x = (int) delta_x;
             int tile_y = (int) delta_y;
-
-            GradientPaint gradient = new GradientPaint(tile_x, tile_y, new Color(255, 255, 255, 200), tile_x, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(255, 255, 255, 0));
+            Color color = FieldsLayer.MASK_COLORS.get(this.color);
+            int r = color.getRed();
+            int g = color.getGreen();
+            int b = color.getBlue();
+            GradientPaint gradient = new GradientPaint(tile_x, tile_y, new Color(r,g,b,200), tile_x, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(r, g, b, 0));
             g2.setPaint(gradient);
             Polygon border = new Polygon();
             border.addPoint(tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS);
@@ -58,7 +64,7 @@ public class TileHighlightmentLayer extends AbstractLayer
             border.addPoint(tile_x, tile_y);
             g2.fillPolygon(border);
 
-            gradient = new GradientPaint(tile_x + tileSize, tile_y, new Color(255, 255, 255, 200), tile_x + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
+            gradient = new GradientPaint(tile_x + tileSize, tile_y, new Color(r, g, b, 200), tile_x + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(r, g, b, 0));
             g2.setPaint(gradient);
 
             border.reset();
@@ -68,7 +74,7 @@ public class TileHighlightmentLayer extends AbstractLayer
             border.addPoint(tile_x + tileSize, tile_y);
             g2.fillPolygon(border);
 
-            gradient = new GradientPaint(tile_x, tile_y + tileSize, new Color(255, 255, 255, 200), tile_x, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(255, 255, 255, 0));
+            gradient = new GradientPaint(tile_x, tile_y + tileSize, new Color(r, g, b, 200), tile_x, tile_y + tileSize + InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, new Color(r, g, b, 0));
             g2.setPaint(gradient);
 
             border.reset();
@@ -78,7 +84,7 @@ public class TileHighlightmentLayer extends AbstractLayer
             border.addPoint(tile_x + tileSize, tile_y + tileSize);
             g2.fillPolygon(border);
 
-            gradient = new GradientPaint(tile_x, tile_y, new Color(255, 255, 255, 200), tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(255, 255, 255, 0));
+            gradient = new GradientPaint(tile_x, tile_y, new Color(r, g, b, 200), tile_x - InfoPanel.HIGHLIGHT_GRADIENT_THICKNESS, tile_y, new Color(r, g, b, 0));
             g2.setPaint(gradient);
 
             border.reset();

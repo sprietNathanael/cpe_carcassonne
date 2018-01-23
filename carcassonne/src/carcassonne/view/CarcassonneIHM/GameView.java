@@ -65,6 +65,8 @@ public class GameView
 
             // Build the game
             this.game = new CarcassonneGame(players, sets);
+            this.game.setRiverExtensionIsUsed(true);
+            this.game.setInnsAndCathedralsExtensionIsUsed(true);
             //this.game = new CarcassonneGame(players);
 
             // Build the controller

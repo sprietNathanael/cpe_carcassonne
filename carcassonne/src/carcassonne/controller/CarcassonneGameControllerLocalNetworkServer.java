@@ -8,10 +8,10 @@ package carcassonne.controller;
 import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.DataInputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
@@ -37,7 +37,7 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
         this(new CarcassonneGame(), playersNumber);
     }
 
-    public CarcassonneGameControllerLocalNetworkServer(CarcassonneGame model, int playersNumber)
+    public CarcassonneGameControllerLocalNetworkServer(CarcassonneGame model, int playersNumber) throws InterruptedException
     {
         super(model);
         maxClients = playersNumber - 1;
@@ -50,12 +50,11 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
             t.start();
             System.out.println("Serveur prêt !");
             t.join();
-
-            System.out.println("Le client numéro " + ActualClientNumber + " est connecté !");
         } catch (Exception e) {
 
             e.printStackTrace();
         }
+        sleep(100000);
     }
 
     private class WaitAndAcceptsClient implements Runnable
@@ -67,15 +66,16 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
         public void run()
         {
             try {
-                socketserver = new ServerSocket(80);
+                socketserver = new ServerSocket(6666);
                 while (ActualClientNumber < maxClients) {
                     socket = socketserver.accept();
+                    System.out.println("Socket accepté");
                     ReceiveClientInfomation(socket);
+                    System.out.println("Le client numéro " + ActualClientNumber + " est connecté !");
                     ActualClientNumber++;
                     sockets.add(socket);
-                    //socket.close();
                 }
-
+                SendPlayersList();
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -87,9 +87,9 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
     {
         inputStream = new ObjectInputStream(s.getInputStream());
         String pseudo = (String) inputStream.readObject();
+        System.out.println(pseudo);
         ParamPlayers p = new ParamPlayers(pseudo, "red", PlayerTypes.player);
         players.add(p);
-        inputStream.close();
     }
 
     private void SendPlayersList() throws Exception
@@ -97,13 +97,18 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
         for (Socket s : sockets) {
             outputStream = new ObjectOutputStream(s.getOutputStream());
             outputStream.writeObject(players);
-            outputStream.close();
+            System.out.println("liste envoyée");
         }
     }
 
     public static void main(String[] zero) throws Exception
     {
         new CarcassonneGameControllerLocalNetworkServer(2);
+    }
+
+    public List<ParamPlayers> getPlayers()
+    {
+        return players;
     }
 
 }
