@@ -52,7 +52,7 @@ public class RiverAggregate extends AbstractAggregate
         Coord result = null, currentCoord;
 
         AbstractTile tile = this.aggregatedTiles.get(lastTile);
-        
+
         //Récupère les locations des bords de la tuile 
         Set<String> locations = filterEdgeLocations(this.aggregatedPositionTypes.get(tile));
 
@@ -66,48 +66,48 @@ public class RiverAggregate extends AbstractAggregate
             }
         }
 
-    return result ;
-}
+        return result;
+    }
 
-@Override
-        public Set<Player> getWinningPlayers()
+    @Override
+    public Set<Player> getWinningPlayers()
     {
         return null;
     }
 
     @Override
-        public int getBiggestPoints()
+    public int getBiggestPoints()
     {
         return -1;
     }
 
     @Override
-        protected void merge(AbstractAggregate neighborAggregate
+    protected void merge(AbstractAggregate neighborAggregate
     )
     {
 
     }
 
     @Override
-        public Map<Player, Set<Meeple>> getPlayers()
+    public Map<Player, Set<Meeple>> getPlayers()
     {
         return null;
     }
 
     @Override
-        public boolean addMeeple(Player player, Meeple meeple)
+    public boolean addMeeple(Player player, Meeple meeple)
     {
         return false;
     }
 
     @Override
-        public int countPoints()
+    public int countPoints()
     {
         return -1;
     }
 
     @Override
-        public String toString()
+    public String toString()
     {
         return "River{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + "\n}";
     }
