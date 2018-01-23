@@ -10,6 +10,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import java.io.Serializable;
+import java.io.Serializable;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.RiverType;
 import java.util.HashSet;
