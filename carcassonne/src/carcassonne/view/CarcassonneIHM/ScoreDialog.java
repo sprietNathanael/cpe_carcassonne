@@ -19,19 +19,16 @@ import javax.swing.JLabel;
 public class ScoreDialog extends JDialog
 {
     private Player player;
-    
+
     private final JLabel roadPin = new JLabel(new ImageIcon("resources/pins/roadPin.png"));;
     private final JLabel abbayPin = new JLabel(new ImageIcon("resources/pins/abbayPin.png"));
     private final JLabel cityPin = new JLabel(new ImageIcon("resources/pins/cityPin.png"));
     private final JLabel fieldPin = new JLabel(new ImageIcon("resources/pins/fieldPin.png"));
-    private final JLabel crossPin = new JLabel(new ImageIcon("resources/pins/crossPin.png"));
-    private final JLabel crossPin2 = new JLabel(new ImageIcon("resources/pins/crossPin.png"));
-    private final JLabel crossPin3 = new JLabel(new ImageIcon("resources/pins/crossPin.png"));
-    private final JLabel crossPin4 = new JLabel(new ImageIcon("resources/pins/crossPin.png"));
     private final JLabel equalsPin = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
     private final JLabel equalsPin2 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
     private final JLabel equalsPin3 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
     private final JLabel equalsPin4 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
+    private final JLabel fin = new JLabel();
     
     public ScoreDialog(){
         initComponent();
@@ -57,31 +54,25 @@ public class ScoreDialog extends JDialog
         //Add Picture
         this.add(roadPin);
         roadPin.setBounds(20, 160, 100, 100);
-        this.add(crossPin);
-        crossPin.setBounds(140, 180, 60, 60);
         this.add(equalsPin);
-        equalsPin.setBounds(300, 195, 60, 30);
+        equalsPin.setBounds(140, 180, 60, 60);
         
         this.add(abbayPin);
         abbayPin.setBounds(20, 300, 100, 100);
-        this.add(crossPin2);
-        crossPin2.setBounds(140, 320, 60, 60);
         this.add(equalsPin2);
-        equalsPin2.setBounds(300, 335, 60, 30);
+        equalsPin2.setBounds(140, 320, 60, 60);
         
         this.add(cityPin);
         cityPin.setBounds(20, 440, 100, 100);
-        this.add(crossPin3);
-        crossPin3.setBounds(140, 460, 60, 60);
         this.add(equalsPin3);
-        equalsPin3.setBounds(300, 475, 60, 30);
+        equalsPin3.setBounds(140, 460, 60, 60);
         
         this.add(fieldPin);
         fieldPin.setBounds(20, 580, 100, 100);
-        this.add(crossPin4);
-        crossPin4.setBounds(140, 600, 60, 60);
         this.add(equalsPin4);
-        equalsPin4.setVisible(false);
+        equalsPin4.setBounds(140, 600, 60, 60);
+        
+        this.add(fin);
         
         this.setVisible(true);
     }
