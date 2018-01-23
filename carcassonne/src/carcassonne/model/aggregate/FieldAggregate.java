@@ -10,11 +10,8 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
-import carcassonne.model.type.AbstractType;
-import carcassonne.model.type.FieldType;
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -24,7 +21,6 @@ import java.util.Set;
 public class FieldAggregate extends AbstractAggregate implements Serializable
 {
 
-    private boolean hasInn;
     /**
      * Set of the cities that are linked to the fiedl
      */
@@ -56,7 +52,6 @@ public class FieldAggregate extends AbstractAggregate implements Serializable
         this.type = FIELD;
         boundedCities = new HashSet<>();
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
-        hasInn = aggregateHasInn(firstTile, locationTypes);
     }
 
     /**
@@ -75,7 +70,6 @@ public class FieldAggregate extends AbstractAggregate implements Serializable
         super(col, row, firstTile, locationTypes, player, meeple);
         boundedCities = new HashSet<>();
         this.addBoundedCities(currentTileCities, firstTile, locationTypes);
-        hasInn = aggregateHasInn(firstTile, locationTypes);
     }
 
     /**
@@ -91,14 +85,12 @@ public class FieldAggregate extends AbstractAggregate implements Serializable
     {
         super.merge(neighborAggregate);
         boundedCities.addAll(neighborAggregate.getBoundedCities());
-        hasInn = (this.hasInn || neighborAggregate.hasInn);
     }
 
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes, Set<CityAggregate> currentTileCities)
     {
         super.enlargeAggregate(col, row, newTile, locationTypes);
         this.addBoundedCities(currentTileCities, newTile, locationTypes);
-        hasInn = aggregateHasInn(newTile, locationTypes);
     }
 
     /**
@@ -144,23 +136,6 @@ public class FieldAggregate extends AbstractAggregate implements Serializable
     public String toString()
     {
         return "Field{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + "Villes: " + boundedCities + " Player: " + players + "}\n";
-    }
-
-    private boolean aggregateHasInn(AbstractTile tile, Set<String> locations)
-    {
-        for (Map.Entry<String, AbstractType> item : tile.getTypes().entrySet()) {
-            String key = item.getKey();
-            AbstractType value = item.getValue();
-
-            if (value instanceof FieldType && locations.contains(key)) {
-                FieldType field = (FieldType) value;
-                if (field.hasInn) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }
 

@@ -13,21 +13,12 @@ import java.io.Serializable;
 public class FieldType extends AbstractType implements Serializable
 {
 
-    public final boolean hasInn;
-
     /**
      * Constructor
      */
     public FieldType()
     {
         super();
-        hasInn = false;
-    }
-
-    public FieldType(Building building)
-    {
-        super();
-        hasInn = building.equals(Building.inn);
     }
 
     /**

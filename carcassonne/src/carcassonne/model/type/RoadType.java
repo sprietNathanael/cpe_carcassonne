@@ -13,12 +13,21 @@ import java.io.Serializable;
 public class RoadType extends AbstractType implements Serializable
 {
 
+    public final boolean hasInn;
+
     /**
      * Constructor
      */
     public RoadType()
     {
         super();
+        hasInn = false;
+    }
+
+    public RoadType(Building building)
+    {
+        super();
+        hasInn = building.equals(Building.inn);
     }
 
     /**

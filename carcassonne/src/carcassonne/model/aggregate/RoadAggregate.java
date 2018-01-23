@@ -12,6 +12,9 @@ import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
 import static carcassonne.model.aggregate.AggregatesEnum.ROAD;
+import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.FieldType;
+import carcassonne.model.type.RoadType;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -26,6 +29,7 @@ import java.util.Set;
 public class RoadAggregate extends AbstractAggregate implements Serializable
 {
 
+    private boolean hasInn;
     private Map<Coord, Set<RoadEdgeEnum>> roadEdges;
 
     public Map<Coord, Set<RoadEdgeEnum>> getCityEdges()
@@ -74,6 +78,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
         roadEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         roadEdges.put(new Coord(col, row), getRoadEdges(locationTypes));
+        hasInn = aggregateHasInn(firstTile, locationTypes);
     }
 
     /**
@@ -92,6 +97,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
         roadEdges = new HashMap<>();
         //We add the edge(s) that will need to be closed to complete the aggregate
         roadEdges.put(new Coord(col, row), getRoadEdges(locationTypes));
+        hasInn = aggregateHasInn(firstTile, locationTypes);
     }
 
     /**
@@ -106,6 +112,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     @Override
     public void enlargeAggregate(int col, int row, AbstractTile newTile, Set<String> locationTypes)
     {
+        hasInn = aggregateHasInn(newTile, locationTypes);
         //We get the road edges of this new tile; using the list of location's tile composing the aggregate
         Set<RoadEdgeEnum> currentTileEdges = getRoadEdges(locationTypes);
         List<RoadEdgeEnum> completedEdges = new ArrayList<>();
@@ -169,6 +176,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
         super.merge(neighborAggregate);
         this.roadEdges = mergeCityEdgesSet(neighborAggregate.getCityEdges(), this.roadEdges);
         cleanRoadEdgesMap();
+        hasInn = (this.hasInn || neighborAggregate.hasInn);
     }
 
     /**
@@ -280,7 +288,7 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
 
         //Fin du tour
         //Tour suivant, avec la pioche d'une pièce compatible, on pose la pièce à 0,-1
-        Player player2 = new Player("C'est moi", "yellow",PlayerTypes.player);
+        Player player2 = new Player("C'est moi", "yellow", PlayerTypes.player);
         AbstractTile nextTile = game.drawFromPileIndex(9);
         locationTypes = new HashSet<>();
         locationTypes.add("S");
@@ -303,6 +311,23 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     @Override
     public String toString()
     {
-        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + "}\n";
+        return "Road{" + "Tuiles=" + aggregatedTiles.keySet() + "Types" + aggregatedPositionTypes.values() + " Player: " + players + " IsInn: " + hasInn +"}\n";
+    }
+
+    private boolean aggregateHasInn(AbstractTile tile, Set<String> locations)
+    {
+        for (Map.Entry<String, AbstractType> item : tile.getTypes().entrySet()) {
+            String key = item.getKey();
+            AbstractType value = item.getValue();
+
+            if (value instanceof RoadType && locations.contains(key)) {
+                RoadType road = (RoadType) value;
+                if (road.hasInn) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

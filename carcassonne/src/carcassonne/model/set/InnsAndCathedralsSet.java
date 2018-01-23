@@ -6,7 +6,6 @@
 package carcassonne.model.set;
 
 import carcassonne.model.player.Meeple;
-import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.AbbayType;
 import carcassonne.model.type.Building;
@@ -15,10 +14,7 @@ import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -57,7 +53,7 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
                 new FieldType(), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
                 new RoadType(), //West section
-                new FieldType(), new FieldType(Building.inn), new FieldType(), new RoadType(), //Center section
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(Building.inn), //Center section
                 aggregates
         ));
 
@@ -68,11 +64,11 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
 
         //Tile EB
         tileList.add(new CasualTile("EB", "inncathedral", "EB", //Id
-                new FieldType(), new FieldType(Building.inn), new FieldType(), //North section
+                new FieldType(), new FieldType(), new FieldType(), //North section
                 new RoadType(), //East section
                 new FieldType(), new FieldType(), new FieldType(), //South section
                 new RoadType(), //West section
-                new RoadType(), new RoadType(), new RoadType(), new RoadType(), //Center section
+                new RoadType(), new RoadType(Building.inn), new RoadType(), new RoadType(), //Center section
                 aggregates
         ));
 
@@ -86,8 +82,8 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
         aggregates.add(retTreeSet("E")); //R
 
         tileList.add(new CasualTile("EC", "inncathedral", "EC", //Id
-                new FieldType(), new FieldType(Building.inn), new FieldType(), //North section
-                new RoadType(), //East section
+                new FieldType(), new FieldType(), new FieldType(), //North section
+                new RoadType(Building.inn), //East section
                 new FieldType(), new RoadType(), new FieldType(), //South section
                 new RoadType(), //West section
                 new CrossType(), new CrossType(), new CrossType(), new CrossType(), //Center section
@@ -256,17 +252,17 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
         aggregates.add(retTreeSet("SEE", "SE", "SSE")); //F
 
         tileList.add(new CasualTile("EL", "inncathedral", "EL", //Id
-                new CityType(true), new CityType(true), new CityType(true), //North West section
-                new CityType(true), //North
-                new CityType(true), new FieldType(Building.inn), new FieldType(Building.inn), //North East section
-                new RoadType(), //East
-                new FieldType(), new FieldType(), new FieldType(), //South East section
-                new RoadType(), //South
-                new FieldType(), new FieldType(), new CityType(true), //South West section
-                new CityType(true), //West
-                new FieldType(), new FieldType(), new RoadType(), new FieldType(), //Center section
-                aggregates
-        ));
+                    new CityType(true), new CityType(true), new CityType(true), //North West section
+                    new CityType(true), //North
+                    new CityType(true), new FieldType(), new FieldType(), //North East section
+                    new RoadType(Building.inn), //East
+                    new FieldType(), new FieldType(), new FieldType(), //South East section
+                    new RoadType(), //South
+                    new FieldType(), new FieldType(), new CityType(true), //South West section
+                    new CityType(true), //West
+                    new FieldType(), new FieldType(), new RoadType(), new FieldType(), //Center section
+                    aggregates
+            ));
 
         //Tile EM
         aggregates = new HashSet<>();
@@ -280,11 +276,11 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
                 new FieldType(), //East
-                new FieldType(Building.inn), new FieldType(Building.inn), new FieldType(Building.inn), //South East section
+                new FieldType(), new FieldType(), new FieldType(), //South East section
                 new RoadType(), //South
                 new FieldType(), new FieldType(), new FieldType(), //South West section
                 new RoadType(), //West
-                new FieldType(), new FieldType(), new FieldType(), new RoadType(), //Center section
+                new FieldType(), new FieldType(), new FieldType(), new RoadType(Building.inn), //Center section
                 aggregates
         ));
 
@@ -299,9 +295,9 @@ public class InnsAndCathedralsSet extends AbstractSet implements Serializable
                 new CityType(), new CityType(), new CityType(), //North West section
                 new CityType(), //North
                 new CityType(), new FieldType(), new FieldType(), //North East section
-                new FieldType(Building.inn), //East
+                new FieldType(), //East
                 new FieldType(), new FieldType(), new FieldType(), //South East section
-                new RoadType(), //South
+                new RoadType(Building.inn), //South
                 new FieldType(), new FieldType(), new CityType(), //South West section
                 new CityType(), //West
                 new RoadType(), new RoadType(), new RoadType(), new RoadType(), //Center section
