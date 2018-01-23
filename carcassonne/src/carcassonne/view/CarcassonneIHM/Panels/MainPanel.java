@@ -23,6 +23,7 @@ import carcassonne.view.CarcassonneIHM.Layers.Tile.TileHighlightmentLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -106,14 +107,15 @@ public class MainPanel extends JPanel implements java.util.Observer
     @SuppressWarnings("unchecked")
     public void update(Observable o, Object arg)
     {
-        String messageType = (String) arg;
+        ObserverMessage message = (ObserverMessage)arg;
+        String messageType = message.messageType;
+        CarcassonneGame game = message.game;
         System.out.println(messageType);
         // If the update is from a game change
         switch (messageType) {
             case "boardChanged":
                 {
                     // Get the game's informations
-                    CarcassonneGame game = (CarcassonneGame) o;
                     HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();
@@ -235,7 +237,7 @@ public class MainPanel extends JPanel implements java.util.Observer
                         // Shows the tile placements layer
                         this.tilesPlacementLayer.onShow();
                         // Get the game's informations
-                        CarcassonneGame game = (CarcassonneGame) o;
+                        
                         ArrayList<Coord> placements = game.getPlacements();
                         // Add positions of placement layer
                         for(int i = 0; i < placements.size(); i++)
@@ -251,7 +253,7 @@ public class MainPanel extends JPanel implements java.util.Observer
             case "gameEnds":
                 {
                     // Get the game's informations
-                    CarcassonneGame game = (CarcassonneGame) o;
+                    
                     HashMap<Coord, AbstractTile> board = game.getBoard().getAllTiles();
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();

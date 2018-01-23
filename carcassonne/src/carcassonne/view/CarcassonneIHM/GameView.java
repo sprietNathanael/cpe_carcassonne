@@ -152,7 +152,8 @@ public class GameView
     {
         //Construct the main panel and adds it to the main container
         MainPanel mainPanel = new MainPanel(this.controller, this.players);
-        this.game.addObserver(mainPanel);
+        this.controller.addObserver(mainPanel);
+        this.game.addObserver(controller);
 
         pane.add(mainPanel);
         try {

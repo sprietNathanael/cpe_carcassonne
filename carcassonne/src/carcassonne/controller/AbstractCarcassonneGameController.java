@@ -12,7 +12,10 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.notifyMessage.ObserverMessage;
 import java.util.ArrayList;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,12 +25,13 @@ import java.util.logging.Logger;
  *
  * @author Thomas
  */
-public class AbstractCarcassonneGameController implements CarcassonneGameControllerInterface
+public class AbstractCarcassonneGameController extends Observable implements CarcassonneGameControllerInterface, java.util.Observer
 {
 
     protected final CarcassonneGame carcassonneGame;
     private AbstractTile currentTile;
     private boolean useBigMeeple;
+    private ObserverMessage observerMessage;
     
 
     /**
@@ -375,6 +379,35 @@ public class AbstractCarcassonneGameController implements CarcassonneGameControl
     public void turnRight()
     {
         this.currentTile.rotateRight();
+    }
+    
+    /**
+     * Add an observer
+     *
+     * @param o
+     */
+    @Override
+    public synchronized void addObserver(Observer o)
+    {
+        super.addObserver(o);
+    }
+    
+    /**
+     * Notifies the observers with the current notify message
+     */
+    @Override
+    public void notifyObservers()
+    {
+        super.setChanged();
+        super.notifyObservers(this.observerMessage);
+    }
+
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        this.observerMessage = new ObserverMessage((String)arg, (CarcassonneGame)o);
+        this.notifyObservers();
+        
     }
 
 }
