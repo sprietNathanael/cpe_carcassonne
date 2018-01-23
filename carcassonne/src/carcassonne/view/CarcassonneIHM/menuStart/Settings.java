@@ -29,7 +29,7 @@ public class Settings extends JFrame
     private final BtGame btModeLocal = new BtGame("resources/btModeLocal.png");
     private final BtGame btOnline = new BtGame("resources/online.png");
 
-    private Parameters parameters;
+    private Local parameters;
     private Online online;
 
     public Settings() throws IOException
@@ -64,7 +64,7 @@ public class Settings extends JFrame
         Settings self = this;
         btModeLocal.addActionListener((ActionEvent arg0) -> {
             try {
-                self.parameters = new Parameters(null, "Settings", true);
+                self.parameters = new Local(null, "Settings", true);
             } catch (Exception ex) {
                 Logger.getLogger(Settings.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -13,6 +13,9 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -33,9 +36,10 @@ public class Online extends JDialog
 
     private JLabel icon, lbName;
     private JRadioButton serveur, client;
-    private JButton btCreateGame, btJoinGame,btPlay;
+    private JButton btCreateGame, btJoinGame, btPlay;
     private CarcassonneGameControllerMulti controller;
     private JTextField tfIpAddress, tfName;
+    private Settings settings;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -46,7 +50,6 @@ public class Online extends JDialog
     private void initComponent()
     {
         Online self = this;
-        
 
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
@@ -77,6 +80,14 @@ public class Online extends JDialog
             public void actionPerformed(ActionEvent arg0)
             {
                 //System.out.println(tfName.getText());
+                try {
+                    self.settings = new Settings();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                self.settings.setVisible(true);
+                self.settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                self.setVisible(false);
                 setVisible(false);
             }
         });
@@ -101,7 +112,7 @@ public class Online extends JDialog
         panRole.setBorder(BorderFactory.createTitledBorder("GAME"));
         btCreateGame = new JButton("Create a game");
         btJoinGame = new JButton("Join a game");
- 
+
         panRole.add(panNom);
         panRole.add(btCreateGame);
         panRole.add(btJoinGame);
@@ -127,7 +138,7 @@ public class Online extends JDialog
         panIP.add(lbName);
         panIP.add(tfIpAddress);
         panJoin.add(panIP);
-        
+
         //button play Player
         btPlay = new JButton("Play");
         btPlay.setEnabled(false);
@@ -140,22 +151,22 @@ public class Online extends JDialog
             }
         });
         panJoin.add(btPlay);
-        
+
         //active listenning of buttons
-           btCreateGame.addActionListener(new ActionListener()
+        btCreateGame.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)
             {
-               panJoin.setBackground(Color.black);
-               panIP.setBackground(Color.black);
-               tfIpAddress.setBackground(Color.black);
-               btPlay.setEnabled(false);
-               btJoinGame.setEnabled(false);
+                panJoin.setBackground(Color.black);
+                panIP.setBackground(Color.black);
+                tfIpAddress.setBackground(Color.black);
+                btPlay.setEnabled(false);
+                btJoinGame.setEnabled(false);
             }
         });
-           
-           btJoinGame.addActionListener(new ActionListener()
+
+        btJoinGame.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent e)

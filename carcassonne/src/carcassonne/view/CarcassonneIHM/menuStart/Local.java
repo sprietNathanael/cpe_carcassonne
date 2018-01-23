@@ -9,8 +9,11 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -23,7 +26,7 @@ import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JTextField;
 
-public class Parameters extends JDialog
+public class Local extends JDialog
 {
 
     private static final int NBMAXPLAYERS = 6;
@@ -41,9 +44,9 @@ public class Parameters extends JDialog
     private JComboBox<String> cbPlayerType[];
     private Settings settings;
 
-    Parameters self = this;
+    Local self = this;
 
-    public Parameters(JFrame parent, String title, boolean modal)
+    public Local(JFrame parent, String title, boolean modal)
     {
         super(parent, title, modal);
         this.initComponent();
@@ -139,7 +142,25 @@ public class Parameters extends JDialog
             content.add(paPlayer);
         }
         JPanel control = new JPanel();
-        JButton okBouton = new JButton("Play");
+        JButton okBouton = new JButton("PLAY");
+        JButton btBack = new JButton("BACK");
+
+        btBack.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent arg0)
+            {
+                try {
+                    self.settings = new Settings();
+                } catch (IOException ex) {
+                    Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                self.settings.setVisible(true);
+                self.settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+                self.setVisible(false);
+                setVisible(false);
+            }
+        });
 
         okBouton.addActionListener(new ActionListener()
         {
@@ -153,8 +174,7 @@ public class Parameters extends JDialog
                         tfNomPlayer[4].getText(), (String) cbColors[4].getSelectedItem(),
                         tfNomPlayer[5].getText(), (String) cbColors[5].getSelectedItem()
                 );
-                
-                
+
                 ClientWindow clientWindow;
 
                 if (self != null) {
@@ -163,12 +183,11 @@ public class Parameters extends JDialog
                 else {
                     clientWindow = new ClientWindow();
                 }
-                
+
                 clientWindow.setVisible(true);
 
                 clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                
-                
+
                 setVisible(false);
 
             }
@@ -185,6 +204,7 @@ public class Parameters extends JDialog
         });
 
         control.add(okBouton);
+        control.add(btBack);
         control.setBackground(Color.white);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
@@ -235,7 +255,7 @@ public class Parameters extends JDialog
         return li;
     }
 
-      public List<ParamPlayers> getPlayers()
+    public List<ParamPlayers> getPlayers()
     {
         return (this.getDataPlayers());
     }
