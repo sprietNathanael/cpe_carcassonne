@@ -22,9 +22,12 @@ import java.util.Set;
 public class RiverAggregate extends AbstractAggregate
 {
 
+    private Coord lastTile;
+
     public RiverAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
+        lastTile = new Coord(col, row);
     }
 
     @Override
@@ -35,6 +38,7 @@ public class RiverAggregate extends AbstractAggregate
         if (newTile.getId().equals("RE")) {
             isCompleted = true;
         }
+        lastTile = new Coord(col, row);
     }
 
     @Override
@@ -47,78 +51,72 @@ public class RiverAggregate extends AbstractAggregate
     {
         Coord result = null, currentCoord;
 
-        //Parcours de toutes les tuiles
-        for (Map.Entry<Coord, AbstractTile> entry : this.aggregatedTiles.entrySet()) {
-            Coord neighbordCoord = new Coord(entry.getKey().col, entry.getKey().row);
-            AbstractTile tile = entry.getValue();
+        AbstractTile tile = this.aggregatedTiles.get(lastTile);
+        
+        //Récupère les locations des bords de la tuile 
+        Set<String> locations = filterEdgeLocations(this.aggregatedPositionTypes.get(tile));
 
-            //Récupère les locations des bords de la tuile 
-            Set<String> locations = filterEdgeLocations(this.aggregatedPositionTypes.get(tile));
-
-            //Parcours de ces locations
-            for (String location : locations) {
-                //Coord corespondant à cette location
-                currentCoord = getCoordFromLocation(location, neighbordCoord);
-                if (!this.aggregatedTiles.containsKey(currentCoord)) {
-                    result = currentCoord;
-                    break;
-                }
-            }
-            if (result != null) {
+        //Parcours de ces locations
+        for (String location : locations) {
+            //Coord corespondant à cette location
+            currentCoord = getCoordFromLocation(location, lastTile);
+            if (!this.aggregatedTiles.containsKey(currentCoord)) {
+                result = currentCoord;
                 break;
             }
         }
 
-        return result;
-    }
+    return result ;
+}
 
-    @Override
-    public Set<Player> getWinningPlayers()
+@Override
+        public Set<Player> getWinningPlayers()
     {
         return null;
     }
 
     @Override
-    public int getBiggestPoints()
+        public int getBiggestPoints()
     {
         return -1;
     }
 
     @Override
-    protected void merge(AbstractAggregate neighborAggregate
+        protected void merge(AbstractAggregate neighborAggregate
     )
     {
 
     }
 
     @Override
-    public Map<Player, Set<Meeple>> getPlayers()
+        public Map<Player, Set<Meeple>> getPlayers()
     {
         return null;
     }
 
     @Override
-    public boolean addMeeple(Player player, Meeple meeple)
+        public boolean addMeeple(Player player, Meeple meeple)
     {
         return false;
     }
 
     @Override
-    public int countPoints()
+        public int countPoints()
     {
         return -1;
     }
 
     @Override
-    public String toString()
+        public String toString()
     {
         return "River{" + "aggregatedTiles=" + aggregatedTiles + ", aggregatedPositionTypes=" + aggregatedPositionTypes + ", players=" + players + ", isCompleted=" + isCompleted + "\n}";
     }
 
     /**
      * Get only the locations of the river that is at an edge of a tile
+     *
      * @param locations
-     * @return 
+     * @return
      */
     private static Set<String> filterEdgeLocations(Set<String> locations)
     {
@@ -138,9 +136,10 @@ public class RiverAggregate extends AbstractAggregate
 
     /**
      * Get neighbor coord, using current coord and location
+     *
      * @param location
      * @param neighborCoord
-     * @return 
+     * @return
      */
     private static Coord getCoordFromLocation(String location, Coord neighborCoord)
     {
