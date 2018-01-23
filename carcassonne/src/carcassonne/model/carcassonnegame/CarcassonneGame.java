@@ -24,6 +24,7 @@ import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -39,7 +40,7 @@ import java.util.Set;
 /**
  * Represents a carcassonne game, which aggregates all the model entities
  */
-public class CarcassonneGame extends Observable implements CarcassonneGameInterface
+public class CarcassonneGame extends Observable implements CarcassonneGameInterface, Serializable
 {
 
     private ArrayList<Player> players;
@@ -1052,4 +1053,11 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         icExtensionIsUsed = b;
     }
+
+    public int getCurrentPlayerIndex()
+    {
+        return currentPlayerIndex;
+    }
+    
+    
 }
