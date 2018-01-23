@@ -5,7 +5,13 @@
  */
 package carcassonne.controller;
 
+import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.player.Meeple;
+import carcassonne.model.player.Player;
+import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.tile.CasualTile;
+import carcassonne.view.CarcassonneIHM.ClientWindow;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -13,6 +19,7 @@ import java.io.ObjectOutputStream;
 import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.List;
+import javax.swing.JFrame;
 
 /**
  *
@@ -23,6 +30,7 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
 
     private Socket socket;
     private List<ParamPlayers> players = null;
+    private int myPlayerIndex;
 
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
@@ -31,7 +39,7 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
     {
         this(new CarcassonneGame(), ipAddr, pseudo);
     }
-
+    @SuppressWarnings("unchecked")
     public CarcassonneGameControllerLocalNetworkClient(CarcassonneGame model, String ipAddr, String pseudo) throws Exception
     {
         super(model);
@@ -39,36 +47,68 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
         try {
             socket = new Socket(ipAddr, 6666);
             System.out.println("Socket client crée");
-            SendClientInfomation(pseudo);
-            ReceivePlayersList();
+            sendClientInfomation(pseudo);
+            inputStream = new ObjectInputStream(socket.getInputStream());
+            myPlayerIndex = (int) inputStream.readObject();
+            System.out.println("Player index : " + myPlayerIndex);
+            players = (List<ParamPlayers>) inputStream.readObject();
+            play();
             sleep(100000);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void SendClientInfomation(String pseudo) throws IOException
+    private void sendClientInfomation(String pseudo) throws IOException
     {
         outputStream = new ObjectOutputStream(socket.getOutputStream());
         outputStream.writeObject(pseudo);
         System.out.println("pseudo envoyé");
     }
-
-    private void ReceivePlayersList() throws Exception
-    {
-        inputStream = new ObjectInputStream(socket.getInputStream());
-        System.out.println("test");
-        players = (List<ParamPlayers>) inputStream.readObject();
-    }
-
+        
     public List<ParamPlayers> getPlayers()
     {
         return players;
     }
+    
+    // à remplacer dans un click
+    private void play()
+    {
+        ClientWindow clientWindow = new ClientWindow(this.getPlayers());
+        clientWindow.setVisible(true);
+        clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    }
+
+    @Override
+    public void beginTurn()
+    {
+        if (myPlayerIndex == this.carcassonneGame.getCurrentPlayerIndex())
+        {
+            super.beginTurn();
+        }
+        else
+        {
+            //ManageNetwork();
+        }
+    }
+    
+    public void ManageNetwork() throws Exception
+    {
+        for(int i=0 ; i < carcassonneGame.getPlayers().size()-1 ; i++)
+        {
+            AbstractTile tile = (AbstractTile) inputStream.readObject();
+            Coord c = (Coord) inputStream.readObject();
+            Meeple m = (Meeple) inputStream.readObject();
+            //String coord =
+        }
+    }
+    
+    
+    
 
     public static void main(String[] zero) throws Exception
     {
-        new CarcassonneGameControllerLocalNetworkClient("localhost", "mon pseudo");
+        new CarcassonneGameControllerLocalNetworkClient("localhost",  String.valueOf((int)(Math.random()*100)));
     }
 
 }
