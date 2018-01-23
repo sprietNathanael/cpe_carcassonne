@@ -91,8 +91,6 @@ public class Online extends JDialog
         tfName = new JTextField();
         tfName.setPreferredSize(new Dimension(100, 25));
         panNom.setBorder(BorderFactory.createTitledBorder("Pseudo"));
-        //lbName = new JLabel("name :");
-        //panNom.add(lbName);
         panNom.add(tfName);
 
         //buttons Create and join game to choose
@@ -101,24 +99,8 @@ public class Online extends JDialog
         panRole.setPreferredSize(new Dimension(585, 100));
         panRole.setBorder(BorderFactory.createTitledBorder("GAME"));
         btCreateGame = new JButton("Create a game");
-        btCreateGame.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-
-            }
-        });
-
         btJoinGame = new JButton("Join a game");
-        btJoinGame.addActionListener(new ActionListener()
-        {
-            @Override
-            public void actionPerformed(ActionEvent e)
-            {
-
-            }
-        });
+ 
         panRole.add(panNom);
         panRole.add(btCreateGame);
         panRole.add(btJoinGame);
@@ -156,6 +138,31 @@ public class Online extends JDialog
             }
         });
         panJoin.add(btPlay);
+        
+        //active listenning of buttons
+           btCreateGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+               panJoin.setBackground(Color.black);
+               panIP.setBackground(Color.black);
+               tfIpAddress.setBackground(Color.black);
+               btPlay.setEnabled(false);
+               btJoinGame.setEnabled(false);
+            }
+        });
+           
+           btJoinGame.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                panCreate.setBackground(Color.black);
+                btCreateGame.setEnabled(false);
+
+            }
+        });
 
         //Composition of panels with the differents elements
         panParameters.add(panRole, BorderLayout.NORTH);
