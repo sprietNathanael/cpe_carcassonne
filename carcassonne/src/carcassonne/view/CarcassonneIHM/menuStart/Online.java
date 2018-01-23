@@ -46,6 +46,7 @@ public class Online extends JDialog
     private void initComponent()
     {
         Online self = this;
+        
 
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
@@ -129,6 +130,7 @@ public class Online extends JDialog
         
         //button play Player
         btPlay = new JButton("Play");
+        btPlay.setEnabled(false);
         btPlay.addActionListener(new ActionListener()
         {
             @Override
@@ -160,6 +162,7 @@ public class Online extends JDialog
             {
                 panCreate.setBackground(Color.black);
                 btCreateGame.setEnabled(false);
+                btPlay.setEnabled(true);
 
             }
         });
