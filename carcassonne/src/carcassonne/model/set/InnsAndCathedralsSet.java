@@ -14,6 +14,7 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -25,7 +26,7 @@ import java.util.Set;
  *
  * @author Bertrand
  */
-public class InnsAndCathedralsSet extends AbstractSet
+public class InnsAndCathedralsSet extends AbstractSet implements Serializable
 {
 
     /**

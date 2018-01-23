@@ -6,13 +6,14 @@
 package carcassonne.model.type;
 
 import carcassonne.model.player.Meeple;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Represents a cross type
  */
-public class CrossType extends AbstractType
+public class CrossType extends AbstractType implements Serializable
 {
 
     /**

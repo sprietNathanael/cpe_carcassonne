@@ -9,6 +9,10 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.io.Serializable;
+import java.io.Serializable;
+import carcassonne.model.type.AbstractType;
+import carcassonne.model.type.RiverType;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -19,15 +23,17 @@ import java.util.Set;
  * @author Étienne
  *
  */
-public class RiverAggregate extends AbstractAggregate
+public class RiverAggregate extends AbstractAggregate implements Serializable
 {
 
     private Coord lastTile;
+    private final StreamDirection stream;
 
     public RiverAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)
     {
         super(col, row, firstTile, locationTypes);
         lastTile = new Coord(col, row);
+        stream = filterEdgeLocation(locationTypes);
     }
 
     @Override
@@ -135,6 +141,29 @@ public class RiverAggregate extends AbstractAggregate
     }
 
     /**
+     * Get only the location of the river that is at an edge of a tile
+     *
+     * @param locations
+     * @return
+     */
+    private static StreamDirection filterEdgeLocation(Set<String> locations)
+    {
+        String result = null;
+
+        for (String location : locations) {
+            if (location.equals("N")
+                    || location.equals("E")
+                    || location.equals("S")
+                    || location.equals("W")) {
+                result = location;
+                break;
+            }
+        }
+
+        return StreamDirection.getStreamDirectionLocation(result);
+    }
+
+    /**
      * Get neighbor coord, using current coord and location
      *
      * @param location
@@ -162,4 +191,73 @@ public class RiverAggregate extends AbstractAggregate
         return coord;
     }
 
+    /**
+     * Check if the new tile can be put in this rotation state, used to test all
+     * rotation placements
+     *
+     * @param coordinates
+     * @param tile
+     * @return
+     */
+    public boolean checkNewPlacementCorrect(Coord coordinates, AbstractTile tile)
+    {
+        System.out.println("TErminéééé: " + isCompleted);
+        boolean result = false;
+
+        //Case of the second tile, where there is still no stream direction fixed
+        if (stream == null) {
+            result = true;
+        }
+        else {
+            //Récupère les locations des bords de la tuile 
+            Set<String> locations = filterEdgeLocations(tile.getRiverAggregateEmplacements());
+            Set<Coord> coords;
+            Coord newCoord;
+
+            System.out.println("Liste location: " + tile.getRiverAggregateEmplacements());
+            boolean modifie = false;
+            //Parcours de ces locations
+            for (String location : locations) {
+                //Récupère les voisins existants
+                coords = this.getTrueNeighboredCoordinates(coordinates.col, coordinates.row);
+                newCoord = getNewCoordUsingLocation(location, coordinates.col, coordinates.row);
+                //Condition pour traiter uniquement la sortie de la rivière
+                if (!coords.contains(newCoord)) {
+                    //Test si le placement complète la rivière en respectant le sens d'écoulement
+                    result = StreamDirection.checkCorrectSreamDirection(stream, location);
+                    //Test si le nouveau placement ne crée pas une situation bloquante
+                    result = result && this.getNeighboredCoordinates(newCoord.col, newCoord.row).isEmpty();
+                    //Utilisé pour tester la dernière tuile
+                    modifie = true;
+                    break;
+                }
+            }
+            if (!modifie) {
+                //Test pour dernière tuile, on retourne true
+                result = true;
+            }
+        }
+
+        return result;
+    }
+
+    private static Coord getNewCoordUsingLocation(String location, int col, int row)
+    {
+        System.out.println("Locaca " + location);
+
+        if (location.equals("E")) {
+            col = col + 1;
+        }
+        else if (location.equals("W")) {
+            col = col - 1;
+        }
+        else if (location.equals("S")) {
+            row = row - 1;
+        }
+        else {
+            row = row + 1;
+        }
+
+        return new Coord(col, row);
+    }
 }

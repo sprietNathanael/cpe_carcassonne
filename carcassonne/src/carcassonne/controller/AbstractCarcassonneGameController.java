@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 public class AbstractCarcassonneGameController implements CarcassonneGameControllerInterface
 {
 
-    private final CarcassonneGame carcassonneGame;
+    protected final CarcassonneGame carcassonneGame;
     private AbstractTile currentTile;
     private boolean useBigMeeple;
     

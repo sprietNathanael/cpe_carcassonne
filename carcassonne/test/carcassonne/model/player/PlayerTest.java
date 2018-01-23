@@ -50,18 +50,6 @@ public class PlayerTest
      * Test of checkMeepleAvailable method, of class Player.
      */
     @Test
-    public void testCheckMeepleAvailableTrue()
-    {
-        System.out.println("checkMeepleAvailableTrue");
-        Player p = new Player("test", "yellow", "Player");
-        boolean result = p.checkMeepleAvailable();
-        assertEquals(true, result);
-    }
-
-    /**
-     * Test of checkMeepleAvailable method, of class Player.
-     */
-    @Test
     public void testCheckMeepleAvailableFalse()
     {
         System.out.println("checkMeepleAvailableFalse");
@@ -92,22 +80,6 @@ public class PlayerTest
     }
 
     /**
-     * Test of getBigMeeple method, of class Player.
-     */
-    @Test
-    public void testGetBigMeepleFalse()
-    {
-        System.out.println("checkMeepleAvailableFalse");
-        Player p = new Player("test", "yellow", "Player");
-        Meeple bigMeeple = p.getBigMeeple();
-        bigMeeple.setIsUsed(true);
-
-        Meeple result = p.getBigMeepleAvailable();
-        Meeple expResult = null;
-        assertEquals(expResult, result);
-    }
-
-    /**
      * Test of countMeeples method, of class Player.
      */
     @Test
@@ -115,9 +87,9 @@ public class PlayerTest
     {
         System.out.println("countMeeples");
         Set<Meeple> meeples = new HashSet<>();
-        meeples.add(new Meeple(new Player("un","red", "Player")));
-        meeples.add(new Meeple(new Player("deux","blue", "Player")));
-        meeples.add(new Meeple(true, new Player("trois","yellow", "Player")));
+        meeples.add(new Meeple(new Player("un", "red", "Player")));
+        meeples.add(new Meeple(new Player("deux", "blue", "Player")));
+        meeples.add(new Meeple(true, new Player("trois", "yellow", "Player")));
 
         int expResult = 4;
         int result = Player.countPoints(meeples);

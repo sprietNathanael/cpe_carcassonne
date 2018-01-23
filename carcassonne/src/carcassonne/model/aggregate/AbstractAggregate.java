@@ -9,6 +9,7 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Set;
  *
  * @author Étienne
  */
-public abstract class AbstractAggregate
+public abstract class AbstractAggregate implements Serializable
 {
 
     /**
@@ -115,7 +116,7 @@ public abstract class AbstractAggregate
     }
 
     /**
-     * Get the tile emplacements that are neighbored with those coordinates. Use
+     * Get the tile difference btwn current tile and the neighbored one. Use
      * this method to test every aggregate, to check which aggregate we have to
      * enlarge
      *
@@ -139,6 +140,36 @@ public abstract class AbstractAggregate
         }
         if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
             result.add(new Coord(0, 1));
+        }
+
+        return result;
+    }
+
+    /**
+     * Get the tile emplacements that are neighbored with those coordinates. Use
+     * this method to test every aggregate, to check which aggregate we have to
+     * enlarge
+     *
+     * @param row of the new emplacement to test
+     * @param col of the new emplacement to test
+     * @return List the coordinates of the neighbored emplacement, return
+     * [-1;-1] if the aggregate dosen't
+     */
+    public Set<Coord> getTrueNeighboredCoordinates(int col, int row)
+    {
+        Set<Coord> result = new HashSet<>();
+
+        if (aggregatedTiles.containsKey(new Coord(col - 1, row))) {
+            result.add(new Coord(col - 1, row));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col + 1, row))) {
+            result.add(new Coord(col + 1, row));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col, row - 1))) {
+            result.add(new Coord(col, row - 1));
+        }
+        if (aggregatedTiles.containsKey(new Coord(col, row + 1))) {
+            result.add(new Coord(col, row + 1));
         }
 
         return result;

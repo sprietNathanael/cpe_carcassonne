@@ -5,11 +5,13 @@
  */
 package carcassonne.coord;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Étienne
  */
-public class Coord
+public class Coord implements Serializable
 {
 
     public int row, col;

@@ -6,13 +6,14 @@
 package carcassonne.model.type;
 
 import carcassonne.model.player.Meeple;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Represents a river type
  */
-public class RiverType extends AbstractType
+public class RiverType extends AbstractType implements Serializable
 {
 
     /**

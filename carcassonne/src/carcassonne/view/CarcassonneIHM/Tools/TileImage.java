@@ -63,25 +63,16 @@ public class TileImage extends UICoord
     {
         AffineTransform tx = new AffineTransform();
         this.image = null;
-        try 
-        {
-            // Get the rotation in radians
-            double rad_rotation = this.rotation * Math.PI / 180.0;
-            
-            // Get the tile image based on its name
-            this.image = ImageIO.read(new File("resources/tiles/"+this.path+"/"+this.name + ".jpg"));
-            
-            // Applies the rotation on the affine transform
-            tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);
-            AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
-            //System.out.println(this.name+" "+this.rotation);
-            
-            // Applies the affine transform on the image
-            this.image = op.filter(image, null);
-            
-        } catch (IOException ex) {
-            Logger.getLogger(TilesLayer.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        // Get the rotation in radians
+        double rad_rotation = this.rotation * Math.PI / 180.0;
+        // Get the tile image based on its name
+        this.image = TileImageFactory.getImage("resources/tiles/"+this.path+"/"+this.name + ".jpg");
+        // Applies the rotation on the affine transform
+        tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);
+        AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
+        //System.out.println(this.name+" "+this.rotation);
+        // Applies the affine transform on the image
+        this.image = op.filter(image, null);
     }
 
     /**

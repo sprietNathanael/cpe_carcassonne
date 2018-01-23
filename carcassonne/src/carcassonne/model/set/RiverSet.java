@@ -12,6 +12,7 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,7 +25,7 @@ import java.util.Set;
  *
  * @author Bertrand
  */
-public class RiverSet extends AbstractSet
+public class RiverSet extends AbstractSet implements Serializable
 {
 
     private AbstractTile lastTile;

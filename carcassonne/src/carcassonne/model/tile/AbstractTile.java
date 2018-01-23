@@ -7,13 +7,14 @@ package carcassonne.model.tile;
 
 import carcassonne.model.player.Meeple;
 import carcassonne.model.type.AbstractType;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Set;
 
 /**
  * Abstract class to represent a Tile
  */
-public abstract class AbstractTile
+public abstract class AbstractTile implements Serializable
 {
     protected String id;
     protected String name;
