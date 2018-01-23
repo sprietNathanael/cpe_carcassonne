@@ -36,6 +36,8 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Represents a carcassonne game, which aggregates all the model entities
@@ -209,6 +211,55 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         pile.addAll(newSet.getSet());
     }
+    
+    public void beginGame()
+    {
+        try {
+            this.putTile(this.getFirstTile(), 0, 0);
+        } catch (Exception ex) {
+            Logger.getLogger(CarcassonneGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        this.beginTurn();
+    }
+    
+    public void beginTurn()
+    {
+        processNextTile();
+    }
+    
+    public void endTurn()
+    {
+        this.manageCompletedAggregates();
+        System.out.println("===========\nPoints des joueurs :" + this.getPlayers());
+        this.nextPlayer();
+        this.beginTurn();
+    }
+    
+    /**
+     * Process the next Tile
+     */
+    private void processNextTile()
+    {
+        this.drawFromPile();
+        if (this.currentTile != null) {
+            System.out.println("La pièce piochée est : " + this.currentTile.getName());
+            System.out.println(this.currentTile);
+            this.notifyNewTurn();
+            // If the current tile can be placed
+            if (this.refreshPlacements()) {
+                this.notifyPlacementsReady();
+            }
+            // Else put back the current tile and draw another one
+            else {
+                this.putBackCurrentTile();
+                this.processNextTile();
+            }
+        }
+        else {
+            System.out.println("Fin de partie");
+            this.notifyGameEnds();
+        }
+    }
 
     /**
      * Draws the first tile of the pile. Removes it from the pile and then
@@ -239,6 +290,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     @Override
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
+        this.setPreviousPlayer(this.getCurrentPlayer());
         board.addTile(tile, row, column);
         this.lastPutTile = new Coord(column, row);
         this.manageNewTileAggregates(tile, row, column);
@@ -267,6 +319,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
         List<AbstractAggregate> aggregates = new ArrayList<>();
+        
+        currentTile.putMeeple(coordinates, meeple);
+        meeple.setCurrentType(currentTile.getType(coordinates));        
+        meeple.setIsUsed(true);
 
         if (tile.getType(coordinates) instanceof RoadType) {
             aggregates.addAll(roadAggregates);
@@ -377,6 +433,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
+        System.out.println("Check "+tile);
         boolean result = this.board.canTileBePlacedHere(coordinates, tile);
         //Manage specific case of river
         if (result && riverExtensionIsUsed && !riverAggregate.isCompleted()){
@@ -395,6 +452,24 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public boolean checkTilePosition(Coord coordinates)
     {
         return this.checkTilePosition(coordinates, this.currentTile);
+    }
+    
+    /**
+     * Notifies the observers when this is a new turn
+     */
+    public void notifyNewTurn()
+    {
+        this.notifyMessage = "newTurn";
+        this.notifyObservers();
+    }
+    
+    /**
+     * Notifies the observers when the turn ends
+     */
+    public void notifyEndTurn()
+    {
+        this.notifyMessage = "endTurn";
+        this.notifyObservers();
     }
 
     /**
@@ -1057,6 +1132,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public int getCurrentPlayerIndex()
     {
         return currentPlayerIndex;
+    }
+
+    @Override
+    public void rotateCurrentTileRight()
+    {
+        this.currentTile.rotateRight();
     }
     
     

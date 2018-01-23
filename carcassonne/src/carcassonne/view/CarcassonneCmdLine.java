@@ -37,7 +37,7 @@ public class CarcassonneCmdLine implements Observer
     private void newTurn()
     {
         System.out.println("C'est à "+this.controller.getCurrentPlayer().getName()+" de jouer");
-        System.out.println("La carte à poser est : \n"+this.controller.drawTile());
+        //System.out.println("La carte à poser est : \n"+this.controller.drawTile());
     }
     
     @Override

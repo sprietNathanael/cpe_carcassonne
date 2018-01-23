@@ -75,17 +75,6 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     }
 
     /**
-     * Draws the first tile of the pile
-     *
-     * @return AbstractTile the first tile of the pile
-     */
-    public AbstractTile drawTile()
-    {
-        this.currentTile = this.carcassonneGame.drawFromPile();
-        return this.currentTile;
-    }
-
-    /**
      * puts the tile drawed on the board
      *
      * @param c
@@ -110,20 +99,9 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     
     public void putTile(AbstractTile tile,int col,int row) throws Exception
     {
-        this.carcassonneGameInterface.setPreviousPlayer(this.getCurrentPlayer());
         this.carcassonneGameInterface.putTile(tile, row, col);
     }
-
-    /**
-     * Put the first tile on the board
-     *
-     * @throws Exception
-     */
-    public void putFirstTile() throws Exception
-    {
-        this.putTile(this.carcassonneGame.getFirstTile(), 0, 0);
-    }
-
+    
     /**
      * gets the first meeple available of the current player
      *
@@ -179,12 +157,9 @@ public class AbstractCarcassonneGameController extends Observable implements Car
             m = getCurrentPlayerMeepleAvailable();
             
         }
-        //tuile
-        currentTile.putMeeple(coordinates, m);
-        m.setCurrentType(currentTile.getType(coordinates));
+        
         //aggregats
         carcassonneGameInterface.putMeeple(m, currentTile, m.getPlayer(), coordinates);
-        m.setIsUsed(true);
     }
 
     /**
@@ -202,22 +177,10 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      *
      * @throws java.lang.Exception
      */
-    public void beginGame() throws Exception
+    public void beginGame()
     {
-        /*boolean extensionRiver = true;
-        boolean extensionIC = true;
-
-        //-- Here, we will test if the Inns and Cathedrals extension is activated --//
-        if (extensionIC == true) {
-            this.carcassonneGame.useInnsAndCathedralsExtension();
-        }
-
-        //-- Here, we will test if the river extension is activated --//
-        if (extensionRiver == true) {
-            this.carcassonneGame.useRiverExtension();
-        }*/
-        this.putFirstTile();
-        this.beginTurn();
+        
+        this.carcassonneGameInterface.beginGame();
     }
 
     /**
@@ -227,39 +190,12 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     {
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
-        this.processNextTile();
         if (this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA)) {
             try {
                 this.ManageIA();
             } catch (Exception ex) {
                 Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-    }
-
-    /**
-     * Process the next Tile
-     */
-    private void processNextTile()
-    {
-        this.drawTile();
-        if (this.currentTile != null) {
-            System.out.println("La pièce piochée est : " + this.currentTile.getName());
-            System.out.println(this.currentTile);
-            this.carcassonneGameInterface.notifyBoardChanged();
-            // If the current tile can be placed
-            if (this.carcassonneGame.refreshPlacements()) {
-                this.carcassonneGameInterface.notifyPlacementsReady();
-            }
-            // Else put back the current tile and draw another one
-            else {
-                this.carcassonneGameInterface.putBackCurrentTile();
-                this.processNextTile();
-            }
-        }
-        else {
-            System.out.println("Fin de partie");
-            this.carcassonneGameInterface.notifyGameEnds();
         }
     }
 
@@ -278,7 +214,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
             System.out.println(e);
         }
 
-        endTurn();
+        this.endTurn();
     }
 
     /**
@@ -294,6 +230,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
         Coord c = new Coord(placements.get(index).col, placements.get(index).row);
         while (this.checkTilePosition(c) == false) {
             this.currentTile.rotateRight();
+            this.carcassonneGameInterface.rotateCurrentTileRight();
         }
         this.putCurrentTile(placements.get(index));
         return (c);
@@ -346,15 +283,10 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     /**
      * Ends the turn of a player
      *
-     * @return the next player
      */
-    public Player endTurn()
+    public void endTurn()
     {
-        carcassonneGameInterface.manageCompletedAggregates();
-        System.out.println("===========\nPoints des joueurs :" + this.carcassonneGame.getPlayers());
-        Player player = this.carcassonneGame.nextPlayer();
-        this.beginTurn();
-        return player;
+        this.carcassonneGameInterface.endTurn();
     }
 
     /**
@@ -386,6 +318,8 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     public void turnRight()
     {
         this.currentTile.rotateRight();
+        System.out.println("Turn right "+this.currentTile);
+        //this.carcassonneGameInterface.rotateCurrentTileRight();
     }
     
     /**
@@ -413,7 +347,14 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     public void update(Observable o, Object arg)
     {
         this.carcassonneGame = (CarcassonneGame)o;
-        this.observerMessage = new ObserverMessage((String)arg, this.carcassonneGame);
+        this.currentTile = this.carcassonneGame.getCurrentTile();
+        String message = (String)arg;
+        if(message.equals("newTurn"))
+        {
+            message = "boardChanged";
+            this.beginTurn();
+        }
+        this.observerMessage = new ObserverMessage(message, this.carcassonneGame);
         this.notifyObservers();
         
     }
