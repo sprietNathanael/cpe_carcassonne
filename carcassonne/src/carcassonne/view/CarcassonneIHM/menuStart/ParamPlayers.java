@@ -5,11 +5,13 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import java.io.Serializable;
+
 /**
  *
  * @author thomas
  */
-public class ParamPlayers
+public class ParamPlayers implements Serializable
 {
     private final String nom;
     private final String color;

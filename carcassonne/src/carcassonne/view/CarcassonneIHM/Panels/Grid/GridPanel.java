@@ -254,6 +254,15 @@ public class GridPanel extends JPanel
         this.repaint();
     }
     
+    public void updateBoardBounds(int top, int left, int bottom, int right)
+    {
+        this.upBorder = top;
+        this.downBorder = bottom;
+        this.leftBorder = left;
+        this.rightBorder = right;
+    }
+    
+    
     /**
      * Zoom on the board
      * @param wheelDirection Mouse wheel direction : -1 or 1

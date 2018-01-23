@@ -129,7 +129,16 @@ public class MainPanel extends JPanel implements java.util.Observer
                     
                     if(game.getLastPutTile() != null)
                     {
-                        this.tileHighlightmentLayer.setTileToHighlight(new UICoord(game.getLastPutTile()));
+                        String color;
+                        if(game.getPreviousPlayer() == null)
+                        {
+                            color = "transp";
+                        }
+                        else
+                        {
+                            color = game.getPreviousPlayer().getColor();
+                        }
+                        this.tileHighlightmentLayer.setTileToHighlight(new UICoord(game.getLastPutTile()), color);
                     }
                     
                     this.fieldsLayer.setFields(game.getFieldAggregates());
@@ -175,8 +184,28 @@ public class MainPanel extends JPanel implements java.util.Observer
                     this.tilesPlacementLayer.cleanPositions();
                     this.meeplesLayer.cleanMeeple();
                     // Add positions of tiles layer
+                    int top = 0;
+                    int bottom = 0;
+                    int left = 0;
+                    int right = 0;
                     for (HashMap.Entry<Coord, AbstractTile> entry : board.entrySet()) {
                         Coord coord = entry.getKey();
+                        if(coord.col > right)
+                        {
+                            right = coord.col;
+                        }
+                        if(coord.col < left)
+                        {
+                            left = coord.col;
+                        }
+                        if(coord.row > bottom)
+                        {
+                            bottom = coord.row;
+                        }
+                        if(coord.row < top)
+                        {
+                            top = coord.row;
+                        }
                         AbstractTile tile = entry.getValue();
                         this.tilesLayer.addPosition(new TileImage(coord.col, coord.row, tile));
                         
@@ -190,6 +219,7 @@ public class MainPanel extends JPanel implements java.util.Observer
                             }
                         }
                     }
+                    this.gridPanel.updateBoardBounds(top, left, bottom, right);
                     // Refresh info panel informations
                     this.infoPanel.refresh(game);
                     // Repaint the panels

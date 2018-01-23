@@ -56,6 +56,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     private List<FieldAggregate> fieldAggregates;
     private List<AbbayAggregate> abbayAggregates;
     private RiverAggregate riverAggregate;
+    private Player previousPlayer;
     private String notifyMessage;
     private Player winningPlayer;
     private boolean riverExtensionIsUsed;
@@ -82,6 +83,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.board = new Board();
         this.pile = new ArrayList<AbstractTile>();
         this.meeplesSet = new HashSet<>();
+        this.previousPlayer = null;
         HashSet<SetInterface> sideSet = new HashSet<>();
         for (SetInterface set : sets) {
             if(set.isNotShuffleable())
@@ -145,6 +147,16 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public Coord getLastPutTile()
     {
         return lastPutTile;
+    }
+    
+    public Player getPreviousPlayer()
+    {
+        return this.previousPlayer;
+    }
+    
+    public void setPreviousPlayer(Player previousPlayer)
+    {
+        this.previousPlayer = previousPlayer;
     }
 
     /**
@@ -309,7 +321,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public boolean refreshPlacements()
     {
         this.placements.clear();
-        if (this.currentTile != null) {
+
+        //Manages the specific case of the river
+        if (this.riverExtensionIsUsed && !this.riverAggregate.checkIsCompleted()) {
+            Coord possibleCoord = riverAggregate.getNextPositionTile();
+            this.placements.add(convertCoord(possibleCoord.col, possibleCoord.row));
+        }
+        //Other cases
+        else if (this.currentTile != null) {
+
             this.placements = this.board.getTilePossiblePlacements(this.currentTile);
         }
         return !this.placements.isEmpty();
@@ -356,6 +376,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
+
         return this.board.canTileBePlacedHere(coordinates, tile);
     }
 
@@ -1015,5 +1036,15 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
         return result;
+    }
+
+    public void setRiverExtensionIsUsed(boolean b)
+    {
+        riverExtensionIsUsed = b;
+    }
+
+    public void setInnsAndCathedralsExtensionIsUsed(boolean b)
+    {
+        icExtensionIsUsed = b;
     }
 }

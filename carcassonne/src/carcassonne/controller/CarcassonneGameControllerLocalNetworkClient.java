@@ -6,13 +6,13 @@
 package carcassonne.controller;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
-import java.io.BufferedReader;
-import java.io.DataInputStream;
+import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import static java.lang.Thread.sleep;
 import java.net.Socket;
-import sun.security.ssl.Debug;
+import java.util.List;
 
 /**
  *
@@ -22,31 +22,53 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
 {
 
     private Socket socket;
+    private List<ParamPlayers> players = null;
 
-    public CarcassonneGameControllerLocalNetworkClient() throws Exception
+    private ObjectOutputStream outputStream;
+    private ObjectInputStream inputStream;
+
+    public CarcassonneGameControllerLocalNetworkClient(String ipAddr, String pseudo) throws Exception
     {
-        this(new CarcassonneGame());
+        this(new CarcassonneGame(), ipAddr, pseudo);
     }
 
-    public CarcassonneGameControllerLocalNetworkClient(CarcassonneGame model) throws InterruptedException, ClassNotFoundException
+    public CarcassonneGameControllerLocalNetworkClient(CarcassonneGame model, String ipAddr, String pseudo) throws Exception
     {
         super(model);
 
         try {
-            socket = new Socket("localhost", 80);
+            socket = new Socket(ipAddr, 6666);
             System.out.println("Socket client crée");
-            ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
-            CarcassonneGame test = (CarcassonneGame) ois.readObject();
-            System.out.println(test);
-            //close resources
-            ois.close();
+            SendClientInfomation(pseudo);
+            ReceivePlayersList();
+            sleep(100000);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
-    public static void main(String[] zero) throws Exception {
-        new CarcassonneGameControllerLocalNetworkClient();
+
+    private void SendClientInfomation(String pseudo) throws IOException
+    {
+        outputStream = new ObjectOutputStream(socket.getOutputStream());
+        outputStream.writeObject(pseudo);
+        System.out.println("pseudo envoyé");
     }
-    
+
+    private void ReceivePlayersList() throws Exception
+    {
+        inputStream = new ObjectInputStream(socket.getInputStream());
+        System.out.println("test");
+        players = (List<ParamPlayers>) inputStream.readObject();
+    }
+
+    public List<ParamPlayers> getPlayers()
+    {
+        return players;
+    }
+
+    public static void main(String[] zero) throws Exception
+    {
+        new CarcassonneGameControllerLocalNetworkClient("localhost", "mon pseudo");
+    }
+
 }

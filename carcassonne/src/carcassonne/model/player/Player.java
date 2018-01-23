@@ -183,7 +183,7 @@ public class Player
     {
         Meeple ret = null;
         for (Meeple m : meeples) {
-            if (m.getIsUsed() == false) {
+            if (m.getIsUsed() == false && !m.getIsBig()) {
                 ret = m;
                 break;
             }

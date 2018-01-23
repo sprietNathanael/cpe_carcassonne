@@ -150,13 +150,13 @@ public class InnsAndCathedralsSet extends AbstractSet
         //Tile EG
         aggregates = new HashSet<>();
         aggregates.add(retTreeSet("NWW", "NW", "W", "CSW", "SWW", "SW", "SSW", "S", "SSE")); //F
-        aggregates.add(retTreeSet("NNW", "N", "NNE", "NE", "CNW", "CNE", "CSE", "SE")); //C
-        aggregates.add(retTreeSet("NEE", "E", "SEE")); //F
+        aggregates.add(retTreeSet("NNW", "N", "NNE", "CNW", "CNE", "CSE", "SE")); //C
+        aggregates.add(retTreeSet("NE", "NEE", "E", "SEE")); //F
 
         tileList.add(new CasualTile("EG", "inncathedral", "EG", //Id
-                new FieldType(), new CityType(), new CityType(), //North West section
+                new FieldType(), new FieldType(), new CityType(), //North West section
                 new CityType(), //North
-                new CityType(), new CityType(), new FieldType(), //North East section
+                new CityType(), new FieldType(), new FieldType(), //North East section
                 new FieldType(), //East
                 new FieldType(), new CityType(), new FieldType(), //South East section
                 new FieldType(), //South
