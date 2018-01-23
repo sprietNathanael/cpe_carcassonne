@@ -11,6 +11,7 @@ import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ import java.util.Set;
 /**
  * @author Étienne
  */
-public class CityAggregate extends AbstractAggregate
+public class CityAggregate extends AbstractAggregate implements Serializable
 {
 
     private Map<Coord, Set<CityEdgeEnum>> cityEdges;

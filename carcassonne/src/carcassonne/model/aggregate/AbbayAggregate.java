@@ -7,6 +7,7 @@ package carcassonne.model.aggregate;
 
 import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Set;
  * @author Thomas
  *
  */
-public class AbbayAggregate extends AbstractAggregate
+public class AbbayAggregate extends AbstractAggregate implements Serializable
 {
 
     public AbbayAggregate(int col, int row, AbstractTile firstTile, Set<String> locationTypes)

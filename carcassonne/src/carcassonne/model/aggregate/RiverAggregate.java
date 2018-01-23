@@ -9,6 +9,7 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.io.Serializable;
 import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.RiverType;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ import java.util.Set;
  * @author Étienne
  *
  */
-public class RiverAggregate extends AbstractAggregate
+public class RiverAggregate extends AbstractAggregate implements Serializable
 {
 
     private Coord lastTile;

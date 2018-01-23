@@ -13,6 +13,7 @@ import carcassonne.model.type.CityType;
 import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +24,7 @@ import java.util.Set;
  *
  * @author Étienne
  */
-public class BasicSet extends AbstractSet
+public class BasicSet extends AbstractSet implements Serializable
 {
 
     /**

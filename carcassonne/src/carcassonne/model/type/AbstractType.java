@@ -6,11 +6,12 @@
 package carcassonne.model.type;
 
 import carcassonne.model.player.Meeple;
+import java.io.Serializable;
 
 /**
  * Abstract class that represents a generic type
  */
-public abstract class AbstractType
+public abstract class AbstractType implements Serializable
 {
 
     protected Meeple meeple;

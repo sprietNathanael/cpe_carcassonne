@@ -11,6 +11,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ import java.util.Set;
 /**
  * @author Étienne
  */
-public class RoadAggregate extends AbstractAggregate
+public class RoadAggregate extends AbstractAggregate implements Serializable
 {
 
     private Map<Coord, Set<RoadEdgeEnum>> roadEdges;

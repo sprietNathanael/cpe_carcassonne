@@ -5,10 +5,12 @@
  */
 package carcassonne.model.type;
 
+import java.io.Serializable;
+
 /**
  * Represents a road type
  */
-public class RoadType extends AbstractType
+public class RoadType extends AbstractType implements Serializable
 {
 
     /**

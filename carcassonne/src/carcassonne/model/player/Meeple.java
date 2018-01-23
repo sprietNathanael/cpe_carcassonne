@@ -6,13 +6,14 @@
 package carcassonne.model.player;
 
 import carcassonne.model.type.AbstractType;
+import java.io.Serializable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
  * Represents a "Meeple", the follower or pawn of a player
  */
-public class Meeple implements Cloneable
+public class Meeple implements Cloneable, Serializable
 {
 
     private boolean isUsed;

@@ -9,6 +9,7 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -18,7 +19,7 @@ import java.util.Set;
  *
  * @author Étienne
  */
-public abstract class AbstractAggregate
+public abstract class AbstractAggregate implements Serializable
 {
 
     /**

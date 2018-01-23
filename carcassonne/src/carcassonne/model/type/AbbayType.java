@@ -5,11 +5,13 @@
  */
 package carcassonne.model.type;
 
+import java.io.Serializable;
+
 /**
  *
  * Represents an abbay type
  */
-public class AbbayType extends AbstractType
+public class AbbayType extends AbstractType implements Serializable
 {
 
     /**

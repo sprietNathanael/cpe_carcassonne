@@ -5,10 +5,12 @@
  */
 package carcassonne.model.type;
 
+import java.io.Serializable;
+
 /**
  * Represents a city type
  */
-public class CityType extends AbstractType
+public class CityType extends AbstractType implements Serializable
 {
 
     private final boolean hasShield;

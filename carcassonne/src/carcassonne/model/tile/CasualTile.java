@@ -12,6 +12,7 @@ import carcassonne.model.type.CrossType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RiverType;
 import carcassonne.model.type.RoadType;
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -23,7 +24,7 @@ import java.util.Set;
  * derivatives (NE,NW,SE,SW) - These derivatives are themselves cut in 2 The
  * center layer is cut in 4 parts : CNE, CNW, CSE, CSW
  */
-public class CasualTile extends AbstractTile
+public class CasualTile extends AbstractTile implements Serializable
 {
 
     public static boolean locationsAreBounded(Set<String> cityLocations, Set<String> locationTypes)

@@ -5,6 +5,7 @@
  */
 package carcassonne.model.player;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Set;
@@ -12,7 +13,7 @@ import java.util.Set;
 /**
  * Represents a player
  */
-public class Player
+public class Player implements Serializable
 {
 
     /**

@@ -9,6 +9,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.model.tile.CasualTile;
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,7 +17,7 @@ import java.util.Set;
  *
  * @author Étienne
  */
-public class FieldAggregate extends AbstractAggregate
+public class FieldAggregate extends AbstractAggregate implements Serializable
 {
 
     /**

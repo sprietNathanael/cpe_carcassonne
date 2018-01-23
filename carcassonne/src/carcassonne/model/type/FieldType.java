@@ -5,10 +5,12 @@
  */
 package carcassonne.model.type;
 
+import java.io.Serializable;
+
 /**
  * Represents a field type
  */
-public class FieldType extends AbstractType
+public class FieldType extends AbstractType implements Serializable
 {
 
     public final boolean hasInn;
