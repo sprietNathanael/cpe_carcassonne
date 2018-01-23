@@ -376,8 +376,13 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
-
-        return this.board.canTileBePlacedHere(coordinates, tile);
+        boolean result = this.board.canTileBePlacedHere(coordinates, tile);
+        //Manage specific case of river
+        if (result && riverExtensionIsUsed && !riverAggregate.isCompleted()){
+            result = riverAggregate.checkNewPlacementCorrect(convertCoord(coordinates.col, coordinates.row), tile);
+        }
+        
+        return result;
     }
 
     /**
