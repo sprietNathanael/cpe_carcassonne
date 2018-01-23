@@ -6,8 +6,11 @@
 package carcassonne.view.CarcassonneIHM;
 
 import carcassonne.model.player.Player;
+import carcassonne.view.CarcassonneIHM.menuStart.Background;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,22 +22,25 @@ import javax.swing.JLabel;
 public class ScoreDialog extends JDialog
 {
     private Player player;
+    
+    private JLabel playerName;
 
     private final JLabel roadPin = new JLabel(new ImageIcon("resources/pins/roadPin.png"));;
     private final JLabel abbayPin = new JLabel(new ImageIcon("resources/pins/abbayPin.png"));
     private final JLabel cityPin = new JLabel(new ImageIcon("resources/pins/cityPin.png"));
     private final JLabel fieldPin = new JLabel(new ImageIcon("resources/pins/fieldPin.png"));
-    private final JLabel equalsPin = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
-    private final JLabel equalsPin2 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
-    private final JLabel equalsPin3 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
-    private final JLabel equalsPin4 = new JLabel(new ImageIcon("resources/pins/equalsPin.png"));
+
+    private JLabel roadScore;
+    private JLabel abbayScore;
+    private JLabel cityScore;
+    private JLabel fieldScore;
     private final JLabel fin = new JLabel();
     
-    public ScoreDialog(){
+    public ScoreDialog() throws IOException{
         initComponent();
     }
     
-    private void initComponent()
+    private void initComponent() throws IOException
     {
         //Set Title
         this.setTitle("Score détaillé");
@@ -51,34 +57,59 @@ public class ScoreDialog extends JDialog
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
         
-        //Add Picture
+        //Add Background
+        this.setContentPane(new Background("resources/score_background.png"));
+        this.setLayout(null);
+        
+        // For Test before import
+        player = new Player("Nathanaël", "bleu", "player");
+        
+        //Add Pictures and Labels
+        playerName = new JLabel (player.getName());
+        playerName.setFont(new Font("Serif", Font.PLAIN, 40));
+        playerName.setBounds(0, 0, 200, 100);
+        playerName.setLocation((this.getWidth()-playerName.getWidth())/2, 20);
+        this.add(playerName);
+        
+        roadPin.setBounds(150, 160, 100, 100);
         this.add(roadPin);
-        roadPin.setBounds(20, 160, 100, 100);
-        this.add(equalsPin);
-        equalsPin.setBounds(140, 180, 60, 60);
         
+        roadScore = new JLabel (Integer.toString(player.getRoadPoints()));
+        roadScore.setBounds(300, 180, 120, 60);
+        roadScore.setFont(new Font("Serif", Font.PLAIN, 60));
+        this.add(roadScore);        
+        
+        abbayPin.setBounds(150, 300, 100, 100);
         this.add(abbayPin);
-        abbayPin.setBounds(20, 300, 100, 100);
-        this.add(equalsPin2);
-        equalsPin2.setBounds(140, 320, 60, 60);
         
+        abbayScore = new JLabel (Integer.toString(player.getAbbayePoints()));
+        abbayScore.setBounds(300, 320, 120, 60);
+        abbayScore.setFont(new Font("Serif", Font.PLAIN, 60));
+        this.add(abbayScore);
+        
+        cityPin.setBounds(150, 440, 100, 100);
         this.add(cityPin);
-        cityPin.setBounds(20, 440, 100, 100);
-        this.add(equalsPin3);
-        equalsPin3.setBounds(140, 460, 60, 60);
         
+        cityScore = new JLabel (Integer.toString(player.getCityPoints()));
+        cityScore.setBounds(300, 460, 120, 60);
+        cityScore.setFont(new Font("Serif", Font.PLAIN, 60));
+        this.add(cityScore);
+        
+        fieldPin.setBounds(150, 580, 100, 100);
         this.add(fieldPin);
-        fieldPin.setBounds(20, 580, 100, 100);
-        this.add(equalsPin4);
-        equalsPin4.setBounds(140, 600, 60, 60);
+        
+        fieldScore = new JLabel (Integer.toString(player.getFieldPoints()));
+        fieldScore.setBounds(300, 600, 120, 60);
+        fieldScore.setFont(new Font("Serif", Font.PLAIN, 60));
+        this.add(fieldScore);
         
         this.add(fin);
         
         this.setVisible(true);
     }
     
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException{
         // Displays the game menu
-        ScoreDialog scoreDialog = new ScoreDialog();
+        new ScoreDialog();
     }
 }
