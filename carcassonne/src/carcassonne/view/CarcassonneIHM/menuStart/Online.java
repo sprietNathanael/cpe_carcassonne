@@ -31,11 +31,11 @@ import javax.swing.JTextField;
 public class Online extends JDialog
 {
 
-    private JLabel icon;
+    private JLabel icon, lbName;
     private JRadioButton serveur, client;
-    private JButton btCreateGame, btJoinGame;
+    private JButton btCreateGame, btJoinGame,btPlay;
     private CarcassonneGameControllerMulti controller;
-    private JTextField tfIpAddress;
+    private JTextField tfIpAddress, tfName;
 
     public Online(JFrame parent, String title, boolean modal)
     {
@@ -45,6 +45,8 @@ public class Online extends JDialog
 
     private void initComponent()
     {
+        Online self = this;
+
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
 
@@ -65,54 +67,39 @@ public class Online extends JDialog
         panIcon.add(icon);
 
         //Button back
-        JPanel control = new JPanel();
-        JButton okBouton = new JButton("BACK");
+        JPanel panControl = new JPanel();
+        JButton btBack = new JButton("BACK");
 
-        okBouton.addActionListener(new ActionListener()
+        btBack.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
+                //System.out.println(tfName.getText());
                 setVisible(false);
             }
         });
 
-        control.add(okBouton);
-        control.setBackground(Color.white);
+        //Parameters
+        JPanel panParameters = new JPanel();
+        panParameters.setBackground(Color.black);
 
-        //Panel settings
-        /*JPanel panSettings = new JPanel();
-        panSettings.setBackground(Color.white);
-        panSettings.setBorder(BorderFactory.createTitledBorder("Mode online"));
-        panSettings.setPreferredSize(new Dimension(440, 60));
-        client = new JRadioButton("Joueur");
-        serveur = new JRadioButton("Hôte");
-        client.setSelected(true);
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(client);
-        bg.add(serveur);
-        panSettings.add(client);
-        panSettings.add(serveur);
+        //Pseudo
+        JPanel panNom = new JPanel();
+        panNom.setBackground(Color.white);
+        panNom.setPreferredSize(new Dimension(220, 55));
+        tfName = new JTextField();
+        tfName.setPreferredSize(new Dimension(100, 25));
+        panNom.setBorder(BorderFactory.createTitledBorder("Pseudo"));
+        //lbName = new JLabel("name :");
+        //panNom.add(lbName);
+        panNom.add(tfName);
 
-        if (client.isSelected() == true) {
-            JTextField port = new JTextField("Port to join a game ?");
-            port.setPreferredSize(new Dimension(130, 30));
-            panSettings.add(port);
-
-        }
-        else {
-            JTextField port = new JTextField("Port for the game ?");
-            port.setPreferredSize(new Dimension(130, 30));
-            panSettings.add(port);
-
-        }*/
-<<<<<<< HEAD
-=======
-        
-        // Address IP
-        tfIpAddress = new JTextField();
-        
->>>>>>> develop
+        //buttons Create and join game to choose
+        JPanel panRole = new JPanel();
+        panRole.setBackground(Color.white);
+        panRole.setPreferredSize(new Dimension(585, 100));
+        panRole.setBorder(BorderFactory.createTitledBorder("GAME"));
         btCreateGame = new JButton("Create a game");
         btCreateGame.addActionListener(new ActionListener()
         {
@@ -122,6 +109,7 @@ public class Online extends JDialog
 
             }
         });
+
         btJoinGame = new JButton("Join a game");
         btJoinGame.addActionListener(new ActionListener()
         {
@@ -131,19 +119,55 @@ public class Online extends JDialog
 
             }
         });
-        JPanel pnActionButtons = new JPanel();
-        pnActionButtons.add(btCreateGame);
-        pnActionButtons.add(btJoinGame);
-<<<<<<< HEAD
-=======
-        pnActionButtons.add(tfIpAddress);
-        
->>>>>>> develop
+        panRole.add(panNom);
+        panRole.add(btCreateGame);
+        panRole.add(btJoinGame);
 
-        //this.getContentPane().add(panSettings, BorderLayout.CENTER);
+        /* 2 PANNELS : CREATE GAME AND JOIN GAME */
+        JPanel panCreate = new JPanel();
+        panCreate.setBackground(Color.white);
+        panCreate.setPreferredSize(new Dimension(291, 516));
+        panCreate.setBorder(BorderFactory.createTitledBorder("HOST"));
+        JPanel panJoin = new JPanel();
+        panJoin.setBackground(Color.white);
+        panJoin.setPreferredSize(new Dimension(291, 516));
+        panJoin.setBorder(BorderFactory.createTitledBorder("PLAYER"));
+
+        //Adress IP for join game
+        JPanel panIP = new JPanel();
+        panIP.setBackground(Color.white);
+        panIP.setPreferredSize(new Dimension(220, 60));
+        tfIpAddress = new JTextField();
+        tfIpAddress.setPreferredSize(new Dimension(100, 25));
+        panIP.setBorder(BorderFactory.createTitledBorder("JOIN GAME"));
+        lbName = new JLabel("Address IP :");
+        panIP.add(lbName);
+        panIP.add(tfIpAddress);
+        panJoin.add(panIP);
+        
+        //button play Player
+        btPlay = new JButton("Play");
+        btPlay.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+
+            }
+        });
+        panJoin.add(btPlay);
+
+        //Composition of panels with the differents elements
+        panParameters.add(panRole, BorderLayout.NORTH);
+        panParameters.add(panCreate, BorderLayout.WEST);
+        panParameters.add(panJoin, BorderLayout.EAST);
+
+        panControl.add(btBack);
+        panControl.setBackground(Color.white);
+
+        this.getContentPane().add(panParameters, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
-        this.getContentPane().add(control, BorderLayout.SOUTH);
-        this.getContentPane().add(pnActionButtons, BorderLayout.CENTER);
+        this.getContentPane().add(panControl, BorderLayout.SOUTH);
 
     }
 }

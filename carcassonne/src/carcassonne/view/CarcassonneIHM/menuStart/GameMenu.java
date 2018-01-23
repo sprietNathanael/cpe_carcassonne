@@ -83,7 +83,7 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //musicPlayer.close();
+                musicPlayer.close();
                 /*ClientWindow clientWindow;
                 if (self.settings != null) {
                     clientWindow = new ClientWindow(self.settings.getPlayers());
@@ -146,6 +146,6 @@ public class GameMenu extends JFrame
         this.setVisible(true);
         
         musicPlayer.play();
-       // musicPlayer2.play();
+        musicPlayer2.play();
     }
 }
