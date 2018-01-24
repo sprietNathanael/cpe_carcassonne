@@ -31,6 +31,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
 
     protected CarcassonneGame carcassonneGame;
     protected final CarcassonneGameInterface carcassonneGameInterface;
+    protected CarcassonneGame carcassonneGame;
     private AbstractTile currentTile;
     private boolean useBigMeeple;
     private ObserverMessage observerMessage;

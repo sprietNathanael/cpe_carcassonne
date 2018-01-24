@@ -27,11 +27,10 @@ import javax.swing.JFrame;
  *
  * @author Thomas
  */
-public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcassonneGameController
+public class CarcassonneGameControllerLocalNetworkClient extends CarcassonneGameControllerLocalNetwork
 {
 
     private Socket socket;
-    private List<ParamPlayers> players = null;
     private int myPlayerIndex;
 
     private ObjectOutputStream outputStream;
@@ -53,7 +52,7 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
             inputStream = new ObjectInputStream(socket.getInputStream());
             myPlayerIndex = (int) inputStream.readObject();
             System.out.println("Player index : " + myPlayerIndex);
-            players = (List<ParamPlayers>) inputStream.readObject();
+            this.paramPlayers = (List<ParamPlayers>) inputStream.readObject();
             play();
             sleep(100000);
         } catch (IOException e) {
@@ -67,15 +66,11 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
         outputStream.writeObject(pseudo);
         System.out.println("pseudo envoyé");
     }
-        
-    public List<ParamPlayers> getPlayers()
-    {
-        return players;
-    }
     
     // à remplacer dans un click
     private void play()
     {
+        ClientWindow clientWindow = new ClientWindow(this.paramPlayers);
         Set<String> playableColors = new HashSet<>();
         playableColors.add("red");
         ClientWindow clientWindow = new ClientWindow(this.getPlayers(), playableColors);
@@ -107,6 +102,11 @@ public class CarcassonneGameControllerLocalNetworkClient extends AbstractCarcass
         }
     }
     
+    public void ReceiveCarcassonneGame() throws Exception
+    {
+       this.carcassonneGame = (CarcassonneGame) inputStream.readObject();
+       carcassonneGame.notifyObservers();
+    }
     
     
 

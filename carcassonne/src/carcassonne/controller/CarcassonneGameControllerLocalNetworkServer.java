@@ -26,7 +26,7 @@ import javax.swing.JFrame;
  *
  * @author Thomas
  */
-public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcassonneGameController
+public class CarcassonneGameControllerLocalNetworkServer extends CarcassonneGameControllerLocalNetwork
 {
 
     private List<Socket> sockets;
@@ -35,7 +35,6 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
     
     private int maxClients;
     private int ActualClientNumber;
-    private List<ParamPlayers> paramPlayers;
     private int myPlayerIndex;
 
     private ObjectOutputStream outputStream;
