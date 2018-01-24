@@ -318,7 +318,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     public void turnRight()
     {
         this.currentTile.rotateRight();
-        System.out.println("Turn right "+this.currentTile);
+        //System.out.println("Turn right "+this.currentTile);
         //this.carcassonneGameInterface.rotateCurrentTileRight();
     }
     

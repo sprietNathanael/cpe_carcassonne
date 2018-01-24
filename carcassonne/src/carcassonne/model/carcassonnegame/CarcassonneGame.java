@@ -232,7 +232,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void endTurn()
     {
         this.manageCompletedAggregates();
-        System.out.println("===========\nPoints des joueurs :" + this.getPlayers());
+        //System.out.println("===========\nPoints des joueurs :" + this.getPlayers());
         this.nextPlayer();
         this.beginTurn();
     }
@@ -245,7 +245,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.drawFromPile();
         if (this.currentTile != null) {
             System.out.println("La pièce piochée est : " + this.currentTile.getName());
-            System.out.println(this.currentTile);
+            //System.out.println(this.currentTile);
             this.notifyNewTurn();
             // If the current tile can be placed
             if (this.refreshPlacements()) {
@@ -436,7 +436,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      */
     public boolean checkTilePosition(Coord coordinates, AbstractTile tile)
     {
-        System.out.println("Check "+tile);
+        //System.out.println("Check "+tile);
         boolean result = this.board.canTileBePlacedHere(coordinates, tile);
         //Manage specific case of river
         if (result && riverExtensionIsUsed && !riverAggregate.isCompleted()){
