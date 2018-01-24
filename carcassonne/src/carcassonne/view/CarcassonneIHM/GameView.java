@@ -13,6 +13,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
+import carcassonne.controller.CarcassonneGameControllerLocalNetworkClient;
 import carcassonne.controller.CarcassonneGameControllerLocalNetworkServer;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.set.BasicSet;
@@ -87,7 +88,7 @@ public class GameView
             contructPlayersListAndGame(playerList);
             // Build the controller
             this.controller = localNetworkControler;
-            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient)
+            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient.class)
             ((CarcassonneGameControllerLocalNetworkServer)controller).sendCarcassoneGame();
             
         } catch (Exception ex) {

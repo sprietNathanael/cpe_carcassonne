@@ -70,10 +70,9 @@ public class CarcassonneGameControllerLocalNetworkClient extends CarcassonneGame
     // à remplacer dans un click
     private void play()
     {
-        ClientWindow clientWindow = new ClientWindow(this.paramPlayers);
         Set<String> playableColors = new HashSet<>();
         playableColors.add("red");
-        ClientWindow clientWindow = new ClientWindow(this.getPlayers(), playableColors);
+        ClientWindow clientWindow = new ClientWindow(this.getParamPlayers(), playableColors);
         clientWindow.setVisible(true);
         clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
