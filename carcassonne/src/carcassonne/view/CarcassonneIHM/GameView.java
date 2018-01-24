@@ -149,7 +149,7 @@ public class GameView
     {
         this.players = new ArrayList<>();
         players.add(new Player("player1", "blue", PlayerTypes.player));
-        players.add(new Player("player2", "green", PlayerTypes.player));
+        players.add(new Player("player2", "green", PlayerTypes.basicIA));
         //players.add(new Player("player3", "red", PlayerTypes.player));
         //players.add(new Player("player4", "black", PlayerTypes.player));
         this.playableColors = new HashSet<>();
