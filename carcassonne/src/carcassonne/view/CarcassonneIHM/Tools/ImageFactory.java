@@ -17,7 +17,7 @@ import javax.imageio.ImageIO;
  *
  * @author nathanael
  */
-public class TileImageFactory
+public class ImageFactory
 {
     private static HashMap<String,BufferedImage> images = new HashMap<>();
     
@@ -33,7 +33,7 @@ public class TileImageFactory
             try {
                 image = ImageIO.read(new File(imageName));
             } catch (IOException ex) {
-                Logger.getLogger(TileImageFactory.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ImageFactory.class.getName()).log(Level.SEVERE, null, ex);
             }
             images.put(imageName, image);
             return image;

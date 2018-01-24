@@ -66,7 +66,7 @@ public class TileImage extends UICoord
         // Get the rotation in radians
         double rad_rotation = this.rotation * Math.PI / 180.0;
         // Get the tile image based on its name
-        this.image = TileImageFactory.getImage("resources/tiles/"+this.path+"/"+this.name + ".jpg");
+        this.image = ImageFactory.getImage("resources/tiles/"+this.path+"/"+this.name + ".jpg");
         // Applies the rotation on the affine transform
         tx.rotate(rad_rotation, this.image.getWidth()/2, this.image.getHeight()/2);
         AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_BILINEAR);
