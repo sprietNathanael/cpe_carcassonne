@@ -5,9 +5,15 @@
  */
 package carcassonne.view.CarcassonneIHM.Panels.Info;
 
+import carcassonne.model.player.Player;
+import carcassonne.view.CarcassonneIHM.ScoreDialog;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics2D;
+import java.awt.Polygon;
+import java.awt.Rectangle;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +26,7 @@ import javax.imageio.ImageIO;
  *
  * @author nathanael
  */
-public class PlayerInfo
+public class PlayerInfo implements InfoPanelMouseListener
 {
     // Constants
     public static final int MEEPLE_BORDER = 10;
@@ -36,7 +42,10 @@ public class PlayerInfo
     private BufferedImage coinImage;
     private BufferedImage hollowMeeple;
     private BufferedImage hollowMeeple_big;
+    private BufferedImage infoImage;
     private int bigMeepleNumber;
+    private Rectangle infoButton;
+    private Player player;
 
     /**
      * Construct a Player info
@@ -44,11 +53,11 @@ public class PlayerInfo
      * @param name
      * @param color
      */
-    public PlayerInfo(String name, String color)
+    public PlayerInfo(Player player, InfoPanelMouseAdapter adapter)
     {
-        this.color = color.toLowerCase();
-        System.out.println(this.color);
-        this.name = name;
+        this.player = player;
+        this.color = player.getColor().toLowerCase();
+        adapter.addListener(this);
         this.buildImages();
     }
 
@@ -58,11 +67,12 @@ public class PlayerInfo
      * @param meeples
      * @param points
      */
-    public void updatePlayer(int meeples, int bigMeeple, int points)
+    public void updatePlayer(Player player, int bigMeeple)
     {
-        this.meepleNumber = bigMeeple == 1 ? meeples-1 : meeples;
+        this.player = player;
+        this.meepleNumber = bigMeeple == 1 ? player.getUnusedMeepleNumber()-1 : player.getUnusedMeepleNumber();
         this.bigMeepleNumber = bigMeeple;
-        this.pointNumber = points;
+        this.pointNumber = player.getPoints();
     }
 
     /**
@@ -111,6 +121,13 @@ public class PlayerInfo
         } catch (IOException ex) {
             Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
+        // Get the info image
+        try {
+            this.infoImage = ImageIO.read(new File("resources/info.png"));
+        } catch (IOException ex) {
+            Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     /**
@@ -125,7 +142,7 @@ public class PlayerInfo
     public void paint(Graphics2D g2, int currentHeight, int height, int width, boolean currentPlayer)
     {
         g2.drawImage(this.plankTexture, 0, currentHeight, width, height, null);
-        
+              
         int meepleSize = (int) (height / 2);
         int meepleX = PlayerInfo.MEEPLE_BORDER;
         int meepleY = currentHeight + (height / 2) - (meepleSize / 2);
@@ -174,8 +191,27 @@ public class PlayerInfo
         // Draw the informations
         int nameX = meepleX + meepleSize + PlayerInfo.MEEPLE_BORDER;
         g2.setFont(new Font("Calibri", Font.PLAIN, 18));
-        g2.drawString(this.name, nameX, meepleY + meepleSize / 4);
+        g2.drawString(this.player.getName(), nameX, meepleY + meepleSize / 4);
+        
+        int infoSize = (int)(height/4.0);
+        int infoY = currentHeight+ ((int)(height / 2.0))- ((int)(infoSize/2.0));
+        int infoX = 4*(int)(width/5.0);
+        this.infoButton = new Rectangle(infoX, infoY, infoSize, infoSize);
+        g2.drawImage(this.infoImage, infoX, infoY, infoSize, infoSize, null);
 
         
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e, Point2D p)
+    {
+        if(this.infoButton.contains(p))
+        {
+            try {
+                new ScoreDialog(this.player);
+            } catch (IOException ex) {
+                Logger.getLogger(PlayerInfo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 }

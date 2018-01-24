@@ -21,7 +21,6 @@ import javax.swing.JLabel;
  */
 public class ScoreDialog extends JDialog
 {
-    private Player player;
     
     private JLabel playerName;
 
@@ -36,11 +35,11 @@ public class ScoreDialog extends JDialog
     private JLabel fieldScore;
     private final JLabel fin = new JLabel();
     
-    public ScoreDialog() throws IOException{
-        initComponent();
+    public ScoreDialog(Player player) throws IOException{
+        initComponent(player);
     }
     
-    private void initComponent() throws IOException
+    private void initComponent(Player player) throws IOException
     {
         //Set Title
         this.setTitle("Score détaillé");
@@ -60,9 +59,6 @@ public class ScoreDialog extends JDialog
         //Add Background
         this.setContentPane(new Background("resources/score_background.png"));
         this.setLayout(null);
-        
-        // For Test before import
-        player = new Player("Nathanaël", "bleu", "player");
         
         //Add Pictures and Labels
         playerName = new JLabel (player.getName());
@@ -109,7 +105,9 @@ public class ScoreDialog extends JDialog
     }
     
     public static void main(String[] args) throws IOException{
+        // For Test before import
+        Player player = new Player("Nathanaël", "bleu", "player");
         // Displays the game menu
-        new ScoreDialog();
+        new ScoreDialog(player);
     }
 }

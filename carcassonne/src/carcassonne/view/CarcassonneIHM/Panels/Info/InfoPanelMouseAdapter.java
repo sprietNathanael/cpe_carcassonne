@@ -8,6 +8,8 @@ package carcassonne.view.CarcassonneIHM.Panels.Info;
 import carcassonne.view.CarcassonneIHM.Layers.LayerMouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Point2D;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A mouse adapter for the info panel
@@ -15,7 +17,7 @@ import java.awt.geom.Point2D;
  */
 public class InfoPanelMouseAdapter extends LayerMouseAdapter
 {
-    private final InfoPanelMouseListener listener;
+    private final Set<InfoPanelMouseListener> listeners;
     
 
     /**
@@ -24,7 +26,13 @@ public class InfoPanelMouseAdapter extends LayerMouseAdapter
      */
     public InfoPanelMouseAdapter(InfoPanelMouseListener listener)
     {
-        this.listener = listener;
+        this.listeners = new HashSet<>();
+        this.listeners.add(listener);
+    }
+    
+    public void addListener(InfoPanelMouseListener listener)
+    {
+        this.listeners.add(listener);
     }
 
     /**
@@ -36,6 +44,10 @@ public class InfoPanelMouseAdapter extends LayerMouseAdapter
     {
         // Get the coordinates of the mouse
         Point2D point = e.getPoint();
-        listener.mouseClicked(e, point);
+        for(InfoPanelMouseListener listener : listeners)
+        {
+            listener.mouseClicked(e, point);
+            
+        }
     }
 }
