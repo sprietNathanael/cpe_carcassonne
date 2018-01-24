@@ -47,12 +47,12 @@ public class GameView
      * @param playerList
      * @param playableColors
      */
-    public GameView(List<ParamPlayers> playerList, Set<String> playableColors)
+    public GameView(List<ParamPlayers> playerList, Set<String> playableColors, boolean cbExtRiver, boolean cbExtInnsAndCath)
     {
         System.out.println("[GameView] Construct 1");
         try {
             this.playableColors = playableColors;
-            contructPlayersListAndGame(playerList); // Build the controller
+            contructPlayersListAndGame(playerList, cbExtRiver, cbExtInnsAndCath); // Build the controller
             this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
@@ -66,7 +66,7 @@ public class GameView
     {
         System.out.println("[GameView] Construct 2");
         try {
-            this.contructPlayersListAndGame(new ArrayList<>());
+            this.contructPlayersListAndGame(new ArrayList<>(), true, true);
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
@@ -86,12 +86,13 @@ public class GameView
         System.out.println("[GameView] Construct 3");
         try {
             this.playableColors = playableColors;
-            contructPlayersListAndGame(playerList);
+            contructPlayersListAndGame(playerList, true, true);
             // Build the controller
             this.controller = localNetworkControler;
-            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient.class)
-            ((CarcassonneGameControllerLocalNetworkServer)controller).sendCarcassoneGame();
-            
+            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient.class) {
+                ((CarcassonneGameControllerLocalNetworkServer) controller).sendCarcassoneGame();
+            }
+
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -104,7 +105,7 @@ public class GameView
      * @param playerList
      * @throws Exception
      */
-    private void contructPlayersListAndGame(List<ParamPlayers> playerList) throws Exception
+    private void contructPlayersListAndGame(List<ParamPlayers> playerList, boolean cbExtRiver, boolean cbExtInnsAndCath) throws Exception
     {
         this.players = new ArrayList<>();
         ArrayList<String> colors = new ArrayList<>();
@@ -134,13 +135,21 @@ public class GameView
         // constructs the default players list
         Set<SetInterface> sets = new HashSet<>();
         sets.add(new BasicSet());
-        sets.add(new InnsAndCathedralsSet());
-        sets.add(new RiverSet());
+        if (cbExtInnsAndCath) {
+            sets.add(new InnsAndCathedralsSet());
+        }
 
+        if (cbExtRiver) {
+            sets.add(new RiverSet());
+        }
         // Build the game
         this.game = new CarcassonneGame(players, sets);
-        this.game.setRiverExtensionIsUsed(true);
-        this.game.setInnsAndCathedralsExtensionIsUsed(true);
+        if (cbExtRiver) {
+            this.game.setRiverExtensionIsUsed(true);
+        }
+        if (cbExtInnsAndCath) {
+            this.game.setInnsAndCathedralsExtensionIsUsed(true);
+        }
 
     }
 

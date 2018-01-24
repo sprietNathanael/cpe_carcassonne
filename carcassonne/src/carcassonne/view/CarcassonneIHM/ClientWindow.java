@@ -16,6 +16,7 @@ import java.util.Set;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 
 /**
@@ -33,11 +34,11 @@ public class ClientWindow extends JFrame
      * @param playerList
      * @param playableColors
      */
-    public ClientWindow(List<ParamPlayers> playerList, Set<String> playableColors)
+    public ClientWindow(List<ParamPlayers> playerList, Set<String> playableColors,boolean cbExtRiver, boolean cbExtInnsAndCath)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playerList, playableColors);
+        createGameView(playerList, playableColors,cbExtRiver,cbExtInnsAndCath);
     }
 
     /**
@@ -63,6 +64,7 @@ public class ClientWindow extends JFrame
         createGameView(playerList, playableColors, localNetworkControler);
     }
 
+
     /**
      * Clean the window
      */
@@ -76,9 +78,9 @@ public class ClientWindow extends JFrame
     /**
      * Create the game view from a player list
      */
-    private void createGameView(List<ParamPlayers> playerList, Set<String> playableColors)
+    private void createGameView(List<ParamPlayers> playerList, Set<String> playableColors,boolean cbExtRiver, boolean cbExtInnsAndCath)
     {
-        GameView gameView = new GameView(playerList, playableColors);
+        GameView gameView = new GameView(playerList, playableColors,cbExtRiver,cbExtInnsAndCath);
         gameView.show(getContentPane());
 
         maximizeWindow();

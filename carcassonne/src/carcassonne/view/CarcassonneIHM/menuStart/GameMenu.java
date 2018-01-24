@@ -114,7 +114,7 @@ public class GameMenu extends JFrame
         });
 
         this.add(btExit);
-        btExit.setBounds(400, 460, 207, 92);
+        btExit.setBounds(395, 460, 207, 92);
         btExit.setOpaque(false);
         btExit.setContentAreaFilled(false);
         btExit.setBorderPainted(false);

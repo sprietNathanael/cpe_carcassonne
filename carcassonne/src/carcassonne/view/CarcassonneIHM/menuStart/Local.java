@@ -27,6 +27,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
 public class Local extends JDialog
@@ -43,6 +44,8 @@ public class Local extends JDialog
     private JComboBox<String> cbColors[];
     private JComboBox<String> cbPlayerType[];
     private Settings settings;
+    private JCheckBox extRiver = new JCheckBox("River");
+    private JCheckBox extInnsAndCath = new JCheckBox("Inns and Cathedrals");
 
     Local self = this;
 
@@ -141,6 +144,17 @@ public class Local extends JDialog
             paPlayer.add(cbColors[i], BorderLayout.EAST);
             content.add(paPlayer);
         }
+
+        //Choice extensions
+        JPanel panExt = new JPanel();
+        panExt.setBackground(Color.white);
+        panExt.setPreferredSize(new Dimension(300, 60));
+        panExt.setBorder(BorderFactory.createTitledBorder("EXTENSIONS"));
+        extRiver.addActionListener(new StateListener());
+        extInnsAndCath.addActionListener(new StateListener());
+        panExt.add(extRiver);
+        panExt.add(extInnsAndCath);
+
         JPanel control = new JPanel();
         JButton okBouton = new JButton("PLAY");
         JButton btBack = new JButton("BACK");
@@ -180,14 +194,12 @@ public class Local extends JDialog
                 if (self != null) {
                     List<ParamPlayers> players = self.getPlayers();
                     Set<String> playableColors = new HashSet<>();
-                    for(ParamPlayers player : players)
-                    {
-                        if(player.getPlayerType().equals(PlayerTypes.player))
-                        {
+                    for (ParamPlayers player : players) {
+                        if (player.getPlayerType().equals(PlayerTypes.player)) {
                             playableColors.add(player.getColor());
                         }
                     }
-                    clientWindow = new ClientWindow(self.getPlayers(), playableColors);
+                    clientWindow = new ClientWindow(self.getPlayers(), playableColors, extRiver.isSelected(), extInnsAndCath.isSelected());
                 }
                 else {
                     clientWindow = new ClientWindow();
@@ -211,6 +223,8 @@ public class Local extends JDialog
                         : tranche1.getText();
             }
         });
+
+        content.add(panExt);
 
         control.add(okBouton);
         control.add(btBack);
@@ -268,4 +282,14 @@ public class Local extends JDialog
     {
         return (this.getDataPlayers());
     }
+
+    class StateListener implements ActionListener
+    {
+
+        public void actionPerformed(ActionEvent e)
+        {
+            System.out.println("source : " + ((JCheckBox) e.getSource()).getText() + " - état : " + ((JCheckBox) e.getSource()).isSelected());
+        }
+    }
+
 }
