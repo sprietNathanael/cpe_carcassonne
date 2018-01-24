@@ -10,13 +10,10 @@ import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -81,8 +78,4 @@ public class Settings extends JFrame
         this.setVisible(true);
     }
 
-    /*public List<ParamPlayers> getPlayers()
-    {
-        return (this.parameters.getDataPlayers());
-    }*/
 }

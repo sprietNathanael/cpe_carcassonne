@@ -10,8 +10,11 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.awt.Container;
 import java.awt.Point;
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.List;
 import java.util.Set;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -20,7 +23,10 @@ import javax.swing.JFrame;
  */
 public class ClientWindow extends JFrame
 {
-
+    private final String musicGame = "resources/music/musicGame.mp3";
+    String uriString = new File(musicGame).toURI().toString();
+    MediaPlayer menuMediaPlayer = new MediaPlayer(new Media(uriString));
+    
     /**
      * Window constructor
      *
@@ -76,6 +82,7 @@ public class ClientWindow extends JFrame
         gameView.show(getContentPane());
 
         maximizeWindow();
+        menuMediaPlayer.play();        
     }
 
     /**
@@ -87,6 +94,7 @@ public class ClientWindow extends JFrame
         gameView.show(getContentPane());
 
         maximizeWindow();
+        menuMediaPlayer.play();
     }
 
     /**

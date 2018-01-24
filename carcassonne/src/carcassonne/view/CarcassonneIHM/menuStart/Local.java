@@ -37,9 +37,6 @@ public class Local extends JDialog
     private boolean sendData;
     private JLabel nomLabel, icon, colorsLabel, lbTypeJoueur;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
-    /*private JTextField nomJ1, nomJ2, nomJ3, nomJ4, nomJ5, nomJ6;
-    private JComboBox<String> colorsJ1, colorsJ2, colorsJ3, colorsJ4, colorsJ5, colorsJ6;
-    private JCheckBox chbIaJ1, chbIaJ2, chbIaJ3, chbIaJ4, chbIaJ5, chbIaJ6;*/
 
     private JTextField tfNomPlayer[];
     private JComboBox<String> cbColors[];
