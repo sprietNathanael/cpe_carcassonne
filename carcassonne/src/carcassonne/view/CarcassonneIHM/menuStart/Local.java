@@ -26,7 +26,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JTextField;
 
@@ -79,31 +78,6 @@ public class Local extends JDialog
         panIcon.setLayout(new BorderLayout());
         panIcon.add(icon);
 
-        //Numbers of players
-        JPanel numPlayers = new JPanel();
-        numPlayers.setBackground(Color.white);
-        numPlayers.setBorder(BorderFactory.createTitledBorder("Numbers of players"));
-        numPlayers.setPreferredSize(new Dimension(440, 60));
-        tranche1 = new JRadioButton("2");
-        tranche2 = new JRadioButton("3");
-        tranche3 = new JRadioButton("4");
-        tranche4 = new JRadioButton("5");
-        tranche5 = new JRadioButton("6");
-
-        tranche1.setSelected(true);
-
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(tranche1);
-        bg.add(tranche2);
-        bg.add(tranche3);
-        bg.add(tranche4);
-        bg.add(tranche5);
-        numPlayers.add(tranche1);
-        numPlayers.add(tranche2);
-        numPlayers.add(tranche3);
-        numPlayers.add(tranche4);
-        numPlayers.add(tranche5);
-
         //------------- PART PLAYERS ------------------------------------------
         JPanel paPlayer;
         JPanel content = new JPanel();
@@ -123,7 +97,7 @@ public class Local extends JDialog
             cbPlayerType[i] = new JComboBox<>();
             cbPlayerType[i].addItem(PlayerTypes.player);
             cbPlayerType[i].addItem(PlayerTypes.basicIA);
-            //cbPlayerType[i].addItem(PlayerTypes.advancedIA);            
+            
             nomLabel = new JLabel("Name :");
             colorsLabel = new JLabel("Color :");
             tfNomPlayer[i] = new JTextField();
@@ -135,6 +109,7 @@ public class Local extends JDialog
             cbColors[i].addItem(Colors.black);
             cbColors[i].addItem(Colors.yellow);
             cbColors[i].addItem(Colors.magenta);
+            cbColors[i].setSelectedIndex(i);
             paPlayer.add(lbTypeJoueur, BorderLayout.WEST);
             paPlayer.add(cbPlayerType[i], BorderLayout.WEST);
             paPlayer.add(nomLabel, BorderLayout.CENTER);
@@ -180,7 +155,7 @@ public class Local extends JDialog
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                zInfo = new ZDialogInfo(tfNomPlayer[0].getText(), getNumbersPlayers(), (String) cbColors[0].getSelectedItem(),
+                zInfo = new ZDialogInfo(tfNomPlayer[0].getText(), "6", (String) cbColors[0].getSelectedItem(),
                         tfNomPlayer[1].getText(), (String) cbColors[1].getSelectedItem(),
                         tfNomPlayer[2].getText(), (String) cbColors[2].getSelectedItem(),
                         tfNomPlayer[3].getText(), (String) cbColors[3].getSelectedItem(),
@@ -210,15 +185,6 @@ public class Local extends JDialog
 
             }
 
-            public String getNumbersPlayers()
-            {
-                return (tranche1.isSelected()) ? tranche1.getText()
-                        : (tranche2.isSelected()) ? tranche2.getText()
-                        : (tranche3.isSelected()) ? tranche3.getText()
-                        : (tranche4.isSelected()) ? tranche4.getText()
-                        : (tranche5.isSelected()) ? tranche5.getText()
-                        : tranche1.getText();
-            }
         });
 
         content.add(panExt);
@@ -237,15 +203,6 @@ public class Local extends JDialog
      *
      * @return
      */
-    public String getNumbersPlayers()
-    {
-        return (tranche1.isSelected()) ? tranche1.getText()
-                : (tranche2.isSelected()) ? tranche2.getText()
-                : (tranche3.isSelected()) ? tranche3.getText()
-                : (tranche4.isSelected()) ? tranche4.getText()
-                : (tranche5.isSelected()) ? tranche5.getText()
-                : tranche1.getText();
-    }
 
     public ZDialogInfo showZDialog()
     {
