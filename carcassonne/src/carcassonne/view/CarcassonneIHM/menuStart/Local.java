@@ -151,7 +151,9 @@ public class Local extends JDialog
         panExt.setPreferredSize(new Dimension(300, 60));
         panExt.setBorder(BorderFactory.createTitledBorder("EXTENSIONS"));
         extRiver.addActionListener(new StateListener());
+        extRiver.setBackground(Color.white);
         extInnsAndCath.addActionListener(new StateListener());
+        extInnsAndCath.setBackground(Color.white);
         panExt.add(extRiver);
         panExt.add(extInnsAndCath);
 
