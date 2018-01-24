@@ -51,19 +51,22 @@ public class MainPanel extends JPanel implements java.util.Observer
     private UICoord lastCoord;
     private boolean interfaceLocked;
     private boolean putBigMeeple;
+    private Set<String> playableColors;
 
     /**
      * Main panel constructor
      *
      * @param controller AbstractCarcassonneGameController
+     * @param players
      */
-    public MainPanel(AbstractCarcassonneGameController controller, ArrayList<Player> players)
+    public MainPanel(AbstractCarcassonneGameController controller, ArrayList<Player> players, Set<String> playableColors)
     {
         super();
         this.players = players;
         this.controller = controller;
         setLayout(new BorderLayout());
         this.interfaceLocked = false;
+        this.playableColors = playableColors;
 
         // Construct a grid panel
         this.gridPanel = new GridPanel();
@@ -120,13 +123,13 @@ public class MainPanel extends JPanel implements java.util.Observer
                     AbstractTile preview = game.getCurrentTile();
                     ArrayList<Coord> placements = game.getPlacements();
                     
-                    if(game.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA))
+                    if(this.playableColors.contains(game.getCurrentPlayer().getColor()))
                     {
-                        this.interfaceLocked = true;
+                        this.interfaceLocked = false;
                     }
                     else
                     {
-                        this.interfaceLocked = false;
+                        this.interfaceLocked = true;
                     }
                     
                     if(game.getLastPutTile() != null)

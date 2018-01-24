@@ -35,15 +35,19 @@ public class GameView
     private AbstractCarcassonneGameController controller;
     private CarcassonneGame game;
     private ArrayList<Player> players;
+    private Set<String> playableColors;
 
     /**
      * Game view constructor with a player list
      *
      * @param playerList
+     * @param playableColors
      */
-    public GameView(List<ParamPlayers> playerList)
+    public GameView(List<ParamPlayers> playerList, Set<String> playableColors)
     {
+        System.out.println("[GameView] Construct 1");
         try {
+            this.playableColors = playableColors;
             contructPlayersListAndGame(playerList); // Build the controller
             this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
@@ -56,19 +60,9 @@ public class GameView
      */
     public GameView()
     {
+        System.out.println("[GameView] Construct 2");
         try {
-            // constructs the default players list
-            this.constructDefaultPlayersList();
-            Set<SetInterface> sets = new HashSet<SetInterface>();
-            sets.add(new BasicSet());
-            sets.add(new InnsAndCathedralsSet());
-            sets.add(new RiverSet());
-
-            // Build the game
-            this.game = new CarcassonneGame(players, sets);
-            this.game.setRiverExtensionIsUsed(true);
-            this.game.setInnsAndCathedralsExtensionIsUsed(true);
-
+            this.contructPlayersListAndGame(new ArrayList<>());
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
         } catch (Exception ex) {
@@ -80,13 +74,15 @@ public class GameView
      * Game view constructor with a player list
      *
      * @param playerList
+     * @param playableColors
      * @param localNetworkControler
      */
-    public GameView(List<ParamPlayers> playerList, AbstractCarcassonneGameController localNetworkControler)
+    public GameView(List<ParamPlayers> playerList, Set<String> playableColors, AbstractCarcassonneGameController localNetworkControler)
     {
+        System.out.println("[GameView] Construct 3");
         try {
+            this.playableColors = playableColors;
             contructPlayersListAndGame(playerList);
-
             // Build the controller
             this.controller = localNetworkControler;
         } catch (Exception ex) {
@@ -129,8 +125,7 @@ public class GameView
         }
 
         // constructs the default players list
-        this.constructDefaultPlayersList();
-        Set<SetInterface> sets = new HashSet<SetInterface>();
+        Set<SetInterface> sets = new HashSet<>();
         sets.add(new BasicSet());
         sets.add(new InnsAndCathedralsSet());
         sets.add(new RiverSet());
@@ -152,6 +147,15 @@ public class GameView
         players.add(new Player("player2", "green", PlayerTypes.player));
         //players.add(new Player("player3", "red", PlayerTypes.player));
         //players.add(new Player("player4", "black", PlayerTypes.player));
+        this.playableColors = new HashSet<>();
+        this.playableColors.add("blue");
+        
+        /*for(Player player : this.players)
+        {
+            if(player.getPlayerType().equals(PlayerTypes.player))
+            {
+            }
+        }*/
     }
 
     /**
@@ -162,7 +166,8 @@ public class GameView
     public void show(Container pane)
     {
         //Construct the main panel and adds it to the main container
-        MainPanel mainPanel = new MainPanel(this.controller, this.players);
+        
+        MainPanel mainPanel = new MainPanel(this.controller, this.players, this.playableColors);
         this.controller.addObserver(mainPanel);
         this.game.addObserver(controller);
 

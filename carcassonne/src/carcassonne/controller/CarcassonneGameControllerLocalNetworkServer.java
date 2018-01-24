@@ -16,8 +16,10 @@ import java.io.ObjectOutputStream;
 import static java.lang.Thread.sleep;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import javax.swing.JFrame;
 
 /**
@@ -131,7 +133,9 @@ public class CarcassonneGameControllerLocalNetworkServer extends AbstractCarcass
     // à remplacer dans un click
     private void play()
     {
-        ClientWindow clientWindow = new ClientWindow(this.getPlayers());
+        Set<String> playableColors = new HashSet<>();
+        playableColors.add("red");
+        ClientWindow clientWindow = new ClientWindow(this.getPlayers(), playableColors);
         clientWindow.setVisible(true);
         clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }

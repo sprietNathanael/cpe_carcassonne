@@ -11,6 +11,7 @@ import java.awt.Container;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.util.List;
+import java.util.Set;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
@@ -24,12 +25,13 @@ public class ClientWindow extends JFrame
      * Window constructor
      *
      * @param playerList
+     * @param playableColors
      */
-    public ClientWindow(List<ParamPlayers> playerList)
+    public ClientWindow(List<ParamPlayers> playerList, Set<String> playableColors)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playerList);
+        createGameView(playerList, playableColors);
     }
 
     /**
@@ -48,11 +50,11 @@ public class ClientWindow extends JFrame
      * @param playerList
      * @param localNetworkControler
      */
-    public ClientWindow(List<ParamPlayers> playerList, AbstractCarcassonneGameController localNetworkControler)
+    public ClientWindow(List<ParamPlayers> playerList, Set<String> playableColors, AbstractCarcassonneGameController localNetworkControler)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playerList, localNetworkControler);
+        createGameView(playerList, playableColors, localNetworkControler);
     }
 
     /**
@@ -68,9 +70,9 @@ public class ClientWindow extends JFrame
     /**
      * Create the game view from a player list
      */
-    private void createGameView(List<ParamPlayers> playerList)
+    private void createGameView(List<ParamPlayers> playerList, Set<String> playableColors)
     {
-        GameView gameView = new GameView(playerList);
+        GameView gameView = new GameView(playerList, playableColors);
         gameView.show(getContentPane());
 
         maximizeWindow();
@@ -90,9 +92,9 @@ public class ClientWindow extends JFrame
     /**
      * Create the game view from a player list for localNetwork game
      */
-    private void createGameView(List<ParamPlayers> playerList, AbstractCarcassonneGameController localNetworkControler)
+    private void createGameView(List<ParamPlayers> playerList, Set<String> playableColors, AbstractCarcassonneGameController localNetworkControler)
     {
-        GameView gameView = new GameView(playerList, localNetworkControler);
+        GameView gameView = new GameView(playerList, playableColors, localNetworkControler);
         gameView.show(getContentPane());
 
         maximizeWindow();

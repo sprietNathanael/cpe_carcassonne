@@ -10,8 +10,10 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -178,7 +180,16 @@ public class Local extends JDialog
                 ClientWindow clientWindow;
 
                 if (self != null) {
-                    clientWindow = new ClientWindow(self.getPlayers());
+                    List<ParamPlayers> players = self.getPlayers();
+                    Set<String> playableColors = new HashSet<>();
+                    for(ParamPlayers player : players)
+                    {
+                        if(player.getPlayerType().equals(PlayerTypes.player))
+                        {
+                            playableColors.add(player.getColor());
+                        }
+                    }
+                    clientWindow = new ClientWindow(self.getPlayers(), playableColors);
                 }
                 else {
                     clientWindow = new ClientWindow();
