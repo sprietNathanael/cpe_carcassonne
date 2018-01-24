@@ -190,13 +190,6 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     {
         System.out.println("======================================================================================================");
         System.out.println("C'est au tour de " + this.carcassonneGame.getCurrentPlayer().getName());
-        if (this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA)) {
-            try {
-                this.ManageIA();
-            } catch (Exception ex) {
-                Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
     }
 
     /**
@@ -204,17 +197,24 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      *
      * @throws Exception
      */
-    private void ManageIA() throws Exception
+    private void ManageIA()
     {
-        // Basic IA
-        Coord tileCoordinates = this.putTileBasicIA();
-        try {
-            this.putMeepleBasicIA(tileCoordinates);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        if (this.carcassonneGame.getCurrentPlayer().getPlayerType().equals(PlayerTypes.basicIA)) {
+            try {
+                // Basic IA
+                Coord tileCoordinates = this.putTileBasicIA();
+                try {
+                    this.putMeepleBasicIA(tileCoordinates);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
 
-        this.endTurn();
+                this.endTurn();
+            } catch (Exception ex) {
+                Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        
     }
 
     /**
@@ -230,7 +230,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
         Coord c = new Coord(placements.get(index).col, placements.get(index).row);
         while (this.checkTilePosition(c) == false) {
             this.currentTile.rotateRight();
-            this.carcassonneGameInterface.rotateCurrentTileRight();
+            //this.carcassonneGameInterface.rotateCurrentTileRight();
         }
         this.putCurrentTile(placements.get(index));
         return (c);
@@ -353,6 +353,10 @@ public class AbstractCarcassonneGameController extends Observable implements Car
         {
             message = "boardChanged";
             this.beginTurn();
+        }
+        else if(message.equals("placementsReady"))
+        {
+            this.ManageIA();
         }
         this.observerMessage = new ObserverMessage(message, this.carcassonneGame);
         this.notifyObservers();
