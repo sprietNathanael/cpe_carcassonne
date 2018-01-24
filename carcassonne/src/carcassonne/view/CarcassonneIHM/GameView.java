@@ -155,14 +155,14 @@ public class GameView
         //players.add(new Player("player3", "red", PlayerTypes.player));
         //players.add(new Player("player4", "black", PlayerTypes.player));
         this.playableColors = new HashSet<>();
-        this.playableColors.add(Colors.blue);
         
-        /*for(Player player : this.players)
+        for(Player player : this.players)
         {
             if(player.getPlayerType().equals(PlayerTypes.player))
             {
+                this.playableColors.add(player.getColor());
             }
-        }*/
+        }
     }
 
     /**
