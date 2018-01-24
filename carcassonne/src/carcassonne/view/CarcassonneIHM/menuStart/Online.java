@@ -37,7 +37,7 @@ public class Online extends JDialog
 
     private JLabel icon, lbName;
     private JRadioButton serveur, client;
-    private JButton btCreateGame, btJoinGame, btPlay;
+    private JButton btCreateGame, btJoinGame, btPlay, btPlayHost;
     private CarcassonneGameControllerMulti controller;
     private JTextField tfIpAddress, tfName;
     private Settings settings;
@@ -140,7 +140,7 @@ public class Online extends JDialog
         panJoin.add(panIP);
 
         //button play Player
-        btPlay = new JButton("Play");
+        btPlay = new JButton("Join party");
         btPlay.setEnabled(false);
         btPlay.addActionListener(new ActionListener()
         {
@@ -149,13 +149,26 @@ public class Online extends JDialog
             {
                 String ip = tfIpAddress.getText();
                 try {
-                    NetworkGame game = new NetworkGame((ip != "") ? ip : "localhost" , tfName.getText());
+                    NetworkGame game = new NetworkGame((ip != "") ? ip : "localhost", tfName.getText());
                 } catch (Exception ex) {
                     Logger.getLogger(Online.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
         panJoin.add(btPlay);
+
+        //button play uses by host
+        btPlayHost = new JButton("Play");
+        btPlayHost.setEnabled(false);
+        panCreate.add(btPlayHost);
+        btPlayHost.addActionListener(new ActionListener()
+        {
+            @Override
+            public void actionPerformed(ActionEvent e)
+            {
+                System.out.println("TCHOIN");
+            }
+        });
 
         //active listenning of buttons
         btCreateGame.addActionListener(new ActionListener()
@@ -167,9 +180,10 @@ public class Online extends JDialog
                 panIP.setBackground(Color.black);
                 tfIpAddress.setBackground(Color.black);
                 btPlay.setEnabled(false);
+                btPlayHost.setEnabled(true);
                 btJoinGame.setEnabled(false);
-                
-                Host host = new Host(tfName.getText());
+
+                //Host host = new Host(tfName.getText());
             }
         });
 
