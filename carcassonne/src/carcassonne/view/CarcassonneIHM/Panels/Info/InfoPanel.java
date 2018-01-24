@@ -106,7 +106,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Creates information lines from players
         this.playerInfoLines = new LinkedHashMap<>();
         for (Player player : players) {
-            this.playerInfoLines.put(player.getName(), new PlayerInfo(player.getName(), player.getColor()));
+            this.playerInfoLines.put(player.getName(), new PlayerInfo(player, this.mouseListener));
         }
         
         // Get the meeple button image
@@ -200,7 +200,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Updates the information lines
         for (Player player : game.getPlayers()) {
             int bigMeeple = this.bigMeepleExists ? (player.getBigMeepleAvailable() != null ? 1 : 0) : -1;
-            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), bigMeeple, player.getPoints());
+            this.playerInfoLines.get(player.getName()).updatePlayer(player, bigMeeple);
         }
 
         if (game.getCurrentTile() != null) {
@@ -230,7 +230,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         // Updates the information lines
         for (Player player : game.getPlayers()) {
             int bigMeeple = this.bigMeepleExists ? (player.getBigMeepleAvailable() != null ? 1 : 0) : -1;
-            this.playerInfoLines.get(player.getName()).updatePlayer(player.getUnusedMeepleNumber(), bigMeeple, player.getPoints());
+            this.playerInfoLines.get(player.getName()).updatePlayer(player, bigMeeple);
         }
 
         // Updates the message
