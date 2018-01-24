@@ -19,6 +19,7 @@ public class Colors
     public static String red = "red";
     public static String black = "black";
     public static String yellow = "yellow";
+    public static String magenta = "magenta";
     
     public static List<String> tab;
     static {
@@ -28,6 +29,7 @@ public class Colors
         tab.add(red);
         tab.add(black);
         tab.add(yellow);
+        tab.add(magenta);
     }
     
 }

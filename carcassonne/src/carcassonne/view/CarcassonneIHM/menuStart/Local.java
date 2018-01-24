@@ -1,5 +1,6 @@
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import RessourcesGlobalVariables.Colors;
 import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
@@ -126,12 +127,12 @@ public class Local extends JDialog
             tfNomPlayer[i] = new JTextField();
             tfNomPlayer[i].setPreferredSize(new Dimension(100, 25));
             cbColors[i] = new JComboBox<>();
-            cbColors[i].addItem("Red");
-            cbColors[i].addItem("Blue");
-            cbColors[i].addItem("Green");
-            cbColors[i].addItem("Black");
-            cbColors[i].addItem("Yellow");
-            cbColors[i].addItem("Magenta");
+            cbColors[i].addItem(Colors.red);
+            cbColors[i].addItem(Colors.blue);
+            cbColors[i].addItem(Colors.green);
+            cbColors[i].addItem(Colors.black);
+            cbColors[i].addItem(Colors.yellow);
+            cbColors[i].addItem(Colors.magenta);
             paPlayer.add(lbTypeJoueur, BorderLayout.WEST);
             paPlayer.add(cbPlayerType[i], BorderLayout.WEST);
             paPlayer.add(nomLabel, BorderLayout.CENTER);

@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM;
 
+import RessourcesGlobalVariables.Colors;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.controller.AbstractCarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
@@ -149,12 +150,12 @@ public class GameView
     private void constructDefaultPlayersList()
     {
         this.players = new ArrayList<>();
-        players.add(new Player("player1", "blue", PlayerTypes.player));
-        players.add(new Player("player2", "green", PlayerTypes.basicIA));
+        players.add(new Player("player1", Colors.red, PlayerTypes.player));
+        players.add(new Player("player2", Colors.blue, PlayerTypes.basicIA));
         //players.add(new Player("player3", "red", PlayerTypes.player));
         //players.add(new Player("player4", "black", PlayerTypes.player));
         this.playableColors = new HashSet<>();
-        this.playableColors.add("blue");
+        this.playableColors.add(Colors.blue);
         
         /*for(Player player : this.players)
         {
