@@ -12,6 +12,8 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
+import carcassonne.controller.CarcassonneGameControllerLocalNetworkServer;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.InnsAndCathedralsSet;
@@ -85,6 +87,9 @@ public class GameView
             contructPlayersListAndGame(playerList);
             // Build the controller
             this.controller = localNetworkControler;
+            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient)
+            ((CarcassonneGameControllerLocalNetworkServer)controller).sendCarcassoneGame();
+            
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
