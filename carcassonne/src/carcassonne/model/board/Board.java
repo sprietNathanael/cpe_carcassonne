@@ -7,7 +7,6 @@ package carcassonne.model.board;
 
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.coord.Coord;
-import carcassonne.model.carcassonnegame.CarcassonneGame;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

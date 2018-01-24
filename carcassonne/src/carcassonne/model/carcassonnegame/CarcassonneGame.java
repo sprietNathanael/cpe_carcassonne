@@ -84,7 +84,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public CarcassonneGame(ArrayList<Player> players, Set<SetInterface> sets) throws Exception
     {
         this.board = new Board();
-        this.pile = new ArrayList<AbstractTile>();
+        this.pile = new ArrayList<>();
         this.meeplesSet = new HashSet<>();
         this.previousPlayer = null;
         HashSet<SetInterface> sideSet = new HashSet<>();
@@ -212,6 +212,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         pile.addAll(newSet.getSet());
     }
     
+    @Override
     public void beginGame()
     {
         try {
@@ -227,6 +228,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         processNextTile();
     }
     
+    @Override
     public void endTurn()
     {
         this.manageCompletedAggregates();
@@ -316,6 +318,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
      *
      * @param player
      */
+    @Override
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
         List<AbstractAggregate> aggregates = new ArrayList<>();

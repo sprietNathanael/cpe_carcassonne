@@ -6,11 +6,7 @@
 
 package carcassonne.notifyMessage;
 
-import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
-import carcassonne.model.tile.AbstractTile;
-import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  * 
