@@ -40,9 +40,8 @@ public class Online extends JDialog
     private JTextField tfIpAddress, tfName;
     private Settings settings;
 
-    public Online(JFrame parent, String title, boolean modal)
+    public Online()
     {
-        super(parent, title, modal);
         this.initComponent();
     }
 

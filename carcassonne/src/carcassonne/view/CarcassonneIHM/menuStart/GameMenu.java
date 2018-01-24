@@ -59,8 +59,6 @@ public class GameMenu extends JFrame
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
         
-        GameMenu self = this;
-        
         //Create and play the music
         String uriString = new File(musicMenu).toURI().toString();
         MediaPlayer menuMediaPlayer = new MediaPlayer(new Media(uriString));
@@ -88,6 +86,8 @@ public class GameMenu extends JFrame
             }
         });
  
+        GameMenu self = this;
+        
         this.add(btPlay);
         btPlay.setOpaque(false);
         btPlay.setContentAreaFilled(false);
@@ -99,8 +99,7 @@ public class GameMenu extends JFrame
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                //menuMediaPlayer.stop();
- 
+
                 try {
                     self.settings = new Settings();
                 } catch (IOException ex) {

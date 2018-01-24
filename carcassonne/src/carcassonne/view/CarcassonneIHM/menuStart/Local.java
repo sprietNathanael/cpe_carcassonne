@@ -49,9 +49,8 @@ public class Local extends JDialog
 
     Local self = this;
 
-    public Local(JFrame parent, String title, boolean modal)
+    public Local()
     {
-        super(parent, title, modal);
         this.initComponent();
     }
 
@@ -171,9 +170,7 @@ public class Local extends JDialog
                 } catch (IOException ex) {
                     Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
-                self.settings.setVisible(true);
-                self.settings.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                self.setVisible(false);
+
                 setVisible(false);
             }
         });
