@@ -59,11 +59,11 @@ public class Settings extends JFrame
         this.setLayout(null);
         
         //Ajout des boutons
-        btModeLocal.setBounds(360, 250, 270, 110);
+        btModeLocal.setBounds(350, 310, 270, 110);
         btModeLocal.setOpaque(false);
         btModeLocal.setContentAreaFilled(false);
         btModeLocal.setBorderPainted(false);
-        btOnline.setBounds(360, 350, 270, 110);
+        btOnline.setBounds(350, 410, 270, 110);
         btOnline.setOpaque(false);
         btOnline.setContentAreaFilled(false);
         btOnline.setBorderPainted(false);
