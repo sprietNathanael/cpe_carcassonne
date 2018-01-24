@@ -5,6 +5,8 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import Network.Host;
+import Network.NetworkGame;
 import carcassonne.controller.CarcassonneGameControllerMulti;
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -145,7 +147,12 @@ public class Online extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-
+                String ip = tfIpAddress.getText();
+                try {
+                    NetworkGame game = new NetworkGame((ip != "") ? ip : "localhost" , tfName.getText());
+                } catch (Exception ex) {
+                    Logger.getLogger(Online.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
         panJoin.add(btPlay);
@@ -161,6 +168,8 @@ public class Online extends JDialog
                 tfIpAddress.setBackground(Color.black);
                 btPlay.setEnabled(false);
                 btJoinGame.setEnabled(false);
+                
+                Host host = new Host(tfName.getText());
             }
         });
 
