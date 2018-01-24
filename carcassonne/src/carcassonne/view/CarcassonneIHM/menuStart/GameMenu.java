@@ -85,7 +85,6 @@ public class GameMenu extends JFrame
                     Logger.getLogger(GameMenu.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 instructions.setVisible(true);
-                instructions.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             }
         });
  

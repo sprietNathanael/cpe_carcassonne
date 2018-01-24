@@ -10,15 +10,14 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import javax.swing.ImageIcon;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 
 /**
  *
  * @author thomas
  */
-public class Instructions extends JFrame
+public class Instructions extends JDialog
 {
-
     private final BtGame exit = new BtGame("resources/Exit.png");
 
     public Instructions() throws IOException
@@ -29,10 +28,10 @@ public class Instructions extends JFrame
         exit.setBorderPainted(false);
         exit.setOpaque(false);
         exit.setContentAreaFilled(false);
+        
         exit.addActionListener((ActionEvent e) -> {
             setVisible(false);
         });
-
     }
 
     /**
@@ -43,10 +42,11 @@ public class Instructions extends JFrame
         this.setTitle("Instructions");
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
         this.setSize(860, 1030);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setContentPane(new Background("resources/instructionsMenu.png"));
+        
+        //Add cursor
         Toolkit tk = Toolkit.getDefaultToolkit();
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
