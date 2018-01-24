@@ -30,8 +30,6 @@ public class ZDialogInfo
         this.nom6 = nom6;
         this.colors6 = colors6;
     }
-    
-    
 
     @Override
     public String toString()

@@ -13,7 +13,6 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
-import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.controller.CarcassonneGameControllerLocalNetworkClient;
 import carcassonne.controller.CarcassonneGameControllerLocalNetworkServer;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
@@ -23,7 +22,6 @@ import carcassonne.model.set.RiverSet;
 import carcassonne.model.set.SetInterface;
 import java.awt.Container;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -46,6 +44,8 @@ public class GameView
      *
      * @param playerList
      * @param playableColors
+     * @param cbExtRiver
+     * @param cbExtInnsAndCath
      */
     public GameView(List<ParamPlayers> playerList, Set<String> playableColors, boolean cbExtRiver, boolean cbExtInnsAndCath)
     {
@@ -165,13 +165,9 @@ public class GameView
         //players.add(new Player("player4", "black", PlayerTypes.player));
         this.playableColors = new HashSet<>();
         
-        for(Player player : this.players)
-        {
-            if(player.getPlayerType().equals(PlayerTypes.player))
-            {
-                this.playableColors.add(player.getColor());
-            }
-        }
+        this.players.stream().filter((player) -> (player.getPlayerType().equals(PlayerTypes.player))).forEachOrdered((player) -> {
+            this.playableColors.add(player.getColor());
+        });
     }
 
     /**

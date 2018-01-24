@@ -103,11 +103,5 @@ public class ScoreDialog extends JDialog
         
         this.setVisible(true);
     }
-    
-    public static void main(String[] args) throws IOException{
-        // For Test before import
-        Player player = new Player("Nathanaël", "bleu", "player");
-        // Displays the game menu
-        new ScoreDialog(player);
-    }
+
 }

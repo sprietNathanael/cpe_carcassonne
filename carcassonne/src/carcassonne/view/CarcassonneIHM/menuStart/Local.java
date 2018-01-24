@@ -44,8 +44,8 @@ public class Local extends JDialog
     private JComboBox<String> cbColors[];
     private JComboBox<String> cbPlayerType[];
     private Settings settings;
-    private JCheckBox extRiver = new JCheckBox("River");
-    private JCheckBox extInnsAndCath = new JCheckBox("Inns and Cathedrals");
+    private final JCheckBox extRiver = new JCheckBox("River");
+    private final JCheckBox extInnsAndCath = new JCheckBox("Inns and Cathedrals");
 
     Local self = this;
 
@@ -196,11 +196,9 @@ public class Local extends JDialog
                 if (self != null) {
                     List<ParamPlayers> players = self.getPlayers();
                     Set<String> playableColors = new HashSet<>();
-                    for (ParamPlayers player : players) {
-                        if (player.getPlayerType().equals(PlayerTypes.player)) {
-                            playableColors.add(player.getColor());
-                        }
-                    }
+                    players.stream().filter((player) -> (player.getPlayerType().equals(PlayerTypes.player))).forEachOrdered((player) -> {
+                        playableColors.add(player.getColor());
+                    });
                     clientWindow = new ClientWindow(self.getPlayers(), playableColors, extRiver.isSelected(), extInnsAndCath.isSelected());
                 }
                 else {
@@ -288,6 +286,7 @@ public class Local extends JDialog
     class StateListener implements ActionListener
     {
 
+        @Override
         public void actionPerformed(ActionEvent e)
         {
             System.out.println("source : " + ((JCheckBox) e.getSource()).getText() + " - état : " + ((JCheckBox) e.getSource()).isSelected());

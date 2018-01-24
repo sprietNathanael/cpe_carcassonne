@@ -55,6 +55,7 @@ public class ClientWindow extends JFrame
      * Constructor for localNetwork game
      *
      * @param playerList
+     * @param playableColors
      * @param localNetworkControler
      */
     public ClientWindow(List<ParamPlayers> playerList, Set<String> playableColors, AbstractCarcassonneGameController localNetworkControler)

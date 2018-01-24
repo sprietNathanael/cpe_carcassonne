@@ -44,7 +44,4 @@ public class ParamPlayers implements Serializable
     {
         return playerType;
     }
-    
-    
-
 }
