@@ -155,13 +155,13 @@ public class Local extends JDialog
             @Override
             public void actionPerformed(ActionEvent arg0)
             {
-                zInfo = new ZDialogInfo(tfNomPlayer[0].getText(), "6", (String) cbColors[0].getSelectedItem(),
+                /*zInfo = new ZDialogInfo(tfNomPlayer[0].getText(), "6", (String) cbColors[0].getSelectedItem(),
                         tfNomPlayer[1].getText(), (String) cbColors[1].getSelectedItem(),
                         tfNomPlayer[2].getText(), (String) cbColors[2].getSelectedItem(),
                         tfNomPlayer[3].getText(), (String) cbColors[3].getSelectedItem(),
                         tfNomPlayer[4].getText(), (String) cbColors[4].getSelectedItem(),
                         tfNomPlayer[5].getText(), (String) cbColors[5].getSelectedItem()
-                );
+                );*/
 
                 ClientWindow clientWindow;
 
@@ -204,12 +204,12 @@ public class Local extends JDialog
      * @return
      */
 
-    public ZDialogInfo showZDialog()
+    /*public ZDialogInfo showZDialog()
     {
         this.sendData = false;
         this.setVisible(true);
         return this.zInfo;
-    }
+    }*/
 
     /**
      * List of players with their characteristics
