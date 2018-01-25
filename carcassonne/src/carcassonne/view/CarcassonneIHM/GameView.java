@@ -107,9 +107,8 @@ public class GameView
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti(game);
             netGame.addObserver(controller);
-            this.players = ((CarcassonneGame)game).getPlayers();
+            this.players = ((CarcassonneGame) game).getPlayers();
             this.game = game;
-            
 
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
@@ -162,13 +161,6 @@ public class GameView
         }
         // Build the game
         this.game = new CarcassonneGame(players, sets);
-        /*if (cbExtRiver) {
-            this.game.setRiverExtensionIsUsed(true);
-        }
-        if (cbExtInnsAndCath) {
-            this.game.setInnsAndCathedralsExtensionIsUsed(true);
-        }*/
-
     }
 
     /**

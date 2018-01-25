@@ -88,22 +88,20 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.pile = new ArrayList<>();
         this.meeplesSet = new HashSet<>();
         this.previousPlayer = null;
+        this.riverExtensionIsUsed = false;
+        this.icExtensionIsUsed = false;
         HashSet<SetInterface> sideSet = new HashSet<>();
         for (SetInterface set : sets) {
-            if(set instanceof InnsAndCathedralsSet)
-            {
-                this.setInnsAndCathedralsExtensionIsUsed(true);
+            if (set instanceof InnsAndCathedralsSet) {
+                this.icExtensionIsUsed = true;
             }
-            else if(set instanceof RiverSet)
-            {
-                this.setRiverExtensionIsUsed(true);
+            else if (set instanceof RiverSet) {
+                this.riverExtensionIsUsed = true;
             }
-            if(set.isNotShuffleable())
-            {
+            if (set.isNotShuffleable()) {
                 sideSet.add(set);
             }
-            else
-            {
+            else {
                 this.pile.addAll(set.getSet());
                 this.meeplesSet.addAll(set.getMeeples());
                 if (set.getFirstTile() != null) {
@@ -119,13 +117,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
             }
         }
         Collections.shuffle(this.pile, new Random(System.currentTimeMillis()));
-        for(SetInterface set : sideSet)
-        {
-            this.pile.addAll(0,set.getSet());
+        for (SetInterface set : sideSet) {
+            this.pile.addAll(0, set.getSet());
             this.meeplesSet.addAll(set.getMeeples());
             if (set.getFirstTile() != null) {
                 this.firstTile = set.getFirstTile();
-            }            
+            }
         }
         this.currentPlayerIndex = 0;
         this.placements = new ArrayList<>();
@@ -134,8 +131,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         cityAggregates = new ArrayList<>();
         fieldAggregates = new ArrayList<>();
         abbayAggregates = new ArrayList<>();
-        riverExtensionIsUsed = false;
-        icExtensionIsUsed = false;
         this.lastPutTile = null;
     }
 
@@ -143,8 +138,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return meeplesSet;
     }
-    
-    
 
     /**
      * Get the first tile of the game
@@ -160,12 +153,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return lastPutTile;
     }
-    
+
     public Player getPreviousPlayer()
     {
         return this.previousPlayer;
     }
-    
+
     public void setPreviousPlayer(Player previousPlayer)
     {
         this.previousPlayer = previousPlayer;
@@ -220,7 +213,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         pile.addAll(newSet.getSet());
     }
-    
+
     @Override
     public void beginGame()
     {
@@ -231,12 +224,12 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         }
         this.beginTurn();
     }
-    
+
     public void beginTurn()
     {
         processNextTile();
     }
-    
+
     @Override
     public void endTurn()
     {
@@ -245,7 +238,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.nextPlayer();
         this.beginTurn();
     }
-    
+
     /**
      * Process the next Tile
      */
@@ -331,9 +324,9 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
         List<AbstractAggregate> aggregates = new ArrayList<>();
-        
+
         currentTile.putMeeple(coordinates, meeple);
-        meeple.setCurrentType(currentTile.getType(coordinates));        
+        meeple.setCurrentType(currentTile.getType(coordinates));
         meeple.setIsUsed(true);
 
         if (tile.getType(coordinates) instanceof RoadType) {
@@ -449,10 +442,10 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         //System.out.println("Check "+tile);
         boolean result = this.board.canTileBePlacedHere(coordinates, tile);
         //Manage specific case of river
-        if (result && riverExtensionIsUsed && !riverAggregate.isCompleted()){
+        if (result && riverExtensionIsUsed && !riverAggregate.isCompleted()) {
             result = riverAggregate.checkNewPlacementCorrect(convertCoord(coordinates.col, coordinates.row), tile);
         }
-        
+
         return result;
     }
 
@@ -466,7 +459,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         return this.checkTilePosition(coordinates, this.currentTile);
     }
-    
+
     /**
      * Notifies the observers when this is a new turn
      */
@@ -475,7 +468,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.notifyMessage = "newTurn";
         this.notifyObservers();
     }
-    
+
     /**
      * Notifies the observers when the turn ends
      */
@@ -1066,7 +1059,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
     /**
      * Activate the river extension
-     * @deprecated 
+     *
+     * @deprecated
      */
     public void useRiverExtension()
     {
@@ -1085,7 +1079,7 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     }
 
     /**
-     * @deprecated 
+     * @deprecated
      */
     public void useInnsAndCathedralsExtension()
     {
@@ -1152,6 +1146,5 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
         this.currentTile.rotateRight();
     }
-    
-    
+
 }
