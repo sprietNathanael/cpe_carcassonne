@@ -20,6 +20,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Observable;
 import java.util.Observer;
@@ -49,7 +50,7 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
             System.out.println("Socket client crée");
 
             // Send pseudo
-            outputStream.writeObject(pseudo);
+            sendToServer(pseudo);
             // Receive color
             Set<String> color = new HashSet<>();
             String messageReceived = (String) inputStream.readObject();
@@ -62,7 +63,7 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
                 System.out.println("couleur recue : " + messageReceived);
                 color.add(messageReceived);
                 // Receive first game
-                CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
+                CarcassonneGameInterface game = ((ObserverMessage) inputStream.readObject()).game;
                 ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, this);
                 Thread t = new Thread(new ReceiveData());
                 t.start();
@@ -113,55 +114,52 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     private void receiveNotifyMessage() throws Exception
     {
         notifyMessage = (ObserverMessage) inputStream.readObject();
+        System.out.println("Received a notify : "+notifyMessage.messageType);
         notifyObservers();
+    }
+    
+    private void sendToServer(Object message)
+    {
+        System.out.println("[Client] Sending "+message);
+        try {
+            outputStream.writeObject(message);
+            outputStream.reset();
+        } catch (IOException ex) {
+            Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 
     @Override
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
-        outputStream.writeObject(eNetworkActions.putTile);
-        outputStream.writeObject(new Coord(column, row));
+        ArrayList<Object> objectToPass = new ArrayList<>();
+        objectToPass.add(new Coord(column, row));
+        this.sendToServer(new NetworkMessage(eNetworkActions.putTile, objectToPass));
     }
 
     @Override
     public void beginGame()
     {
-        try {
-            outputStream.writeObject(eNetworkActions.beginGame);
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.sendToServer(new NetworkMessage(eNetworkActions.beginGame, null));
     }
 
     @Override
     public void endTurn()
     {
-        try {
-            outputStream.writeObject(eNetworkActions.endTurn);
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.sendToServer(new NetworkMessage(eNetworkActions.endTurn, null));
     }
 
     @Override
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates)
     {
-        try {
-            outputStream.writeObject(eNetworkActions.putMeeple);
-            outputStream.writeObject(coordinates);
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.sendToServer(new NetworkMessage(eNetworkActions.putMeeple, coordinates));
     }
-
+    
     @Override
     public void rotateCurrentTileRight()
     {
-        try {
-            outputStream.writeObject(eNetworkActions.rotateRight);
-        } catch (IOException ex) {
-            Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.sendToServer(new NetworkMessage(eNetworkActions.rotateRight, null));
     }
 
 }

@@ -337,8 +337,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     public void turnRight()
     {
         this.currentTile.rotateRight();
-        //System.out.println("Turn right "+this.currentTile);
-        //this.carcassonneGameInterface.rotateCurrentTileRight();
+        this.carcassonneGameInterface.rotateCurrentTileRight();
     }
 
     /**
@@ -369,7 +368,6 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         this.carcassonneGame = obsMessage.game;
         this.currentTile = this.carcassonneGame.getCurrentTile();
         String message = obsMessage.messageType;
-        System.out.println("________________ Controller Update : " + message + " tile size " + carcassonneGame.getBoard().getAllTiles().size());
         if (message.equals("newTurn")) {
             this.beginTurn();
         }

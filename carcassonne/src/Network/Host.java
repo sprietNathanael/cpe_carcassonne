@@ -8,9 +8,10 @@ package Network;
 import RessourcesGlobalVariables.Colors;
 import RessourcesGlobalVariables.PlayerTypes;
 import RessourcesGlobalVariables.eNetworkActions;
-import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.tile.AbstractTile;
 import carcassonne.notifyMessage.ObserverMessage;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,10 +40,11 @@ public class Host implements Observer
     private Map<Integer, Socket> sockets;
     private Map<Integer, ObjectOutputStream> outS;
     private Map<Integer, ObjectInputStream> inS;
-    private CarcassonneGameControllerLocalNetwork netController;
+    private CarcassonneGameController controller;
     private List<ParamPlayers> paramPlayers; // just for initialization
     private int currentPlayerIndex;
-    private Thread t;
+    private Thread clientWaitingThread;
+    private Thread messageWaitingThread;
 
     public Host(String pseudo)
     {
@@ -53,10 +56,11 @@ public class Host implements Observer
 
         paramPlayers.add(new ParamPlayers(pseudo, Colors.tab.get(currentPlayerIndex), PlayerTypes.player));
         currentPlayerIndex++;
+        messageWaitingThread = new Thread(new WaitAndReceiveInformations());
 
         try {
-            t = new Thread(new waitAndAcceptsClient());
-            t.start();
+            clientWaitingThread = new Thread(new WaitAndAcceptsClient());
+            clientWaitingThread.start();
             System.out.println("Serveur prêt !");
             //Thread tj = new Thread 
        } catch (Exception e) {
@@ -64,43 +68,15 @@ public class Host implements Observer
             e.printStackTrace();
         }
     }
-
-    public void receiveAction() throws Exception
+    
+    public void setController(CarcassonneGameController controller)
     {
-        for (ObjectInputStream in : inS.values()) {
-            eNetworkActions action = (eNetworkActions) in.readObject();
-
-            switch (action) {
-                case rotateRight:
-                    netController.turnRight();
-                    break;
-                case putTile:
-                    putTile(in);
-                    break;
-                case putMeeple:
-                    putMeeple(in);
-                    break;
-                case beginGame:
-                    netController.beginGame();
-                    break;
-                case endTurn:
-                    netController.endTurn();
-                    break;
-            }
-        }
+        this.controller = controller;
     }
 
-    @Override
-    public void update(Observable o, Object arg)
-    {
-        try {
-            sendToAllClients(arg);
-        } catch (Exception ex) {
-            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
+    
 
-    private class waitAndAcceptsClient implements Runnable
+    private class WaitAndAcceptsClient implements Runnable
     {
 
         ServerSocket socketserver;
@@ -135,24 +111,6 @@ public class Host implements Observer
 
     }
     
-    public void beginGame()
-    {
-        this.t.interrupt();
-    }
-    
-    private class waitAndReceiveInformations implements Runnable
-    {
-        public void run()
-        {
-            try {
-                
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
-
     private void receiveClientInfomation(ObjectInputStream in) throws Exception
     {
         String pseudo = (String) in.readObject();
@@ -161,6 +119,70 @@ public class Host implements Observer
         paramPlayers.add(p);
     }
     
+    
+    public void beginGame()
+    {
+        this.clientWaitingThread.interrupt();
+        this.currentPlayerIndex = 0;
+        this.messageWaitingThread.start();
+    }
+    
+    private class WaitAndReceiveInformations implements Runnable
+    {
+        public void run()
+        {
+            while(true)
+            {
+                if(currentPlayerIndex == 0)
+                {
+                    currentPlayerIndex++;
+                }
+                else
+                {
+                    try {
+                        receiveAction(currentPlayerIndex);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+
+    }
+    
+    public void receiveAction(int clientToRead) throws Exception
+    {
+        System.out.println("[Server] Waiting for action of client "+clientToRead);
+        NetworkMessage netMessage = (NetworkMessage)inS.get(clientToRead).readObject();
+        eNetworkActions action = (eNetworkActions) netMessage.message;
+        System.out.println("[Server] received a "+action+" message");
+        Object object = netMessage.object;
+
+        switch (action) {
+            case rotateRight:
+                controller.turnRight();
+                break;
+            case putTile:
+                ArrayList<Object> array = (ArrayList<Object>)object;
+                controller.putCurrentTile((Coord)array.get(0));
+                break;
+            case putMeeple:
+                controller.putMeeple((String)object);
+                break;
+            case beginGame:
+                controller.beginGame();
+                break;
+            case endTurn:
+                controller.endTurn();
+                currentPlayerIndex++;
+                if(currentPlayerIndex >= paramPlayers.size())
+                {
+                    currentPlayerIndex = 0;
+                }
+                break;
+        }
+    }
+
     public void sendToClient(int playerIndex, Object o)
     {
         try {
@@ -170,12 +192,6 @@ public class Host implements Observer
         }
     }
     
-    public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
-    {
-        out.writeObject(o);
-        out.reset();
-    }
-
     public void sendToAllClients(Object o) throws Exception
     {
         for (ObjectOutputStream out : outS.values()) {
@@ -183,27 +199,28 @@ public class Host implements Observer
             out.writeObject(o);
         }
     }
+    
+    public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
+    {
+        out.writeObject(o);
+        out.reset();
+    }
+
 
     public List<ParamPlayers> getParamPlayers()
     {
         return paramPlayers;
     }
-
-    public void setNetController(CarcassonneGameControllerLocalNetwork netController)
+    
+    @Override
+    public void update(Observable o, Object arg)
     {
-        this.netController = netController;
+        try {
+            sendToAllClients(arg);
+        } catch (Exception ex) {
+            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void putTile(ObjectInputStream in) throws Exception
-    {
-        Coord c = (Coord) in.readObject();
-        netController.putCurrentTile(c);
-    }
-
-    private void putMeeple(ObjectInputStream in) throws Exception
-    {
-        String coordinates = (String) in.readObject();
-        netController.putMeeple(coordinates);
-    }
 
 }

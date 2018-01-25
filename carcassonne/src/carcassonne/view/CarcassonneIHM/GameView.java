@@ -15,7 +15,6 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
-import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.InnsAndCathedralsSet;
@@ -54,7 +53,7 @@ public class GameView
         try {
             this.playableColors = playableColors;
             contructPlayersListAndGame(playerList, cbExtRiver, cbExtInnsAndCath); // Build the controller
-            this.controller = new CarcassonneGameControllerMulti(game);
+            this.controller = new CarcassonneGameController(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -69,7 +68,7 @@ public class GameView
         try {
             this.contructPlayersListAndGame(new ArrayList<>(), true, true);
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti(game);
+            this.controller = new CarcassonneGameController(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -89,8 +88,10 @@ public class GameView
             this.playableColors = playableColors;
             contructPlayersListAndGame(host.getParamPlayers(), true, true);
             // Build the controller
-            this.controller = new CarcassonneGameControllerLocalNetwork(game, host);
+            this.controller = new CarcassonneGameController(game);
+            //this.controller = new CarcassonneGameControllerLocalNetwork(game, host);
             this.controller.addObserver(host);
+            host.setController(this.controller);
 
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,7 +106,7 @@ public class GameView
             this.playableColors = playableColors;
 
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti(game);
+            this.controller = new CarcassonneGameController(netGame);
             netGame.addObserver(controller);
             this.players = ((CarcassonneGame) game).getPlayers();
             this.game = game;

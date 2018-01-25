@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Panels;
 
+import Network.NetworkGame;
 import carcassonne.view.CarcassonneIHM.Panels.Info.InfoPanel;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.Meeple.MeeplesLayer;
@@ -62,6 +63,7 @@ public class MainPanel extends JPanel implements java.util.Observer
     public MainPanel(CarcassonneGameController controller, ArrayList<Player> players, Set<String> playableColors)
     {
         super();
+        
         this.players = players;
         this.controller = controller;
         setLayout(new BorderLayout());
@@ -113,7 +115,6 @@ public class MainPanel extends JPanel implements java.util.Observer
         ObserverMessage message = (ObserverMessage)arg;
         String messageType = message.messageType;
         CarcassonneGame game = message.game;
-        System.out.println(messageType);
         // If the update is from a game change
         switch (messageType) {
             case "newTurn":
@@ -229,8 +230,9 @@ public class MainPanel extends JPanel implements java.util.Observer
                     // Refresh info panel informations
                     this.infoPanel.refresh(game);
                     // Repaint the panels
-                    this.gridPanel.repaint();
-                    this.infoPanel.repaint();
+                    
+                    Thread paintThread  = new Thread(new MainPanel.RepaintAll());
+                    paintThread.start();
                     break;
                 }
             // If the update is from a placements ready
@@ -248,8 +250,8 @@ public class MainPanel extends JPanel implements java.util.Observer
                         {
                             this.tilesPlacementLayer.addPosition(new UICoord(placements.get(i)));
                         }       // Repaint the panels
-                        this.gridPanel.repaint();
-                        this.infoPanel.repaint();
+                        Thread paintThread  = new Thread(new MainPanel.RepaintAll());
+                        paintThread.start();
                     }
                     break;
                 }
@@ -283,8 +285,8 @@ public class MainPanel extends JPanel implements java.util.Observer
                     // Refresh info panel informations
                     this.infoPanel.endGame(game);
                     // Repaint panels
-                    this.gridPanel.repaint();
-                    this.infoPanel.repaint();
+                    Thread paintThread  = new Thread(new MainPanel.RepaintAll());
+                    paintThread.start();
                     break;
                 }
             default:
@@ -320,7 +322,17 @@ public class MainPanel extends JPanel implements java.util.Observer
         {
             this.fieldsLayer.onShow();
         }
-        this.gridPanel.repaint();
-        this.infoPanel.repaint();
+        Thread paintThread  = new Thread(new MainPanel.RepaintAll());
+        paintThread.start();
+    }
+    
+    private class RepaintAll implements Runnable
+    {
+
+        public void run()
+        {
+            gridPanel.repaint();
+            infoPanel.repaint();
+        }
     }
 }

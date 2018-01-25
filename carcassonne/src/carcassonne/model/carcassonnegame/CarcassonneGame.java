@@ -1144,7 +1144,6 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     @Override
     public void rotateCurrentTileRight()
     {
-        this.currentTile.rotateRight();
     }
 
 }
