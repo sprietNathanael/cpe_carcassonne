@@ -87,6 +87,7 @@ public class Host implements Observer
     public void update(Observable o, Object arg)
     {
         try {
+            System.out.println("mmmmmmmmmmmmmmmmmmmm Host : "+((ObserverMessage)arg).game.getBoard().getAllTiles().size());
             sendToAllSockets(arg);
         } catch (Exception ex) {
             Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
@@ -135,6 +136,7 @@ public class Host implements Observer
     public void sendToAllSockets(Object o) throws Exception
     {
         for (ObjectOutputStream out : outS) {
+            out.reset();
             out.writeObject(o);
         }
     }

@@ -116,6 +116,7 @@ public class MainPanel extends JPanel implements java.util.Observer
         System.out.println(messageType);
         // If the update is from a game change
         switch (messageType) {
+            case "newTurn":
             case "boardChanged":
                 {
                     // Get the game's informations

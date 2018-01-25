@@ -350,9 +350,9 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         this.carcassonneGame = obsMessage.game;
         this.currentTile = this.carcassonneGame.getCurrentTile();
         String message = obsMessage.messageType;
+        System.out.println("________________ Controller Update : "+message+" tile size "+carcassonneGame.getBoard().getAllTiles().size());
         if(message.equals("newTurn"))
         {
-            message = "boardChanged";
             this.beginTurn();
         }
         else if(message.equals("placementsReady"))
