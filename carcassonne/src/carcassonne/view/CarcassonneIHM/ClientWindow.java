@@ -9,7 +9,6 @@ import Network.Host;
 import Network.NetworkGame;
 import carcassonne.controller.CarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerInterface;
-import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.awt.Container;
