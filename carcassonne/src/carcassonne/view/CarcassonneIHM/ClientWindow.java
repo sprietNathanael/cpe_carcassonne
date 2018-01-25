@@ -12,6 +12,7 @@ import carcassonne.controller.CarcassonneGameControllerInterface;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.io.File;
@@ -29,6 +30,7 @@ import javax.swing.JFrame;
 public class ClientWindow extends JFrame
 {
 
+    private final static Dimension MIN_SIZE = new Dimension(200,300);
     private final String musicGame = "resources/music/musicGame.mp3";
     String uriString = new File(musicGame).toURI().toString();
     MediaPlayer menuMediaPlayer = new MediaPlayer(new Media(uriString));
@@ -46,6 +48,8 @@ public class ClientWindow extends JFrame
         GameView gameView = new GameView(playerList, playableColors, cbExtRiver, cbExtInnsAndCath);
         gameView.show(getContentPane());
 
+        
+        this.setMinimumSize(MIN_SIZE);
         maximizeWindow();
         menuMediaPlayer.play();
     }
@@ -60,6 +64,7 @@ public class ClientWindow extends JFrame
         GameView gameView = new GameView();
         gameView.show(getContentPane());
 
+        this.setMinimumSize(MIN_SIZE);
         maximizeWindow();
         menuMediaPlayer.play();
     }
@@ -77,6 +82,7 @@ public class ClientWindow extends JFrame
         GameView gameView = new GameView(playableColors, host);
         gameView.show(getContentPane());
         menuMediaPlayer.play();
+        this.setMinimumSize(MIN_SIZE);
         maximizeWindow();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -89,6 +95,7 @@ public class ClientWindow extends JFrame
         GameView gameView = new GameView(playableColors, game, netGame);
         gameView.show(getContentPane());
         menuMediaPlayer.play();
+        this.setMinimumSize(MIN_SIZE);
         maximizeWindow();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
