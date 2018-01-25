@@ -346,9 +346,10 @@ public class AbstractCarcassonneGameController extends Observable implements Car
     @Override
     public void update(Observable o, Object arg)
     {
-        this.carcassonneGame = (CarcassonneGame)o;
+        ObserverMessage obsMessage = (ObserverMessage)arg;
+        this.carcassonneGame = obsMessage.game;
         this.currentTile = this.carcassonneGame.getCurrentTile();
-        String message = (String)arg;
+        String message = obsMessage.messageType;
         if(message.equals("newTurn"))
         {
             message = "boardChanged";

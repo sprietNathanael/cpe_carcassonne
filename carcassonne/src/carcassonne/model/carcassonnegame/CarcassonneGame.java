@@ -24,6 +24,7 @@ import carcassonne.model.tile.CasualTile;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
+import carcassonne.notifyMessage.ObserverMessage;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -419,7 +420,8 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public void notifyObservers()
     {
         super.setChanged();
-        super.notifyObservers(this.notifyMessage);
+        ObserverMessage obsMessage = new ObserverMessage(this.notifyMessage, this);
+        super.notifyObservers(obsMessage);
     }
 
     /**
