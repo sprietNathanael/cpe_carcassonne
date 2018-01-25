@@ -64,7 +64,7 @@ public class Local extends JDialog
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
 
         //Dimension Window
-        this.setSize(1050, 800);
+        this.setSize(1050, 700);
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
