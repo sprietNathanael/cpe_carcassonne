@@ -52,7 +52,8 @@ public class Host implements Observer
             t.start();
             System.out.println("Serveur prêt !");
             t.join();
-        } catch (Exception e) {
+            //Thread tj = new Thread 
+       } catch (Exception e) {
 
             e.printStackTrace();
         }
@@ -113,6 +114,19 @@ public class Host implements Observer
                 receiveClientInfomation(inS.get(inS.size() - 1));
                 outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size() + 1));
                 //}
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+    
+    private class waitAndReceiveInformations implements Runnable
+    {
+        public void run()
+        {
+            try {
+                
             } catch (Exception e) {
                 e.printStackTrace();
             }
