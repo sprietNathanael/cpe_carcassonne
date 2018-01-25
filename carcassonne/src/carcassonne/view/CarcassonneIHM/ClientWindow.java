@@ -6,6 +6,7 @@
 package carcassonne.view.CarcassonneIHM;
 
 import Network.Host;
+import Network.NetworkGame;
 import carcassonne.controller.CarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerInterface;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
@@ -43,7 +44,11 @@ public class ClientWindow extends JFrame
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playerList, playableColors, cbExtRiver, cbExtInnsAndCath);
+        GameView gameView = new GameView(playerList, playableColors, cbExtRiver, cbExtInnsAndCath);
+        gameView.show(getContentPane());
+
+        maximizeWindow();
+        menuMediaPlayer.play();
     }
 
     /**
@@ -53,30 +58,39 @@ public class ClientWindow extends JFrame
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView();
+        GameView gameView = new GameView();
+        gameView.show(getContentPane());
+
+        maximizeWindow();
+        menuMediaPlayer.play();
     }
 
     /**
      * Constructor for localNetwork game
      *
-     * @param playerList
+     * @param host
      * @param playableColors
-     * @param localNetworkControler
      */
     public ClientWindow(Set<String> playableColors, Host host)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playableColors, host);
+        GameView gameView = new GameView(playableColors, host);
+        gameView.show(getContentPane());
+        menuMediaPlayer.play();
+        maximizeWindow();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
-
-    public ClientWindow(Set<String> playableColors, CarcassonneGameInterface game)
+    
+    public ClientWindow(Set<String> playableColors, CarcassonneGameInterface game, NetworkGame netGame)
     {
         super("Carcassonne");
         cleanContentPane();
-        createGameView(playableColors, game);
+        GameView gameView = new GameView(playableColors, game, netGame);
+        gameView.show(getContentPane());
+        menuMediaPlayer.play();
+        maximizeWindow();
         this.setVisible(true);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }
@@ -89,49 +103,6 @@ public class ClientWindow extends JFrame
         Container pane = getContentPane();
         pane.setVisible(false);
         pane.removeAll();
-    }
-
-    /**
-     * Create the game view from a player list
-     */
-    private void createGameView(List<ParamPlayers> playerList, Set<String> playableColors, boolean cbExtRiver, boolean cbExtInnsAndCath)
-    {
-        GameView gameView = new GameView(playerList, playableColors, cbExtRiver, cbExtInnsAndCath);
-        gameView.show(getContentPane());
-
-        maximizeWindow();
-        menuMediaPlayer.play();
-    }
-
-    /**
-     * Create the game view
-     */
-    private void createGameView()
-    {
-        GameView gameView = new GameView();
-        gameView.show(getContentPane());
-
-        maximizeWindow();
-        menuMediaPlayer.play();
-    }
-
-    /**
-     * Create the game view from a player list for localNetwork game
-     */
-    private void createGameView(Set<String> playableColors, Host host)
-    {
-        GameView gameView = new GameView(playableColors, host);
-        gameView.show(getContentPane());
-        menuMediaPlayer.play();
-        maximizeWindow();
-    }
-
-    private void createGameView(Set<String> playableColors, CarcassonneGameInterface game)
-    {
-        GameView gameView = new GameView(playableColors, game);
-        gameView.show(getContentPane());
-        menuMediaPlayer.play();
-        maximizeWindow();
     }
 
     /**

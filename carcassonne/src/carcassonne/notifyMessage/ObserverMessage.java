@@ -7,12 +7,13 @@
 package carcassonne.notifyMessage;
 
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import java.io.Serializable;
 
 /**
  * 
  * @author nathanael
  */
-public class ObserverMessage
+public class ObserverMessage implements Serializable
 {
     public final CarcassonneGame game;
     public final String messageType;

@@ -6,6 +6,7 @@
 package carcassonne.view.CarcassonneIHM;
 
 import Network.Host;
+import Network.NetworkGame;
 import RessourcesGlobalVariables.Colors;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.controller.CarcassonneGameController;
@@ -89,6 +90,7 @@ public class GameView
             contructPlayersListAndGame(host.getParamPlayers(), true, true);
             // Build the controller
             this.controller = new CarcassonneGameControllerLocalNetwork(game, host);
+            this.controller.addObserver(host);
 
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
@@ -96,7 +98,7 @@ public class GameView
 
     }
 
-    public GameView(Set<String> playableColors, CarcassonneGameInterface game)
+    public GameView(Set<String> playableColors, CarcassonneGameInterface game, NetworkGame netGame)
     {
         System.out.println("[GameView] Construct 3");
         try {
@@ -104,6 +106,7 @@ public class GameView
 
             // Build the controller
             this.controller = new CarcassonneGameControllerMulti(game);
+            netGame.addObserver(controller);
             this.players = ((CarcassonneGame)game).getPlayers();
             this.game = game;
             

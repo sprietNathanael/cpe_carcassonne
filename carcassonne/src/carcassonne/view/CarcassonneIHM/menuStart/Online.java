@@ -46,6 +46,7 @@ public class Online extends JDialog
     private JTextField tfIpAddress, tfName;
     private Settings settings;
     private Host host; // use in host only
+    private NetworkGame game;
 
     public Online()
     {
@@ -158,7 +159,7 @@ public class Online extends JDialog
             {
                 String ip = tfIpAddress.getText();
                 try {
-                    NetworkGame game = new NetworkGame((ip != "") ? ip : "localhost", tfName.getText());
+                    game = new NetworkGame((ip.equals("")) ? ip : "localhost", tfName.getText());
                 } catch (Exception ex) {
                     Logger.getLogger(Online.class.getName()).log(Level.SEVERE, null, ex);
                 }
