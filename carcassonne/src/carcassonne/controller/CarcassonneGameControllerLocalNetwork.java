@@ -7,6 +7,7 @@ package carcassonne.controller;
 
 import Network.Host;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 
 /**
  *
@@ -21,7 +22,7 @@ public class CarcassonneGameControllerLocalNetwork extends AbstractCarcassonneGa
         this(new CarcassonneGame(), host);
     }
 
-    public CarcassonneGameControllerLocalNetwork(CarcassonneGame model, Host host) throws Exception
+    public CarcassonneGameControllerLocalNetwork(CarcassonneGameInterface model, Host host) throws Exception
     {
         super(model);
         

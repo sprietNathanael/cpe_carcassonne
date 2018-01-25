@@ -8,6 +8,7 @@ package carcassonne.model.carcassonnegame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import java.util.Observer;
 
 /**
  *
@@ -31,5 +32,7 @@ public interface CarcassonneGameInterface
     public void putMeeple(Meeple meeple, AbstractTile tile, Player player, String coordinates);
     
     public void rotateCurrentTileRight();
+    
+    public void addObserver(Observer o);
     
 }
