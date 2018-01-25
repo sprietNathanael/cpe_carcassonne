@@ -34,7 +34,6 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     private AbstractTile currentTile;
     private boolean useBigMeeple;
     private ObserverMessage observerMessage;
-    
 
     /**
      * Constructor for an AbstractCarcassonneGameController
@@ -58,7 +57,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         this.carcassonneGameInterface = modelInterface;
         this.useBigMeeple = false;
     }
-    
+
     public void setUseBigMeeple(boolean useBigMeeple)
     {
         this.useBigMeeple = useBigMeeple;
@@ -96,12 +95,12 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     {
         this.putTile(tile, c.col, c.row);
     }
-    
-    public void putTile(AbstractTile tile,int col,int row) throws Exception
+
+    public void putTile(AbstractTile tile, int col, int row) throws Exception
     {
         this.carcassonneGameInterface.putTile(tile, row, col);
     }
-    
+
     /**
      * gets the first meeple available of the current player
      *
@@ -113,14 +112,13 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         Meeple m = carcassonneGame.getCurrentPlayer().getFirstMeepleAvailable();
         if (m == null) {
             m = carcassonneGame.getCurrentPlayer().getBigMeepleAvailable();
-            if(m == null)
-            {
-                throw new Exception("Plus de pion disponible");                
+            if (m == null) {
+                throw new Exception("Plus de pion disponible");
             }
         }
         return m;
     }
-    
+
     /**
      * gets the big meeple available of the current player
      *
@@ -146,18 +144,16 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     public void putMeeple(String coordinates) throws Exception
     {
         Meeple m = null;
-        if(this.useBigMeeple)
-        {
+        if (this.useBigMeeple) {
             m = getCurrentPlayerBigMeepleAvailable();
             this.useBigMeeple = false;
-            
+
         }
-        if(m == null)
-        {
+        if (m == null) {
             m = getCurrentPlayerMeepleAvailable();
-            
+
         }
-        
+
         //aggregats
         carcassonneGameInterface.putMeeple(m, currentTile, m.getPlayer(), coordinates);
     }
@@ -179,7 +175,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
      */
     public void beginGame()
     {
-        
+
         this.carcassonneGameInterface.beginGame();
     }
 
@@ -214,7 +210,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
                 Logger.getLogger(CarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
     }
 
     /**
@@ -226,11 +222,18 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     private Coord putTileBasicIA() throws Exception
     {
         ArrayList<Coord> placements = this.carcassonneGame.getPlacements();
+        //Random emplacement pour la tuile parmis ceux possible
         int index = (int) (Math.random() * placements.size());
+        /*@TODO: 
+            Chercher parmi les ville libre voisine de ces coord, filtrer celles qui sont ouvertes dessus: prendre la plus grosse
+                carcaGame.getBiggestCityAvailableInCoords(placements);
+                 -> Retourne les Coord du placement intéressant
+                 -> null sinon, comportement normal
+                this.biggestCityFound = true;
+         */
         Coord c = new Coord(placements.get(index).col, placements.get(index).row);
         while (this.checkTilePosition(c) == false) {
             this.currentTile.rotateRight();
-            //this.carcassonneGameInterface.rotateCurrentTileRight();
         }
         this.putCurrentTile(placements.get(index));
         return (c);
@@ -246,6 +249,15 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         if (this.carcassonneGame.playerMeepleBePutOnCurrentTile()) {
             int putMeepleOrNot = (int) (Math.random() * 2);
             if (putMeepleOrNot == 1) {
+                /*@TODO:
+                    If biggestCity found:
+                        A l'emplacement, récupérer la ville la plus grosse
+                            Récupérer la plus grosse ville libre de cette tuile
+                            coordinates = carcaGame.getLocationOfBiggestCity(c); 
+                             -> renvoyer un type la composant pour poser un meeple dessus
+                             -> Si null habituel
+                            this.putMeeple(coordinates);
+                 */
                 Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
                 String coordinates = this.getRandomAggregateLocation(freeAgg);
                 //tuile
@@ -321,7 +333,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         //System.out.println("Turn right "+this.currentTile);
         //this.carcassonneGameInterface.rotateCurrentTileRight();
     }
-    
+
     /**
      * Add an observer
      *
@@ -332,7 +344,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     {
         super.addObserver(o);
     }
-    
+
     /**
      * Notifies the observers with the current notify message
      */
@@ -346,22 +358,20 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     @Override
     public void update(Observable o, Object arg)
     {
-        ObserverMessage obsMessage = (ObserverMessage)arg;
+        ObserverMessage obsMessage = (ObserverMessage) arg;
         this.carcassonneGame = obsMessage.game;
         this.currentTile = this.carcassonneGame.getCurrentTile();
         String message = obsMessage.messageType;
-        System.out.println("________________ Controller Update : "+message+" tile size "+carcassonneGame.getBoard().getAllTiles().size());
-        if(message.equals("newTurn"))
-        {
+        System.out.println("________________ Controller Update : " + message + " tile size " + carcassonneGame.getBoard().getAllTiles().size());
+        if (message.equals("newTurn")) {
             this.beginTurn();
         }
-        else if(message.equals("placementsReady"))
-        {
+        else if (message.equals("placementsReady")) {
             this.ManageIA();
         }
         this.observerMessage = new ObserverMessage(message, this.carcassonneGame);
         this.notifyObservers();
-        
+
     }
 
 }
