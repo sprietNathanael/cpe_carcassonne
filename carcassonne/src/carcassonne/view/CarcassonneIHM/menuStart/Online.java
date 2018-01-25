@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
+import Network.Host;
 import Network.NetworkGame;
 import RessourcesGlobalVariables.Colors;
 import carcassonne.controller.CarcassonneGameControllerMulti;
