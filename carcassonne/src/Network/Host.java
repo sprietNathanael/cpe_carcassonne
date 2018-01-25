@@ -9,6 +9,7 @@ import RessourcesGlobalVariables.Colors;
 import RessourcesGlobalVariables.PlayerTypes;
 import RessourcesGlobalVariables.eNetworkActions;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
+import carcassonne.coord.Coord;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -17,12 +18,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 /**
  *
  * @author Thomas
  */
-public class Host
+public class Host implements Observer
 {
 
     private List<Socket> sockets;
@@ -59,17 +62,28 @@ public class Host
         {
             case rotateRight :
                 netController.turnRight();
-                //sendToAllSockets(netController.c)
                 break;
             case putTile :
+                putTile(in);
                 break;
             case putMeeple :
+                putMeeple(in);
                 break;
             case beginGame :
+                netController.beginGame();
                 break;
             case endTurn :
+                netController.endTurn();
                 break;
         }
+        
+        
+    }
+
+    @Override
+    public void update(Observable o, Object arg)
+    {
+        //sendToAllSockets(); envoie de o + arg
     }
 
     private class waitAndAcceptsClient implements Runnable
@@ -126,6 +140,18 @@ public class Host
     public void setNetController(CarcassonneGameControllerLocalNetwork netController)
     {
         this.netController = netController;
+    }
+    
+    private void putTile(ObjectInputStream in) throws Exception
+    {
+        Coord c = (Coord) in.readObject();
+        netController.putCurrentTile(c);
+    }
+    
+    private void putMeeple(ObjectInputStream in) throws Exception
+    {
+        String coordinates = (String) in.readObject();
+        netController.putMeeple(coordinates);
     }
     
     
