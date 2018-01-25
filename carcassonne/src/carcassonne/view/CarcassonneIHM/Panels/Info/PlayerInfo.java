@@ -157,7 +157,7 @@ public class PlayerInfo implements InfoPanelMouseListener
         }
         
         int fontSize = height/6;
-        g2.setFont(new Font("Calibri", Font.PLAIN, fontSize));
+        g2.setFont(new Font("Times New Roman", Font.PLAIN, fontSize));
         g2.setColor(Color.BLACK);
         int iconsSize = (int) (height / 5.0);
         
@@ -190,7 +190,7 @@ public class PlayerInfo implements InfoPanelMouseListener
 
         // Draw the informations
         int nameX = meepleX + meepleSize + PlayerInfo.MEEPLE_BORDER;
-        g2.setFont(new Font("Calibri", Font.PLAIN, 18));
+        g2.setFont(new Font("Times New Roman", Font.PLAIN, 18));
         g2.drawString(this.player.getName(), nameX, meepleY + meepleSize / 4);
         
         int infoSize = (int)(height/4.0);
