@@ -19,7 +19,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
@@ -34,7 +33,7 @@ public class Local extends JDialog
 
     private static final int NBMAXPLAYERS = 6;
 
-    private ZDialogInfo zInfo = new ZDialogInfo();
+    //private ZDialogInfo zInfo = new ZDialogInfo();
     private boolean sendData;
     private JLabel nomLabel, icon, colorsLabel, lbTypeJoueur;
     private JRadioButton tranche1, tranche2, tranche3, tranche4, tranche5;
@@ -59,11 +58,15 @@ public class Local extends JDialog
     @SuppressWarnings("unchecked")
     private void initComponent()
     {
+        //Add title
+        this.setTitle("Jeu en Local");
+        
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
 
         //Dimension Window
         this.setSize(1050, 800);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
@@ -80,7 +83,6 @@ public class Local extends JDialog
         //------------- PART PLAYERS ------------------------------------------
         JPanel paPlayer;
         JPanel content = new JPanel();
-        //content.setBackground(Color.white);
 
         tfNomPlayer = new JTextField[NBMAXPLAYERS];
         cbPlayerType = new JComboBox[NBMAXPLAYERS];
@@ -118,7 +120,7 @@ public class Local extends JDialog
             content.add(paPlayer);
         }
 
-        //Choice extensions
+        //Extension choice
         JPanel panExt = new JPanel();
         panExt.setBackground(new Color(232,181,87));
         panExt.setPreferredSize(new Dimension(300, 60));
@@ -131,13 +133,11 @@ public class Local extends JDialog
         panExt.add(extInnsAndCath);
 
         JPanel control = new JPanel();
-        //JButton okBouton = new JButton("PLAY");
         BtGame okBouton = new BtGame("resources/PlayLocal.png");
         okBouton.setOpaque(false);
         okBouton.setContentAreaFilled(false);
         okBouton.setBorderPainted(false);
         BtGame btBack = new BtGame("resources/BackLocal.png");
-        //JButton btBack = new JButton("BACK");
         btBack.setOpaque(false);
         btBack.setContentAreaFilled(false);
         btBack.setBorderPainted(false);
@@ -185,9 +185,7 @@ public class Local extends JDialog
                 }
 
                 clientWindow.setVisible(true);
-
                 clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
                 setVisible(false);
 
             }
@@ -204,7 +202,6 @@ public class Local extends JDialog
         panIcon.setBackground(new Color(242,210,100));
 
         this.getContentPane().add(control, BorderLayout.SOUTH);
-
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(content, BorderLayout.CENTER);
     }

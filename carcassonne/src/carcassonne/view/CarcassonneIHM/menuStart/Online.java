@@ -5,7 +5,6 @@
  */
 package carcassonne.view.CarcassonneIHM.menuStart;
 
-import Network.Host;
 import Network.NetworkGame;
 import carcassonne.controller.CarcassonneGameControllerMulti;
 import java.awt.BorderLayout;
@@ -51,11 +50,15 @@ public class Online extends JDialog
     {
         Online self = this;
 
+        //Add title
+        this.setTitle("Jeu en Ligne");
+        
         //Set Icon
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
 
         //Dimension Window
         this.setSize(950, 700);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
