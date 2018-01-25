@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
@@ -54,7 +54,7 @@ public class MeeplesLayer extends AbstractLayer
      * @param gridPanel
      * @param controller 
      */
-    public MeeplesLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public MeeplesLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         super(gridPanel, controller);
         this.meepleImages = new HashMap<>();

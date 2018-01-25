@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Field;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.aggregate.FieldAggregate;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
@@ -54,7 +54,7 @@ public class FieldsLayer extends AbstractLayer
         MASK_COLORS.put("transp", new Color(255,255,255,0));
     }
     
-    public FieldsLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public FieldsLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         super(gridPanel, controller);
     }

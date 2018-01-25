@@ -6,7 +6,7 @@
 package Network;
 
 import RessourcesGlobalVariables.eNetworkActions;
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerInterface;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
@@ -39,7 +39,7 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     
-    private AbstractCarcassonneGameController controller;
+    private CarcassonneGameController controller;
 
     @SuppressWarnings("unchecked")
     public NetworkGame(String ipAddr, String pseudo) throws Exception

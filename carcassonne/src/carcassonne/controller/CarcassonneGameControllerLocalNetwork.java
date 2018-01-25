@@ -13,7 +13,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
  *
  * @author Thomas
  */
-public class CarcassonneGameControllerLocalNetwork extends AbstractCarcassonneGameController
+public class CarcassonneGameControllerLocalNetwork extends CarcassonneGameController
 {
     private Host host;
 

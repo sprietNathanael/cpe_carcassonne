@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Field.FieldsLayer;
@@ -27,7 +27,7 @@ public class TileHighlightmentLayer extends AbstractLayer
     private UICoord tileToHighlight;
     private String color;
 
-    public TileHighlightmentLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public TileHighlightmentLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         super(gridPanel, controller);
     }

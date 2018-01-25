@@ -11,7 +11,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGame;
  *
  * @author thomas
  */
-public class CarcassonneGameControllerSolo extends AbstractCarcassonneGameController
+public class CarcassonneGameControllerSolo extends CarcassonneGameController
 {
 
     public CarcassonneGameControllerSolo(CarcassonneGame game)

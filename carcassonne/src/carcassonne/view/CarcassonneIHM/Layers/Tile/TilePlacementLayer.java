@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
@@ -54,7 +54,7 @@ public class TilePlacementLayer extends AbstractLayer implements TilePlacementMo
      * @param controller
      * @param mainPanel
      */
-    public TilePlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller, MainPanel mainPanel)
+    public TilePlacementLayer(GridPanel gridPanel, CarcassonneGameController controller, MainPanel mainPanel)
     {
         super(gridPanel, controller);
         // Initialise the position array

@@ -6,7 +6,7 @@
 package carcassonne.view.CarcassonneIHM;
 
 import Network.Host;
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerInterface;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;

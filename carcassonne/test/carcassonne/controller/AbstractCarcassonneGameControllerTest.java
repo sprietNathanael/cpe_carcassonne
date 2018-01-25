@@ -24,7 +24,7 @@ public class AbstractCarcassonneGameControllerTest
 
     /**
      * Test of getCurrentPlayer method, of class
-     * AbstractCarcassonneGameController.
+ CarcassonneGameController.
      * @throws java.lang.Exception
      */
     @Test
@@ -37,7 +37,7 @@ public class AbstractCarcassonneGameControllerTest
         list.add(1, j2);
 
         CarcassonneGame jeu = new CarcassonneGame(list);
-        AbstractCarcassonneGameController gameController = new AbstractCarcassonneGameController(jeu);
+        CarcassonneGameController gameController = new CarcassonneGameController(jeu);
 
         Player expectedPlayer = gameController.getCurrentPlayer();
 

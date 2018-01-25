@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import java.awt.Graphics2D;
@@ -20,14 +20,14 @@ public abstract class AbstractLayer
     protected ArrayList<UICoord> positions;
     private LayerMouseAdapter mouseListener;
     private boolean visible;
-    protected AbstractCarcassonneGameController controller;
+    protected CarcassonneGameController controller;
     
     /**
      * Construction of an abstract layer
      * @param gridPanel Grid panel
-     * @param controller AbstractCarcassonneGameController
+     * @param controller CarcassonneGameController
      */
-    public AbstractLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public AbstractLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         this.gridPanel = gridPanel;        
         this.controller = controller;

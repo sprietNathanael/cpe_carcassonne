@@ -8,7 +8,7 @@ package carcassonne.view.CarcassonneIHM;
 import Network.Host;
 import RessourcesGlobalVariables.Colors;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
@@ -34,7 +34,7 @@ import java.util.logging.Logger;
 public class GameView
 {
 
-    private AbstractCarcassonneGameController controller;
+    private CarcassonneGameController controller;
     private CarcassonneGameInterface game;
     private ArrayList<Player> players;
     private Set<String> playableColors;

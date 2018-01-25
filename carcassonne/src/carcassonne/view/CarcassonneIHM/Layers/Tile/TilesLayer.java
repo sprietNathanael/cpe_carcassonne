@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Tile;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
 import carcassonne.view.CarcassonneIHM.Tools.TileImage;
@@ -22,7 +22,7 @@ public class TilesLayer extends AbstractLayer
      * @param gridPanel The grid panel which the layer is rattached to
      * @param controller
      */
-    public TilesLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public TilesLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         super(gridPanel, controller);
     }

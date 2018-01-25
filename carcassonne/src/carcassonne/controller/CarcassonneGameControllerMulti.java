@@ -12,7 +12,7 @@ import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
  * Allows to play at several players on a same computer
  * @author Thomas
  */
-public class CarcassonneGameControllerMulti extends AbstractCarcassonneGameController
+public class CarcassonneGameControllerMulti extends CarcassonneGameController
 {
 
     public CarcassonneGameControllerMulti() throws Exception

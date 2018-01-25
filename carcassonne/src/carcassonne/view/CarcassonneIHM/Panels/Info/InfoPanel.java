@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Panels.Info;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
@@ -57,7 +57,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
 
     private LinkedHashMap<String, PlayerInfo> playerInfoLines;
     private String currentPlayer;
-    private AbstractCarcassonneGameController controller;
+    private CarcassonneGameController controller;
     private BufferedImage backTile;
     private BufferedImage currentTile;
     private BufferedImage noMeepleButtonImage;
@@ -86,7 +86,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
      * @param players
      * @param controller
      */
-    public InfoPanel(ArrayList<Player> players, AbstractCarcassonneGameController controller, MainPanel mainPanel)
+    public InfoPanel(ArrayList<Player> players, CarcassonneGameController controller, MainPanel mainPanel)
     {
         // Configure component
         setDoubleBuffered(true);

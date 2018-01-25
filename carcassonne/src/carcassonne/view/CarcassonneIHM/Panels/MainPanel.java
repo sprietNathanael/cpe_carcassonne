@@ -11,7 +11,7 @@ import carcassonne.view.CarcassonneIHM.Layers.Meeple.MeeplesLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Meeple.MeeplePlacementLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Tile.TilesLayer;
 import carcassonne.view.CarcassonneIHM.Layers.Tile.TilePlacementLayer;
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Meeple;
@@ -38,7 +38,7 @@ import javax.swing.JPanel;
 public class MainPanel extends JPanel implements java.util.Observer
 {
 
-    private AbstractCarcassonneGameController controller;
+    private CarcassonneGameController controller;
     private TilesLayer tilesLayer;
     private MeeplesLayer meeplesLayer;
     private TilePlacementLayer tilesPlacementLayer;
@@ -56,10 +56,10 @@ public class MainPanel extends JPanel implements java.util.Observer
     /**
      * Main panel constructor
      *
-     * @param controller AbstractCarcassonneGameController
+     * @param controller CarcassonneGameController
      * @param players
      */
-    public MainPanel(AbstractCarcassonneGameController controller, ArrayList<Player> players, Set<String> playableColors)
+    public MainPanel(CarcassonneGameController controller, ArrayList<Player> players, Set<String> playableColors)
     {
         super();
         this.players = players;

@@ -5,7 +5,7 @@
  */
 package carcassonne.view;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -15,9 +15,9 @@ import java.util.Observer;
  */
 public class CarcassonneCmdLine implements Observer
 {
-    private final AbstractCarcassonneGameController controller;    
+    private final CarcassonneGameController controller;    
     
-    public CarcassonneCmdLine(AbstractCarcassonneGameController controller)
+    public CarcassonneCmdLine(CarcassonneGameController controller)
     {
         this.controller = controller;  
     }

@@ -5,7 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM.Layers.Meeple;
 
-import carcassonne.controller.AbstractCarcassonneGameController;
+import carcassonne.controller.CarcassonneGameController;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.view.CarcassonneIHM.Panels.Grid.GridPanel;
 import carcassonne.view.CarcassonneIHM.Layers.AbstractLayer;
@@ -69,7 +69,7 @@ public class MeeplePlacementLayer extends AbstractLayer implements TilePlacement
      * @param gridPanel
      * @param controller 
      */
-    public MeeplePlacementLayer(GridPanel gridPanel, AbstractCarcassonneGameController controller)
+    public MeeplePlacementLayer(GridPanel gridPanel, CarcassonneGameController controller)
     {
         super(gridPanel, controller);
         this.tileAggregates = new HashSet<>();

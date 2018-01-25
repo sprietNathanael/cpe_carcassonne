@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  *
  * @author Thomas
  */
-public class AbstractCarcassonneGameController extends Observable implements CarcassonneGameControllerInterface, java.util.Observer
+public class CarcassonneGameController extends Observable implements CarcassonneGameControllerInterface, java.util.Observer
 {
 
     protected CarcassonneGame carcassonneGame;
@@ -41,7 +41,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      *
      * @throws java.lang.Exception
      */
-    public AbstractCarcassonneGameController() throws Exception
+    public CarcassonneGameController() throws Exception
     {
         this.carcassonneGameInterface = new CarcassonneGame();
         this.useBigMeeple = false;
@@ -53,7 +53,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
      *
      * @param modelInterface
      */
-    public AbstractCarcassonneGameController(CarcassonneGameInterface modelInterface)
+    public CarcassonneGameController(CarcassonneGameInterface modelInterface)
     {
         this.carcassonneGameInterface = modelInterface;
         this.useBigMeeple = false;
@@ -211,7 +211,7 @@ public class AbstractCarcassonneGameController extends Observable implements Car
 
                 this.endTurn();
             } catch (Exception ex) {
-                Logger.getLogger(AbstractCarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(CarcassonneGameController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
         
