@@ -67,7 +67,6 @@ public class GameMenu extends JFrame
         //Add buttons
         this.add(btInstructions);
         btInstructions.setBounds(830, 660, 135, 155);
-        btInstructions.setOpaque(false);
         btInstructions.setContentAreaFilled(false);
         btInstructions.setBorderPainted(false);
 
@@ -89,7 +88,6 @@ public class GameMenu extends JFrame
         GameMenu self = this;
         
         this.add(btPlay);
-        btPlay.setOpaque(false);
         btPlay.setContentAreaFilled(false);
         btPlay.setBorderPainted(false);
         btPlay.setBounds(400, 330, 207, 92);
@@ -113,7 +111,6 @@ public class GameMenu extends JFrame
 
         this.add(btExit);
         btExit.setBounds(395, 460, 207, 92);
-        btExit.setOpaque(false);
         btExit.setContentAreaFilled(false);
         btExit.setBorderPainted(false);
         btExit.addActionListener(new ActionListener()

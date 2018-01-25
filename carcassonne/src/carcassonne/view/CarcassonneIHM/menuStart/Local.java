@@ -6,7 +6,6 @@ import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -31,7 +30,6 @@ import javax.swing.JTextField;
 
 public class Local extends JDialog
 {
-
     private static final int NBMAXPLAYERS = 6;
 
     //private ZDialogInfo zInfo = new ZDialogInfo();
@@ -95,8 +93,6 @@ public class Local extends JDialog
             paPlayer.setPreferredSize(new Dimension(600, 55));
             paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
             
-            
-
             lbTypeJoueur = new JLabel("Player type : ");
             cbPlayerType[i] = new JComboBox<>();
             cbPlayerType[i].addItem(PlayerTypes.player);
@@ -136,10 +132,10 @@ public class Local extends JDialog
         panExt.add(extInnsAndCath);
 
         JPanel control = new JPanel();
-        BtGame okBouton = new BtGame("resources/PlayLocal.png");
-        okBouton.setOpaque(false);
-        okBouton.setContentAreaFilled(false);
-        okBouton.setBorderPainted(false);
+        BtGame btPlay = new BtGame("resources/PlayLocal.png");
+        btPlay.setOpaque(false);
+        btPlay.setContentAreaFilled(false);
+        btPlay.setBorderPainted(false);
         BtGame btBack = new BtGame("resources/BackLocal.png");
         btBack.setOpaque(false);
         btBack.setContentAreaFilled(false);
