@@ -5,11 +5,8 @@
  */
 package carcassonne.controller;
 
+import Network.Host;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
-import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
-import java.util.AbstractList;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  *
@@ -17,23 +14,23 @@ import java.util.List;
  */
 public class CarcassonneGameControllerLocalNetwork extends AbstractCarcassonneGameController
 {
-    protected List<ParamPlayers> paramPlayers = null;
+    private Host host;
 
-    public CarcassonneGameControllerLocalNetwork() throws Exception
+    public CarcassonneGameControllerLocalNetwork(Host host) throws Exception
     {
-        this(new CarcassonneGame());
+        this(new CarcassonneGame(), host);
     }
 
-    public CarcassonneGameControllerLocalNetwork(CarcassonneGame model)
+    public CarcassonneGameControllerLocalNetwork(CarcassonneGame model, Host host) throws Exception
     {
         super(model);
-        paramPlayers = new LinkedList<>();
+        
+        // double link
+        this.host = host;
+        host.setNetController(this);
+        host.sendToAllSockets(model);
     }
 
-    public List<ParamPlayers> getParamPlayers()
-    {
-        return paramPlayers;
-    }
     
     
 }
