@@ -6,7 +6,9 @@
 package carcassonne.view.CarcassonneIHM.menuStart;
 
 import Network.NetworkGame;
+import RessourcesGlobalVariables.Colors;
 import carcassonne.controller.CarcassonneGameControllerMulti;
+import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -15,6 +17,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.BorderFactory;
@@ -40,6 +44,7 @@ public class Online extends JDialog
     private CarcassonneGameControllerMulti controller;
     private JTextField tfIpAddress, tfName;
     private Settings settings;
+    private Host host; // use in host only
 
     public Online()
     {
@@ -169,7 +174,10 @@ public class Online extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
-                System.out.println("TCHOIN");
+                Set<String> color = new HashSet<>();
+                color.add(Colors.tab.get(0));
+                
+                ClientWindow cw = new ClientWindow(color, host);
             }
         });
 
@@ -186,7 +194,8 @@ public class Online extends JDialog
                 btPlayHost.setEnabled(true);
                 btJoinGame.setEnabled(false);
 
-                //Host host = new Host(tfName.getText());
+                host = new Host(tfName.getText());
+                
             }
         });
 

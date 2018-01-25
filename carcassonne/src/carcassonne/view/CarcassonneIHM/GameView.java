@@ -5,6 +5,7 @@
  */
 package carcassonne.view.CarcassonneIHM;
 
+import Network.Host;
 import RessourcesGlobalVariables.Colors;
 import carcassonne.view.CarcassonneIHM.Panels.MainPanel;
 import carcassonne.controller.AbstractCarcassonneGameController;
@@ -13,8 +14,7 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.player.Player;
 import RessourcesGlobalVariables.PlayerTypes;
-import carcassonne.controller.CarcassonneGameControllerLocalNetworkClient;
-import carcassonne.controller.CarcassonneGameControllerLocalNetworkServer;
+import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.set.BasicSet;
 import carcassonne.model.set.InnsAndCathedralsSet;
@@ -81,17 +81,31 @@ public class GameView
      * @param playableColors
      * @param localNetworkControler
      */
-    public GameView(List<ParamPlayers> playerList, Set<String> playableColors, AbstractCarcassonneGameController localNetworkControler)
+    public GameView(Set<String> playableColors, Host host)
     {
         System.out.println("[GameView] Construct 3");
         try {
             this.playableColors = playableColors;
-            contructPlayersListAndGame(playerList, true, true);
+            contructPlayersListAndGame(host.getParamPlayers(), true, true);
             // Build the controller
-            this.controller = localNetworkControler;
-            if (this.controller.getClass() == CarcassonneGameControllerLocalNetworkClient.class) {
-                ((CarcassonneGameControllerLocalNetworkServer) controller).sendCarcassoneGame();
-            }
+            this.controller = new CarcassonneGameControllerLocalNetwork(game, host);
+
+        } catch (Exception ex) {
+            Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public GameView(Set<String> playableColors, CarcassonneGameInterface game)
+    {
+        System.out.println("[GameView] Construct 3");
+        try {
+            this.playableColors = playableColors;
+
+            // Build the controller
+            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
+            this.players = ((CarcassonneGame)game).getPlayers();
+            
 
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
@@ -164,7 +178,7 @@ public class GameView
         //players.add(new Player("player3", "red", PlayerTypes.player));
         //players.add(new Player("player4", "black", PlayerTypes.player));
         this.playableColors = new HashSet<>();
-        
+
         this.players.stream().filter((player) -> (player.getPlayerType().equals(PlayerTypes.player))).forEachOrdered((player) -> {
             this.playableColors.add(player.getColor());
         });
@@ -178,7 +192,7 @@ public class GameView
     public void show(Container pane)
     {
         //Construct the main panel and adds it to the main container
-        
+
         MainPanel mainPanel = new MainPanel(this.controller, this.players, this.playableColors);
         this.controller.addObserver(mainPanel);
         this.game.addObserver(controller);
