@@ -10,6 +10,8 @@ import RessourcesGlobalVariables.PlayerTypes;
 import RessourcesGlobalVariables.eNetworkActions;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
 import carcassonne.coord.Coord;
+import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.notifyMessage.ObserverMessage;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -20,6 +22,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -54,36 +58,39 @@ public class Host implements Observer
         }
     }
 
-    private void ReceiveAction(ObjectInputStream in) throws Exception
+    public void receiveAction() throws Exception
     {
-        eNetworkActions action = (eNetworkActions) in.readObject();
-        
-        switch (action)
-        {
-            case rotateRight :
-                netController.turnRight();
-                break;
-            case putTile :
-                putTile(in);
-                break;
-            case putMeeple :
-                putMeeple(in);
-                break;
-            case beginGame :
-                netController.beginGame();
-                break;
-            case endTurn :
-                netController.endTurn();
-                break;
+        for (ObjectInputStream in : inS) {
+            eNetworkActions action = (eNetworkActions) in.readObject();
+
+            switch (action) {
+                case rotateRight:
+                    netController.turnRight();
+                    break;
+                case putTile:
+                    putTile(in);
+                    break;
+                case putMeeple:
+                    putMeeple(in);
+                    break;
+                case beginGame:
+                    netController.beginGame();
+                    break;
+                case endTurn:
+                    netController.endTurn();
+                    break;
+            }
         }
-        
-        
     }
 
     @Override
     public void update(Observable o, Object arg)
     {
-        //sendToAllSockets(); envoie de o + arg
+        try {
+            sendToAllSockets(arg);
+        } catch (Exception ex) {
+            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private class waitAndAcceptsClient implements Runnable
@@ -97,13 +104,13 @@ public class Host implements Observer
             try {
                 socketserver = new ServerSocket(6666);
                 //while (true) {
-                    socket = socketserver.accept();
-                    System.out.println("Socket accepté");
-                    outS.add(new ObjectOutputStream(socket.getOutputStream()));
-                    inS.add(new ObjectInputStream(socket.getInputStream()));
-                    sockets.add(socket);
-                    receiveClientInfomation(inS.get(inS.size() - 1));
-                    outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size() + 1));
+                socket = socketserver.accept();
+                System.out.println("Socket accepté");
+                outS.add(new ObjectOutputStream(socket.getOutputStream()));
+                inS.add(new ObjectInputStream(socket.getInputStream()));
+                sockets.add(socket);
+                receiveClientInfomation(inS.get(inS.size() - 1));
+                outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size() + 1));
                 //}
             } catch (Exception e) {
                 e.printStackTrace();
@@ -131,7 +138,7 @@ public class Host implements Observer
             out.writeObject(o);
         }
     }
-            
+
     public List<ParamPlayers> getParamPlayers()
     {
         return paramPlayers;
@@ -141,19 +148,17 @@ public class Host implements Observer
     {
         this.netController = netController;
     }
-    
+
     private void putTile(ObjectInputStream in) throws Exception
     {
         Coord c = (Coord) in.readObject();
         netController.putCurrentTile(c);
     }
-    
+
     private void putMeeple(ObjectInputStream in) throws Exception
     {
         String coordinates = (String) in.readObject();
         netController.putMeeple(coordinates);
     }
-    
-    
 
 }

@@ -7,21 +7,18 @@ package Network;
 
 import RessourcesGlobalVariables.eNetworkActions;
 import carcassonne.controller.CarcassonneGameController;
-import carcassonne.controller.CarcassonneGameControllerInterface;
-import carcassonne.model.carcassonnegame.CarcassonneGame;
+import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.notifyMessage.ObserverMessage;
 import carcassonne.view.CarcassonneIHM.ClientWindow;
-import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import static java.lang.Thread.sleep;
 import java.net.Socket;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -38,8 +35,8 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     private Socket socket;
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
+    private ObserverMessage notifyMessage;
     
-    private CarcassonneGameController controller;
 
     @SuppressWarnings("unchecked")
     public NetworkGame(String ipAddr, String pseudo) throws Exception
@@ -59,26 +56,46 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
             color.add(colorTemp);
             // Receive first game
             CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
-            ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game);
+            ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, this);
            
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
-    private void receiveGame() throws Exception
+    /**
+     * Notifies the observers with the current notify message
+     */
+    @Override
+    public void notifyObservers()
     {
-        CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
-        String msg = (String) inputStream.readObject();
-        controller.update((Observable) game, msg); // à voir
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$ TEST");
+        super.setChanged();
+        super.notifyObservers(this.notifyMessage);
+    }
+
+    /**
+     * Add an observer
+     *
+     * @param o
+     */
+    @Override
+    public synchronized void addObserver(Observer o)
+    {
+        super.addObserver(o);
+    }
+    
+    private void receiveNotifyMessage() throws Exception
+    {
+        notifyMessage = (ObserverMessage) inputStream.readObject();
+        notifyObservers();
     }
 
     @Override
     public void putTile(AbstractTile tile, int row, int column) throws Exception
     {
         outputStream.writeObject(eNetworkActions.putTile);
-        outputStream.writeObject(row);
-        outputStream.writeObject(column);
+        outputStream.writeObject(new Coord(column, row));
     }
 
     @Override
@@ -120,13 +137,6 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
         } catch (IOException ex) {
             Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    @Override
-    public void addObserver(Observer o)
-    {
-        super.addObserver(o);
-        //this.notifyBoardChanged();
     }
 
 }

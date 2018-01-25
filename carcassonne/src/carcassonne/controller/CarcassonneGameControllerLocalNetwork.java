@@ -8,6 +8,8 @@ package carcassonne.controller;
 import Network.Host;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -32,6 +34,18 @@ public class CarcassonneGameControllerLocalNetwork extends CarcassonneGameContro
         host.sendToAllSockets(model);
     }
 
+    @Override
+    public void endTurn()
+    {
+        try {
+            super.endTurn();
+            host.receiveAction();
+        } catch (Exception ex) {
+            Logger.getLogger(CarcassonneGameControllerLocalNetwork.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    
     
     
 }
