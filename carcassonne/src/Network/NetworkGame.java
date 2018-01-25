@@ -52,14 +52,21 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
             outputStream.writeObject(pseudo);
             // Receive color
             Set<String> color = new HashSet<>();
-            String colorTemp = (String) inputStream.readObject();
-            System.out.println("couleur recue : " + colorTemp);
-            color.add(colorTemp);
-            // Receive first game
-            CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
-            ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, this);
-            Thread t = new Thread(new ReceiveData());
-            t.start();
+            String messageReceived = (String) inputStream.readObject();
+            if(messageReceived.equals("full"))
+            {
+                System.out.println("Le serveur est complet");
+            }
+            else
+            {
+                System.out.println("couleur recue : " + messageReceived);
+                color.add(messageReceived);
+                // Receive first game
+                CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
+                ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, this);
+                Thread t = new Thread(new ReceiveData());
+                t.start();
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -88,7 +95,6 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     @Override
     public void notifyObservers()
     {
-        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$ Network notify"+notifyMessage.game.getBoard().getAllTiles().size());
         super.setChanged();
         super.notifyObservers(this.notifyMessage);
     }
@@ -107,7 +113,6 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     private void receiveNotifyMessage() throws Exception
     {
         notifyMessage = (ObserverMessage) inputStream.readObject();
-        System.out.println("mmmmmmmmmmmmmmmmmmmm Network receive : "+notifyMessage.game.getBoard().getAllTiles().size());
         notifyObservers();
     }
 

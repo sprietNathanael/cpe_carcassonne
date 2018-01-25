@@ -32,6 +32,7 @@ import java.util.logging.Logger;
 public class Host implements Observer
 {
 
+    private static final int MAX_PLAYERS = 6;
     private List<Socket> sockets;
     private List<ObjectOutputStream> outS;
     private List<ObjectInputStream> inS;
@@ -52,6 +53,7 @@ public class Host implements Observer
             t.start();
             System.out.println("Serveur prêt !");
             t.join();
+            System.out.println("Tout reçu");
             //Thread tj = new Thread 
        } catch (Exception e) {
 
@@ -88,7 +90,6 @@ public class Host implements Observer
     public void update(Observable o, Object arg)
     {
         try {
-            System.out.println("mmmmmmmmmmmmmmmmmmmm Host : "+((ObserverMessage)arg).game.getBoard().getAllTiles().size());
             sendToAllSockets(arg);
         } catch (Exception ex) {
             Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
@@ -105,15 +106,24 @@ public class Host implements Observer
         {
             try {
                 socketserver = new ServerSocket(6666);
-                //while (true) {
-                socket = socketserver.accept();
-                System.out.println("Socket accepté");
-                outS.add(new ObjectOutputStream(socket.getOutputStream()));
-                inS.add(new ObjectInputStream(socket.getInputStream()));
-                sockets.add(socket);
-                receiveClientInfomation(inS.get(inS.size() - 1));
-                outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size() + 1));
-                //}
+                while (true){
+                    if(paramPlayers.size() < MAX_PLAYERS) {
+                        socket = socketserver.accept();
+                        System.out.println("Socket accepté");
+                        outS.add(new ObjectOutputStream(socket.getOutputStream()));
+                        inS.add(new ObjectInputStream(socket.getInputStream()));
+                        sockets.add(socket);
+                        receiveClientInfomation(inS.get(inS.size() - 1));
+                        outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size()-1));
+                        outS.get(outS.size() - 1).reset();
+                    }
+                    else
+                    {
+                        socket = socketserver.accept();
+                        System.out.println("Socket rejettée");
+                        (new ObjectOutputStream(socket.getOutputStream())).writeObject("full");
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
