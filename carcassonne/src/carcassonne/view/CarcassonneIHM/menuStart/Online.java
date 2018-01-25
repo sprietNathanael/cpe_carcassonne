@@ -178,7 +178,7 @@ public class Online extends JDialog
             {
                 Set<String> color = new HashSet<>();
                 color.add(Colors.tab.get(0));
-                
+                host.beginGame();
                 ClientWindow cw = new ClientWindow(color, host);
             }
         });

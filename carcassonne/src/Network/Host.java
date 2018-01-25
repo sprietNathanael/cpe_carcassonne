@@ -18,8 +18,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -33,27 +35,29 @@ public class Host implements Observer
 {
 
     private static final int MAX_PLAYERS = 6;
-    private List<Socket> sockets;
-    private List<ObjectOutputStream> outS;
-    private List<ObjectInputStream> inS;
+    private Map<Integer, Socket> sockets;
+    private Map<Integer, ObjectOutputStream> outS;
+    private Map<Integer, ObjectInputStream> inS;
     private CarcassonneGameControllerLocalNetwork netController;
     private List<ParamPlayers> paramPlayers; // just for initialization
+    private int currentPlayerIndex;
+    private Thread t;
 
     public Host(String pseudo)
     {
-        sockets = new LinkedList<>();
+        sockets = new HashMap<>();
         paramPlayers = new LinkedList<>();
-        inS = new LinkedList<>();
-        outS = new LinkedList<>();
+        inS = new HashMap<>();
+        outS = new HashMap<>();
+        currentPlayerIndex = 0;
 
-        paramPlayers.add(new ParamPlayers(pseudo, Colors.tab.get(0), PlayerTypes.player));
+        paramPlayers.add(new ParamPlayers(pseudo, Colors.tab.get(currentPlayerIndex), PlayerTypes.player));
+        currentPlayerIndex++;
 
         try {
-            Thread t = new Thread(new waitAndAcceptsClient());
+            t = new Thread(new waitAndAcceptsClient());
             t.start();
             System.out.println("Serveur prêt !");
-            t.join();
-            System.out.println("Tout reçu");
             //Thread tj = new Thread 
        } catch (Exception e) {
 
@@ -63,7 +67,7 @@ public class Host implements Observer
 
     public void receiveAction() throws Exception
     {
-        for (ObjectInputStream in : inS) {
+        for (ObjectInputStream in : inS.values()) {
             eNetworkActions action = (eNetworkActions) in.readObject();
 
             switch (action) {
@@ -90,7 +94,7 @@ public class Host implements Observer
     public void update(Observable o, Object arg)
     {
         try {
-            sendToAllSockets(arg);
+            sendToAllClients(arg);
         } catch (Exception ex) {
             Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -107,15 +111,15 @@ public class Host implements Observer
             try {
                 socketserver = new ServerSocket(6666);
                 while (true){
-                    if(paramPlayers.size() < MAX_PLAYERS) {
+                    if(currentPlayerIndex < MAX_PLAYERS-1) {
                         socket = socketserver.accept();
                         System.out.println("Socket accepté");
-                        outS.add(new ObjectOutputStream(socket.getOutputStream()));
-                        inS.add(new ObjectInputStream(socket.getInputStream()));
-                        sockets.add(socket);
-                        receiveClientInfomation(inS.get(inS.size() - 1));
-                        outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size()-1));
-                        outS.get(outS.size() - 1).reset();
+                        outS.put(currentPlayerIndex, new ObjectOutputStream(socket.getOutputStream()));
+                        inS.put(currentPlayerIndex, new ObjectInputStream(socket.getInputStream()));
+                        sockets.put(currentPlayerIndex, socket);
+                        receiveClientInfomation(inS.get(currentPlayerIndex));
+                        sendToClient(currentPlayerIndex, Colors.tab.get(currentPlayerIndex));
+                        currentPlayerIndex++;
                     }
                     else
                     {
@@ -129,6 +133,11 @@ public class Host implements Observer
             }
         }
 
+    }
+    
+    public void beginGame()
+    {
+        this.t.interrupt();
     }
     
     private class waitAndReceiveInformations implements Runnable
@@ -148,18 +157,28 @@ public class Host implements Observer
     {
         String pseudo = (String) in.readObject();
         System.out.println("pseudo : " + pseudo);
-        ParamPlayers p = new ParamPlayers(pseudo, Colors.tab.get(paramPlayers.size()), PlayerTypes.player);
+        ParamPlayers p = new ParamPlayers(pseudo, Colors.tab.get(currentPlayerIndex), PlayerTypes.player);
         paramPlayers.add(p);
     }
-
+    
+    public void sendToClient(int playerIndex, Object o)
+    {
+        try {
+            this.sendToSocket(this.outS.get(playerIndex), o);
+        } catch (IOException ex) {
+            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
     {
         out.writeObject(o);
+        out.reset();
     }
 
-    public void sendToAllSockets(Object o) throws Exception
+    public void sendToAllClients(Object o) throws Exception
     {
-        for (ObjectOutputStream out : outS) {
+        for (ObjectOutputStream out : outS.values()) {
             out.reset();
             out.writeObject(o);
         }
