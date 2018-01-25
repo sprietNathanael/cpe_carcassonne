@@ -118,12 +118,10 @@ public class CityAggregate extends AbstractAggregate implements Serializable
                     neighborTileEdges.remove(neighborTileEdge);
                     if (neighborTileEdges.isEmpty()) {
                         //Remove the set if there is no more edges for this neighbor tile
-//                        System.out.println("Suppression edge: " + neighborCol + ";" + neighborRow + " : " + cityEdges.get(new Coord(neighborCol, neighborCol)));
                         cityEdges.remove(new Coord(neighborCol, neighborCol));
                     }
                     else {
                         //Update the set if there is still edges for this neighbor tile
-//                        System.out.println("Ajout edge: " + neighborCol + ";" + neighborRow + " : " + neighborTileEdges);
                         cityEdges.put(new Coord(neighborCol, neighborRow), neighborTileEdges);
                     }
                 }
@@ -135,10 +133,8 @@ public class CityAggregate extends AbstractAggregate implements Serializable
         });
         if (!currentTileEdges.isEmpty()) {
             //If there is still incompleted edges on this current tile, we put them
-//            System.out.println("Ajout edge: " + col + ";" + row + " : " + currentTileEdges);
             cityEdges.put(new Coord(col, row), currentTileEdges);
         }
-
         super.enlargeAggregate(col, row, newTile, locationTypes);
     }
 
@@ -146,7 +142,6 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     {
         super.merge(neighborAggregate);
         this.cityEdges = mergeCityEdgesSet(neighborAggregate.getCityEdges(), this.cityEdges);
-//        System.out.println("Merge city edges: " + cityEdges);
         cleanCityEdgesMap();
         hasCathedral = (this.hasCathedral || neighborAggregate.hasCathedral);
     }
@@ -210,40 +205,47 @@ public class CityAggregate extends AbstractAggregate implements Serializable
     @SuppressWarnings("unchecked")
     public void cleanCityEdgesMap()
     {
-        Coord currentCoord, neighborCoord;
+        Coord currentCoord;
         Set<CityEdgeEnum> currentEdges;
         CityEdgeEnum neighborEdge;
 
+        //Nouvelle map qui remplacera l'ancienne
         Map<Coord, Set<CityEdgeEnum>> updatedCityEdges;
         updatedCityEdges = new HashMap<>();
+        //Edges de la tuile courante
         Set<CityEdgeEnum> updatedCurrentEdges;
 
+        //Parcours des coord de chaque edge non complété
         for (Map.Entry currentLocalisation : cityEdges.entrySet()) {
+            int neighborCol, neighborRow;
             //Get the current data
             currentCoord = (Coord) currentLocalisation.getKey();
             currentEdges = (Set<CityEdgeEnum>) currentLocalisation.getValue();
-            //By default the neighbor are similar to the current coord, the enum will change it
-            neighborCoord = new Coord(currentCoord.col, currentCoord.row);
+
             updatedCurrentEdges = new HashSet<>();
             //For each edge, test if the corresponding edge exists
             for (CityEdgeEnum edge : currentEdges) {
+                //On obtient les coord du voisin en se basant sur la valeur de edge
+                neighborCol = currentCoord.col;
+                neighborRow = currentCoord.row;
                 neighborEdge = CityEdgeEnum.getOpposite(edge);
                 switch (edge) {
                     case NORTH:
-                        neighborCoord.row++;
+                        neighborRow++;
                         break;
                     case EAST:
-                        neighborCoord.col++;
+                        neighborCol++;
                         break;
                     case SOUTH:
-                        neighborCoord.row--;
+                        neighborRow = neighborRow - 1;
                         break;
                     case WEST:
-                        neighborCoord.col--;
+                        neighborCol = neighborCol - 1;
                         break;
                 }
-                if (!cityEdges.containsKey(neighborCoord)
-                        || !cityEdges.get(neighborCoord).contains(neighborEdge)) {
+
+                if (!cityEdges.containsKey(new Coord(neighborCol, neighborRow))
+                        || !cityEdges.get(new Coord(neighborCol, neighborRow)).contains(neighborEdge)) {
                     updatedCurrentEdges.add(edge);
                 }
                 /**
@@ -252,7 +254,7 @@ public class CityAggregate extends AbstractAggregate implements Serializable
                  * si ce vide est complété par un city type. Si c'est un
                  * CityType, l'edge est bien complété donc on ne l'ajoute pas
                  */
-                Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCoord.col, neighborCoord.row);
+                Set<String> neighborTypes = this.getAggregatedTypesByCoord(neighborCol, neighborRow);
                 if ((neighborTypes != null)
                         && (getCityEdges(neighborTypes).contains(neighborEdge))
                         && updatedCurrentEdges.contains(edge)) {
