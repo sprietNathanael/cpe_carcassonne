@@ -9,7 +9,6 @@ import RessourcesGlobalVariables.Colors;
 import RessourcesGlobalVariables.PlayerTypes;
 import RessourcesGlobalVariables.eNetworkActions;
 import carcassonne.controller.CarcassonneGameControllerLocalNetwork;
-import carcassonne.controller.CarcassonneGameControllerLocalNetworkServer;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -60,6 +59,7 @@ public class Host
         {
             case rotateRight :
                 netController.turnRight();
+                //sendToAllSockets(netController.c)
                 break;
             case putTile :
                 break;
@@ -82,14 +82,15 @@ public class Host
         {
             try {
                 socketserver = new ServerSocket(6666);
-                while (true) {
+                //while (true) {
                     socket = socketserver.accept();
                     System.out.println("Socket accepté");
                     outS.add(new ObjectOutputStream(socket.getOutputStream()));
                     inS.add(new ObjectInputStream(socket.getInputStream()));
                     sockets.add(socket);
                     receiveClientInfomation(inS.get(inS.size() - 1));
-                }
+                    outS.get(outS.size() - 1).writeObject(Colors.tab.get(paramPlayers.size() + 1));
+                //}
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -105,16 +106,28 @@ public class Host
         paramPlayers.add(p);
     }
 
-    private void sendToSocket(ObjectOutputStream out, Object o) throws IOException
+    public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
     {
         out.writeObject(o);
     }
 
-    private void sendToAllSockets(Object o) throws Exception
+    public void sendToAllSockets(Object o) throws Exception
     {
         for (ObjectOutputStream out : outS) {
             out.writeObject(o);
         }
     }
+            
+    public List<ParamPlayers> getParamPlayers()
+    {
+        return paramPlayers;
+    }
+
+    public void setNetController(CarcassonneGameControllerLocalNetwork netController)
+    {
+        this.netController = netController;
+    }
+    
+    
 
 }

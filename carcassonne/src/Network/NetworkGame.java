@@ -13,14 +13,17 @@ import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.view.CarcassonneIHM.ClientWindow;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import static java.lang.Thread.sleep;
 import java.net.Socket;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,10 +50,16 @@ public class NetworkGame implements CarcassonneGameInterface
             System.out.println("Socket client crée");
             
             // Send pseudo
-            outputStream.writeObject(pseudo);;
-           // this.paramPlayers = (List<ParamPlayers>) inputStream.readObject();
-            //play();
-            sleep(100000);
+            outputStream.writeObject(pseudo);
+            // Receive color
+            Set<String> color = new HashSet<>();
+            String colorTemp = (String) inputStream.readObject();
+            System.out.println("couleur recue : " + colorTemp);
+            color.add(colorTemp);
+            // Receive first game
+            CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
+            ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game);
+           
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -58,7 +67,7 @@ public class NetworkGame implements CarcassonneGameInterface
     
     private void receiveGame() throws Exception
     {
-        CarcassonneGameInterface game = (CarcassonneGame) inputStream.readObject();
+        CarcassonneGameInterface game = (CarcassonneGameInterface) inputStream.readObject();
         String msg = (String) inputStream.readObject();
         controller.update((Observable) game, msg); // à voir
     }
