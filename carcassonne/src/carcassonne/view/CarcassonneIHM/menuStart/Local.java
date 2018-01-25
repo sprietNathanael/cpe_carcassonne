@@ -6,6 +6,7 @@ import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -91,6 +92,8 @@ public class Local extends JDialog
             paPlayer.setBackground(new Color(232,181,87));
             paPlayer.setPreferredSize(new Dimension(600, 55));
             paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
+            
+            
 
             lbTypeJoueur = new JLabel("Player type : ");
             cbPlayerType[i] = new JComboBox<>();
@@ -132,10 +135,10 @@ public class Local extends JDialog
 
         JPanel control = new JPanel();
         //JButton okBouton = new JButton("PLAY");
-        BtGame okBouton = new BtGame("resources/PlayLocal.png");
-        okBouton.setOpaque(false);
-        okBouton.setContentAreaFilled(false);
-        okBouton.setBorderPainted(false);
+        BtGame btPlay = new BtGame("resources/PlayLocal.png");
+        btPlay.setOpaque(false);
+        btPlay.setContentAreaFilled(false);
+        btPlay.setBorderPainted(false);
         BtGame btBack = new BtGame("resources/BackLocal.png");
         //JButton btBack = new JButton("BACK");
         btBack.setOpaque(false);
@@ -157,7 +160,7 @@ public class Local extends JDialog
             }
         });
 
-        okBouton.addActionListener(new ActionListener()
+        btPlay.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent arg0)
@@ -189,6 +192,7 @@ public class Local extends JDialog
                 clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 setVisible(false);
+                btPlay.setEnabled(false);
 
             }
 
@@ -197,7 +201,7 @@ public class Local extends JDialog
         content.add(panExt);
         content.setBackground(new Color(242,210,100));
 
-        control.add(okBouton);
+        control.add(btPlay);
         control.add(btBack);
         control.setBackground(new Color(242,210,100));
         
