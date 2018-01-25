@@ -141,7 +141,7 @@ public class PlayerInfo implements InfoPanelMouseListener
      */
     public void paint(Graphics2D g2, int currentHeight, int height, int width, boolean currentPlayer)
     {
-        g2.drawImage(this.plankTexture, 5, currentHeight, width-10, height, null);
+        g2.drawImage(this.plankTexture, 5, currentHeight, width, height, null);
               
         int meepleSize = (int) (height / 2);
         int meepleX = PlayerInfo.MEEPLE_BORDER;

@@ -358,7 +358,7 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         for (Map.Entry<String, PlayerInfo> entry : this.playerInfoLines.entrySet()) {
             String key = entry.getKey();
             PlayerInfo value = entry.getValue();
-            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth(), key.equals(this.currentPlayer));
+            value.paint(g2, currentHeight, infoLinesHeight, this.getWidth()-10, key.equals(this.currentPlayer));
             currentHeight += infoLinesHeight+InfoPanel.GAPS_BETWEEN_LINES;
         }
 
