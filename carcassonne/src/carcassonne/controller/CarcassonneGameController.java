@@ -228,7 +228,7 @@ public class CarcassonneGameController extends Observable implements Carcassonne
             Chercher parmi les ville libre voisine de ces coord, filtrer celles qui sont ouvertes dessus: prendre la plus grosse
                 carcaGame.getBiggestCityAvailableInCoords(placements);
                  -> Retourne les Coord du placement intéressant
-                 -> null sinon, comportement normal
+                 -> null sinon, comportement normal, renvoyer null si un joueur adverse a une ville qui ouvre sur cet emplacement
                 this.biggestCityFound = true;
          */
         Coord c = new Coord(placements.get(index).col, placements.get(index).row);
@@ -259,10 +259,17 @@ public class CarcassonneGameController extends Observable implements Carcassonne
                             this.putMeeple(coordinates);
                  */
                 Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
+                /*@TODO:
+                    Si Abbaye ou Cathédrale ou Auberge présente, renvoyer la location correspondante
+                    coordinates = this.getSpecialBonusTypesInTile(freeAgg, c.col, c.row);
+                 */
                 String coordinates = this.getRandomAggregateLocation(freeAgg);
                 //tuile
                 this.putMeeple(coordinates);
             }
+            /*@TODO:
+                tester si une route libre va se terminer si oui on pose dessus
+             */
         }
     }
 
