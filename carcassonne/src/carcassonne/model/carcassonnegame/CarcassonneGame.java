@@ -89,6 +89,14 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
         this.previousPlayer = null;
         HashSet<SetInterface> sideSet = new HashSet<>();
         for (SetInterface set : sets) {
+            if(set instanceof InnsAndCathedralsSet)
+            {
+                this.setInnsAndCathedralsExtensionIsUsed(true);
+            }
+            else if(set instanceof RiverSet)
+            {
+                this.setRiverExtensionIsUsed(true);
+            }
             if(set.isNotShuffleable())
             {
                 sideSet.add(set);

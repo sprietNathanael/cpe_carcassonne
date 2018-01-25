@@ -158,12 +158,12 @@ public class GameView
         }
         // Build the game
         this.game = new CarcassonneGame(players, sets);
-        if (cbExtRiver) {
+        /*if (cbExtRiver) {
             this.game.setRiverExtensionIsUsed(true);
         }
         if (cbExtInnsAndCath) {
             this.game.setInnsAndCathedralsExtensionIsUsed(true);
-        }
+        }*/
 
     }
 
