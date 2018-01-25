@@ -23,6 +23,7 @@ import java.net.Socket;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Observable;
+import java.util.Observer;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -31,7 +32,7 @@ import java.util.logging.Logger;
  *
  * @author Thomas
  */
-public class NetworkGame implements CarcassonneGameInterface
+public class NetworkGame extends Observable implements CarcassonneGameInterface
 {
 
     private Socket socket;
@@ -119,6 +120,13 @@ public class NetworkGame implements CarcassonneGameInterface
         } catch (IOException ex) {
             Logger.getLogger(NetworkGame.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+
+    @Override
+    public void addObserver(Observer o)
+    {
+        super.addObserver(o);
+        //this.notifyBoardChanged();
     }
 
 }

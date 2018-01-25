@@ -35,7 +35,7 @@ public class GameView
 {
 
     private AbstractCarcassonneGameController controller;
-    private CarcassonneGame game;
+    private CarcassonneGameInterface game;
     private ArrayList<Player> players;
     private Set<String> playableColors;
 
@@ -53,7 +53,7 @@ public class GameView
         try {
             this.playableColors = playableColors;
             contructPlayersListAndGame(playerList, cbExtRiver, cbExtInnsAndCath); // Build the controller
-            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
+            this.controller = new CarcassonneGameControllerMulti(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,7 +68,7 @@ public class GameView
         try {
             this.contructPlayersListAndGame(new ArrayList<>(), true, true);
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
+            this.controller = new CarcassonneGameControllerMulti(game);
         } catch (Exception ex) {
             Logger.getLogger(GameView.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -103,8 +103,9 @@ public class GameView
             this.playableColors = playableColors;
 
             // Build the controller
-            this.controller = new CarcassonneGameControllerMulti((CarcassonneGameInterface) game);
+            this.controller = new CarcassonneGameControllerMulti(game);
             this.players = ((CarcassonneGame)game).getPlayers();
+            this.game = game;
             
 
         } catch (Exception ex) {
