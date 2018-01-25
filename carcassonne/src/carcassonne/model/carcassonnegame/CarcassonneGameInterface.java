@@ -33,4 +33,6 @@ public interface CarcassonneGameInterface
     
     public void rotateCurrentTileRight();
     
+    public void addObserver(Observer o);
+    
 }
