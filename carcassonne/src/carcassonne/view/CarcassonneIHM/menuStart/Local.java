@@ -6,6 +6,7 @@ import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -63,7 +64,7 @@ public class Local extends JDialog
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
 
         //Dimension Window
-        this.setSize(950, 700);
+        this.setSize(1050, 800);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
 
@@ -72,16 +73,15 @@ public class Local extends JDialog
         this.setCursor(tk.createCustomCursor(new ImageIcon(getClass().getResource("/images/curseur.png")).getImage(), new Point(0, 0), "nameCursor"));
 
         //Image de gauche
-        icon = new JLabel(new ImageIcon("resources/knight.jpg"));
+        icon = new JLabel(new ImageIcon("resources/knight.png"));
         JPanel panIcon = new JPanel();
-        panIcon.setBackground(Color.white);
         panIcon.setLayout(new BorderLayout());
         panIcon.add(icon);
 
         //------------- PART PLAYERS ------------------------------------------
         JPanel paPlayer;
         JPanel content = new JPanel();
-        content.setBackground(Color.white);
+        //content.setBackground(Color.white);
 
         tfNomPlayer = new JTextField[NBMAXPLAYERS];
         cbPlayerType = new JComboBox[NBMAXPLAYERS];
@@ -89,15 +89,17 @@ public class Local extends JDialog
 
         for (int i = 0; i < NBMAXPLAYERS; i++) {
             paPlayer = new JPanel();
-            paPlayer.setBackground(Color.white);
+            paPlayer.setBackground(new Color(232,181,87));
             paPlayer.setPreferredSize(new Dimension(600, 55));
             paPlayer.setBorder(BorderFactory.createTitledBorder("Player" + (i + 1)));
+            
+            
 
             lbTypeJoueur = new JLabel("Player type : ");
             cbPlayerType[i] = new JComboBox<>();
             cbPlayerType[i].addItem(PlayerTypes.player);
             cbPlayerType[i].addItem(PlayerTypes.basicIA);
-            
+
             nomLabel = new JLabel("Name :");
             colorsLabel = new JLabel("Color :");
             tfNomPlayer[i] = new JTextField();
@@ -121,19 +123,27 @@ public class Local extends JDialog
 
         //Choice extensions
         JPanel panExt = new JPanel();
-        panExt.setBackground(Color.white);
+        panExt.setBackground(new Color(232,181,87));
         panExt.setPreferredSize(new Dimension(300, 60));
         panExt.setBorder(BorderFactory.createTitledBorder("EXTENSIONS"));
         extRiver.addActionListener(new StateListener());
-        extRiver.setBackground(Color.white);
+        extRiver.setBackground(new Color(232,181,87));
         extInnsAndCath.addActionListener(new StateListener());
-        extInnsAndCath.setBackground(Color.white);
+        extInnsAndCath.setBackground(new Color(232,181,87));
         panExt.add(extRiver);
         panExt.add(extInnsAndCath);
 
         JPanel control = new JPanel();
-        JButton okBouton = new JButton("PLAY");
-        JButton btBack = new JButton("BACK");
+        //JButton okBouton = new JButton("PLAY");
+        BtGame btPlay = new BtGame("resources/PlayLocal.png");
+        btPlay.setOpaque(false);
+        btPlay.setContentAreaFilled(false);
+        btPlay.setBorderPainted(false);
+        BtGame btBack = new BtGame("resources/BackLocal.png");
+        //JButton btBack = new JButton("BACK");
+        btBack.setOpaque(false);
+        btBack.setContentAreaFilled(false);
+        btBack.setBorderPainted(false);
 
         btBack.addActionListener(new ActionListener()
         {
@@ -150,7 +160,7 @@ public class Local extends JDialog
             }
         });
 
-        okBouton.addActionListener(new ActionListener()
+        btPlay.addActionListener(new ActionListener()
         {
             @Override
             public void actionPerformed(ActionEvent arg0)
@@ -182,20 +192,25 @@ public class Local extends JDialog
                 clientWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
                 setVisible(false);
+                btPlay.setEnabled(false);
 
             }
 
         });
 
         content.add(panExt);
+        content.setBackground(new Color(242,210,100));
 
-        control.add(okBouton);
+        control.add(btPlay);
         control.add(btBack);
-        control.setBackground(Color.white);
+        control.setBackground(new Color(242,210,100));
+        
+        panIcon.setBackground(new Color(242,210,100));
+
+        this.getContentPane().add(control, BorderLayout.SOUTH);
 
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(content, BorderLayout.CENTER);
-        this.getContentPane().add(control, BorderLayout.SOUTH);
     }
 
     /**
@@ -210,7 +225,6 @@ public class Local extends JDialog
         this.setVisible(true);
         return this.zInfo;
     }*/
-
     /**
      * List of players with their characteristics
      *
