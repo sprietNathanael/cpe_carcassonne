@@ -39,7 +39,7 @@ public class Settings extends JFrame
         this.setIconImage(new ImageIcon(getClass().getResource("/images/icone carcassonne.jpg")).getImage());
         
         //Set window properties
-        this.setSize(850, 850);
+        this.setSize(700, 700);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
@@ -54,12 +54,12 @@ public class Settings extends JFrame
 
         //Ajout des boutons
         this.add(btModeLocal);        
-        btModeLocal.setBounds(350, 310, 154, 50);
+        btModeLocal.setBounds(270, 269, 270, 110);
         btModeLocal.setContentAreaFilled(false);
         btModeLocal.setBorderPainted(false);
         
         this.add(btModeOnline);
-        btModeOnline.setBounds(350, 410, 154, 50);
+        btModeOnline.setBounds(270, 360, 270, 110);
         btModeOnline.setContentAreaFilled(false);
         btModeOnline.setBorderPainted(false);
         
