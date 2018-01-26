@@ -48,10 +48,6 @@ public class Board implements BoardInterface, Serializable
             if (!grid.containsKey(new Coord(column, row))) {
                 grid.put(new Coord(column, row), newTile);
             }
-            else {
-                throw new Exception("There is already a tile in the location ["
-                        + row + ":" + column + "]");
-            }
         } catch (ArrayIndexOutOfBoundsException e) {
             throw new Exception("The new tile has indexes that are out of the grid range");
         }
