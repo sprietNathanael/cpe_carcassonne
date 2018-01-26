@@ -18,6 +18,7 @@ import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -88,7 +89,10 @@ public class Host implements Observer
         public void run()
         {
             try {
-                socketserver = new ServerSocket(6666);
+                socketserver = new ServerSocket(650);
+                InetAddress localAddress = InetAddress.getLocalHost();
+                System.out.println("Local adress " + localAddress);
+
                 while (true){
                     if(currentPlayerIndex < MAX_PLAYERS) {
                         socket = socketserver.accept();
