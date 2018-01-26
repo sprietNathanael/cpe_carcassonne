@@ -56,7 +56,7 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
             //InetAddress iAddr = InetAddress.getByName(ipAddr);
             //System.out.println(iAddr);
             System.out.println(ipAddr);
-            socket = new Socket(ipAddr, 8989);
+            socket = new Socket(ipAddr, 6666);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
             System.out.println("Socket client crée");
