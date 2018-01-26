@@ -18,6 +18,7 @@ import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -44,7 +45,8 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     public NetworkGame(String ipAddr, String pseudo) throws Exception
     {
         try {
-            socket = new Socket(ipAddr, 6666);
+            InetAddress iAddr = InetAddress.getByName(ipAddr);
+            socket = new Socket(iAddr, 80);
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
             System.out.println("Socket client crée");
