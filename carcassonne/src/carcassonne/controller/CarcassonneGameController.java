@@ -12,6 +12,7 @@ import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import RessourcesGlobalVariables.PlayerTypes;
+import carcassonne.model.aggregate.AbstractAggregate;
 import carcassonne.model.carcassonnegame.CarcassonneGameInterface;
 import carcassonne.notifyMessage.ObserverMessage;
 import java.util.ArrayList;
@@ -247,9 +248,20 @@ public class CarcassonneGameController extends Observable implements Carcassonne
     public void putMeepleBasicIA(Coord c) throws Exception
     {
         if (this.carcassonneGame.playerMeepleBePutOnCurrentTile()) {
-            int putMeepleOrNot = (int) (Math.random() * 2);
-            if (putMeepleOrNot == 1) {
-                /*@TODO:
+            String coordinates = null;
+            Set<AbstractAggregate> freeAbstractAgg = this.carcassonneGame.getFreeAggregatesOfTile(c.col, c.row);
+            //Test toujours validé en cas normal
+            if (!freeAbstractAgg.isEmpty()) {
+                coordinates = this.carcassonneGame.getSpecialBonusTypesInTile(freeAbstractAgg, c.col, c.row);
+                System.out.println("    :" + freeAbstractAgg + ":" + coordinates);
+            }
+            if (coordinates == null) {
+                int putMeepleOrNot = (int) (Math.random() * 2);
+                if (putMeepleOrNot == 1) {
+
+                    Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
+                    coordinates = this.getRandomAggregateLocation(freeAgg);
+                    /*@TODO:
                     If biggestCity found:
                         A l'emplacement, récupérer la ville la plus grosse
                             Récupérer la plus grosse ville libre de cette tuile
@@ -257,18 +269,15 @@ public class CarcassonneGameController extends Observable implements Carcassonne
                              -> renvoyer un type la composant pour poser un meeple dessus
                              -> Si null habituel
                             this.putMeeple(coordinates);
-                 */
-                Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
-                /*@TODO:
-                    Si Abbaye ou Cathédrale ou Auberge présente, renvoyer la location correspondante
-                    coordinates = this.getSpecialBonusTypesInTile(freeAgg, c.col, c.row);
-                 */
-                String coordinates = this.getRandomAggregateLocation(freeAgg);
-                //tuile
+                     */
+
+                }
+            }
+            if (coordinates != null) {
                 this.putMeeple(coordinates);
             }
             /*@TODO:
-                tester si une route libre va se terminer si oui on pose dessus
+                tester si une route ou une ville libre va se terminer, si oui on pose dessus
              */
         }
     }

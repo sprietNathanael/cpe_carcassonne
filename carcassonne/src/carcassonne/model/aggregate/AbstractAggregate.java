@@ -9,9 +9,12 @@ import carcassonne.coord.Coord;
 import carcassonne.model.player.Meeple;
 import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
+import carcassonne.model.type.AbstractType;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -38,9 +41,9 @@ public abstract class AbstractAggregate implements Serializable
      * State of the aggregate, can be updated using "checkIsCompleted"
      */
     protected boolean isCompleted;
-    
+
     protected AggregatesEnum type;
-    
+
     public AggregatesEnum getType()
     {
         return this.type;
@@ -229,6 +232,26 @@ public abstract class AbstractAggregate implements Serializable
         AbstractTile tile = aggregatedTiles.get(new Coord(col, row));
 
         return aggregatedPositionTypes.get(tile);
+    }
+
+    /**
+     * Gets the types of the tile placed on col, row passed in parameters
+     *
+     * @param col
+     * @param row
+     * @return
+     */
+    public List<AbstractType> getAggregatedAbstractTypesByCoord(int col, int row)
+    {
+        List<AbstractType> result = new ArrayList<>();
+        Set<String> typesCoord = this.getAggregatedTypesByCoord(col, row);
+        AbstractTile tile = this.getAggregatedTiles().get(new Coord(col, row));
+
+        typesCoord.forEach((location) -> {
+            result.add(tile.getType(location));
+        });
+
+        return result;
     }
 
     public Map<Player, Set<Meeple>> getPlayers()

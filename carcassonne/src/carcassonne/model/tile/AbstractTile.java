@@ -117,6 +117,8 @@ public abstract class AbstractTile implements Serializable
      */
     public abstract AbstractType getType(String coordinates);
     
+    public abstract String getLocation(AbstractType location);
+    
     public abstract HashMap<String, AbstractType> getTypes();
 
     /**

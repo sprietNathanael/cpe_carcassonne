@@ -16,6 +16,7 @@ import java.io.Serializable;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map.Entry;
 import java.util.Set;
 
 /**
@@ -925,5 +926,20 @@ public class CasualTile extends AbstractTile implements Serializable
         location = (String) locations.iterator().next();
 
         return this.getType(location);
+    }
+
+    @Override
+    public String getLocation(AbstractType location)
+    {
+        String result = null;
+
+        for (Entry<String, AbstractType> entry : this.types.entrySet()) {
+            if (location.equals(entry.getValue())) {
+                result = entry.getKey();
+            }
+        }
+        
+        return result;
+
     }
 }
