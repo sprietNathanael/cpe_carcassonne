@@ -1235,4 +1235,25 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
 
         return result;
     }
+
+    public String getGoodCityLocation(Set<AbstractAggregate> freeAbstractAgg, int col, int row)
+    {
+        List<AbstractType> tileTypes;
+        AbstractType wantedType = null;
+        String result = null;
+        Coord coord = convertCoord(col, row);
+
+        for (AbstractAggregate agg : freeAbstractAgg) {
+            if (agg instanceof CityAggregate && agg.getAggregatedTiles().size() > 1) {
+                tileTypes = agg.getAggregatedAbstractTypesByCoord(coord.col, coord.row);
+                if (tileTypes != null && !tileTypes.isEmpty()) {
+                    wantedType = tileTypes.get(0);
+                    result = agg.getAggregatedTiles().get(coord).getLocation(wantedType);
+                    System.out.println("Pose forcée !");
+                }
+            }
+        }
+        
+        return result;
+    }
 }

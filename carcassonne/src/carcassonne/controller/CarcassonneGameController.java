@@ -258,6 +258,11 @@ public class CarcassonneGameController extends Observable implements Carcassonne
             if (coordinates == null) {
                 int putMeepleOrNot = (int) (Math.random() * 2);
                 if (putMeepleOrNot == 1) {
+                    coordinates = this.carcassonneGame.getGoodCityLocation(freeAbstractAgg, c.col, c.row);
+                }
+            }
+            if (coordinates == null) {
+                if (Math.random() > 0.75) {
 
                     Set<Set<String>> freeAgg = this.carcassonneGame.getFreeAggregatesInTile(c.col, c.row);
                     coordinates = this.getRandomAggregateLocation(freeAgg);
