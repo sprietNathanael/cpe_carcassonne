@@ -160,6 +160,7 @@ public class Host implements Observer
 
     }
     
+    @SuppressWarnings("unchecked")
     public void receiveAction(int clientToRead) throws Exception
     {
         System.out.println("[Server] Waiting for action of client "+clientToRead);
