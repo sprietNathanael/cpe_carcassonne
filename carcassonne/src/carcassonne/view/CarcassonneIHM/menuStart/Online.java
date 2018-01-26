@@ -170,7 +170,9 @@ public class Online extends JDialog
             {
                 String ip = tfIpAddress.getText();
                 try {
-                    game = new NetworkGame((ip.equals("")) ? ip : "localhost", tfName.getText(), self);
+                    if (ip == "")
+                        ip = "localhost";
+                    game = new NetworkGame(ip, tfName.getText(), self);
                 } catch (Exception ex) {
                     Logger.getLogger(Online.class.getName()).log(Level.SEVERE, null, ex);
                 }
