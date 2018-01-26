@@ -229,10 +229,10 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
             currentCoord = (Coord) currentLocalisation.getKey();
             currentEdges = (Set<RoadEdgeEnum>) currentLocalisation.getValue();
             //By default the neighbor are similar to the current coord, the enum will change it
-            neighborCoord = new Coord(currentCoord.col, currentCoord.row);
             updatedCurrentEdges = new HashSet<>();
             //For each edge, test if the corresponding edge exists
             for (RoadEdgeEnum edge : currentEdges) {
+                neighborCoord = new Coord(currentCoord.col, currentCoord.row);
                 neighborEdge = RoadEdgeEnum.getOpposite(edge);
                 switch (edge) {
                     case NORTH:
@@ -305,13 +305,14 @@ public class RoadAggregate extends AbstractAggregate implements Serializable
     public int countPoints()
     {
         int result = 0;
-        
+
         //If this is a road with a meeple, we count 2 points per Tiles if the road is completed, 0 if not
         if (this.hasInn) {
             if (this.checkIsCompleted()) {
                 result = aggregatedTiles.size() * 2;
             }
-        } else {
+        }
+        else {
             result = aggregatedTiles.size();
         }
 
