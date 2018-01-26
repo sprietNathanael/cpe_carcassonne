@@ -392,5 +392,10 @@ public class CarcassonneGameController extends Observable implements Carcassonne
         this.notifyObservers();
 
     }
+    
+    public void setPlayerIA(String color)
+    {
+        this.carcassonneGame.setPlayerIA(color);
+    }
 
 }

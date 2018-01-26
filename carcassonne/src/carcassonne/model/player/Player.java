@@ -26,7 +26,7 @@ public class Player implements Serializable
     private final String name;
     private int points;
     private final String color;
-    private final String playerType;
+    private String playerType;
     private int fieldPoints;
     private int cityPoints;
     private int abbayePoints;
@@ -268,5 +268,11 @@ public class Player implements Serializable
         }
 
         return total;
+    }
+    
+    public void setMode(String mode)
+    {
+        System.out.println("Change Mode");
+        this.playerType = mode;
     }
 }

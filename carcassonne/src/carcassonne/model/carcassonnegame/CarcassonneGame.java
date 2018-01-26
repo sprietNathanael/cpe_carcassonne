@@ -5,6 +5,7 @@
  */
 package carcassonne.model.carcassonnegame;
 
+import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.coord.Coord;
 import carcassonne.model.aggregate.AbbayAggregate;
 import carcassonne.model.aggregate.AbstractAggregate;
@@ -138,6 +139,18 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     public Set<Meeple> getMeeplesSet()
     {
         return meeplesSet;
+    }
+    
+    public void setPlayerIA(String color)
+    {
+        for(Player player : this.players)
+        {
+            if(player.getColor().equals(color))
+            {
+                player.setMode(PlayerTypes.basicIA);
+                break;
+            }
+        }
     }
 
     /**
