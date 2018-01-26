@@ -31,6 +31,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
 import java.util.Set;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -287,6 +289,9 @@ public class MainPanel extends JPanel implements java.util.Observer
                     // Repaint panels
                     Thread paintThread  = new Thread(new MainPanel.RepaintAll());
                     paintThread.start();
+                    JOptionPane gg = new JOptionPane(); 
+                    ImageIcon img = new ImageIcon("resources/king.png"); 
+                    gg.showMessageDialog(null, "Le joueur gagnant est : " + game.getWinner().getName(), "WINNER", JOptionPane.INFORMATION_MESSAGE, img); 
                     break;
                 }
             default:

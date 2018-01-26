@@ -234,10 +234,8 @@ public class InfoPanel extends JPanel implements InfoPanelMouseListener
         }
 
         // Updates the message
-        this.message = "Le joueur gagnant est : " + game.getWinner().getName();
-        JOptionPane gg = new JOptionPane();
-        ImageIcon img = new ImageIcon("resources/king.png");
-        gg.showMessageDialog(null, "Le joueur gagnant est : " + game.getWinner().getName(), "WINNER", JOptionPane.INFORMATION_MESSAGE, img);
+        //this.message = "Le joueur gagnant est : " + game.getWinner().getName();
+        
 
         // Reset the current tile
         this.currentTile = null;
