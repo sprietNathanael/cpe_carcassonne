@@ -13,6 +13,7 @@ import carcassonne.coord.Coord;
 import carcassonne.model.carcassonnegame.CarcassonneGame;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.notifyMessage.ObserverMessage;
+import carcassonne.view.CarcassonneIHM.menuStart.Online;
 import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -45,16 +46,18 @@ public class Host implements Observer
     private int currentPlayerIndex;
     private Thread clientWaitingThread;
     private Thread messageWaitingThread;
+    private Online menu;
 
-    public Host(String pseudo)
+    public Host(ParamPlayers paramPlayer, Online menu)
     {
         sockets = new HashMap<>();
         paramPlayers = new LinkedList<>();
         inS = new HashMap<>();
         outS = new HashMap<>();
         currentPlayerIndex = 0;
+        this.menu = menu;
 
-        paramPlayers.add(new ParamPlayers(pseudo, Colors.tab.get(currentPlayerIndex), PlayerTypes.player));
+        paramPlayers.add(paramPlayer);
         currentPlayerIndex++;
         messageWaitingThread = new Thread(new WaitAndReceiveInformations());
 
@@ -87,21 +90,22 @@ public class Host implements Observer
             try {
                 socketserver = new ServerSocket(6666);
                 while (true){
-                    if(currentPlayerIndex < MAX_PLAYERS-1) {
+                    if(currentPlayerIndex < MAX_PLAYERS) {
                         socket = socketserver.accept();
                         System.out.println("Socket accepté");
                         outS.put(currentPlayerIndex, new ObjectOutputStream(socket.getOutputStream()));
                         inS.put(currentPlayerIndex, new ObjectInputStream(socket.getInputStream()));
                         sockets.put(currentPlayerIndex, socket);
-                        receiveClientInfomation(inS.get(currentPlayerIndex));
-                        sendToClient(currentPlayerIndex, Colors.tab.get(currentPlayerIndex));
+                        ParamPlayers player = receiveClientInfomation(inS.get(currentPlayerIndex));
+                        sendToClient(currentPlayerIndex, new NetworkMessage(eNetworkActions.currentColor,Colors.tab.get(currentPlayerIndex)));
+                        sendToAllClients(new NetworkMessage(eNetworkActions.allPlayers, paramPlayers));
                         currentPlayerIndex++;
                     }
                     else
                     {
                         socket = socketserver.accept();
                         System.out.println("Socket rejettée");
-                        (new ObjectOutputStream(socket.getOutputStream())).writeObject("full");
+                        (new ObjectOutputStream(socket.getOutputStream())).writeObject(new NetworkMessage(eNetworkActions.serverFull, null));
                     }
                 }
             } catch (Exception e) {
@@ -111,12 +115,14 @@ public class Host implements Observer
 
     }
     
-    private void receiveClientInfomation(ObjectInputStream in) throws Exception
+    private ParamPlayers receiveClientInfomation(ObjectInputStream in) throws Exception
     {
         String pseudo = (String) in.readObject();
         System.out.println("pseudo : " + pseudo);
         ParamPlayers p = new ParamPlayers(pseudo, Colors.tab.get(currentPlayerIndex), PlayerTypes.player);
         paramPlayers.add(p);
+        menu.addPlayer(p);
+        return p;
     }
     
     
@@ -216,7 +222,7 @@ public class Host implements Observer
     public void update(Observable o, Object arg)
     {
         try {
-            sendToAllClients(arg);
+            sendToAllClients(new NetworkMessage(eNetworkActions.sendGame, arg));
         } catch (Exception ex) {
             Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
         }
