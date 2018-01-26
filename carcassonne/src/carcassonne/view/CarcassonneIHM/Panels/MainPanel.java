@@ -26,6 +26,7 @@ import carcassonne.view.CarcassonneIHM.Tools.UICoord;
 import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -291,6 +292,7 @@ public class MainPanel extends JPanel implements java.util.Observer
                     paintThread.start();
                     JOptionPane gg = new JOptionPane(); 
                     ImageIcon img = new ImageIcon("resources/king.png"); 
+                    gg.setBackground(Color.white);
                     gg.showMessageDialog(null, "Le joueur gagnant est : " + game.getWinner().getName(), "WINNER", JOptionPane.INFORMATION_MESSAGE, img); 
                     break;
                 }
