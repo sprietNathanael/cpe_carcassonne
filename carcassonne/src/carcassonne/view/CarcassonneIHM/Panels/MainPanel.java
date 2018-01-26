@@ -28,6 +28,8 @@ import carcassonne.notifyMessage.ObserverMessage;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Observable;
@@ -106,6 +108,8 @@ public class MainPanel extends JPanel implements java.util.Observer
         // Add the panels to the main panel
         this.add(this.infoPanel, BorderLayout.WEST);
         this.add(gridPanel, BorderLayout.CENTER);
+        this.addComponentListener(new ResizeListener());
+
     }
 
     /**
@@ -342,4 +346,12 @@ public class MainPanel extends JPanel implements java.util.Observer
             infoPanel.repaint();
         }
     }
+    
+    class ResizeListener extends ComponentAdapter {
+        public void componentResized(ComponentEvent e) {
+            gridPanel.reCenter();
+            Thread paintThread  = new Thread(new MainPanel.RepaintAll());
+            paintThread.start();
+        }
+}
 }
