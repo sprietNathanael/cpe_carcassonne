@@ -146,6 +146,12 @@ public class GridPanel extends JPanel
         }
     }
     
+    public void reCenter()
+    {
+        this.moveCenterTo(new UICoord(this.getWidth()/2,this.getHeight()/2));
+        
+    }
+    
     /**
      * Get the tile size
      * @return 
