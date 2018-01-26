@@ -68,6 +68,7 @@ public class Host implements Observer
             System.out.println("Serveur prêt !");
             //Thread tj = new Thread 
        } catch (Exception e) {
+
             e.printStackTrace();
         }
     }
@@ -88,7 +89,7 @@ public class Host implements Observer
         public void run()
         {
             try {
-                socketserver = new ServerSocket(6666);
+                socketserver = new ServerSocket(8989);
                 InetAddress localAddress = InetAddress.getLocalHost();
                 System.out.println("Local adress " + localAddress);
 
@@ -151,14 +152,7 @@ public class Host implements Observer
                     try {
                         receiveAction(currentPlayerIndex);
                     } catch (Exception e) {
-                        inS.remove(currentPlayerIndex);
-                        outS.remove(currentPlayerIndex);
-                        sockets.remove(currentPlayerIndex);
-                        currentPlayerIndex++;
-                        if(currentPlayerIndex >= paramPlayers.size())
-                        {
-                            currentPlayerIndex = 0;
-                        }
+                        e.printStackTrace();
                     }
                 }
             }
@@ -201,24 +195,25 @@ public class Host implements Observer
 
     public void sendToClient(int playerIndex, Object o)
     {
-        this.sendToSocket(this.outS.get(playerIndex), o);
+        try {
+            this.sendToSocket(this.outS.get(playerIndex), o);
+        } catch (IOException ex) {
+            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
     public void sendToAllClients(Object o) throws Exception
     {
         for (ObjectOutputStream out : outS.values()) {
-            sendToSocket(out, o);
+            out.reset();
+            out.writeObject(o);
         }
     }
     
-    public void sendToSocket(ObjectOutputStream out, Object o)
+    public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
     {
-        try { 
-            out.reset();
-            out.writeObject(o);
-        } catch (IOException ex) {
-            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        out.writeObject(o);
+        out.reset();
     }
 
 
