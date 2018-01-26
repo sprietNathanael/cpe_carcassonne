@@ -89,7 +89,7 @@ public class Host implements Observer
         public void run()
         {
             try {
-                socketserver = new ServerSocket(650);
+                socketserver = new ServerSocket(8989);
                 InetAddress localAddress = InetAddress.getLocalHost();
                 System.out.println("Local adress " + localAddress);
 
