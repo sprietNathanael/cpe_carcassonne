@@ -193,13 +193,13 @@ public class Local extends JDialog
         });
 
         content.add(panExt);
-        content.setBackground(new Color(242,210,100));
+        content.setBackground(new Color(190,139,46));
 
         control.add(btPlay);
         control.add(btBack);
-        control.setBackground(new Color(242,210,100));
+        control.setBackground(new Color(190,139,46));
         
-        panIcon.setBackground(new Color(242,210,100));
+        panIcon.setBackground(new Color(190,139,46));
 
         this.getContentPane().add(control, BorderLayout.SOUTH);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
