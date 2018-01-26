@@ -246,6 +246,7 @@ public class Online extends JDialog
     
     public void addPlayer(ParamPlayers player)
     {
+        System.out.println("============= Test");
         JPanel curPan;
         if(isHost)
         {
@@ -272,11 +273,13 @@ public class Online extends JDialog
         JLabel icon_label= new JLabel(imageIcon);
         playerPanel.add(icon_label);
         curPan.add(playerPanel);
+        
+        this.revalidate();
+        this.repaint();
     }
     
     public void flushPanel()
     {
-        JPanel curPan;
         if(isHost)
         {
             panCreate.removeAll();

@@ -68,7 +68,6 @@ public class Host implements Observer
             System.out.println("Serveur prêt !");
             //Thread tj = new Thread 
        } catch (Exception e) {
-
             e.printStackTrace();
         }
     }
@@ -89,7 +88,7 @@ public class Host implements Observer
         public void run()
         {
             try {
-                socketserver = new ServerSocket(8989);
+                socketserver = new ServerSocket(6666);
                 InetAddress localAddress = InetAddress.getLocalHost();
                 System.out.println("Local adress " + localAddress);
 
@@ -152,7 +151,14 @@ public class Host implements Observer
                     try {
                         receiveAction(currentPlayerIndex);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        inS.remove(currentPlayerIndex);
+                        outS.remove(currentPlayerIndex);
+                        sockets.remove(currentPlayerIndex);
+                        currentPlayerIndex++;
+                        if(currentPlayerIndex >= paramPlayers.size())
+                        {
+                            currentPlayerIndex = 0;
+                        }
                     }
                 }
             }
@@ -195,25 +201,24 @@ public class Host implements Observer
 
     public void sendToClient(int playerIndex, Object o)
     {
-        try {
-            this.sendToSocket(this.outS.get(playerIndex), o);
-        } catch (IOException ex) {
-            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        this.sendToSocket(this.outS.get(playerIndex), o);
     }
     
     public void sendToAllClients(Object o) throws Exception
     {
         for (ObjectOutputStream out : outS.values()) {
-            out.reset();
-            out.writeObject(o);
+            sendToSocket(out, o);
         }
     }
     
-    public void sendToSocket(ObjectOutputStream out, Object o) throws IOException
+    public void sendToSocket(ObjectOutputStream out, Object o)
     {
-        out.writeObject(o);
-        out.reset();
+        try { 
+            out.reset();
+            out.writeObject(o);
+        } catch (IOException ex) {
+            Logger.getLogger(Host.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
 
