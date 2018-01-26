@@ -15,6 +15,8 @@ import carcassonne.model.player.Player;
 import carcassonne.model.tile.AbstractTile;
 import carcassonne.notifyMessage.ObserverMessage;
 import carcassonne.view.CarcassonneIHM.ClientWindow;
+import carcassonne.view.CarcassonneIHM.menuStart.Online;
+import carcassonne.view.CarcassonneIHM.menuStart.ParamPlayers;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -23,6 +25,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.LinkedList;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Set;
@@ -40,10 +43,15 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
     private ObjectOutputStream outputStream;
     private ObjectInputStream inputStream;
     private ObserverMessage notifyMessage;
+    private Online menu;
+    private Set<String> color;
+    NetworkGame self;
 
     @SuppressWarnings("unchecked")
-    public NetworkGame(String ipAddr, String pseudo) throws Exception
+    public NetworkGame(String ipAddr, String pseudo, Online menu) throws Exception
     {
+        this.menu = menu;
+        this.self = this;
         try {
             //InetAddress iAddr = InetAddress.getByName(ipAddr);
             //System.out.println(iAddr);
@@ -52,29 +60,62 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
             outputStream = new ObjectOutputStream(socket.getOutputStream());
             inputStream = new ObjectInputStream(socket.getInputStream());
             System.out.println("Socket client crée");
-
+            color = new HashSet<>();
+            Thread infoThread = new Thread(new ReceiveInformations());
+            infoThread.start();
             // Send pseudo
             sendToServer(pseudo);
-            // Receive color
-            Set<String> color = new HashSet<>();
-            String messageReceived = (String) inputStream.readObject();
-            if(messageReceived.equals("full"))
-            {
-                System.out.println("Le serveur est complet");
-            }
-            else
-            {
-                System.out.println("couleur recue : " + messageReceived);
-                color.add(messageReceived);
-                // Receive first game
-                CarcassonneGameInterface game = ((ObserverMessage) inputStream.readObject()).game;
-                ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, this);
-                Thread t = new Thread(new ReceiveData());
-                t.start();
-            }
+            
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+    
+    private class ReceiveInformations implements Runnable
+    {
+
+        public void run()
+        {
+            boolean continueExec = true;
+            while(continueExec)
+            {
+                try {
+                    NetworkMessage netMessage = (NetworkMessage) inputStream.readObject();
+                    switch(netMessage.message)
+                    {
+                        case serverFull:
+                            System.out.println("Le serveur est complet");
+                            menu.displayClientMessage("Server is Full");
+                            break;
+                        case allPlayers:
+                            LinkedList<ParamPlayers> players = (LinkedList<ParamPlayers>)netMessage.object;
+                            menu.flushPanel();
+                            for(ParamPlayers player : players)
+                            {
+                                menu.addPlayer(player);
+                            }
+                            break;
+                        case currentColor:
+                            String arg = (String)netMessage.object;
+                            System.out.println("couleur recue : " + arg);
+                            color.add(arg);
+                            break;
+                        case sendGame:
+                            // Receive first game
+                            CarcassonneGameInterface game = (CarcassonneGameInterface)((ObserverMessage)netMessage.object).game;
+                            ClientWindow cl = new ClientWindow(color, (CarcassonneGameInterface) game, self);
+                            continueExec = false;
+                            Thread t = new Thread(new ReceiveData());
+                            t.start();
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (IOException | ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
         }
     }
 
@@ -117,7 +158,8 @@ public class NetworkGame extends Observable implements CarcassonneGameInterface
 
     private void receiveNotifyMessage() throws Exception
     {
-        notifyMessage = (ObserverMessage) inputStream.readObject();
+        NetworkMessage netMessage = (NetworkMessage)inputStream.readObject();
+        notifyMessage = (ObserverMessage)netMessage.object;
         System.out.println("Received a notify : "+notifyMessage.messageType);
         notifyObservers();
     }

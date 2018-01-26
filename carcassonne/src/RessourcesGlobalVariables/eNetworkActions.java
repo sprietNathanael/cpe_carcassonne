@@ -17,5 +17,9 @@ public enum eNetworkActions implements Serializable
     putTile,
     putMeeple,
     beginGame,
-    endTurn
+    endTurn,
+    currentColor,
+    allPlayers,
+    serverFull,
+    sendGame
 }

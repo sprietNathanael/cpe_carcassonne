@@ -8,20 +8,27 @@ package carcassonne.view.CarcassonneIHM.menuStart;
 import Network.Host;
 import Network.NetworkGame;
 import RessourcesGlobalVariables.Colors;
+import RessourcesGlobalVariables.PlayerTypes;
 import carcassonne.controller.CarcassonneGameControllerMulti;
 import carcassonne.view.CarcassonneIHM.ClientWindow;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,11 +49,13 @@ public class Online extends JDialog
     private JLabel icon, lbName;
     private JRadioButton serveur, client;
     private JButton btCreateGame, btJoinGame, btPlay, btPlayHost;
+    private JPanel panCreate, panJoin;
     private CarcassonneGameControllerMulti controller;
     private JTextField tfIpAddress, tfName;
     private Settings settings;
     private Host host; // use in host only
     private NetworkGame game;
+    private boolean isHost;
 
     public Online()
     {
@@ -128,13 +137,15 @@ public class Online extends JDialog
         panRole.add(btJoinGame);
 
         /* 2 PANNELS : CREATE GAME AND JOIN GAME */
-        JPanel panCreate = new JPanel();
+        panCreate = new JPanel();
         panCreate.setBackground(Color.white);
         panCreate.setPreferredSize(new Dimension(291, 516));
+        panCreate.setLayout(new GridLayout(7,1));
         panCreate.setBorder(BorderFactory.createTitledBorder("HOST"));
-        JPanel panJoin = new JPanel();
+        panJoin = new JPanel();
         panJoin.setBackground(Color.white);
         panJoin.setPreferredSize(new Dimension(291, 516));
+        panJoin.setLayout(new GridLayout(8,1));
         panJoin.setBorder(BorderFactory.createTitledBorder("PLAYER"));
 
         //Adress IP for join game
@@ -191,14 +202,16 @@ public class Online extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                isHost = true;
                 panJoin.setBackground(Color.black);
                 panIP.setBackground(Color.black);
                 tfIpAddress.setBackground(Color.black);
                 btPlay.setEnabled(false);
                 btPlayHost.setEnabled(true);
                 btJoinGame.setEnabled(false);
-
-                host = new Host(tfName.getText());
+                ParamPlayers player = new ParamPlayers(tfName.getText(), Colors.tab.get(0), PlayerTypes.player);
+                host = new Host(player, self);
+                addPlayer(player);
                 
             }
         });
@@ -208,6 +221,7 @@ public class Online extends JDialog
             @Override
             public void actionPerformed(ActionEvent e)
             {
+                isHost = false;
                 panCreate.setBackground(Color.black);
                 btCreateGame.setEnabled(false);
                 btPlay.setEnabled(true);
@@ -226,6 +240,58 @@ public class Online extends JDialog
         this.getContentPane().add(panParameters, BorderLayout.CENTER);
         this.getContentPane().add(panIcon, BorderLayout.WEST);
         this.getContentPane().add(panControl, BorderLayout.SOUTH);
+        
 
+    }
+    
+    public void addPlayer(ParamPlayers player)
+    {
+        JPanel curPan;
+        if(isHost)
+        {
+            curPan = panCreate;
+        }
+        else
+        {
+            curPan = panJoin;
+        }
+        JPanel playerPanel = new JPanel();
+        playerPanel.setLayout(new GridLayout(1,2));
+        JLabel label = new JLabel(""+player.getNom());
+        
+        BufferedImage img = null;
+        try {
+            img = ImageIO.read(new File("resources/meeples_bordered/"+player.getColor()+".png"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Image dimg = img.getScaledInstance(30, 30,Image.SCALE_SMOOTH);
+        ImageIcon imageIcon = new ImageIcon(dimg);
+        
+        playerPanel.add(label);
+        JLabel icon_label= new JLabel(imageIcon);
+        playerPanel.add(icon_label);
+        curPan.add(playerPanel);
+    }
+    
+    public void flushPanel()
+    {
+        JPanel curPan;
+        if(isHost)
+        {
+            panCreate.removeAll();
+        }
+        else
+        {
+            panJoin.removeAll();
+        }
+    }
+    
+    public void displayClientMessage(String message)
+    {
+        panJoin.add(new JLabel(message));
+        
+        this.revalidate();
+        this.repaint();
     }
 }

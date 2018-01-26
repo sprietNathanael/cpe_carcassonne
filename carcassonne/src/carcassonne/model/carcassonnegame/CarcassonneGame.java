@@ -21,6 +21,7 @@ import carcassonne.model.set.InnsAndCathedralsSet;
 import carcassonne.model.set.RiverSet;
 import carcassonne.model.set.SetInterface;
 import carcassonne.model.tile.CasualTile;
+import carcassonne.model.type.AbstractType;
 import carcassonne.model.type.CityType;
 import carcassonne.model.type.FieldType;
 import carcassonne.model.type.RoadType;
@@ -1146,4 +1147,92 @@ public class CarcassonneGame extends Observable implements CarcassonneGameInterf
     {
     }
 
+    /* -------------
+    Methods for AI :
+    ------------- */
+    /**
+     * Récupère les aggrégats de tous les types, s'ils sont libres et présents
+     * aux coordonnées courantes
+     *
+     * @param col
+     * @param row
+     * @return
+     */
+    public Set<AbstractAggregate> getFreeAggregatesOfTile(int col, int row)
+    {
+        Set<AbstractAggregate> aggregates = new HashSet<>();
+        Set<AbstractAggregate> result = new HashSet<>();
+
+        aggregates.addAll(roadAggregates);
+        aggregates.addAll(cityAggregates);
+        aggregates.addAll(fieldAggregates);
+        aggregates.addAll(abbayAggregates);
+
+        //parcours des aggregats
+        for (AbstractAggregate aggregate : aggregates) {
+            //test si on est sur la bonne tuile
+            if (aggregate.getPlayers().isEmpty() && aggregate.getAggregatedTiles().containsKey(convertCoord(col, row))) {
+                result.add(aggregate);
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * Renvoie la coordonnées de la tuile posée la plus intéressante pour le
+     * joueur (Si abbaye, cathédrale, auberge libre)
+     *
+     * @param freeAgg
+     * @param col
+     * @param row
+     * @return
+     */
+    public String getSpecialBonusTypesInTile(Set<AbstractAggregate> freeAgg, int col, int row)
+    {
+        List<AbstractType> tileTypes;
+        AbstractType wantedType = null;
+        String result = null;
+
+        Coord coord = convertCoord(col, row);
+        for (AbstractAggregate agg : freeAgg) {
+            tileTypes = agg.getAggregatedAbstractTypesByCoord(coord.col, coord.row);
+
+            //Si abbaye et type non vide = tuile de l'abbaye qu'on retourne
+            if (agg instanceof AbbayAggregate && !tileTypes.isEmpty()) {
+                wantedType = tileTypes.get(0);
+            }
+            //Si ville et un type avec une cathédrale = type qu'on retourne
+            else if (agg instanceof CityAggregate) {
+                for (AbstractType type : tileTypes) {
+                    CityType cityType = (CityType) type;
+                    if (cityType.hasCathedral) {
+                        wantedType = type;
+                        break;
+                    }
+                }
+            }
+            //Si route et un type avec une auberge = type qu'on retourne
+            else if (agg instanceof RoadAggregate) {
+                for (AbstractType type : tileTypes) {
+                    RoadType roadType = (RoadType) type;
+                    if (roadType.hasInn) {
+                        wantedType = type;
+                        break;
+                    }
+                }
+            }
+            //Si un type déjà trouvé, on stop le parcours
+            if (wantedType != null) {
+                //Récupère la tuile correspondante
+                AbstractTile tile = agg.getAggregatedTiles().get(coord);
+                //récupère la location du type voulu
+                result = tile.getLocation(wantedType);
+                //Arrête le parcours de la boucle
+                break;
+            }
+        }
+
+        return result;
+    }
 }
